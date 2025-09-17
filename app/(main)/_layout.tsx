@@ -1,10 +1,9 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import { Stack } from "expo-router";
 
-export default function _layout() {
+export default function MainLayout() {
   return (
-    <View>
-      <Text>_layout</Text>
-    </View>
-  )
+    <Stack>
+      <Stack.Screen name="index" options={{ title: "Главная" }} />
+    </Stack>
+  );
 }
