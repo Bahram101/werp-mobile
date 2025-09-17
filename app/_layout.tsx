@@ -19,7 +19,7 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [user] = useState(false);
+  const [user] = useState(true);
   const segments = useSegments();
 
   console.log("segments", segments);
@@ -29,7 +29,7 @@ export default function RootLayout() {
   }
 
   if (user && segments[0] === "(auth)") {
-    return <Redirect href="/(main)" />;
+    return <Redirect href="/(main)/(tabs)" />;
   }
 
   return (
