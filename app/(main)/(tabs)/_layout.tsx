@@ -5,7 +5,6 @@ import { Tabs } from "expo-router";
 import React from "react";
 
 export default function TabsLayout() {
-  console.log("");
   return (
     <Tabs
       screenOptions={{
@@ -13,13 +12,15 @@ export default function TabsLayout() {
       }}
     >
       {tabItems.map((tab) => {
-        console.log("tab item", tab);
         return (
           <Tabs.Screen
             key={tab.name}
             name={tab.name}
             options={{
-              headerShown: tab.name === "messages" ? false : true,
+              headerShown:
+                tab.name === "messages" || tab.name === "requests"
+                  ? false
+                  : true,
               title: tab.title,
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons

@@ -15,7 +15,7 @@ export default function MessageDetail() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-        Детали сообщения #{id}
+        Детали заявки #{id}
       </Text>
     </View>
   );

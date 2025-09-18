@@ -36,6 +36,7 @@ export default function RootLayout() {
   if (user === null || !navigationState?.key) {
     return <Loader />;
   }
+  
   if (!user && segments[0] !== "(auth)") {
     return <Redirect href="/(auth)/login" />;
   }
