@@ -5,25 +5,33 @@ import { Tabs } from "expo-router";
 import React from "react";
 
 export default function TabsLayout() {
-
+  console.log("");
   return (
-    <Tabs>
-      {tabItems.map((tab) => (
-        <Tabs.Screen
-          key={tab.name}
-          name={tab.name}
-          options={{
-            title: tab.title,
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons
-                name={tab.icon as any}
-                size={size}
-                color={color}
-              />
-            ),
-          }}
-        />
-      ))}
+    <Tabs
+      screenOptions={{
+        headerTitleAlign: "center",
+      }}
+    >
+      {tabItems.map((tab) => {
+        console.log("tab item", tab);
+        return (
+          <Tabs.Screen
+            key={tab.name}
+            name={tab.name}
+            options={{
+              headerShown: tab.name === "messages" ? false : true,
+              title: tab.title,
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons
+                  name={tab.icon as any}
+                  size={size}
+                  color={color}
+                />
+              ),
+            }}
+          />
+        );
+      })}
     </Tabs>
   );
 }
