@@ -22,7 +22,7 @@ export default function RootLayout() {
   const [user] = useState(true);
   const segments = useSegments();
 
-  console.log("segments", segments);
+  // console.log("segments", segments);
 
   if (!user && segments[0] !== "(auth)") {
     return <Redirect href="/(auth)/login" />;
