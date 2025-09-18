@@ -1,11 +1,18 @@
-import { useLocalSearchParams } from "expo-router";
-import React from "react";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 
 export default function MessageDetail() {
-  const { id } = useLocalSearchParams();
+  const { id, title } = useLocalSearchParams();
+  console.log(id, title)
 
-  console.log('id',id)
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (title) {
+      navigation.setOptions({ title }); 
+    }
+  }, [title]);
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

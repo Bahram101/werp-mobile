@@ -21,7 +21,14 @@ export default function Messages() {
   return (
     <View style={{ flex: 1, padding: 16, backgroundColor: "#f9f9f9" }}>
       {messages.map((msg) => (
-        <Link key={msg.id} href={`/messages/${msg.id}`} asChild>
+        <Link
+          key={msg.id}
+          href={{
+            pathname: "/messages/[id]",
+            params: { id: msg.id, title: msg.title },
+          }}
+          asChild
+        >
           <TouchableOpacity
             style={{
               padding: 16,
