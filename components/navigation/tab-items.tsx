@@ -17,7 +17,7 @@ export const tabItems: ITabItem[] = [
     icon: "folder-open",
   },
   {
-    name: "messages", // 👈 здесь важно!
+    name: "messages",
     title: "Сообщения",
     icon: "message-processing",
   },

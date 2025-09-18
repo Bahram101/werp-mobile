@@ -29,16 +29,7 @@ export default function Messages() {
           }}
           asChild
         >
-          <TouchableOpacity
-            style={{
-              padding: 16,
-              borderBottomWidth: 1,
-              borderColor: "#ddd",
-              backgroundColor: "white",
-              marginBottom: 8,
-              borderRadius: 8,
-            }}
-          >
+          <TouchableOpacity className="p-4 bg-white mb-3">
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               {msg.title}
             </Text>
