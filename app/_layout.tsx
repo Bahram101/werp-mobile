@@ -1,56 +1,24 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import {
-  Redirect,
-  Slot,
-  useRootNavigationState,
-  useSegments,
-} from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
-import { useColorScheme } from "@/hooks/use-color-scheme";
-
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-import { Loader } from "@/components/ui/Loader";
+import AuthProvider from "@/features/auth/components/AuthProvider";
+// import { useAuth } from "@/features/auth/hooks/useAuth";
 import "@/global.css";
-import { useEffect, useState } from "react";
+import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
+import RootLayout from "./RootLayout";
 
 export const unstable_settings = {
   anchor: "(tabs)",
 };
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const navigationState = useRootNavigationState();
-  const segments = useSegments();
-  const [user, setUser] = useState<null | boolean>(null);
-
-  useEffect(() => {
-    setUser(true);
-  }, []);
-
-  if (user === null || !navigationState?.key) {
-    return <Loader />;
-  }
-  
-  if (!user && segments[0] !== "(auth)") {
-    return <Redirect href="/(auth)/login" />;
-  }
-
-  if (user && segments[0] === "(auth)") {
-    return <Redirect href="/(main)/(tabs)" />;
-  }
-
+export default function RootlayoutWrapper() {
   return (
-    <GluestackUIProvider mode="light">
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Slot />
-        <StatusBar style="auto" />
-      </ThemeProvider>
-    </GluestackUIProvider>
+    <ReactQueryProvider>
+      <AuthProvider>
+        <GluestackUIProvider mode="light">
+          <RootLayout />
+        </GluestackUIProvider>
+      </AuthProvider>
+    </ReactQueryProvider>
   );
 }
