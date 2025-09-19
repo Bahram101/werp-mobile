@@ -1,0 +1,43 @@
+import { Loader } from "@/components/ui/Loader";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useColorScheme } from "@/hooks/use-color-scheme";
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import {
+  Redirect,
+  Slot,
+  useRootNavigationState,
+  useSegments,
+} from "expo-router";
+import { StatusBar } from "expo-status-bar";
+
+export default function RootLayout() {
+  const colorScheme = useColorScheme();
+  const navigationState = useRootNavigationState();
+  const segments = useSegments();
+  const { user, isInitialized } = useAuth();
+
+  console.log("USER ", user);
+
+  if (!isInitialized || !navigationState?.key) {
+    return <Loader />;
+  }
+
+  if (!user && segments[0] !== "(auth)") {
+    return <Redirect href="/(auth)/login" />;
+  }
+
+  if (user && segments[0] === "(auth)") {
+    return <Redirect href="/(main)/(tabs)" />;
+  }
+
+  return (
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <Slot />
+      <StatusBar style="auto" />
+    </ThemeProvider>
+  );
+}

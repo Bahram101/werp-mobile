@@ -1,5 +1,5 @@
 // import { tabItems } from "@/components/navigation/tab-items";
-import { tabItems } from "@/components/navigation/tab-items";
+import { tabItems } from "@/features/service/navigation/tab-items";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
