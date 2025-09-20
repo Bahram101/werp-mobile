@@ -2,7 +2,6 @@ import "react-native-reanimated";
 
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import AuthProvider from "@/features/auth/components/AuthProvider";
-// import { useAuth } from "@/features/auth/hooks/useAuth";
 import "@/global.css";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import RootLayout from "./RootLayout";

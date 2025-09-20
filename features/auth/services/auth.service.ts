@@ -26,8 +26,6 @@ export const AuthService = {
         }
       );
 
-      console.log('data',data)
-
       if (data.access_token) {
         await saveToStorage(data);
       }
