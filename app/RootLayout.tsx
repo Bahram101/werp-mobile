@@ -20,8 +20,6 @@ export default function RootLayout() {
   const segments = useSegments();
   const { user, isInitialized } = useAuth();
 
-  console.log("USER ", user);
-
   if (!isInitialized || !navigationState?.key) {
     return <Loader />;
   }

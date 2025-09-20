@@ -3,9 +3,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import { Field } from "@/components/ui/field/Field";
-
 import AppButton from "@/components/ui/button/BaseButton";
+import { Field } from "@/components/ui/input/Field";
 import { Loader } from "@/components/ui/Loader";
 import { useAuthMutations } from "@/features/auth/hooks/useAuthMutation";
 import { IAuthFormData } from "@/types/auth.interface";
@@ -22,8 +21,6 @@ const Auth = () => {
   const { loginSync, isLoading } = useAuthMutations(reset);
 
   const onSubmit: SubmitHandler<IAuthFormData> = (data) => {
-    console.log('isLoading', isLoading)
-    console.log("ddd", data);
     loginSync(data);
   };
 
@@ -38,7 +35,7 @@ const Auth = () => {
         <View className="flex-1 items-center justify-center bg-white px-4">
           <View className="w-10/12 max-w-md">
             {isLoading ? (
-              <Loader />
+              <Loader/>
             ) : (
               <>
                 <Text className="text-2xl text-center mb-4">Sign in</Text>
@@ -48,7 +45,10 @@ const Auth = () => {
                   keyboardType="email-address"
                   control={control}
                   name="username"
-                  rules={{ required: "Login is required!" }}
+                  rules={{ required: "Login is required!", minLength: {
+                    value: 3,
+                    message: "Please enter at least 3 characters"
+                  } }}
                 />
 
                 <Field<IAuthFormData>
