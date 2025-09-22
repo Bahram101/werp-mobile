@@ -1,7 +1,7 @@
 // import { tabItems } from "@/components/navigation/tab-items";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { AuthService } from "@/features/auth/services/auth.service";
-import { tabItems } from "@/features/navigation/master-tabs";
+import { mainTabs } from "@/features/navigation/main-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
@@ -18,16 +18,13 @@ export default function TabsLayout() {
         headerTitleAlign: "center",
       }}
     >
-      {tabItems.map((tab) => {
+      {mainTabs.map((tab) => {
+        console.log('tabItem',tab)
         return (
           <Tabs.Screen
             key={tab.name}
             name={tab.name}
             options={{
-              headerShown:
-                tab.name === "messages" || tab.name === "requests"
-                  ? false
-                  : true,
               title: tab.title,
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons
@@ -36,18 +33,6 @@ export default function TabsLayout() {
                   color={color}
                 />
               ),
-              ...(tab.name === "profile" && {
-                headerRight() {
-                  return (
-                    <MaterialCommunityIcons
-                      className="mr-3"
-                      name="logout"
-                      onPress={logout}
-                      size={22}
-                    />
-                  );
-                },
-              }),
             }}
           />
         );
