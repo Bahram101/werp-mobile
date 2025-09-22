@@ -20,6 +20,8 @@ export default function RootLayout() {
   const segments = useSegments();
   const { user, isInitialized } = useAuth();
 
+  console.log("setments", segments);
+
   if (!isInitialized || !navigationState?.key) {
     return <Loader />;
   }
@@ -28,8 +30,12 @@ export default function RootLayout() {
     return <Redirect href="/(auth)/login" />;
   }
 
-  if (user && segments[0] === "(auth)") {
-    return <Redirect href="/(main)/(tabs)" />;
+  if (user && segments[0] === "(auth)" && user?.user_id === 1) {
+    return <Redirect href="/(master)/(master-tabs)" />;
+  }
+
+  if (user && segments[0] === "(auth)" && user?.user_id === 4957) {
+    return <Redirect href="/(main)/(main-tabs)" />;
   }
 
   return (
