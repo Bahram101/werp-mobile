@@ -40,6 +40,7 @@ export default function TabsLayout() {
                 headerRight() {
                   return (
                     <MaterialCommunityIcons
+                      className="mr-3"
                       name="logout"
                       onPress={logout}
                       size={22}

@@ -7,7 +7,7 @@ import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import RootLayout from "./RootLayout";
 
 export const unstable_settings = {
-  anchor: "(tabs)",
+  // anchor: "(masters)",
 };
 
 export default function RootlayoutWrapper() {
