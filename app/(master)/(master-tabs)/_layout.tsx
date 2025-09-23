@@ -5,6 +5,7 @@ import { tabItems } from "@/features/navigation/master-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
+import { TouchableOpacity } from "react-native";
 
 export default function TabsLayout() {
   const { setUser } = useAuth();
@@ -39,12 +40,14 @@ export default function TabsLayout() {
               ...(tab.name === "profile" && {
                 headerRight() {
                   return (
-                    <MaterialCommunityIcons
-                      className="mr-3"
-                      name="logout"
-                      onPress={logout}
-                      size={22}
-                    />
+                    <TouchableOpacity>
+                      <MaterialCommunityIcons
+                        className="mr-3"
+                        name="logout"
+                        onPress={logout}
+                        size={22}
+                      />
+                    </TouchableOpacity>
                   );
                 },
               }),

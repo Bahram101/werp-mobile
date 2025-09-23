@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
+import Layout from "@/components/ui/main/Layout";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { AuthService } from "@/features/auth/services/auth.service";
 import React from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 
 export default function Home() {
   const { setUser } = useAuth();
@@ -11,11 +12,14 @@ export default function Home() {
   };
 
   return (
-    <View className="flex-1 items-center justify-center bg-blue-200">
-      <Text>Home pagee</Text>
+    <Layout header={true}>
+      <Text>
+        Home pagee asdf asdfalskdfa a;sdlkfjasdlkfja asldkf ja lsd ka;s sldkfs
+        a;lskdfjas dfl asdfas d
+      </Text>
       <Button onPress={logout}>
         <Text>Logout</Text>
       </Button>
-    </View>
+    </Layout>
   );
 }
