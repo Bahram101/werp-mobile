@@ -1,4 +1,3 @@
-// import { tabItems } from "@/components/navigation/tab-items";
 import { mainTabs } from "@/features/navigation/main-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";

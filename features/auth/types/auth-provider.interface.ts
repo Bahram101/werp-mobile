@@ -8,4 +8,5 @@ export interface IContext {
   user: TypeUserState
   setUser: Dispatch<SetStateAction<TypeUserState>>
   isInitialized: boolean
+  logout: () => void
 }

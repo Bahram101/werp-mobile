@@ -1,6 +1,4 @@
-// import { tabItems } from "@/components/navigation/tab-items";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { AuthService } from "@/features/auth/services/auth.service";
 import { tabItems } from "@/features/navigation/master-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
@@ -8,10 +6,7 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 
 export default function TabsLayout() {
-  const { setUser } = useAuth();
-  const logout = () => {
-    AuthService.logout().then(() => setUser(null));
-  };
+  const { logout } = useAuth();
 
   return (
     <Tabs
