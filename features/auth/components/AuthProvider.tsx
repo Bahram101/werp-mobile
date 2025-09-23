@@ -11,6 +11,7 @@ import { getAccessToken, getUserFromStorage } from "../services/auth.storage";
 // import { registerSetUser } from '@/services/auth/auth.helper-context'
 
 import { registerSetUser } from "../helpers/auth.helper-context";
+import { AuthService } from "../services/auth.service";
 import { IContext, TypeUserState } from "../types/auth-provider.interface";
 
 export const AuthContext = createContext({} as IContext);
@@ -29,7 +30,7 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
         const accessToken = await getAccessToken();
         if (accessToken) {
           try {
-            const storedUser = await getUserFromStorage(); 
+            const storedUser = await getUserFromStorage();
             if (isMounted) setUser(storedUser);
           } catch (e) {}
         } else {
@@ -52,10 +53,14 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
     registerSetUser(setUser);
   }, []);
 
+  const logout = () => {
+    AuthService.logout().then(() => setUser(null));
+  };
+
   console.log("user", user);
 
   return (
-    <AuthContext.Provider value={{ isInitialized, user, setUser }}>
+    <AuthContext.Provider value={{ isInitialized, user, setUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

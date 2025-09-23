@@ -29,11 +29,11 @@ export default function RootLayout() {
   }
 
   if (user && segments[0] === "(auth)" && user?.user_id === 1) {
-    return <Redirect href="/(main)/(main-tabs)" />;
+    return <Redirect href="/(main)/(tabs)" />;
   }
 
   if (user && segments[0] === "(auth)" && user?.user_id === 4957) {
-    return <Redirect href="/(master)/(master-tabs)" />;
+    return <Redirect href="/(master)/(tabs)" />;
   }
 
   return (
