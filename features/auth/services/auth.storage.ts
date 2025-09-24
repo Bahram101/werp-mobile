@@ -8,7 +8,6 @@ import {
   ITokens
 } from '@/types/auth.interface'
 
-import { authInstance } from '@/services/api/interceptors'
 import { removePinCode } from '../utils/pinStore'
 
 export const getAccessToken = async () => {
@@ -59,32 +58,32 @@ export const saveToStorage = async (data: IAuthResponse) => {
   } catch (error) {}
 }
 
-export const getNewTokens = async () => {
-  console.log('getNewTokens')
-  try {
-    const refreshToken = await getRefreshToken()
-    if (!refreshToken) throw new Error('No refresh token found')
+// export const getNewTokens = async () => {
+//   console.log('getNewTokens')
+//   try {
+//     const refreshToken = await getRefreshToken()
+//     if (!refreshToken) throw new Error('No refresh token found')
 
-    const body = new URLSearchParams()
-    body.set('grant_type', 'refresh_token')
-    body.set('refresh_token', refreshToken)
+//     const body = new URLSearchParams()
+//     body.set('grant_type', 'refresh_token')
+//     body.set('refresh_token', refreshToken)
 
-    const { data } = await authInstance.post<IAuthResponse>(
-      '/oauth/token',
-      body.toString(),
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization: 'Basic V0VSUDpwYXNzd29yZA=='
-        }
-      }
-    )
+//     const { data } = await authInstance.post<IAuthResponse>(
+//       '/oauth/token',
+//       body.toString(),
+//       {
+//         headers: {
+//           'Content-Type': 'application/x-www-form-urlencoded',
+//           Authorization: 'Basic V0VSUDpwYXNzd29yZA=='
+//         }
+//       }
+//     )
 
-    if (data.access_token) await saveAccessToken(data.access_token)
+//     if (data.access_token) await saveAccessToken(data.access_token)
 
-    return data
-  } catch (e) {
-    console.log('Error new token', e)
-    throw e
-  }
-}
+//     return data
+//   } catch (e) {
+//     console.log('Error new token', e)
+//     throw e
+//   }
+// }

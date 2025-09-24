@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { authInstance } from "@/services/api/auth-instance";
 import { errorCatch } from "@/services/api/error";
-import { authInstance } from "@/services/api/interceptors";
 import { EnumAsyncStorage, IAuthResponse } from "@/types/auth.interface";
 import Toast from "react-native-toast-message";
 import { deleteTokensFromStorage, saveToStorage } from "./auth.storage";
@@ -25,6 +25,7 @@ export const AuthService = {
           },
         }
       );
+      // console.log('data',data)
 
       if (data.access_token) {
         await saveToStorage(data);
