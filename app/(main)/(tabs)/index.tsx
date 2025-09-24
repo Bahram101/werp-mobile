@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <Layout header={true}>
       <View className="">
-        <TouchableOpacity className="mb-5" onPress={() => router.push("/(service)")}>
+        <TouchableOpacity className="mb-5" onPress={() => router.push("/(modals)")}>
           <Text>Service</Text>
         </TouchableOpacity>
 

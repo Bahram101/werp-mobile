@@ -10,6 +10,7 @@ export default function ServiceTabsLayout() {
           key={tab.name}
           name={tab.name}
           options={{
+            // headerShown: false,
             title: tab.title,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name={tab.icon as any} color={color} size={size} />
