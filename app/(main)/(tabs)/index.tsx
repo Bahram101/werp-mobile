@@ -7,7 +7,11 @@ export default function Home() {
   return (
     <Layout header={true}>
       <View className="gap-6">
-        <Link href="/modal">Service</Link>
+        <Link href="/modals/service/tasks">Service</Link>
+
+        <Link href="/modals/finance/reports">Finance</Link>
+
+        <Link href="/modals/marketing/sales">Marketing</Link>
       </View>
     </Layout>
   );
