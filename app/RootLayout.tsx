@@ -6,34 +6,29 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import {
-  Redirect,
-  Slot,
-  useRootNavigationState,
-  useSegments,
-} from "expo-router";
+import { router, Slot, useRootNavigationState } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const navigationState = useRootNavigationState();
-  const segments = useSegments();
   const { user, isInitialized } = useAuth();
+
+  useEffect(() => {
+    if (!isInitialized || !navigationState?.key) return;
+
+    if (!user) {
+      router.replace("/(auth)/login");
+    } else if (user.user_id === 4957) {
+      router.replace("/(master)/(tabs)");
+    } else if (user.user_id === 1) {
+      router.replace("/(main)/(tabs)");
+    }
+  }, [isInitialized, navigationState?.key, user]);
 
   if (!isInitialized || !navigationState?.key) {
     return <Loader />;
-  }
-
-  if (!user && segments[0] !== "(auth)") {
-    return <Redirect href="/(auth)/login" />;
-  }
-
-  if (user && segments[0] === "(auth)" && user?.user_id === 1) {
-    return <Redirect href="/(main)/(tabs)" />;
-  }
-
-  if (user && segments[0] === "(auth)" && user?.user_id === 4957) {
-    return <Redirect href="/(master)/(tabs)" />;
   }
 
   return (

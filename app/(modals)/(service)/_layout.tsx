@@ -1,10 +1,9 @@
-import { Tabs } from "expo-router";
+import { Stack } from "expo-router";
 
 export default function ServiceLayout() {
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
-      <Tabs.Screen name="index" options={{ title: "Главная" }} />
-      <Tabs.Screen name="tasks" options={{ title: "Задачи" }} />
-    </Tabs>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    </Stack>
   );
 }
