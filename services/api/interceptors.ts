@@ -1,28 +1,26 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 
-import {
-  getAccessToken,
-  getNewTokens,
-} from "@/features/auth/services/auth.storage";
+import { getAccessToken } from "@/features/auth/services/auth.storage";
 
 import { logoutWithContext } from "@/features/auth/helpers/auth.helper-context";
 import { AuthService } from "@/features/auth/services/auth.service";
-import { AUTH_URL, CORE_URL } from "./config";
+import { getNewTokens } from "@/features/auth/services/token.helper";
+import { coreInstance } from "./core-instance";
 
-export const authInstance = axios.create({
-  baseURL: AUTH_URL,
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-    Authorization: "Basic V0VSUDpwYXNzd29yZA==",
-  },
-});
+// export const authInstance = axios.create({
+//   baseURL: AUTH_URL,
+//   headers: {
+//     "Content-Type": "application/x-www-form-urlencoded",
+//     Authorization: "Basic V0VSUDpwYXNzd29yZA==",
+//   },
+// });
 
-const coreInstance = axios.create({
-  baseURL: CORE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+// const coreInstance = axios.create({
+//   baseURL: CORE_URL,
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+// });
 
 coreInstance.interceptors.request.use(async (config) => {
   console.log("REQ interceptors");
