@@ -12,9 +12,7 @@ export default function MainModalsLayout() {
       <Stack.Screen
         name="service"
         options={{
-          presentation: "transparentModal" as const,
-          // animation:
-          //   Platform.OS === "ios" ? "slide_from_bottom" : "slide_from_right",
+          presentation: "transparentModal" as const, 
           headerShown: false,
         }}
       />
@@ -22,18 +20,14 @@ export default function MainModalsLayout() {
         name="finance"
         options={{
           presentation: "modal",
-          animation: 'fade', 
-          // animation:
-          //   Platform.OS === "ios" ? "slide_from_bottom" : "slide_from_right",
+          animation: 'fade',  
           headerShown: false,
         }}
       />
       <Stack.Screen
         name="marketing"
         options={{
-          presentation: "modal",
-          // animation:
-          //   Platform.OS === "ios" ? "slide_from_bottom" : "slide_from_right",
+          presentation: "modal", 
           headerShown: false,
         }}
       />
