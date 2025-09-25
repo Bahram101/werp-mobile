@@ -8,9 +8,7 @@ export default function Home() {
     <Layout header={true}>
       <View className="gap-6">
         <Link href="/modals/service/tasks">Service</Link>
-
         <Link href="/modals/finance/reports">Finance</Link>
-
         <Link href="/modals/marketing/sales">Marketing</Link>
       </View>
     </Layout>

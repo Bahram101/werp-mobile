@@ -1,4 +1,12 @@
-import { Stack } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { router, Stack } from "expo-router";
+import { Pressable } from "react-native";
+
+const Back = () => (
+  <Pressable onPress={() => router.back()} hitSlop={12} style={{ marginLeft: 12 }}>
+    <Ionicons name="close" size={22} />
+  </Pressable>
+);
 
 export default function MainLayout() {
   return (
@@ -7,10 +15,11 @@ export default function MainLayout() {
       <Stack.Screen
         name="modal"
         options={{
-          presentation: "modal", // fullScreenModal, modal, transparentModal 
-          // animation: Platform.OS === "ios" ? "slide_from_bottom" : "fade", //fade, slide_from_right 
-          animation: "slide_from_bottom",  
-          headerShown: false,
+          presentation: "fullScreenModal",
+          // animation: "slide_from_bottom",
+          headerShown: true,             // показать хедер только у модалки
+          headerTitle: "",
+          headerRight: () => <Back />,    // ← кнопка закрытия
         }}
       />
     </Stack>
