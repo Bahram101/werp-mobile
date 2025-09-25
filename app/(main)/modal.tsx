@@ -1,15 +1,25 @@
-import { Link, router } from "expo-router";
-import { Text, View } from "react-native";
+import { Link, router, Stack } from "expo-router";
 
 export default function Modal() {
   const isPresented = router.canGoBack();
 
   return (
-    <View className="flex-1 justify-center items-center gap-3 bg-orange-400">
-      <View>
-        <Text>Modal screen</Text>
-      </View>
+    <Stack screenOptions={{ headerShown: false }} >
       {isPresented && <Link href="../">Dismiss modal</Link>}
-    </View>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
+      <Stack.Screen
+        name="service"
+        options={{ presentation: "modal", headerShown: false }}
+      />
+      <Stack.Screen
+        name="finance"
+        options={{ presentation: "modal", headerShown: false }}
+      />
+      <Stack.Screen
+        name="marketing"
+        options={{ presentation: "modal", headerShown: false }}
+      />
+    </Stack>
   );
 }
