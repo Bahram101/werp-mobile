@@ -8,10 +8,9 @@ export default function ServiceTabsLayout() {
       initialRouteName="tasks"
       screenOptions={{
         headerShown: true,
-        headerRight: () => <CloseButton />,
-       
+        headerRight: () => <CloseButton />,       
         tabBarActiveTintColor: "orange",
-        tabBarInactiveTintColor: "rgba(255,255,255,0.7)",
+        // tabBarInactiveTintColor: "rgba(255,255,255,0.7)",
         // sceneContainerStyle: { backgroundColor: "#0b1220" },
       }}
     >
