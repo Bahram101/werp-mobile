@@ -1,10 +1,15 @@
+import Banner from "@/components/ui/master/Banner";
+import Layout from "@/components/ui/master/Layout";
 import React from "react";
 import { Text, View } from "react-native";
 
 export default function Home() {
   return (
-    <View className="flex-1 items-center justify-center bg-blue-200">
-      <Text>Home page</Text>
-    </View>
+    <Layout header>
+      <View>
+        <Banner/>
+        <Text>Home page</Text>
+      </View>
+    </Layout>
   );
 }

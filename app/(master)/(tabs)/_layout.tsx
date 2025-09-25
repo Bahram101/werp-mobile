@@ -20,10 +20,9 @@ export default function TabsLayout() {
             key={tab.name}
             name={tab.name}
             options={{
-              headerShown:
-                tab.name === "messages" || tab.name === "requests"
-                  ? false
-                  : true,
+              headerShown: ["index", "requests", "messages"].includes(tab.name)
+                ? false
+                : true,
               title: tab.title,
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons
