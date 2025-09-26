@@ -6,7 +6,7 @@ export default function RequestsLayout() {
       screenOptions={{
         headerShown: true,
         headerTitleAlign: "center",
-        headerBackTitle: "Назад", 
+        // headerBackTitle: "Назад", 
       }}
     >
       <Stack.Screen name="index" options={{ title: "Заявки" }} />
@@ -14,7 +14,7 @@ export default function RequestsLayout() {
         name="[id]"
         options={{
           title: "Детали заявки",
-          headerBackTitle: "Назад",
+          // headerBackTitle: "Назад",
         }}
       />
     </Stack>

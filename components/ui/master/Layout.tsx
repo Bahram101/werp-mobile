@@ -11,8 +11,9 @@ interface ILayout {
 
 const Layout: FC<ILayout> = ({ children, className, header = false }) => {
   return (
-    <View className={cn("flex-1 w-full h-full bg-[#EAEAEA]", className)}>
+    <View className={cn("w-full h-full", className)}>
       {header && <Header />}
+
       <View className="p-5">{children}</View>
     </View>
   );

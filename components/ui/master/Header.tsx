@@ -9,11 +9,11 @@ export default function MainHeader() {
   const { user } = useAuth();
 
   return (
-    <View className="h-[180px] rounded-bl-3xl rounded-br-3xl overflow-hidden">
+    <View className="rounded-bl-3xl rounded-br-3xl overflow-hidden" style={{ height: 180 }}>
       <ImageBackground
         source={require("@/assets/images/back.png")}
         resizeMode="cover"
-        className="bg-white px-4 py-3 flex-row items-center justify-between h-full"
+        className="px-5 py-3 flex-row items-center justify-between h-full w-full"
       >
         <View className="absolute inset-0 bg-white/70" />
         <View className="flex-row items-center gap-3">

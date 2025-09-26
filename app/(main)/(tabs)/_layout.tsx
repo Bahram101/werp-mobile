@@ -17,12 +17,6 @@ export default function TabsLayout() {
             name={tab.name}
             options={{
               title: tab.title,
-              // tabBarStyle: {
-              //   // backgroundColor: "#111827",
-              //   borderTopColor: "transparent",
-              //   elevation: 0,
-              //   borderRadius: 25,
-              // },
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons
                   name={tab.icon as any}
