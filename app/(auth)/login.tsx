@@ -13,8 +13,8 @@ const Auth = () => {
   const { control, reset, handleSubmit } = useForm<IAuthFormData>({
     mode: "onChange",
     defaultValues: {
-      username: "azamat",
-      password: "Almaty2020",
+      username: "bakhram.at",
+      password: "Qwerty123",
     },
   });
 

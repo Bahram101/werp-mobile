@@ -1,10 +1,9 @@
 import cn from "clsx";
-import React from "react";
+import React, { FC } from "react";
 import { Dimensions, Text, View } from "react-native";
 
 import { getStatusColor, StatusText } from "@/utils/status.helper";
 
-type Props = {};
 type Scheme = "red" | "blue" | "green";
 
 type StatItem = {
@@ -39,21 +38,40 @@ const DATA: StatItem[] = [
   },
 ];
 
-const Banner = (props: Props) => {
+// type Props = {
+//   className?: string;
+// } & ViewProps
+
+type Props = {
+  className?: string;
+  style?: object;
+};
+
+const Banner: FC<Props> = ({ className, style }) => {
   const { width } = Dimensions.get("window");
   const H_PADDING = 16;
   const GAP = 12;
-  const CARD_WIDTH = (width - H_PADDING * 2 - GAP * 2) / 3;
+  const CARD_WIDTH = (width - H_PADDING * 2 - GAP * 1) / 3;
 
   return (
-    <View className="-translate-y-20 w-full">
-      <View className="flex-row justify-between bg-white rounded-2xl px-2 pt-4 pb-2">
+    <View
+      className={cn(className)}
+      style={{
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.15,
+        shadowRadius: 6,
+        elevation: 6,
+      }}
+      {...style}
+    >
+      <View className="flex-row justify-between bg-white rounded-2xl px-2 pt-4 pb-2 ">
         {DATA.map((item, index) => (
           <View
             key={item.id}
             style={{ width: CARD_WIDTH }}
             className={cn(
-              `px-3 items-center justify-center  border-grayLight`,
+              `px-3 items-center justify-center border-grayLight`,
               index !== 2 && "border-r"
             )}
           >
