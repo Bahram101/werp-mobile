@@ -16,19 +16,19 @@ type ActiveRequestCardProps = {
 const ActiveRequestCard: FC<ActiveRequestCardProps> = ({ item }) => {
   return (
     <Pressable
-      className="bg-white mt-3 rounded-2xl p-4"
+      className={cn(
+        "bg-white mb-3 rounded-2xl p-4",
+        // Platform.OS === "android" && "mb-2"
+      )}
       onPress={() =>
-        router.push(
-          {
-            pathname: "/messages/[id]",
-            params: { id: item.id, title: item.title },
-          }
-          // { id: item.id }
-        )
+        router.push({
+          pathname: "/requests/[id]",
+          params: { id: item.id, title: item.number },
+        })
       }
     >
       <View className="flex-row items-center justify-between mb-3 border-b border-grayLight pb-2">
-        <View className="px-2 bg-primary pt-2 h-6 justify-center flex rounded">
+        <View className="px-2 bg-primary h-6 justify-center flex rounded">
           <Text className="text-white text-xs">{item.title}</Text>
         </View>
         <View>

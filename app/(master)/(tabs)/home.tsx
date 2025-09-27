@@ -66,12 +66,50 @@ export default function Home() {
       scheme: "purple",
       icon: "briefcase-search-outline",
     },
+    {
+      id: "a6",
+      number: 1564353,
+      title: "Поиск по адресу",
+      category: "address_search",
+      date: "2025-08-13",
+      timeFrom: "10:00",
+      timeTo: "10:30",
+      address: "ул. Абая, 25",
+      scheme: "purple",
+      icon: "briefcase-search-outline",
+    },
+    {
+      id: "a7",
+      number: 1564353,
+      title: "Поиск по адресу",
+      category: "address_search",
+      date: "2025-08-13",
+      timeFrom: "10:00",
+      timeTo: "10:30",
+      address: "ул. Абая, 25",
+      scheme: "purple",
+      icon: "briefcase-search-outline",
+    },
+    {
+      id: "a8",
+      number: 1564353,
+      title: "Поиск по адресу",
+      category: "address_search",
+      date: "2025-08-13",
+      timeFrom: "10:00",
+      timeTo: "10:30",
+      address: "ул. Абая, 25",
+      scheme: "purple",
+      icon: "briefcase-search-outline",
+    },
   ];
   return (
     <Layout header>
-      <Banner style={{ marginTop: -65 }}/>
-
-      <ScrollView className="h-full">
+      <Banner style={{ marginTop: -65 }} />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 230 }}
+      >
         <View className="mt-5 flex-1">
           <Text className="text-2xl font-semibold mb-2">
             Виды заявки на сегодня

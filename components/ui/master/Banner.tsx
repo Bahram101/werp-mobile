@@ -38,10 +38,6 @@ const DATA: StatItem[] = [
   },
 ];
 
-// type Props = {
-//   className?: string;
-// } & ViewProps
-
 type Props = {
   className?: string;
   style?: object;
@@ -65,7 +61,7 @@ const Banner: FC<Props> = ({ className, style }) => {
       }}
       {...style}
     >
-      <View className="flex-row justify-between bg-white rounded-2xl px-2 pt-4 pb-4 ">
+      <View className="flex-row justify-between bg-white rounded-2xl pt-4 pb-4 ">
         {DATA.map((item, index) => (
           <View
             key={item.id}

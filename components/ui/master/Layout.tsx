@@ -14,7 +14,7 @@ const Layout: FC<ILayout> = ({ children, className, header = false }) => {
     <View className={cn("w-full h-full", className)}>
       {header && <Header />}
 
-      <View className="p-5">{children}</View>
+      <View className="px-4 pt-2">{children}</View>
     </View>
   );
 };
