@@ -18,13 +18,15 @@ export default function RequestsScenes({ route, data }: Props) {
         <FlatList
           data={data}
           renderItem={({ item }) => <ActiveRequestCard item={item} />}
+          contentContainerStyle={{ paddingBottom: 10 }}
         />
       );
     case "done":
       return (
         <FlatList
           data={data}
-          renderItem={({ item }) => <DoneRequestCard item={item} />} 
+          renderItem={({ item }) => <DoneRequestCard item={item} />}
+          contentContainerStyle={{ paddingBottom: 10 }}
           ListFooterComponent={<DoneSummary />}
         />
       );
@@ -37,6 +39,7 @@ export default function RequestsScenes({ route, data }: Props) {
           <FlatList
             data={data}
             renderItem={({ item }) => <FinishedRequestCard item={item} />}
+            contentContainerStyle={{ paddingBottom: 10 }}
             ListFooterComponent={<FinishedSummary />}
           />
         </>

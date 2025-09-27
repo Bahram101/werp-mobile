@@ -60,6 +60,28 @@ export default function Requests() {
       paymentType: "1",
       paid: "34700",
     },
+    {
+      id: 5,
+      title: "ПОТОП",
+      number: "1564854",
+      date: "13 август",
+      time: "11:00 — 11:40",
+      address: "Мкр. Мамыр-4, дом 138",
+      status: 4,
+      paymentType: "1",
+      paid: "34700",
+    },
+    {
+      id: 6,
+      title: "ПОТОП",
+      number: "1564854",
+      date: "13 август",
+      time: "11:00 — 11:40",
+      address: "Мкр. Мамыр-4, дом 138",
+      status: 4,
+      paymentType: "1",
+      paid: "34700",
+    },
   ];
 
   return (
