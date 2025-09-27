@@ -1,17 +1,10 @@
 import Layout from "@/components/ui/master/Layout";
-import ActiveRequestCard from "@/features/master/requests/components/RequestCard/ActiveRequestCard";
-import DoneRequestCard from "@/features/master/requests/components/RequestCard/DoneRequestCard";
-import FinishedRequestCard from "@/features/master/requests/components/RequestCard/FinishedRequestCard";
-import DoneSummary from "@/features/master/requests/components/Summary/DoneSummary";
-import FinishedSummary from "@/features/master/requests/components/Summary/FinishedSummary";
+import RequestsScenes from "@/features/master/requests/components/RequestsScenes";
+import RequestsTabBar from "@/features/master/requests/components/RequestsTabBar";
+import { IRequest } from "@/features/master/requests/types";
 import { useState } from "react";
-import {
-  FlatList,
-  Text,
-  useWindowDimensions,
-  View
-} from "react-native";
-import { TabBar, TabBarItem, TabBarProps, TabView } from 'react-native-tab-view';
+import { useWindowDimensions, View } from "react-native";
+import { TabBarProps, TabView } from "react-native-tab-view";
 
 export default function Requests() {
   const layout = useWindowDimensions();
@@ -22,17 +15,7 @@ export default function Requests() {
     { key: "finished", title: "Завершенные" },
   ]);
 
-  const activeData: {
-    id: number;
-    title: string;
-    number: string;
-    date: string;
-    time: string;
-    address: string;
-    status: number;
-    paymentType: string;
-    paid: string;
-  }[] = [
+  const data: IRequest[] = [
     {
       id: 1,
       title: "ЗАМЕНА КАРТРИДЖА",
@@ -79,107 +62,21 @@ export default function Requests() {
     },
   ];
 
-  const renderScene = ({ route }: { route: { key: string } }) => {
-    switch (route.key) {
-      case "active":
-        return (
-          <FlatList
-            data={activeData}
-            renderItem={({ item }) => <ActiveRequestCard item={item} />}
-            contentContainerStyle={{ paddingBottom: 115 }}
-          />
-        );
-      case "done":
-        return (
-          <>
-            <FlatList
-              data={activeData}
-              renderItem={({ item }) => <DoneRequestCard item={item} />}
-              contentContainerStyle={{ paddingBottom: 115 }}
-              ListFooterComponent={<DoneSummary />}
-            />
-          </>
-        );
-      case "finished":
-        return (
-          <>
-            <Text className="text-xl font-semibold mt-3 mb-2">
-              Завершенные заявки с 1 августа
-            </Text>
-            <FlatList
-              data={activeData}
-              renderItem={({ item }) => <FinishedRequestCard item={item} />}
-              contentContainerStyle={{ paddingBottom: 115 }}
-              ListFooterComponent={<FinishedSummary />}
-            />
-          </>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <Layout>
-      <View className="px-4 h-full pt-2">
+      <View className="h-full">
         <TabView
           lazy
           navigationState={{ index, routes }}
-          renderScene={renderScene}
+          renderScene={({ route }) => (
+            <RequestsScenes route={route} data={data} />
+          )}
           onIndexChange={setIndex}
           initialLayout={{ width: layout.width }}
           removeClippedSubviews={false}
-          renderTabBar={(props: TabBarProps<any>) => {
-            return (
-              <TabBar
-                {...props}
-                activeColor="black"
-                inactiveColor="black"
-                style={{
-                  backgroundColor: "#D4D4D4",
-                  height: 43,
-                  borderRadius: 40,
-                  marginBottom: 4,
-                }}
-                contentContainerStyle={{
-                  backgroundColor: "transparent",
-                  borderRadius: 30,
-                  alignItems: "center",
-                }}
-                indicatorStyle={{
-                  backgroundColor: "white",
-                  height: "88%",
-                  width: "32%",
-                  borderRadius: 9999,
-                  marginVertical: 2,
-                  marginLeft: 3,
-                }}
-                tabStyle={{
-                  flex: 1,
-                  // width: 'auto',
-                }}
-                renderTabBarItem={(itemProps) => {
-                  const { key, ...rest } = itemProps;
-                  return (
-                    <TabBarItem
-                      key={itemProps.key}
-                      {...rest}
-                      label={({ labelText }) => (
-                        <Text
-                          style={{
-                            fontSize: 14,
-                            padding: 0,
-                          }}
-                        >
-                          {labelText}
-                        </Text>
-                      )}
-                    />
-                  );
-                }}
-              />
-            );
-          }}
+          renderTabBar={(props: TabBarProps<any>) => (
+            <RequestsTabBar {...props} />
+          )}
         />
       </View>
     </Layout>

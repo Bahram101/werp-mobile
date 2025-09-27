@@ -1,6 +1,6 @@
 import Banner from "@/components/ui/master/Banner";
 import Layout from "@/components/ui/master/Layout";
-import RequestList from "@/features/master/requests/components/RequestList";
+import RequestTypesToday from "@/features/master/requests/components/RequestTypesToday";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 
@@ -76,7 +76,7 @@ export default function Home() {
           <Text className="text-2xl font-semibold mb-2">
             Виды заявки на сегодня
           </Text>
-          <RequestList requests={requests} />
+          <RequestTypesToday requests={requests} />
         </View>
       </ScrollView>
     </Layout>
