@@ -1,12 +1,24 @@
-export interface IRequest {
+
+export interface IRequestType {
   id: string;
-  number: number;
   title: string;
-  category: string;
+  number: number;
   date: string;
+  address: string;
+  category: string;
   timeFrom: string;
   timeTo: string;
-  address: string;
   scheme: string;
   icon: string;
+}
+export interface IRequest {
+  id: number;
+  title: string;
+  number: string;
+  date: string;
+  address: string;
+  time: string;
+  status: number;
+  paymentType: string;
+  paid: string;
 }

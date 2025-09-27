@@ -3,12 +3,11 @@ import cn from "clsx";
 import React, { FC } from "react";
 import { Pressable, Text, View } from "react-native";
 
-import { IRequest } from "@/types/request.interface";
-
 import { getStatusMeta } from "@/utils/status.helper";
 
 import { COLORS } from "@/constants/theme";
 import { router } from "expo-router";
+import { IRequest } from "../../types";
 
 type ActiveRequestCardProps = {
   item: IRequest;
@@ -23,18 +22,18 @@ const ActiveRequestCard: FC<ActiveRequestCardProps> = ({ item }) => {
           {
             pathname: "/messages/[id]",
             params: { id: item.id, title: item.title },
-          },
+          }
           // { id: item.id }
         )
       }
     >
-      <View className="flex-row items-center pb-3 justify-between border-b mb-3 border-grayLight">
-        <View className={cn("flex-row items-center")}>
-          <Text className="bg-primary text-white px-2 py-1 rounded-lg text-xs">
-            {item.title}
-          </Text>
+      <View className="flex-row items-center justify-between mb-3 border-b border-grayLight pb-2">
+        <View className="px-2 bg-primary pt-2 h-6 justify-center flex rounded">
+          <Text className="text-white text-xs">{item.title}</Text>
         </View>
-        <Text className="text-sm font-semibold">ЗАЯВКА № {item.number}</Text>
+        <View>
+          <Text className="text-sm font-semibold">ЗАЯВКА № {item.number}</Text>
+        </View>
       </View>
       <View className="flex-row justify-between">
         <View className="flex-row items-start gap-3 pl-3 border-l-4 border-primary">
@@ -43,9 +42,9 @@ const ActiveRequestCard: FC<ActiveRequestCardProps> = ({ item }) => {
               <Text>{item.date}</Text>
               <Text>{item.time}</Text>
             </>
-            <View className="flex-row mb-1">
+            <View className="flex-row mb-1 items-center gap-2">
               <Feather name="map-pin" size={18} color={COLORS.grayDark} />
-              <Text className="ml-2">{item.address}</Text>
+              <Text>{item.address}</Text>
             </View>
           </View>
         </View>

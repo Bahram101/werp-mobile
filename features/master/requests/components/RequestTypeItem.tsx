@@ -1,13 +1,13 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { Text, View } from "react-native";
-import { IRequest } from "../types";
+import { IRequestType } from "../types";
 
 interface IRequestItem {
-  request: IRequest;
+  request: IRequestType;
 }
 
-export default function RequestItem({ request }: IRequestItem) {
+export default function RequestTypeItem({ request }: IRequestItem) {
   return (
     <View className="p-5 bg-white rounded-2xl mb-2 border-grayLight flex-row items-center justify-between">
       <View className="flex-row items-center">
