@@ -22,3 +22,7 @@ export interface IRequest {
   paymentType: string;
   paid: string;
 }
+export type RequestDetailParams = {
+  id: string;
+  title?: string;
+};
