@@ -5,9 +5,9 @@ module.exports = {
   content: [
     "./app/**/*.{html,js,jsx,ts,tsx,mdx}",
     "./components/**/*.{html,js,jsx,ts,tsx,mdx}",
+    "./features/**/*.{html,js,jsx,ts,tsx,mdx}",
     "./utils/**/*.{html,js,jsx,ts,tsx,mdx}",
     "./*.{html,js,jsx,ts,tsx,mdx}",
-    "./src/**/*.{html,js,jsx,ts,tsx,mdx}",
   ],
   presets: [require("nativewind/preset")],
   important: "html",
@@ -22,6 +22,7 @@ module.exports = {
       colors: {
         ...colors,
         primary: "#15973D",
+        primaryDark: "#10772F",
         blue: "#007AFF",
         blueDark: "#0066D3",
         grayLight: "#E5E7EB",
