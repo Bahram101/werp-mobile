@@ -13,7 +13,7 @@ type DoneRequestCardProps = {
 const DoneRequestCard: FC<DoneRequestCardProps> = ({ item }) => {
   const paymentType = item.paymentType;
   return (
-    <View className="bg-white mb-3 rounded-2xl p-3">
+    <View className="bg-white mb-3 rounded-2xl p-3 w-full">
       <View className="flex-row items-center pb-3 border-b mb-3 border-grayLight gap-2">
         <Feather
           name={"check"}

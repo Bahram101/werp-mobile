@@ -1,4 +1,4 @@
-import { FlatList, Text } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { IRequest } from "../types";
 import ActiveRequestCard from "./RequestCards/ActiveRequestCard";
 import DoneRequestCard from "./RequestCards/DoneRequestCard";
@@ -18,7 +18,7 @@ export default function RequestsScenes({ route, data }: Props) {
         <FlatList
           data={data}
           renderItem={({ item }) => <ActiveRequestCard item={item} />}
-          contentContainerStyle={{ paddingBottom: 10 }}
+          contentContainerStyle={{ paddingBottom: 10, paddingHorizontal: 14 }}
         />
       );
     case "done":
@@ -26,20 +26,22 @@ export default function RequestsScenes({ route, data }: Props) {
         <FlatList
           data={data}
           renderItem={({ item }) => <DoneRequestCard item={item} />}
-          contentContainerStyle={{ paddingBottom: 10 }}
+          contentContainerStyle={{ paddingBottom: 10, paddingHorizontal: 14 }}
           ListFooterComponent={<DoneSummary />}
         />
       );
     case "finished":
       return (
         <>
-          <Text className="text-xl font-semibold mt-2">
-            Завершенные заявки с 1 августа
-          </Text>
+          <View className="mx-4">
+            <Text className="text-xl font-semibold mt-2">
+              Завершенные заявки с 1 августа
+            </Text>
+          </View>
           <FlatList
             data={data}
             renderItem={({ item }) => <FinishedRequestCard item={item} />}
-            contentContainerStyle={{ paddingBottom: 10 }}
+            contentContainerStyle={{ paddingBottom: 10, paddingHorizontal: 14 }}
             ListFooterComponent={<FinishedSummary />}
           />
         </>
