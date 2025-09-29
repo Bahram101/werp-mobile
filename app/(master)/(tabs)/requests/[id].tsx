@@ -1,22 +1,3 @@
-import { useLocalSearchParams, useNavigation } from "expo-router";
-import React, { useEffect } from "react";
-import { Text, View } from "react-native";
+import RequestDetailScreen from "@/features/master/requests/screens/RequestDetailScreen";
 
-export default function MessageDetail() {
-  const { id, title } = useLocalSearchParams();
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    if (title) {
-      navigation.setOptions({ title }); 
-    }
-  }, [title]);
-
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-        Детали заявки #{id}
-      </Text>
-    </View>
-  );
-}
+export default RequestDetailScreen;
