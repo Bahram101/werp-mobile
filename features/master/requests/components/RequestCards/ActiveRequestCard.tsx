@@ -1,12 +1,12 @@
 import { Feather } from "@expo/vector-icons";
 import cn from "clsx";
 import React, { FC } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 import { getStatusMeta } from "@/utils/status.helper";
 
+import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import { COLORS } from "@/constants/theme";
-import { router } from "expo-router";
 import { IRequest } from "../../types";
 
 type ActiveRequestCardProps = {
@@ -15,18 +15,7 @@ type ActiveRequestCardProps = {
 
 const ActiveRequestCard: FC<ActiveRequestCardProps> = ({ item }) => {
   return (
-    <Pressable
-      className={cn(
-        "bg-white mb-3 rounded-2xl p-3"
-        // Platform.OS === "android" && "mb-2"
-      )}
-      onPress={() =>
-        router.push({
-          pathname: "/requests/[id]",
-          params: { id: item.id, title: item.number },
-        })
-      }
-    >
+    <AnimatedButton item={item}>
       <View className="flex-row items-center justify-between mb-3 border-b border-grayLight pb-2">
         <View className="bg-primary h-6 justify-center flex rounded px-3">
           <Text className="text-white text-xs">{item.title}</Text>
@@ -71,7 +60,7 @@ const ActiveRequestCard: FC<ActiveRequestCardProps> = ({ item }) => {
           </View>
         </View>
       </View>
-    </Pressable>
+    </AnimatedButton>
   );
 };
 

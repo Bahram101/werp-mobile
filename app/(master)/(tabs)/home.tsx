@@ -1,5 +1,5 @@
 import Banner from "@/components/ui/master/Banner";
-import Layout from "@/components/ui/master/Layout";
+import Header from "@/components/ui/master/Header";
 import RequestTypesToday from "@/features/master/requests/components/RequestTypesToday";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
@@ -68,19 +68,20 @@ export default function Home() {
     },
   ];
   return (
-    <Layout header>
+    <View>
+      <Header />
       <Banner style={{ marginTop: -55 }} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 230 }}
       >
-        <View className="mt-5 flex-1">
+        <View className="mt-5 flex-1 px-4">
           <Text className="text-2xl font-semibold mb-2">
             Виды заявки на сегодня
           </Text>
           <RequestTypesToday requests={requests} />
         </View>
       </ScrollView>
-    </Layout>
+    </View>
   );
 }
