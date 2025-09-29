@@ -1,3 +1,3 @@
-import RequestDetailScreen from "@/features/master/requests/screens/RequestDetailScreen";
+import RequestDetail from "@/features/master/requests/screens/RequestDetail";
 
-export default RequestDetailScreen;
+export default RequestDetail;

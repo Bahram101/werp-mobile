@@ -1,3 +1,3 @@
-import RequestsScreen from "@/features/master/requests/screens/RequestsScreen";
+import Requests from "@/features/master/requests/screens/Requests";
 
-export default RequestsScreen;
+export default Requests;

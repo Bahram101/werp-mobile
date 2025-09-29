@@ -1,4 +1,3 @@
-import Layout from "@/components/ui/master/Layout";
 import RequestsScenes from "@/features/master/requests/components/RequestsScenes";
 import RequestsTabBar from "@/features/master/requests/components/RequestsTabBar";
 import { IRequest } from "@/features/master/requests/types";
@@ -85,22 +84,20 @@ export default function Requests() {
   ];
 
   return (
-    <Layout>
-      <View className="h-full">
-        <TabView
-          lazy
-          navigationState={{ index, routes }}
-          renderScene={({ route }) => (
-            <RequestsScenes route={route} data={data} />
-          )}
-          onIndexChange={setIndex}
-          initialLayout={{ width: layout.width }}
-          removeClippedSubviews={false}
-          renderTabBar={(props: TabBarProps<any>) => (
-            <RequestsTabBar {...props} />
-          )}
-        />
-      </View>
-    </Layout>
+    <View className="h-full pt-2">
+      <TabView
+        lazy
+        navigationState={{ index, routes }}
+        renderScene={({ route }) => (
+          <RequestsScenes route={route} data={data} />
+        )}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        removeClippedSubviews={false}
+        renderTabBar={(props: TabBarProps<any>) => (
+          <RequestsTabBar {...props} />
+        )}
+      />
+    </View>
   );
 }

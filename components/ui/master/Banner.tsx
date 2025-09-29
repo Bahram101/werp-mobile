@@ -51,7 +51,7 @@ const Banner: FC<Props> = ({ className, style }) => {
 
   return (
     <View
-      className={cn(className)}
+      className={cn('px-4',className)}
       style={{
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
