@@ -9,7 +9,7 @@ interface IRequestItem {
 
 export default function RequestTypeItem({ request }: IRequestItem) {
   return (
-    <View className="p-5 bg-white rounded-2xl mb-2 border-grayLight flex-row items-center justify-between">
+    <View className="bg-white rounded-2xl mb-2 border-grayLight flex-row items-center justify-between py-4 px-3">
       <View className="flex-row items-center">
         <MaterialCommunityIcons
           className="mr-3"

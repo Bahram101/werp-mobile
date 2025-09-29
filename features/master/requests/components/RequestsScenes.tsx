@@ -33,7 +33,7 @@ export default function RequestsScenes({ route, data }: Props) {
     case "finished":
       return (
         <>
-          <Text className="text-xl font-semibold mt-3 mb-2">
+          <Text className="text-xl font-semibold mt-2">
             Завершенные заявки с 1 августа
           </Text>
           <FlatList

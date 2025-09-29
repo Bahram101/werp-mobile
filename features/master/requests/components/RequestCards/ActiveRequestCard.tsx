@@ -17,7 +17,7 @@ const ActiveRequestCard: FC<ActiveRequestCardProps> = ({ item }) => {
   return (
     <Pressable
       className={cn(
-        "bg-white mb-3 rounded-2xl p-4",
+        "bg-white mb-3 rounded-2xl p-3"
         // Platform.OS === "android" && "mb-2"
       )}
       onPress={() =>
@@ -28,7 +28,7 @@ const ActiveRequestCard: FC<ActiveRequestCardProps> = ({ item }) => {
       }
     >
       <View className="flex-row items-center justify-between mb-3 border-b border-grayLight pb-2">
-        <View className="px-2 bg-primary h-6 justify-center flex rounded">
+        <View className="bg-primary h-6 justify-center flex rounded px-3">
           <Text className="text-white text-xs">{item.title}</Text>
         </View>
         <View>

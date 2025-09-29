@@ -4,8 +4,8 @@
  */
 
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+// const tintColorLight = '#0a7ea4';
+// const tintColorDark = '#fff';
 
 export const COLORS = { 
   primary: '#15973D',
