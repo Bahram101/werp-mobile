@@ -13,6 +13,7 @@ export default function RequestsTabBar(props: TabBarProps<any>) {
         height: 43,
         borderRadius: 40,
         marginBottom: 10,
+        marginHorizontal: 14
       }}
       contentContainerStyle={{
         backgroundColor: "transparent",
