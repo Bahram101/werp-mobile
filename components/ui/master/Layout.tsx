@@ -1,8 +1,6 @@
-import cn from "clsx";
 import { useSegments } from "expo-router";
 import React, { FC, ReactNode } from "react";
-import { View } from "react-native";
-import Header from "./Header";
+import { ScrollView } from "react-native";
 
 interface ILayout {
   children: ReactNode;
@@ -12,19 +10,18 @@ interface ILayout {
 
 const Layout: FC<ILayout> = ({ children, className, header = false }) => {
   const segments = useSegments() as string[];
-  const isRequestsScreen = segments.includes("requests");
+  // const isRequestsScreen = segments.includes("requests");
 
   return (
-    <View className={cn("w-full h-full", className)}>
-      {header && <Header />}
-
-      <View
-        className={cn("pt-2")}
-        style={isRequestsScreen ? { paddingHorizontal: 0 } : undefined}
-      >
-        {children}
-      </View>
-    </View>
+    <ScrollView
+      contentContainerStyle={{
+        paddingHorizontal: 14,
+        paddingTop: 14,
+        paddingBottom: 10,
+      }}
+    >
+      {children}
+    </ScrollView>
   );
 };
 export default Layout;

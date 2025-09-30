@@ -5,7 +5,7 @@ import EquipmentItem from "./EquipmentItem";
 
 export default function EquipmentList({ data }: { data: IEquipment[] }) {
   return (
-    <View>
+    <View className="rounded-2xl bg-white mb-3 ">
       {data.map((item, index) => (
         <EquipmentItem key={item.id} data={data} item={item} index={index} />
       ))}

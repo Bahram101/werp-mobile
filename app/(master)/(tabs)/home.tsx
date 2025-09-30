@@ -67,6 +67,7 @@ export default function Home() {
       icon: "briefcase-search-outline",
     },
   ];
+  
   return (
     <View>
       <Header />
