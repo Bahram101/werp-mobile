@@ -1,12 +1,11 @@
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
-import cn from "clsx";
-import React, { useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import React from "react";
+import { ScrollView, View } from "react-native";
+import EquipmentList from "../components/EquipmentList";
 
 type Props = {};
 
 const Equipment = (props: Props) => {
-  const [pressed, setPressed] = useState(false);
   const equipments = [
     {
       id: 1,
@@ -63,37 +62,12 @@ const Equipment = (props: Props) => {
   return (
     <View className="h-full px-4 pt-1">
       <ScrollView contentContainerStyle={{ paddingBottom: 10 }}>
-        <View className="rounded-2xl bg-white">
-          {equipments.map((item, index) => (
-            <View
-              key={item.id}
-              className={cn(
-                "border-grayLight p-4 flex-row justify-between items-center",
-                equipments.length - 1 !== index && "border-b"
-              )}
-            >
-              <View className="flex-col">
-                <Text className="text-lg text-primary mb-1">
-                  {item.name.toUpperCase()}
-                </Text>
-                <Text className="text-xs text-grayDark">
-                  КОД ТОВАРА: ПМ-2531
-                </Text>
-              </View>
-              <Text
-                className={cn(
-                  "text-lg",
-                  Number(item.qty) < 5 ? "text-error-500" : ""
-                )}
-              >
-                {item.qty} шт.
-              </Text>
-            </View>
-          ))}
+        <View className="rounded-2xl bg-white mb-3">
+          <EquipmentList data={equipments} />
         </View>
 
-        <AnimatedButton bg='primary'>
-          <Text>Заказать запчасти</Text>
+        <AnimatedButton bg="primary" bgPressed="primaryDark">
+          Заказать запчасти
         </AnimatedButton>
       </ScrollView>
     </View>

@@ -5,7 +5,7 @@ import { Text, View } from "react-native";
 
 import { getStatusMeta } from "@/utils/status.helper";
 
-import AnimatedButton from "@/components/ui/button/AnimatedButton";
+import AnimatedButton from "@/components/ui/button/AnimatedBlock";
 import { COLORS } from "@/constants/theme";
 import { IRequest } from "../../types";
 
