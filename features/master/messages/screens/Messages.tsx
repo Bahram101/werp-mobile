@@ -1,9 +1,7 @@
-import { COLORS } from "@/constants/theme";
+import Layout from "@/components/ui/master/Layout";
 import { IDepartment } from "@/types/department.interface";
-import { Feather } from "@expo/vector-icons";
-import { Link } from "expo-router";
 import React from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import MessageList from "../components/MessageList";
 
 export default function Messages() {
   const departments: IDepartment[] = [
@@ -73,38 +71,8 @@ export default function Messages() {
   ];
 
   return (
-    <View className="h-full px-4">
-      <ScrollView>
-        {departments.map((msg) => (
-          <Link
-            key={msg.id}
-            href={{
-              pathname: "/messages/[id]",
-              params: { id: msg.id, title: msg.name },
-            }}
-            asChild
-          >
-            <TouchableOpacity className="flex-row p-4 bg-white mt-3 justify-between items-center">
-              <View className="flex-row items-center gap-4">
-                <Feather
-                  name={msg.icon}
-                  size={30}
-                  style={{ color: COLORS.primary }}
-                />
-                <View className="flex-col ml-4">
-                  <Text className="text-lg text-primary mb-1">
-                    {msg.name.toUpperCase()}
-                  </Text>
-                  <Text className="text-xs text-grayDark">
-                    Описание уведомлении
-                  </Text>
-                </View>
-              </View>
-              <Text className="text-sm ">{msg.date}</Text>
-            </TouchableOpacity>
-          </Link>
-        ))}
-      </ScrollView>
-    </View>
+    <Layout>
+      <MessageList data={departments} />
+    </Layout>
   );
 }

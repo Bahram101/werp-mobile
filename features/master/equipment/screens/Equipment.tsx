@@ -1,11 +1,9 @@
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
+import Layout from "@/components/ui/master/Layout";
 import React from "react";
-import { ScrollView, View } from "react-native";
 import EquipmentList from "../components/EquipmentList";
 
-type Props = {};
-
-const Equipment = (props: Props) => {
+const Equipment = () => {
   const equipments = [
     {
       id: 1,
@@ -60,17 +58,12 @@ const Equipment = (props: Props) => {
   ];
 
   return (
-    <View className="h-full px-4 pt-1">
-      <ScrollView contentContainerStyle={{ paddingBottom: 10 }}>
-        <View className="rounded-2xl bg-white mb-3">
-          <EquipmentList data={equipments} />
-        </View>
-
-        <AnimatedButton bg="primary" bgPressed="primaryDark">
-          Заказать запчасти
-        </AnimatedButton>
-      </ScrollView>
-    </View>
+    <Layout>
+      <EquipmentList data={equipments} />
+      <AnimatedButton bg="primary" bgPressed="primaryDark">
+        Заказать запчасти
+      </AnimatedButton> 
+    </Layout>
   );
 };
 
