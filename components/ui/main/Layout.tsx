@@ -1,7 +1,7 @@
 import cn from "clsx";
 import React, { FC, ReactNode } from "react";
 import { View } from "react-native";
-import MainHeader from "./MainHeader";
+import Header from "./Header";
 
 interface ILayout {
   children: ReactNode;
@@ -12,7 +12,7 @@ interface ILayout {
 const Layout: FC<ILayout> = ({ children, className, header = false }) => {
   return (
     <View className={cn("flex-1 w-full h-full", className)}>
-      {header && <MainHeader />}
+      {header && <Header />}
       <View className="p-4">{children}</View>
     </View>
   );

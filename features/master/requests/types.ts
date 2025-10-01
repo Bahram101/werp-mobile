@@ -24,5 +24,5 @@ export interface IRequest {
 }
 export type RequestDetailParams = {
   id: string;
-  title?: string;
+  number?: string;
 };

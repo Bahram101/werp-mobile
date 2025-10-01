@@ -42,7 +42,7 @@ export default function AnimatedBlock({
         if (!item) return;
         router.push({
           pathname: "/requests/[id]",
-          params: { id: item.id, title: item.number },
+          params: { id: item.id, number: item.number },
         });
       }}
     >

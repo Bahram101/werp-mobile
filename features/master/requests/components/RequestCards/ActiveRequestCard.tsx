@@ -5,7 +5,7 @@ import { Text, View } from "react-native";
 
 import { getStatusMeta } from "@/utils/status.helper";
 
-import AnimatedButton from "@/components/ui/button/AnimatedBlock";
+import AnimatedBlock from "@/components/ui/button/AnimatedBlock";
 import { COLORS } from "@/constants/theme";
 import { IRequest } from "../../types";
 
@@ -15,7 +15,7 @@ type ActiveRequestCardProps = {
 
 const ActiveRequestCard: FC<ActiveRequestCardProps> = ({ item }) => {
   return (
-    <AnimatedButton item={item}>
+    <AnimatedBlock item={item}>
       <View className="flex-row items-center justify-between mb-3 border-b border-grayLight pb-2">
         <View className="bg-primary h-6 justify-center flex rounded px-3">
           <Text className="text-white text-xs">{item.title}</Text>
@@ -60,7 +60,7 @@ const ActiveRequestCard: FC<ActiveRequestCardProps> = ({ item }) => {
           </View>
         </View>
       </View>
-    </AnimatedButton>
+    </AnimatedBlock>
   );
 };
 

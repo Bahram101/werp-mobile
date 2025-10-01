@@ -1,20 +1,24 @@
 import { Stack } from "expo-router";
 
 export default function RequestsLayout() {
+
   return (
     <Stack
       screenOptions={{
         headerShown: true,
         headerTitleAlign: "center",
-        // headerBackTitle: "Назад", 
+        headerBackTitle: "",
+        headerBackButtonDisplayMode: "minimal",
+        headerTintColor: "#000",
       }}
     >
       <Stack.Screen name="index" options={{ title: "Заявки" }} />
       <Stack.Screen
         name="[id]"
         options={{
-          title: "Детали заявки",
-          // headerBackTitle: "Назад",
+          headerStyle: {
+            // backgroundColor: "#fff",
+          },
         }}
       />
     </Stack>
