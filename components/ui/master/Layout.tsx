@@ -1,4 +1,3 @@
-import { useSegments } from "expo-router";
 import React, { FC, ReactNode } from "react";
 import { ScrollView } from "react-native";
 
@@ -9,8 +8,7 @@ interface ILayout {
 }
 
 const Layout: FC<ILayout> = ({ children, className, header = false }) => {
-  const segments = useSegments() as string[];
-  // const isRequestsScreen = segments.includes("requests");
+  // const segments = useSegments() as string[]; 
 
   return (
     <ScrollView

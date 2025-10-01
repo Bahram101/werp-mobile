@@ -12,6 +12,7 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerTitleAlign: "center",
+              headerTitleStyle: { color: "#000" },
       }}
     >
       {tabItems.map((tab) => {

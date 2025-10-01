@@ -1,10 +1,21 @@
 import Layout from "@/components/ui/master/Layout";
-import { useLocalSearchParams } from "expo-router";
-import React from "react";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 
 export default function MessageDetail() {
   const { id, title } = useLocalSearchParams();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (title) {
+      navigation.setOptions({
+        headerTitle: String(title),
+        // headerBackTitleVisible: false,
+        // headerBackButtonDisplayMode: "minimal",
+      });
+    }
+  }, [navigation, title]);
 
   return (
     <Layout>
