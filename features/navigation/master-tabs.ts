@@ -14,12 +14,12 @@ export const tabItems: ITabItem[] = [
   {
     name: "equipment",
     title: "Инвентарь",
-    icon: "folder-open",
+    icon: "folder-open-outline",
   },
   {
     name: "messages",
     title: "Сообщения",
-    icon: "message-processing",
+    icon: "message-text-outline",
   },
   {
     name: "profile",
