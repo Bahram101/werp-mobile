@@ -22,7 +22,30 @@ export interface IRequest {
   paymentType: string;
   paid: string;
 }
-export type RequestDetailParams = {
-  id: string;
-  number?: string;
-};
+
+export interface ClientType {
+  name: string
+  address: string
+  problem: string
+}
+
+export type ServiceType = string[]
+
+export interface DeviceType {
+  id: string
+  product: string
+  cn: string
+  date: string
+}
+
+export interface HistoryItemType {
+  id: number
+  date: string
+}
+
+export type RequestType = {
+  client: ClientType
+  service: ServiceType
+  device: DeviceType
+  history: HistoryItemType[]
+}
