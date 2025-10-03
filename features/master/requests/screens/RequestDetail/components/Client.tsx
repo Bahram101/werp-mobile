@@ -9,11 +9,11 @@ type ClientAccordionProps = {
   data: ClientType;
 };
 
-const ClientAccordion: FC<ClientAccordionProps> = ({ data }) => (
+const Client: FC<ClientAccordionProps> = ({ data }) => (
   <BaseAccordion title="Данные клиента" icon="user" value="client">
     <Text>{data.name}</Text>
     <Text>{data.address}</Text>
     <Text>{data.problem}</Text>
   </BaseAccordion>
 );
-export default ClientAccordion;
+export default Client;

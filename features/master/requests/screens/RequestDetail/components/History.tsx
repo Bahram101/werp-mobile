@@ -4,7 +4,7 @@ import cn from "clsx";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import { HistoryItemType } from "../../types";
+import { HistoryItemType } from "../../../types";
 
 type Props = {
   data: HistoryItemType[];
