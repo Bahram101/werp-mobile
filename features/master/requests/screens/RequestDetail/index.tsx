@@ -1,11 +1,13 @@
 import { Accordion } from "@/components/ui/accordion";
+import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import Layout from "@/components/ui/master/Layout";
-import Client from "@/features/master/requests/components/AccordionBlocks/Client";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
-import DeviceData from "../components/AccordionBlocks/Device";
-import { History } from "../components/AccordionBlocks/History";
-import { Service } from "../components/AccordionBlocks/Service";
+import { View } from "react-native";
+import Client from "./components/Client";
+import DeviceData from "./components/Device";
+import { History } from "./components/History";
+import { Service } from "./components/Service";
 
 export default function RequestDetailScreen() {
   const { id, number } = useLocalSearchParams();
@@ -60,6 +62,32 @@ export default function RequestDetailScreen() {
         <DeviceData data={request.device} />
         <History data={request.history} />
       </Accordion>
+      <View className="flex-row gap-3 mb-3 mt-3">
+        <AnimatedButton
+          bg="primary"
+          bgPressed="primaryDark"
+          icon="message-circle"
+          iconColor="white"
+        >
+          Чат
+        </AnimatedButton>
+        <AnimatedButton
+          bg="primary"
+          bgPressed="primaryDark"
+          icon="phone"
+          iconColor="white"
+        >
+          Позвонить
+        </AnimatedButton>
+      </View>
+      <AnimatedButton
+        bg="primary"
+        bgPressed="primaryDark"
+        icon="phone"
+        iconColor="white"
+      >
+        Позвонить
+      </AnimatedButton>
     </Layout>
   );
 }
