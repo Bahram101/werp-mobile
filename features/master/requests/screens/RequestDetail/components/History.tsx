@@ -3,7 +3,7 @@ import { Feather } from "@expo/vector-icons";
 import cn from "clsx";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { HistoryItemType } from "../../../types";
 
 type Props = {
@@ -18,7 +18,7 @@ export function History({ data }: Props) {
     <BaseAccordion title="История обслуживания" icon="clock" value="history">
       <View className="flex-col">
         {data.map((item, index) => (
-          <Pressable
+          <TouchableOpacity
             key={item.id}
             onPress={() => router.push(`/requests/history/${item.id}`)}
             className={cn(
@@ -29,7 +29,7 @@ export function History({ data }: Props) {
           >
             <Text className="text-base text-gray-700">{item.date}</Text>
             <Feather name="chevron-right" size={18} className="-mr-2"/>
-          </Pressable>
+          </TouchableOpacity>
         ))}
       </View>
     </BaseAccordion>
