@@ -3,7 +3,7 @@ import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import Layout from "@/components/ui/master/Layout";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import Client from "./components/Client";
 import DeviceData from "./components/Device";
 import { History } from "./components/History";
@@ -51,7 +51,7 @@ export default function RequestDetailScreen() {
   };
 
   return (
-    <Layout>
+    <Layout className="gap-3">
       <Accordion
         type="multiple"
         defaultValue={["client", "service"]}
@@ -62,32 +62,58 @@ export default function RequestDetailScreen() {
         <DeviceData data={request.device} />
         <History data={request.history} />
       </Accordion>
-      <View className="flex-row gap-3 mb-3 mt-3">
+      {/* Верхние кнопки */}
+      <View className="flex-row gap-3 ">
         <AnimatedButton
-          bg="primary"
-          bgPressed="primaryDark"
+          bg="white"
+          bgPressed="grayLight"
           icon="message-circle"
-          iconColor="white"
+          iconColor="blue"
+          textColor="blue"
         >
-          Чат
+          <Text style={{ lineHeight: 18 }}>{"Чат с\n клиентом"}</Text>
         </AnimatedButton>
         <AnimatedButton
-          bg="primary"
-          bgPressed="primaryDark"
+          bg="white"
+          bgPressed="grayLight"
           icon="phone"
-          iconColor="white"
+          iconColor="primary"
+          textColor="primary"
         >
-          Позвонить
+          <Text style={{ lineHeight: 18 }}>{"Позвонить \n клиенту"}</Text>
         </AnimatedButton>
       </View>
+      {/* Основная кнопка */}
       <AnimatedButton
+        className="h-20"
         bg="primary"
         bgPressed="primaryDark"
-        icon="phone"
+        icon="map"
         iconColor="white"
       >
-        Позвонить
+        Принять
       </AnimatedButton>
+      {/* Нижние кнопки */}
+      <View className="flex-row gap-3">
+        <AnimatedButton
+          bg="yellow"
+          bgPressed="yellowDark"
+          icon="corner-down-right"
+          iconColor="black"
+          textColor="black"
+        >
+          <Text>Перенос</Text>
+        </AnimatedButton>
+        <AnimatedButton
+          bg="red"
+          bgPressed="redDark"
+          icon="x-circle"
+          iconColor="white"
+          textColor="white"
+        >
+          <Text>Отменить</Text>
+        </AnimatedButton>
+      </View>
     </Layout>
   );
 }

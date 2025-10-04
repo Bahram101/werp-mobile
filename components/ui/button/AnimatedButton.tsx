@@ -1,4 +1,4 @@
-import { COLORS } from "@/constants/theme";
+import { ColorKeys, COLORS } from "@/constants/theme";
 import { TypeFeatherIconNames } from "@/types/types";
 import { Feather } from "@expo/vector-icons";
 import cn from "clsx";
@@ -6,22 +6,26 @@ import { useRef } from "react";
 import { Animated, Pressable, Text } from "react-native";
 
 type AnimatedButtonProps = {
+  className?: string;
   children: React.ReactNode;
   onPress?: () => void;
   size?: "full" | "half";
-  bg?: keyof typeof COLORS;
-  bgPressed?: keyof typeof COLORS;
+  bg?: ColorKeys;
+  bgPressed?: ColorKeys;
+  iconColor?: ColorKeys;
+  textColor?: ColorKeys;
   icon?: TypeFeatherIconNames;
-  iconColor?: string;
 };
 
 export default function AnimatedButton({
+  className,
   children,
   onPress,
   bg = "primary",
   bgPressed = "primaryDark",
+  iconColor = "white",
+  textColor = "white",
   icon,
-  iconColor,
 }: AnimatedButtonProps) {
   const scale = useRef(new Animated.Value(1)).current;
   const pressed = useRef(false);
@@ -56,12 +60,18 @@ export default function AnimatedButton({
           style={{
             transform: [{ scale }],
             backgroundColor: pressed ? COLORS[bgPressed] : COLORS[bg],
+            // minHeight: 60,
           }}
-          className={cn("rounded-2xl p-4 flex-row gap-3 justify-center items-center ")}
+          className={cn(
+            "rounded-2xl p-4 flex-row gap-3 justify-center items-center",
+            className
+          )}
         >
           <>
-            {icon && <Feather name={icon} size={22} color={iconColor} />}
-            <Text className="text-white text-lg font-bold text-center ">
+            {icon && (
+              <Feather name={icon} size={33} color={COLORS[iconColor]} />
+            )}
+            <Text className={`text-lg font-semibold text-center text-${textColor}`}>
               {children}
             </Text>
           </>

@@ -18,7 +18,11 @@ export const COLORS = {
   yellowDark: '#D0AA11',
   red: '#CE0003',
   redDark: '#9A0003',
+  white: "#fff",
+  black: "#000"
 }
+
+export type ColorKeys = keyof typeof COLORS;
 
 // export const Colors = {
 //   light: {
