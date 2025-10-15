@@ -1,7 +1,7 @@
-export type StatusText = 'active' | 'done' | 'total'
+export type StatusText = 'assigned' | 'done' | 'total'
 
 const map: Record<StatusText, string> = {
-  active: 'text-red',
+  assigned: 'text-red',
   done: 'text-blue',
   total: 'text-primary'
 }
@@ -34,7 +34,7 @@ export const getStatusMeta = (status: number) => {
 export const getPaymentLabel = (payment: string) => {
   switch (payment) {
     case '1':
-      return 'Наличными'
+      return 'Наличный'
     case '2':
       return 'Безналичный'
     default:

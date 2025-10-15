@@ -9,7 +9,7 @@ export default function Requests() {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: "active", title: "Активные" },
+    { key: "assigned", title: "Назначенные" },
     { key: "done", title: "Выполненные" },
     { key: "finished", title: "Завершенные" },
   ]);

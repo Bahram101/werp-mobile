@@ -16,7 +16,7 @@ export const AuthService = {
       });
 
       const { data } = await authInstance.post<IAuthResponse>(
-        "/oauth/token",
+        "/token",
         bodyFormData.toString(),
         {
           headers: {

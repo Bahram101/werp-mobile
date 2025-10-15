@@ -13,7 +13,7 @@ export const getNewTokens = async () => {
     body.set('refresh_token', refreshToken)
 
     const { data } = await authInstance.post<IAuthResponse>(
-      '/oauth/token',
+      '/token',
       body.toString(),
       {
         headers: {
