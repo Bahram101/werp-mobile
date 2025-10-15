@@ -1,0 +1,17 @@
+{
+  "build": {
+    "production": {
+      "releaseChannel": "production",
+      "autoIncrement": true,
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": false
+      }
+    }
+  },
+  "cli": {
+    "appVersionSource": "remote"
+  }
+}

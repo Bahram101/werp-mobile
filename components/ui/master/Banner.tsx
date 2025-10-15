@@ -16,8 +16,8 @@ type StatItem = {
 
 const DATA: StatItem[] = [
   {
-    id: "active",
-    title: "Активные заявки на сегодня",
+    id: "assigned",
+    title: "Назначенные заявки на сегодня",
     value: 17,
     scheme: "red",
     icon: "doc",

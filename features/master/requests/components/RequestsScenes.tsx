@@ -13,7 +13,7 @@ type Props = {
 
 export default function RequestsScenes({ route, data }: Props) {
   switch (route.key) {
-    case "active":
+    case "assigned":
       return (
         <FlatList
           data={data}
