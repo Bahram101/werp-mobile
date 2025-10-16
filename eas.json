@@ -1,6 +1,7 @@
 {
   "build": {
     "production": {
+      "channel": "production",
       "releaseChannel": "production",
       "autoIncrement": true,
       "android": {
