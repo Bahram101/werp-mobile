@@ -19,6 +19,7 @@ export interface IRequest {
   address: string;
   time: string;
   status: number;
+  type: number,
   paymentType: string;
   paid: string;
 }
