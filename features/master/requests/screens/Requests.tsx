@@ -1,9 +1,14 @@
 import RequestsScenes from "@/features/master/requests/components/RequestsScenes";
 import RequestsTabBar from "@/features/master/requests/components/RequestsTabBar";
 import { IRequest } from "@/features/master/requests/types";
-import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { useWindowDimensions, View } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { TabBarProps, TabView } from "react-native-tab-view";
 
 export default function Requests() {
@@ -19,7 +24,9 @@ export default function Requests() {
   const [filter, setFilter] = useState<"all" | "date" | "moved" | "cancelled">(
     "all"
   );
+
   const openSheet = useCallback(() => {
+    console.log("openSheet called");
     bottomSheetRef.current?.expand();
   }, []);
 
@@ -103,12 +110,12 @@ export default function Requests() {
   ];
 
   return (
-    <View className="h-full pt-2">
+    <View className="h-full pt-2" style={{ position: "relative" }}>
       <TabView
         lazy
         navigationState={{ index, routes }}
         renderScene={({ route }) => (
-          <RequestsScenes route={route} data={data} />
+          <RequestsScenes route={route} data={data} openSheet={openSheet} />
         )}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
@@ -117,6 +124,62 @@ export default function Requests() {
           <RequestsTabBar {...props} />
         )}
       />
+      <BottomSheet
+        ref={bottomSheetRef}
+        snapPoints={snapPoints}
+        index={-1}
+        enablePanDownToClose
+        backdropComponent={(props) => (
+          <BottomSheetBackdrop
+            {...props}
+            appearsOnIndex={0}
+            disappearsOnIndex={-1}
+          />
+        )}
+        style={{
+          zIndex: 50, // важно, чтобы было выше табов
+        }}
+      >
+        <View className="px-6 py-4">
+          <Text className="text-lg font-semibold mb-4">Фильтр заявок</Text>
+
+          {[
+            { key: "all", label: "Все" },
+            { key: "date", label: "По дате" },
+            { key: "moved", label: "Перенесённые" },
+            { key: "cancelled", label: "Отменённые" },
+          ].map(({ key, label }) => (
+            <TouchableOpacity
+              key={key}
+              onPress={() => setFilter(key as any)}
+              className="flex-row justify-between items-center mb-3"
+            >
+              <Text className="text-base">{label}</Text>
+              {filter === key ? (
+                <View className="w-4 h-4 rounded-full bg-green-600" />
+              ) : (
+                <View className="w-4 h-4 rounded-full border border-gray-400" />
+              )}
+            </TouchableOpacity>
+          ))}
+
+          <View className="flex-row justify-between mt-4">
+            <TouchableOpacity
+              onPress={() => setFilter("all")}
+              className="border border-gray-400 rounded-xl px-6 py-2"
+            >
+              <Text className="text-gray-600">Сброс</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={closeSheet}
+              className="bg-green-600 rounded-xl px-6 py-2"
+            >
+              <Text className="text-white font-semibold">Применить</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </BottomSheet>
     </View>
   );
 }

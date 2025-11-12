@@ -1,5 +1,5 @@
 import { SlidersHorizontal } from "lucide-react-native";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { IRequest } from "../types";
 import AssignedRequestCard from "./RequestCards/AssignedRequestCard";
 import DoneRequestCard from "./RequestCards/DoneRequestCard";
@@ -10,9 +10,10 @@ import FinishedSummary from "./Summaries/FinishedSummary";
 type Props = {
   route: { key: string };
   data: IRequest[];
+  openSheet: () => void;
 };
 
-export default function RequestsScenes({ route, data }: Props) {
+export default function RequestsScenes({ route, data, openSheet }: Props) {
   let filteredData: IRequest[] = [];
 
   switch (route.key) {
@@ -33,7 +34,9 @@ export default function RequestsScenes({ route, data }: Props) {
         <>
           <View className="mx-4 flex-row justify-between items-center mb-3 mt-2">
             <Text className="text-xl font-semibold">Назначенные заявки</Text>
-            <SlidersHorizontal size={21} />
+            <TouchableOpacity onPress={openSheet}>
+              <SlidersHorizontal size={21} />
+            </TouchableOpacity>
           </View>
 
           <FlatList
