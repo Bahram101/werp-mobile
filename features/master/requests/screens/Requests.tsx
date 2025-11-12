@@ -1,7 +1,8 @@
 import RequestsScenes from "@/features/master/requests/components/RequestsScenes";
 import RequestsTabBar from "@/features/master/requests/components/RequestsTabBar";
 import { IRequest } from "@/features/master/requests/types";
-import { useState } from "react";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { TabBarProps, TabView } from "react-native-tab-view";
 
@@ -13,6 +14,18 @@ export default function Requests() {
     { key: "done", title: "Выполненные" },
     { key: "finished", title: "Завершенные" },
   ]);
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ["45%"], []);
+  const [filter, setFilter] = useState<"all" | "date" | "moved" | "cancelled">(
+    "all"
+  );
+  const openSheet = useCallback(() => {
+    bottomSheetRef.current?.expand();
+  }, []);
+
+  const closeSheet = useCallback(() => {
+    bottomSheetRef.current?.close();
+  }, []);
 
   const data: IRequest[] = [
     {
@@ -23,6 +36,7 @@ export default function Requests() {
       time: "11:00 — 11:40",
       address: "Мкр. Мамыр-4, дом 138",
       status: 1,
+      type: 1,
       paymentType: "1",
       paid: "34700",
     },
@@ -33,7 +47,8 @@ export default function Requests() {
       date: "13 август",
       time: "11:40 — 12:20",
       address: "Мкр. Аксаи-4, дом 96, кв 10",
-      status: 2,
+      status: 1,
+      type: 2,
       paymentType: "2",
       paid: "15786",
     },
@@ -44,7 +59,8 @@ export default function Requests() {
       date: "13 август",
       time: "11:00 — 11:40",
       address: "Мкр. Таугуль-2, дом 17",
-      status: 3,
+      status: 2,
+      type: 2,
       paymentType: "1",
       paid: "27300",
     },
@@ -55,7 +71,8 @@ export default function Requests() {
       date: "13 август",
       time: "11:00 — 11:40",
       address: "Мкр. Мамыр-4, дом 138",
-      status: 4,
+      status: 2,
+      type: 1,
       paymentType: "1",
       paid: "34700",
     },
@@ -66,7 +83,8 @@ export default function Requests() {
       date: "13 август",
       time: "11:00 — 11:40",
       address: "Мкр. Мамыр-4, дом 138",
-      status: 4,
+      status: 2,
+      type: 3,
       paymentType: "1",
       paid: "34700",
     },
@@ -77,7 +95,8 @@ export default function Requests() {
       date: "13 август",
       time: "11:00 — 11:40",
       address: "Мкр. Мамыр-4, дом 138",
-      status: 4,
+      status: 3,
+      type: 1,
       paymentType: "1",
       paid: "34700",
     },

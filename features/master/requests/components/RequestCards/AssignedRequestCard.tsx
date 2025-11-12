@@ -9,11 +9,11 @@ import AnimatedBlock from "@/components/ui/button/AnimatedBlock";
 import { COLORS } from "@/constants/theme";
 import { IRequest } from "../../types";
 
-type ActiveRequestCardProps = {
+type AssignedRequestCardProps = {
   item: IRequest;
 };
 
-const ActiveRequestCard: FC<ActiveRequestCardProps> = ({ item }) => {
+const AssignedRequestCard: FC<AssignedRequestCardProps> = ({ item }) => {
   return (
     <AnimatedBlock item={item}>
       <View className="flex-row items-center justify-between mb-3 border-b border-grayLight pb-2">
@@ -64,4 +64,4 @@ const ActiveRequestCard: FC<ActiveRequestCardProps> = ({ item }) => {
   );
 };
 
-export default ActiveRequestCard;
+export default AssignedRequestCard;
