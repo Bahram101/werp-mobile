@@ -26,8 +26,10 @@ export default function Requests() {
   );
 
   const openSheet = useCallback(() => {
-    console.log("openSheet called");
-    bottomSheetRef.current?.expand();
+    console.log("openSheet called", bottomSheetRef.current);
+    // Работает во всех версиях
+    // bottomSheetRef.current?.expand?.();
+    // bottomSheetRef.current?.snapToIndex?.(0);
   }, []);
 
   const closeSheet = useCallback(() => {
@@ -110,7 +112,7 @@ export default function Requests() {
   ];
 
   return (
-    <View className="h-full pt-2" style={{ position: "relative" }}>
+    <View className="flex-1 pt-2" style={{ position: "relative" }}>
       <TabView
         lazy
         navigationState={{ index, routes }}
@@ -136,11 +138,11 @@ export default function Requests() {
             disappearsOnIndex={-1}
           />
         )}
-        style={{
-          zIndex: 50, // важно, чтобы было выше табов
+        backgroundStyle={{
+          backgroundColor: "white",
         }}
       >
-        <View className="px-6 py-4">
+        <View style={{ flex: 1, paddingHorizontal: 24, paddingVertical: 16 }}>
           <Text className="text-lg font-semibold mb-4">Фильтр заявок</Text>
 
           {[
