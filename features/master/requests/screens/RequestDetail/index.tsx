@@ -1,8 +1,8 @@
 import { Accordion } from "@/components/ui/accordion";
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import Layout from "@/components/ui/master/Layout";
-import { useLocalSearchParams, useNavigation } from "expo-router";
-import React, { useEffect } from "react";
+import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import Client from "./components/Client";
 import DeviceData from "./components/Device";
@@ -11,7 +11,9 @@ import { Service } from "./components/Service";
 
 export default function RequestDetailScreen() {
   const { id, number } = useLocalSearchParams();
+  const router = useRouter();
   const navigation = useNavigation();
+  const [status, setStatus] = useState<"accepted" | "arrived">("accepted");
 
   useEffect(() => {
     if (number) {
@@ -20,6 +22,16 @@ export default function RequestDetailScreen() {
       });
     }
   }, [navigation, number]);
+
+  const handleMainButton = () => {
+    if (status === "accepted") {
+      setStatus("arrived");
+    } else {
+      router.push(`/requests/work`);
+    }
+  };
+
+  console.log("status", status);
 
   const request = {
     client: {
@@ -62,7 +74,7 @@ export default function RequestDetailScreen() {
         <DeviceData data={request.device} />
         <History data={request.history} />
       </Accordion>
-      {/* Верхние кнопки */}
+
       <View className="flex-row gap-3 ">
         <AnimatedButton
           bg="white"
@@ -83,17 +95,18 @@ export default function RequestDetailScreen() {
           <Text style={{ lineHeight: 18 }}>{"Позвонить \n клиенту"}</Text>
         </AnimatedButton>
       </View>
-      {/* Основная кнопка */}
+
       <AnimatedButton
         className="h-20"
         bg="primary"
         bgPressed="primaryDark"
-        icon="map"
+        icon={status === "accepted" ? "check" : "map-pin"}
         iconColor="white"
+        onPress={() => handleMainButton()}
       >
-        Принять
+        {status === "accepted" ? "Принять" : "Я на месте"}
       </AnimatedButton>
-      {/* Нижние кнопки */}
+
       <View className="flex-row gap-3">
         <AnimatedButton
           bg="yellow"

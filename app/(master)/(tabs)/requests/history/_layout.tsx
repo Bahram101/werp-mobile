@@ -9,6 +9,7 @@ export default function HistoryLayout() {
       <Stack.Screen
         name="[id]"
         options={({ navigation }) => ({
+          title: "Историяя",
           headerTitleAlign: "center",
           headerLeft: () => (
             <Pressable

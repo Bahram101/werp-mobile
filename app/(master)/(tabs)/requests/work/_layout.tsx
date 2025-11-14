@@ -2,21 +2,13 @@ import { Feather } from "@expo/vector-icons";
 import { Stack } from "expo-router";
 import { Pressable } from "react-native";
 
-export default function RequestsLayout() {
+export default function ReqeustWorkLayout() {
   return (
-    <Stack
-      screenOptions={{
-        headerShown: true,
-        headerTitleAlign: "center",
-        headerBackButtonDisplayMode: "minimal",
-        headerTintColor: "#000",
-      }}
-    >
-      <Stack.Screen name="index" options={{ title: "Заявки" }} />
+    <Stack>
       <Stack.Screen
-        name="[id]"
+        name="index"
         options={({ navigation }) => ({
-          headerBackVisible: false,
+          headerTitleAlign: "center",
           headerLeft: () => (
             <Pressable
               onPress={() => navigation.goBack()}
@@ -27,8 +19,6 @@ export default function RequestsLayout() {
           ),
         })}
       />
-      <Stack.Screen name="history" options={{ headerShown: false }} />
-      <Stack.Screen name="work" options={{ headerShown: false }} />
     </Stack>
   );
 }

@@ -1,20 +1,9 @@
 import Layout from "@/components/ui/master/Layout";
-import { useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect } from "react";
+import { useLocalSearchParams } from "expo-router";
 import { Text, View } from "react-native";
 
 export default function HistoryDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    if (id) {
-      navigation.setOptions({
-        headerTitle: "История",
-      });
-    }
-  }, [navigation, id]);
-
   return (
     <Layout>
       <View className="bg-white rounded-2xl p-4">
