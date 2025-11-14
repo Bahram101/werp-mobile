@@ -26,10 +26,7 @@ export default function Requests() {
   );
 
   const openSheet = useCallback(() => {
-    console.log("openSheet called", bottomSheetRef.current);
-    // Работает во всех версиях
-    // bottomSheetRef.current?.expand?.();
-    // bottomSheetRef.current?.snapToIndex?.(0);
+    console.log("openSheet called", bottomSheetRef.current); 
   }, []);
 
   const closeSheet = useCallback(() => {
