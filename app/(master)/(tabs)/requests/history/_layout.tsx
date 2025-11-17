@@ -1,6 +1,5 @@
 import { Feather } from "@expo/vector-icons";
 import { Stack } from "expo-router";
-import React from "react";
 import { Pressable } from "react-native";
 
 export default function HistoryLayout() {
@@ -9,7 +8,7 @@ export default function HistoryLayout() {
       <Stack.Screen
         name="[id]"
         options={({ navigation }) => ({
-          title: "Историяя",
+          title: "История",
           headerTitleAlign: "center",
           headerLeft: () => (
             <Pressable

@@ -1,14 +1,9 @@
 import RequestsScenes from "@/features/master/requests/components/RequestsScenes";
 import RequestsTabBar from "@/features/master/requests/components/RequestsTabBar";
 import { IRequest } from "@/features/master/requests/types";
-import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
-import { useCallback, useMemo, useRef, useState } from "react";
-import {
-  Text,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { useCallback, useRef, useState } from "react";
+import { useWindowDimensions, View } from "react-native";
 import { TabBarProps, TabView } from "react-native-tab-view";
 
 export default function Requests() {
@@ -20,17 +15,13 @@ export default function Requests() {
     { key: "finished", title: "Завершенные" },
   ]);
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ["45%"], []);
-  const [filter, setFilter] = useState<"all" | "date" | "moved" | "cancelled">(
-    "all"
-  );
+  // const snapPoints = useMemo(() => ["45%"], []);
+  // const [filter, setFilter] = useState<"all" | "date" | "moved" | "cancelled">(
+  //   "all"
+  // );
 
   const openSheet = useCallback(() => {
-    console.log("openSheet called", bottomSheetRef.current); 
-  }, []);
-
-  const closeSheet = useCallback(() => {
-    bottomSheetRef.current?.close();
+    console.log("openSheet called", bottomSheetRef.current);
   }, []);
 
   const data: IRequest[] = [
@@ -123,62 +114,6 @@ export default function Requests() {
           <RequestsTabBar {...props} />
         )}
       />
-      <BottomSheet
-        ref={bottomSheetRef}
-        snapPoints={snapPoints}
-        index={-1}
-        enablePanDownToClose
-        backdropComponent={(props) => (
-          <BottomSheetBackdrop
-            {...props}
-            appearsOnIndex={0}
-            disappearsOnIndex={-1}
-          />
-        )}
-        backgroundStyle={{
-          backgroundColor: "white",
-        }}
-      >
-        <View style={{ flex: 1, paddingHorizontal: 24, paddingVertical: 16 }}>
-          <Text className="text-lg font-semibold mb-4">Фильтр заявок</Text>
-
-          {[
-            { key: "all", label: "Все" },
-            { key: "date", label: "По дате" },
-            { key: "moved", label: "Перенесённые" },
-            { key: "cancelled", label: "Отменённые" },
-          ].map(({ key, label }) => (
-            <TouchableOpacity
-              key={key}
-              onPress={() => setFilter(key as any)}
-              className="flex-row justify-between items-center mb-3"
-            >
-              <Text className="text-base">{label}</Text>
-              {filter === key ? (
-                <View className="w-4 h-4 rounded-full bg-green-600" />
-              ) : (
-                <View className="w-4 h-4 rounded-full border border-gray-400" />
-              )}
-            </TouchableOpacity>
-          ))}
-
-          <View className="flex-row justify-between mt-4">
-            <TouchableOpacity
-              onPress={() => setFilter("all")}
-              className="border border-gray-400 rounded-xl px-6 py-2"
-            >
-              <Text className="text-gray-600">Сброс</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={closeSheet}
-              className="bg-green-600 rounded-xl px-6 py-2"
-            >
-              <Text className="text-white font-semibold">Применить</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </BottomSheet>
     </View>
   );
 }
