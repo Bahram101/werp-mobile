@@ -10,9 +10,9 @@ import { History } from "./components/History";
 import { Service } from "./components/Service";
 
 export default function RequestDetailScreen() {
-  const { id, number } = useLocalSearchParams();
   const router = useRouter();
   const navigation = useNavigation();
+  const { id, number } = useLocalSearchParams();
   const [status, setStatus] = useState<"accepted" | "arrived">("accepted");
 
   useEffect(() => {
@@ -27,12 +27,13 @@ export default function RequestDetailScreen() {
     if (status === "accepted") {
       setStatus("arrived");
     } else {
-      router.push(`/requests/work`);
+      router.push({
+        pathname: "/requests/work/[id]",
+        params: { id, number },        
+      });
     }
-  };
-
-  console.log("status", status);
-
+  }; 
+  
   const request = {
     client: {
       name: "Асрор Умаров",

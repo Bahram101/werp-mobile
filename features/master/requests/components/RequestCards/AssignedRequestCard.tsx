@@ -1,9 +1,9 @@
+import { getStatusMeta } from "@/utils/status.helper";
 import { Feather } from "@expo/vector-icons";
 import cn from "clsx";
-import React, { FC } from "react";
+import { router } from "expo-router";
+import React, { FC, useCallback } from "react";
 import { Text, View } from "react-native";
-
-import { getStatusMeta } from "@/utils/status.helper";
 
 import AnimatedBlock from "@/components/ui/button/AnimatedBlock";
 import { COLORS } from "@/constants/theme";
@@ -14,8 +14,15 @@ type AssignedRequestCardProps = {
 };
 
 const AssignedRequestCard: FC<AssignedRequestCardProps> = ({ item }) => {
+  const handlePress = useCallback(() => {
+    router.push({
+      pathname: "/requests/[id]",
+      params: { id: item.id, number: item.number },
+    });
+  }, [item.id, item.number]);
+
   return (
-    <AnimatedBlock item={item}>
+    <AnimatedBlock item={item} onPress={handlePress}>
       <View className="flex-row items-center justify-between mb-3 border-b border-grayLight pb-2">
         <View className="bg-primary h-6 justify-center flex rounded px-3">
           <Text className="text-white text-xs">{item.title}</Text>

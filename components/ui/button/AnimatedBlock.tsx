@@ -1,6 +1,6 @@
 import { IRequest } from "@/features/master/requests/types";
 import cn from "clsx";
-import { router } from "expo-router";
+
 import { ReactNode, useRef } from "react";
 import { Animated, TouchableOpacity } from "react-native";
 
@@ -8,12 +8,14 @@ type AnimatedBlockProps = {
   children: ReactNode;
   item?: IRequest;
   bg?: string;
+  onPress?: () => void
 };
 
 export default function AnimatedBlock({
   children,
   item,
   bg,
+  onPress
 }: AnimatedBlockProps) {
   const scale = useRef(new Animated.Value(1)).current;
 
@@ -38,13 +40,7 @@ export default function AnimatedBlock({
       activeOpacity={0.7}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      onPress={() => {
-        if (!item) return;
-        router.push({
-          pathname: "/requests/[id]",
-          params: { id: item.id, number: item.number },
-        });
-      }}
+      onPress={onPress}
     >
       <Animated.View
         style={{ transform: [{ scale }] }}
