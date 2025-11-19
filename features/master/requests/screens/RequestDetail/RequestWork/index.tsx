@@ -1,4 +1,5 @@
 import { useLocalSearchParams, useNavigation } from "expo-router";
+import { CirclePlus, CircleX } from "lucide-react-native";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 
@@ -40,12 +41,17 @@ const RequestWorkScreen = () => {
               <Text className="font-semibold">Сумма</Text>
             </View>
             <View className="table-head-col w-[20%] border-r border-grayLight">
-              <Text className="font-semibold">Валюта</Text>
+              <Text className="font-semibold">
+                <CirclePlus color='green' size='20'/>
+              </Text>
             </View>
           </View>
           <View className="table-body flex-col">
             {data.map((item) => (
-              <View key={item.id} className="flex-row justify-between border-b border-grayLight py-2">
+              <View
+                key={item.id}
+                className="flex-row justify-between border-b border-grayLight py-2"
+              >
                 <View className="justify-center flex-row w-[10%]">
                   <Text>{item.id}</Text>
                 </View>
@@ -56,7 +62,7 @@ const RequestWorkScreen = () => {
                   <Text>{item.price}</Text>
                 </View>
                 <View className="justify-center flex-row w-[20%]">
-                  <Text>{item.currency}</Text>
+                   <CircleX color='red' size="20"/> 
                 </View>
               </View>
             ))}
