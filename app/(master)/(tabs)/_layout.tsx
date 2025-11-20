@@ -1,6 +1,7 @@
 import { COLORS } from "@/constants/theme";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { tabItems } from "@/features/navigation/master-tabs";
+import { useBottomSheet } from "@/providers/AppBottomSheetProvider";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";
 import { Tabs } from "expo-router";
@@ -9,6 +10,12 @@ import { TouchableOpacity } from "react-native";
 
 export default function TabsLayout() {
   const { logout } = useAuth();
+  const { closeBottomSheet } = useBottomSheet();
+
+  const logOut = () => {
+    closeBottomSheet();
+    logout();
+  };
 
   return (
     <Tabs
@@ -62,7 +69,7 @@ export default function TabsLayout() {
                       <MaterialCommunityIcons
                         className="mr-3"
                         name="logout"
-                        onPress={logout}
+                        onPress={logOut}
                         size={22}
                       />
                     </TouchableOpacity>
