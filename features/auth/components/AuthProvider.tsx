@@ -8,7 +8,6 @@ import {
 } from "react";
 
 import { getAccessToken, getUserFromStorage } from "../services/auth.storage";
-// import { registerSetUser } from '@/services/auth/auth.helper-context'
 
 import { registerSetUser } from "../helpers/auth.helper-context";
 import { AuthService } from "../services/auth.service";
@@ -32,7 +31,9 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
           try {
             const storedUser = await getUserFromStorage();
             if (isMounted) setUser(storedUser);
-          } catch (e) {}
+          } catch (e) {
+            console.log(e)
+          }
         } else {
           setUser(null);
         }
@@ -57,7 +58,7 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
     AuthService.logout().then(() => setUser(null));
   };
 
-  console.log("user", user);
+  console.log('user', user)
 
   return (
     <AuthContext.Provider value={{ isInitialized, user, setUser, logout }}>

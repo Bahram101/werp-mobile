@@ -5,11 +5,15 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { Image, ImageBackground, Text, View } from "react-native";
 
-export default function MainHeader() {
+export default function MainHeader() { 
   const { user } = useAuth();
 
+ 
   return (
-    <View className="rounded-bl-3xl rounded-br-3xl overflow-hidden" style={{ height: 180 }}>
+    <View
+      className="rounded-bl-3xl rounded-br-3xl overflow-hidden"
+      style={{ height: 180 }}
+    >
       <ImageBackground
         source={require("@/assets/images/back.png")}
         resizeMode="cover"
