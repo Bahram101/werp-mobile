@@ -22,13 +22,13 @@ export default function RootlayoutWrapper() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
           <AppBottomSheetProvider>
-            <ReactQueryProvider>
+            <GluestackUIProvider mode="light">
               <AuthProvider>
-                <GluestackUIProvider mode="light">
+                <ReactQueryProvider>
                   <RootLayout />
-                </GluestackUIProvider>
+                </ReactQueryProvider>
               </AuthProvider>
-            </ReactQueryProvider>
+            </GluestackUIProvider>
           </AppBottomSheetProvider>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
