@@ -1,13 +1,15 @@
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetBackdropProps,
+  BottomSheetView
+} from "@gorhom/bottom-sheet";
+import { BlurView } from "expo-blur";
 import { X } from "lucide-react-native";
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState
-} from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { Pressable, Text, View } from "react-native";
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 
 export type AppBottomSheetRef = {
   open: () => void;
@@ -23,34 +25,60 @@ type Props = {
 const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
   ({ title, snapPoints = ["75%"], children }, ref) => {
     const bottomSheetRef = useRef<BottomSheet>(null);
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-      setMounted(true);
-      return () => setMounted(false); 
-    }, []);
 
     useImperativeHandle(ref, () => ({
-      open: () => mounted && bottomSheetRef.current?.expand(),
-      close: () => mounted && bottomSheetRef.current?.close(),
+      open: () => bottomSheetRef.current?.expand(),
+      close: () => bottomSheetRef.current?.close(),
     }));
+
+    const CustomBackdrop = ({
+      animatedIndex,
+      style,
+    }: BottomSheetBackdropProps) => {
+      const animatedStyle = useAnimatedStyle(() => {
+        const opacity = interpolate(animatedIndex.value, [-1, 0], [0, 1]);
+
+        return { opacity };
+      });
+
+      return (
+        <Animated.View
+          style={[
+            style,
+            animatedStyle,
+            {
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+            },
+          ]}
+        >
+          <BlurView
+            tint="dark"
+            intensity={35}
+            style={{
+              flex: 1,
+              backgroundColor: "rgba(0,0,0,0.1)",
+            }}
+          />
+        </Animated.View>
+      );
+    };
 
     return (
       <BottomSheet
         ref={bottomSheetRef}
         index={-1}
         snapPoints={snapPoints}
-        enablePanDownToClose
+        backdropComponent={CustomBackdrop}
       >
         <BottomSheetView className="p-4">
           {title && (
-            <View className="flex-row justify-between items-center mb-3 ">
+            <View className="flex-row justify-between items-center mb-3">
               <Text className="text-lg font-semibold">{title}</Text>
-              <Pressable
-                onPress={() => {
-                  if (mounted) bottomSheetRef.current?.close();
-                }}
-              >
+              <Pressable onPress={() => bottomSheetRef.current?.close()}>
                 <X />
               </Pressable>
             </View>
