@@ -3,11 +3,13 @@ import React from "react";
 import { Button, Text, TextInput, View } from "react-native";
 
 const App = () => {
-  const { openBottomSheet, setBottomSheetTitle, setBottomSheetContent } =
+  const { openBottomSheet, setBottomSheetTitle, setBottomSheetContent, setBottomSheetSnapPoints } =
     useBottomSheet();
 
   const openAddServiceSheet = () => {
+    openBottomSheet();
     setBottomSheetTitle("Выбрать услуги!!!");
+    setBottomSheetSnapPoints(["95%"]);
     setBottomSheetContent(
       <View>
         <Text>Форма добавления услуги</Text>
@@ -15,13 +17,11 @@ const App = () => {
         <TextInput placeholder="Цена" keyboardType="numeric" />
       </View>
     );
-    openBottomSheet();
   };
 
   return (
     <View className="flex-1 items-center justify-center">
       <Text className="text-lg mb-4">Пример BottomSheet</Text>
-
       <Button title="Создать задачу" onPress={openAddServiceSheet} />
     </View>
   );

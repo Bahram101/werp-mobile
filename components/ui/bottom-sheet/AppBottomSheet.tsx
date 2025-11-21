@@ -8,7 +8,7 @@ import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { Pressable, Text, View } from "react-native";
 import Animated, {
   interpolate,
-  useAnimatedStyle
+  useAnimatedStyle,
 } from "react-native-reanimated";
 
 export type AppBottomSheetRef = {
@@ -36,12 +36,7 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
       style,
     }: BottomSheetBackdropProps) => {
       const animatedStyle = useAnimatedStyle(() => {
-        const opacity = interpolate(
-          animatedIndex.value,
-          [-1, 0],
-          [0, 1],
-          // Extrapolate.CLAMP
-        );
+        const opacity = interpolate(animatedIndex.value, [-1, 0], [0, 1]);
 
         return { opacity };
       });
