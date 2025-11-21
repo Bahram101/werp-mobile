@@ -1,6 +1,6 @@
 import BottomSheet, {
   BottomSheetBackdropProps,
-  BottomSheetView
+  BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { BlurView } from "expo-blur";
 import { X } from "lucide-react-native";
@@ -8,7 +8,7 @@ import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import { Pressable, Text, View } from "react-native";
 import Animated, {
   interpolate,
-  useAnimatedStyle,
+  useAnimatedStyle
 } from "react-native-reanimated";
 
 export type AppBottomSheetRef = {
@@ -36,13 +36,19 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
       style,
     }: BottomSheetBackdropProps) => {
       const animatedStyle = useAnimatedStyle(() => {
-        const opacity = interpolate(animatedIndex.value, [-1, 0], [0, 1]);
+        const opacity = interpolate(
+          animatedIndex.value,
+          [-1, 0],
+          [0, 1],
+          // Extrapolate.CLAMP
+        );
 
         return { opacity };
       });
 
       return (
         <Animated.View
+          pointerEvents="none"
           style={[
             style,
             animatedStyle,
@@ -60,7 +66,7 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
             intensity={35}
             style={{
               flex: 1,
-              backgroundColor: "rgba(0,0,0,0.1)",
+              backgroundColor: "rgba(0,0,0,0.2)",
             }}
           />
         </Animated.View>
