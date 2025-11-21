@@ -1,8 +1,9 @@
 import { ServiceItem } from "@/features/master/requests/types";
 import { useBottomSheet } from "@/providers/AppBottomSheetProvider";
 import { CirclePlus, CircleX } from "lucide-react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import ServiceModalList from "./ServiceModalList";
 
 type ServiceTableProps = {
   data: ServiceItem[];
@@ -10,6 +11,8 @@ type ServiceTableProps = {
 };
 
 const ServiceTable = ({ data, totalPrice }: ServiceTableProps) => {
+  const [selectedValues, setSelectedValues] = useState([""]);
+
   const {
     openBottomSheet,
     setBottomSheetTitle,
@@ -19,12 +22,8 @@ const ServiceTable = ({ data, totalPrice }: ServiceTableProps) => {
 
   const onAdd = () => {
     setBottomSheetTitle("Выбрать услуги");
-    setBottomSheetSnapPoints(["75%"]);
-    setBottomSheetContent(
-      <View>
-        <Text>Форма добавления услуги</Text>
-      </View>
-    );
+    setBottomSheetSnapPoints(["45%"]);
+    setBottomSheetContent(<ServiceModalList data={data} />);
     openBottomSheet();
   };
 
