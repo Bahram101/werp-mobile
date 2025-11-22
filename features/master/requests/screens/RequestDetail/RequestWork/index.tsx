@@ -5,7 +5,7 @@ import { ServiceItem } from "../../../types";
 import ServiceTable from "./components/ServiceTable";
 
 const RequestWorkScreen = () => {
-  const { id, number } = useLocalSearchParams();
+  const { number } = useLocalSearchParams();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -25,17 +25,14 @@ const RequestWorkScreen = () => {
     { id: 6, name: "Ремонт товара", price: 5500, currency: "KZT" },
   ];
 
-  const totalPrice = services.reduce((acc, item) => acc + item.price, 0);
-  
   return (
     <View className="flex-1">
       <View className="bg-white mt-3 rounded-2xl p-3 mx-4">
         <View className="flex-row items-center pb-4 pt-2 border-b mb-4 border-grayLight gap-2">
           <Text className="font-bold text-primary">УСЛУГИ</Text>
         </View>
-        <View>
-          <ServiceTable data={services} totalPrice={totalPrice} />
-        </View>
+
+        <ServiceTable data={services} />
       </View>
     </View>
   );

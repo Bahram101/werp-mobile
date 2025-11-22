@@ -17,12 +17,12 @@ const ServiceModalListItem = ({ value, label }: Props) => {
     <Checkbox
       value={value}
       size="md"
-      className="flex-row justify-between items-center py-3"
+      className="flex-row justify-between items-center py-3 border-b border-grayLight"
     >
       <CheckboxLabel className="text-base text-textDark">{label}</CheckboxLabel>
 
-      <CheckboxIndicator className="w-6 h-6 border border-gray-300 rounded-md items-center justify-center">
-        <CheckboxIcon as={Check} className="text-green-600" strokeWidth={3} />
+      <CheckboxIndicator className="w-6 h-6 border border-gray-300 rounded-md items-center justify-center mr-[2px]">
+        <CheckboxIcon as={Check} className="text-green-600"  />
       </CheckboxIndicator>
     </Checkbox>
   );
