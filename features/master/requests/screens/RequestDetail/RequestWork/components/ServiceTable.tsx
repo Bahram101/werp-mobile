@@ -7,11 +7,17 @@ import ServiceModalList from "./ServiceModalList";
 
 type ServiceTableProps = {
   data: ServiceItem[];
-  totalPrice: number;
 };
 
-const ServiceTable = ({ data, totalPrice }: ServiceTableProps) => {
-  const [selectedValues, setSelectedValues] = useState([""]);
+const ServiceTable = ({ data }: ServiceTableProps) => {
+  const [selectedServices, setSelectedServices] = useState<ServiceItem[]>([]);
+
+  const selectedIds = selectedServices.map((s) => String(s.id));
+
+  const totalPrice = selectedServices.reduce(
+    (acc, item) => acc + item.price,
+    0
+  );
 
   const {
     openBottomSheet,
@@ -20,11 +26,29 @@ const ServiceTable = ({ data, totalPrice }: ServiceTableProps) => {
     setBottomSheetSnapPoints,
   } = useBottomSheet();
 
+  const onSelect = (selectedIds: string[]) => {
+    const selected = data.filter((item) =>
+      selectedIds.includes(item.id.toString())
+    );
+    setSelectedServices(selected);
+  };
+
   const onAdd = () => {
     setBottomSheetTitle("Выбрать услуги");
+    setBottomSheetContent(
+      <ServiceModalList
+        key={selectedIds.join(",")}
+        data={data}
+        onSelect={onSelect}
+        selectedIds={selectedIds}
+      />
+    );
     setBottomSheetSnapPoints(["45%"]);
-    setBottomSheetContent(<ServiceModalList data={data} />);
     openBottomSheet();
+  };
+
+  const onDelete = (id: number) => {
+    setSelectedServices((prev) => prev.filter((item) => item.id !== id));
   };
 
   return (
@@ -46,7 +70,7 @@ const ServiceTable = ({ data, totalPrice }: ServiceTableProps) => {
         </View>
       </View>
       <View className="table-body flex-col">
-        {data.map((item) => (
+        {selectedServices.map((item) => (
           <View
             key={item.id}
             className="flex-row justify-between items-center border-b border-grayLight py-3"
@@ -61,7 +85,9 @@ const ServiceTable = ({ data, totalPrice }: ServiceTableProps) => {
               <Text>{item.price}</Text>
             </View>
             <View className="justify-center flex-row w-[20%]">
-              <CircleX color="red" size="20" />
+              <TouchableOpacity onPress={() => onDelete(item.id)}>
+                <CircleX color="red" size="20" />
+              </TouchableOpacity>
             </View>
           </View>
         ))}
