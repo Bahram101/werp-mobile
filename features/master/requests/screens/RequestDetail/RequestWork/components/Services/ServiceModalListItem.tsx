@@ -4,8 +4,8 @@ import {
   CheckboxIndicator,
   CheckboxLabel,
 } from "@/components/ui/checkbox";
+import BoldCheck from "@/components/ui/checkbox/BoldCheck";
 import cn from "clsx";
-import { Check } from "lucide-react-native";
 import React from "react";
 
 type Props = {
@@ -25,9 +25,12 @@ const ServiceModalListItem = ({ value, label, isLast }: Props) => {
       )}
     >
       <CheckboxLabel className="text-base text-textDark">{label}</CheckboxLabel>
-
-      <CheckboxIndicator className="w-6 h-6 border border-gray-300 rounded-md items-center justify-center mr-[2px]">
-        <CheckboxIcon as={Check} className="text-green-600" />
+      <CheckboxIndicator
+        className={cn(
+          "w-6 h-6 border border-gray-300 rounded-md items-center justify-center mr-[2px]"
+        )}
+      >
+        <CheckboxIcon as={BoldCheck} className={cn("text-green-600")} />
       </CheckboxIndicator>
     </Checkbox>
   );

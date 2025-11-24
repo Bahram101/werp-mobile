@@ -5,17 +5,21 @@ import ServiceModalListItem from "./ServiceModalListItem";
 
 type Props = {
   data: ServiceItem[];
-  onSelect: (values: string[]) => void;
-  selectedIds: string[];
+  handleSelectServices: (values: string[]) => void;
+  selectedServiceIds: string[];
 };
 
-const ServiceModalList = ({ data, onSelect, selectedIds }: Props) => {
+const ServiceModalList = ({
+  data,
+  handleSelectServices,
+  selectedServiceIds,
+}: Props) => {
   const handleChange = (values: string[]) => {
-    onSelect(values);
+    handleSelectServices(values);
   };
 
   return (
-    <CheckboxGroup value={selectedIds} onChange={handleChange}>
+    <CheckboxGroup value={selectedServiceIds} onChange={handleChange}>
       {data.map((item, index) => (
         <ServiceModalListItem
           key={item.id}
