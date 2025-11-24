@@ -56,3 +56,10 @@ export type ServiceItem = {
   price: number;
   currency: string;
 };
+
+export type PartItem = {
+  id: number;
+  serialNumber: string;
+  name: string;
+  price: number;
+};

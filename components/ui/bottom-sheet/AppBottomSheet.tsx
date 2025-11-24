@@ -5,7 +5,13 @@ import BottomSheet, {
 import { BlurView } from "expo-blur";
 import { X } from "lucide-react-native";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
-import { Pressable, Text, View } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -56,14 +62,23 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
             },
           ]}
         >
-          <BlurView
-            tint="dark"
-            intensity={35}
-            style={{
-              flex: 1,
-              backgroundColor: "rgba(0,0,0,0.2)",
+          <TouchableWithoutFeedback
+            onPress={() => {
+              console.log("backdrop pressed (TouchableWithoutFeedback)");
+              bottomSheetRef.current?.close();
             }}
-          />
+          >
+            <View style={{ flex: 1 }}>
+              <BlurView
+                tint="dark"
+                intensity={35}
+                style={{
+                  flex: 1,
+                  backgroundColor: "rgba(0,0,0,0.2)",
+                }}
+              />
+            </View>
+          </TouchableWithoutFeedback>
         </Animated.View>
       );
     };
@@ -74,17 +89,22 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
         index={-1}
         snapPoints={snapPoints}
         backdropComponent={CustomBackdrop}
+        enablePanDownToClose={true}
+        // enableContentPanningGesture={true}
+        // enableHandlePanningGesture={true}
       >
         <BottomSheetView className="p-4">
           {title && (
-            <View className="flex-row justify-between items-center mb-3">
+            <View className="flex-row justify-between items-center mb-3 ">
               <Text className="text-lg font-semibold">{title}</Text>
               <Pressable onPress={() => bottomSheetRef.current?.close()}>
                 <X />
               </Pressable>
             </View>
           )}
-          {children}
+          <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+            {children}
+          </ScrollView>
         </BottomSheetView>
       </BottomSheet>
     );

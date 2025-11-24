@@ -11,15 +11,15 @@ type Props = {
 
 const ServiceModalList = ({ data, onSelect, selectedIds }: Props) => {
   const handleChange = (values: string[]) => {
-    console.log("values", values);
     onSelect(values);
   };
 
   return (
     <CheckboxGroup value={selectedIds} onChange={handleChange}>
-      {data.map((item) => (
+      {data.map((item, index) => (
         <ServiceModalListItem
           key={item.id}
+          isLast={index === data.length - 1}
           value={String(item.id)}
           label={item.name}
         />

@@ -1,16 +1,16 @@
-import { ServiceItem } from "@/features/master/requests/types";
+import { PartItem } from "@/features/master/requests/types";
 import { useBottomSheet } from "@/providers/AppBottomSheetProvider";
 import { CirclePlus, CircleX } from "lucide-react-native";
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import ServiceModalList from "./ServiceModalList";
+import ServiceModalList from "../Services/ServiceModalList";
 
 type ServiceTableProps = {
-  data: ServiceItem[];
+  data: PartItem[];
 };
 
 const ServiceTable = ({ data }: ServiceTableProps) => {
-  const [selectedServices, setSelectedServices] = useState<ServiceItem[]>([]);
+  const [selectedServices, setSelectedServices] = useState<PartItem[]>([]);
 
   const selectedIds = selectedServices.map((s) => String(s.id));
 
@@ -43,7 +43,7 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
         selectedIds={selectedIds}
       />
     );
-    setBottomSheetSnapPoints(["45%"]);
+    setBottomSheetSnapPoints(["60%"]);
     openBottomSheet();
   };
 
