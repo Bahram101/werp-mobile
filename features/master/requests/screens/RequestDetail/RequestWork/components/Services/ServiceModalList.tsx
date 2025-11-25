@@ -14,12 +14,8 @@ const ServiceModalList = ({
   handleSelectServices,
   selectedServiceIds,
 }: Props) => {
-  const handleChange = (values: string[]) => {
-    handleSelectServices(values); 
-  };
-
   return (
-    <CheckboxGroup value={selectedServiceIds} onChange={handleChange}>
+    <CheckboxGroup value={selectedServiceIds} onChange={handleSelectServices}>
       {data.map((item, index) => (
         <ServiceModalListItem
           key={item.id}

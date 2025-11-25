@@ -1,9 +1,8 @@
 import { SparePartItem } from "@/features/master/requests/types";
 import { useBottomSheet } from "@/providers/AppBottomSheetProvider";
 import { CirclePlus, CircleX } from "lucide-react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import SparePartModalList from "./SparePartModalList";
 
 type SparePartsTableProps = {
   data: SparePartItem[];
@@ -16,92 +15,76 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
   const [selectedSparePartIds, setSelectedSparePartIds] = useState<string[]>(
     []
   );
-  const {
-    openBottomSheet,
-    setBottomSheetTitle,
-    setBottomSheetContent,
-    setBottomSheetSnapPoints,
-  } = useBottomSheet();
+
+  const { showBottomSheet } = useBottomSheet();
 
   const totalPrice = selectedSpareParts.reduce(
-    (acc, item) => acc + item.price,
+    (sum, item) => sum + item.price,
     0
   );
 
-  useEffect(() => {
-    setBottomSheetContent(
-      <SparePartModalList
-        data={data}
-        handleSelectSpareParts={handleSelectSpareParts}
-        selectedSparePartIds={selectedSparePartIds}
-      />
-    );
-  }, [selectedSparePartIds]);
+  // ⭐ Открываем модалку
+  const handleOpenSelectModal = () => {
+    showBottomSheet("spareParts", {
+      data,
+      selectedSparePartIds,
+      handleSelectSpareParts,
+    });
+  };
 
+  // ⭐ Выбор запчастей
   const handleSelectSpareParts = (ids: string[]) => {
     setSelectedSparePartIds(ids);
-    const newSelectedSpareParts = data.filter((item) =>
-      ids.includes(item.id.toString())
-    );
-    setSelectedSpareParts(newSelectedSpareParts);
+
+    const newSelected = data.filter((item) => ids.includes(item.id.toString()));
+
+    setSelectedSpareParts(newSelected);
   };
 
-  const handleOpenSelectModal = () => {
-    setBottomSheetTitle("Добавить запчасти");
-    setBottomSheetSnapPoints(["85%"]);
-    openBottomSheet();
-  };
-
+  // ⭐ Удаление запчасти
   const handleRemoveSparePart = (id: number) => {
-    const filteredSpareParts = selectedSpareParts.filter(
-      (item) => item.id !== id
-    );
-    const newIds = filteredSpareParts.map((item) => String(item.id));
-    setSelectedSpareParts(filteredSpareParts);
-    setSelectedSparePartIds(newIds);
+    const updated = selectedSpareParts.filter((item) => item.id !== id);
+
+    setSelectedSpareParts(updated);
+    setSelectedSparePartIds(updated.map((i) => String(i.id)));
   };
 
   return (
     <View className="table">
       <View className="table-header flex-row justify-between border-b border-grayLight pb-3">
-        <View className="table-head-col w-[10%]">
-          <Text className="font-semibold">№</Text>
-        </View>
-        <View className="table-head-col w-[50%]">
-          <Text className="font-semibold">Название усл</Text>
-        </View>
-        <View className="table-head-col w-[20%]">
-          <Text className="font-semibold">Сумма</Text>
-        </View>
+        <Text className="table-head-col w-[10%] font-semibold">№</Text>
+        <Text className="table-head-col w-[50%] font-semibold">
+          Название усл
+        </Text>
+        <Text className="table-head-col w-[20%] font-semibold">Сумма</Text>
+
         <View className="table-head-col w-[20%] border-r border-grayLight">
           <TouchableOpacity onPress={handleOpenSelectModal}>
-            <CirclePlus color="green" size="20" />
+            <CirclePlus color="green" size={20} />
           </TouchableOpacity>
         </View>
       </View>
+
       <View className="table-body flex-col">
         {selectedSpareParts.map((item) => (
           <View
             key={item.id}
             className="flex-row justify-between items-center border-b border-grayLight py-3"
           >
-            <View className="justify-center flex-row w-[10%]">
-              <Text>{item.id}</Text>
-            </View>
-            <View className="justify-center flex-row w-[50%]">
-              <Text>{item.name}</Text>
-            </View>
-            <View className="justify-center flex-row w-[20%]">
-              <Text>{item.price}</Text>
-            </View>
-            <View className="justify-center flex-row w-[20%]">
-              <TouchableOpacity onPress={() => handleRemoveSparePart(item.id)}>
-                <CircleX color="red" size="20" />
-              </TouchableOpacity>
-            </View>
+            <Text className="w-[10%] text-center">{item.id}</Text>
+            <Text className="w-[50%] text-center">{item.name}</Text>
+            <Text className="w-[20%] text-center">{item.price}</Text>
+
+            <TouchableOpacity
+              className="w-[20%] items-center"
+              onPress={() => handleRemoveSparePart(item.id)}
+            >
+              <CircleX color="red" size={20} />
+            </TouchableOpacity>
           </View>
         ))}
       </View>
+
       <View className="flex-row justify-end pt-3">
         <Text>{`Итог: ${totalPrice}`}</Text>
       </View>

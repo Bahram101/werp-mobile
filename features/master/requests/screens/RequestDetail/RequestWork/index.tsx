@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { ServiceItem, SparePartItem } from "../../../types";
 import Services from "./components/Services/Services";
+import SparePartsSale from "./components/SpareParts/SparePartsSale";
 
 const RequestWorkScreen = () => {
   const { number } = useLocalSearchParams();
@@ -100,14 +101,14 @@ const RequestWorkScreen = () => {
           <Services data={services} />
         </View>
 
-        {/* <View className="work-block">
+        <View className="work-block">
           <View className="work-block-top">
             <Text className="font-bold text-primary uppercase">
               Продажа запчастей
             </Text>
           </View>
           <SparePartsSale data={parts} />
-        </View> */}
+        </View>
       </View>
     </ScrollView>
   );

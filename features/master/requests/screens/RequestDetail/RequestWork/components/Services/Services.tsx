@@ -1,9 +1,8 @@
 import { ServiceItem } from "@/features/master/requests/types";
 import { useBottomSheet } from "@/providers/AppBottomSheetProvider";
 import { CirclePlus, CircleX } from "lucide-react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import ServiceModalList from "./ServiceModalList";
 
 type ServiceTableProps = {
   data: ServiceItem[];
@@ -13,47 +12,36 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
   const [selectedServices, setSelectedServices] = useState<ServiceItem[]>([]);
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
 
-  const {
-    openBottomSheet,
-    setBottomSheetTitle,
-    setBottomSheetContent,
-    setBottomSheetSnapPoints,
-  } = useBottomSheet();
+  const { showBottomSheet } = useBottomSheet();
 
   const totalAmount = selectedServices.reduce(
     (acc, item) => acc + item.price,
     0
   );
 
-  useEffect(() => { 
-    setBottomSheetContent(
-      <ServiceModalList
-        data={data}
-        handleSelectServices={handleSelectServices}
-        selectedServiceIds={selectedServiceIds}
-      />
-    );
-  }, [selectedServiceIds]);
-
+  // ⭐ Упрощённое открытие модалки
   const handleOpenSelectModal = () => {
-    setBottomSheetTitle("Выбрать услуги");
-    setBottomSheetSnapPoints(["60%"]);
-    openBottomSheet();
+    showBottomSheet("services", {
+      data,
+      selectedServiceIds,
+      handleSelectServices,
+    });
   };
 
+  // ⭐ Обновление выбранных услуг
   const handleSelectServices = (ids: string[]) => {
     setSelectedServiceIds(ids);
-    const newSelectedServices = data.filter((item) =>
-      ids.includes(item.id.toString())
-    );
-    setSelectedServices(newSelectedServices);
+
+    const newSelected = data.filter((item) => ids.includes(String(item.id)));
+
+    setSelectedServices(newSelected);
   };
 
+  // ⭐ Удаление услуги
   const handleRemoveService = (id: number) => {
-    const filteredServices = selectedServices.filter((item) => item.id !== id);
-    const newIds = filteredServices.map((item) => String(item.id));
-    setSelectedServices(filteredServices);
-    setSelectedServiceIds(newIds);
+    const updated = selectedServices.filter((item) => item.id !== id);
+    setSelectedServices(updated);
+    setSelectedServiceIds(updated.map((i) => String(i.id)));
   };
 
   return (
@@ -70,33 +58,30 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
         </View>
         <View className="table-head-col w-[20%] border-r border-grayLight">
           <TouchableOpacity onPress={handleOpenSelectModal}>
-            <CirclePlus color="green" size="20" />
+            <CirclePlus color="green" size={20} />
           </TouchableOpacity>
         </View>
       </View>
+
       <View className="table-body flex-col">
         {selectedServices.map((item) => (
           <View
             key={item.id}
             className="flex-row justify-between items-center border-b border-grayLight py-3"
           >
-            <View className="justify-center flex-row w-[10%]">
-              <Text>{item.id}</Text>
-            </View>
-            <View className="justify-center flex-row w-[50%]">
-              <Text>{item.name}</Text>
-            </View>
-            <View className="justify-center flex-row w-[20%]">
-              <Text>{item.price}</Text>
-            </View>
-            <View className="justify-center flex-row w-[20%]">
-              <TouchableOpacity onPress={() => handleRemoveService(item.id)}>
-                <CircleX color="red" size="20" />
-              </TouchableOpacity>
-            </View>
+            <Text className="w-[10%] text-center">{item.id}</Text>
+            <Text className="w-[50%] text-center">{item.name}</Text>
+            <Text className="w-[20%] text-center">{item.price}</Text>
+            <TouchableOpacity
+              className="w-[20%] items-center"
+              onPress={() => handleRemoveService(item.id)}
+            >
+              <CircleX color="red" size={20} />
+            </TouchableOpacity>
           </View>
         ))}
       </View>
+
       <View className="flex-row justify-end pt-3">
         <Text>{`Итог: ${totalAmount}`}</Text>
       </View>

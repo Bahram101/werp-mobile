@@ -1,23 +1,26 @@
 import AppBottomSheet, {
   AppBottomSheetRef,
 } from "@/components/ui/bottom-sheet/AppBottomSheet";
+import ServiceModalList from "@/features/master/requests/screens/RequestDetail/RequestWork/components/Services/ServiceModalList";
+import SparePartModalList from "@/features/master/requests/screens/RequestDetail/RequestWork/components/SpareParts/SparePartModalList";
 import React, {
   createContext,
   FC,
   PropsWithChildren,
-  ReactNode,
   useContext,
   useRef,
   useState,
 } from "react";
 
+// ⭐ ДОБАВЛЕНО: Типы модалок
+type BottomSheetType = "services" | "spareParts" | null;
+
 type BottomSheetContextType = {
   openBottomSheet: () => void;
   closeBottomSheet: () => void;
-  setBottomSheetTitle: (title: string) => void;
-  setBottomSheetContent: (content: ReactNode) => void;
-  setBottomSheetSnapPoints: (data: any) => void;
-  content: ReactNode;
+
+  // ⭐ ДОБАВЛЕНО: единый метод показа модалки
+  showBottomSheet: (type: BottomSheetType, props?: any) => void;
 };
 
 export const BottomSheetContext = createContext<BottomSheetContextType | null>(
@@ -26,36 +29,53 @@ export const BottomSheetContext = createContext<BottomSheetContextType | null>(
 
 const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
   const modalRef = useRef<AppBottomSheetRef>(null);
+
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState<ReactNode>(null);
-  const [snapPoints, setSnapPoints] = useState(null);
+  const [snapPoints, setSnapPoints] = useState(["75%"]);
+
+  // ⭐ ДОБАВЛЕНО: хранение типа модалки
+  const [modalType, setModalType] = useState<BottomSheetType>(null);
+
+  // ⭐ ДОБАВЛЕНО: хранение props для модалки
+  const [modalProps, setModalProps] = useState<any>({});
 
   const openBottomSheet = () => modalRef.current?.open();
   const closeBottomSheet = () => modalRef.current?.close();
-  const setBottomSheetTitle = (newTitle: string) => setTitle(newTitle);
-  const setBottomSheetContent = (content: ReactNode) => setContent(content);
-  const setBottomSheetSnapPoints = (data: any) => setSnapPoints(data);
 
-  console.log('content',JSON.stringify(content, null, 2))
+  // ⭐ ГЛАВНЫЙ МЕТОД — устанавливает модалку и её props
+  const showBottomSheet = (type: BottomSheetType, props: any = {}) => {
+    setModalType(type); // устанавливаем тип
+    setModalProps(props); // устанавливаем данные
+    openBottomSheet(); // открываем
+  };
+
+  // ⭐ Рендерим контент в зависимости от типа
+  const renderContent = () => {
+    if (modalType === "services") {
+      return <ServiceModalList {...modalProps} />;
+    }
+
+    if (modalType === "spareParts") {
+      return <SparePartModalList {...modalProps} />;
+    }
+
+    return null;
+  };
 
   return (
     <BottomSheetContext.Provider
       value={{
         openBottomSheet,
         closeBottomSheet,
-        setBottomSheetTitle,
-        setBottomSheetContent,
-        setBottomSheetSnapPoints,
-        content,
+
+        // ⭐ ТЕПЕРЬ отдаём только 1 метод
+        showBottomSheet,
       }}
     >
       {children}
-      <AppBottomSheet
-        ref={modalRef}
-        title={title}
-        snapPoints={snapPoints || ["75%"]}
-      >
-        {content}
+
+      <AppBottomSheet ref={modalRef} title={title} snapPoints={snapPoints}>
+        {renderContent()}
       </AppBottomSheet>
     </BottomSheetContext.Provider>
   );
@@ -63,11 +83,10 @@ const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
 
 export const useBottomSheet = () => {
   const ctx = useContext(BottomSheetContext);
-  if (!ctx) {
+  if (!ctx)
     throw new Error(
       "useBottomSheet must be used within AppBottomSheetProvider"
     );
-  }
   return ctx;
 };
 
