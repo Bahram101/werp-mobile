@@ -1,18 +1,21 @@
-import { ServiceItem } from "@/features/master/requests/types";
+import { SparePartItem } from "@/features/master/requests/types";
 import { useBottomSheet } from "@/providers/AppBottomSheetProvider";
 import { CirclePlus, CircleX } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import ServiceModalList from "./ServiceModalList";
+import SparePartModalList from "./SparePartModalList";
 
-type ServiceTableProps = {
-  data: ServiceItem[];
+type SparePartsTableProps = {
+  data: SparePartItem[];
 };
 
-const ServiceTable = ({ data }: ServiceTableProps) => {
-  const [selectedServices, setSelectedServices] = useState<ServiceItem[]>([]);
-  const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
-
+const SparePartTable = ({ data }: SparePartsTableProps) => {
+  const [selectedSpareParts, setSelectedSpareParts] = useState<SparePartItem[]>(
+    []
+  );
+  const [selectedSparePartIds, setSelectedSparePartIds] = useState<string[]>(
+    []
+  );
   const {
     openBottomSheet,
     setBottomSheetTitle,
@@ -20,41 +23,42 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
     setBottomSheetSnapPoints,
   } = useBottomSheet();
 
-  const totalAmount = selectedServices.reduce(
+  const totalPrice = selectedSpareParts.reduce(
     (acc, item) => acc + item.price,
     0
   );
 
   useEffect(() => {
-    setBottomSheetContent(null);
     setBottomSheetContent(
-      <ServiceModalList
+      <SparePartModalList
         data={data}
-        handleSelectServices={handleSelectServices}
-        selectedServiceIds={selectedServiceIds}
+        handleSelectSpareParts={handleSelectSpareParts}
+        selectedSparePartIds={selectedSparePartIds}
       />
     );
-  }, [selectedServiceIds]);
+  }, [selectedSparePartIds]);
+
+  const handleSelectSpareParts = (ids: string[]) => {
+    setSelectedSparePartIds(ids);
+    const newSelectedSpareParts = data.filter((item) =>
+      ids.includes(item.id.toString())
+    );
+    setSelectedSpareParts(newSelectedSpareParts);
+  };
 
   const handleOpenSelectModal = () => {
-    setBottomSheetTitle("Выбрать услуги");
-    setBottomSheetSnapPoints(["60%"]);
+    setBottomSheetTitle("Добавить запчасти");
+    setBottomSheetSnapPoints(["85%"]);
     openBottomSheet();
   };
 
-  const handleSelectServices = (ids: string[]) => {
-    setSelectedServiceIds(ids);
-    const newSelectedServices = data.filter((item) =>
-      ids.includes(item.id.toString())
+  const handleRemoveSparePart = (id: number) => {
+    const filteredSpareParts = selectedSpareParts.filter(
+      (item) => item.id !== id
     );
-    setSelectedServices(newSelectedServices);
-  };
-
-  const handleRemoveService = (id: number) => {
-    const filteredServices = selectedServices.filter((item) => item.id !== id);
-    const newIds = filteredServices.map((item) => String(item.id));
-    setSelectedServices(filteredServices);
-    setSelectedServiceIds(newIds);
+    const newIds = filteredSpareParts.map((item) => String(item.id));
+    setSelectedSpareParts(filteredSpareParts);
+    setSelectedSparePartIds(newIds);
   };
 
   return (
@@ -76,7 +80,7 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
         </View>
       </View>
       <View className="table-body flex-col">
-        {selectedServices.map((item) => (
+        {selectedSpareParts.map((item) => (
           <View
             key={item.id}
             className="flex-row justify-between items-center border-b border-grayLight py-3"
@@ -91,7 +95,7 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
               <Text>{item.price}</Text>
             </View>
             <View className="justify-center flex-row w-[20%]">
-              <TouchableOpacity onPress={() => handleRemoveService(item.id)}>
+              <TouchableOpacity onPress={() => handleRemoveSparePart(item.id)}>
                 <CircleX color="red" size="20" />
               </TouchableOpacity>
             </View>
@@ -99,10 +103,10 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
         ))}
       </View>
       <View className="flex-row justify-end pt-3">
-        <Text>{`Итог: ${totalAmount}`}</Text>
+        <Text>{`Итог: ${totalPrice}`}</Text>
       </View>
     </View>
   );
 };
 
-export default ServiceTable;
+export default SparePartTable;

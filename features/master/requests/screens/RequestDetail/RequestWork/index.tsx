@@ -2,8 +2,7 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { ServiceItem, SparePartItem } from "../../../types";
-import ServiceTable from "./components/Services/ServiceTable";
-import SparePartsSaleTable from "./components/SpareParts/SparePartsSaleTable";
+import Services from "./components/Services/Services";
 
 const RequestWorkScreen = () => {
   const { number } = useLocalSearchParams();
@@ -98,17 +97,17 @@ const RequestWorkScreen = () => {
           <View className="work-block-top">
             <Text className="font-bold text-primary uppercase">Услуги</Text>
           </View>
-          <ServiceTable data={services} />
+          <Services data={services} />
         </View>
 
-        <View className="work-block">
+        {/* <View className="work-block">
           <View className="work-block-top">
             <Text className="font-bold text-primary uppercase">
               Продажа запчастей
             </Text>
           </View>
-          <SparePartsSaleTable data={parts} />
-        </View>
+          <SparePartsSale data={parts} />
+        </View> */}
       </View>
     </ScrollView>
   );

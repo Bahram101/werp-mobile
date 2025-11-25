@@ -1,21 +1,18 @@
-import { SparePartItem } from "@/features/master/requests/types";
+import { ServiceItem } from "@/features/master/requests/types";
 import { useBottomSheet } from "@/providers/AppBottomSheetProvider";
 import { CirclePlus, CircleX } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import SparePartModalList from "./SparePartModalList";
+import ServiceModalList from "./ServiceModalList";
 
-type SparePartsTableProps = {
-  data: SparePartItem[];
+type ServiceTableProps = {
+  data: ServiceItem[];
 };
 
-const SparePartTable = ({ data }: SparePartsTableProps) => {
-  const [selectedSpareParts, setSelectedSpareParts] = useState<SparePartItem[]>(
-    []
-  );
-  const [selectedSparePartIds, setSelectedSparePartIds] = useState<string[]>(
-    []
-  );
+const ServiceTable = ({ data }: ServiceTableProps) => {
+  const [selectedServices, setSelectedServices] = useState<ServiceItem[]>([]);
+  const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
+
   const {
     openBottomSheet,
     setBottomSheetTitle,
@@ -23,43 +20,40 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
     setBottomSheetSnapPoints,
   } = useBottomSheet();
 
-  const totalPrice = selectedSpareParts.reduce(
+  const totalAmount = selectedServices.reduce(
     (acc, item) => acc + item.price,
     0
   );
 
-  useEffect(() => {
-    setBottomSheetContent(null);
+  useEffect(() => { 
     setBottomSheetContent(
-      <SparePartModalList
+      <ServiceModalList
         data={data}
-        handleSelectSpareParts={handleSelectSpareParts}
-        selectedSparePartIds={selectedSparePartIds}
+        handleSelectServices={handleSelectServices}
+        selectedServiceIds={selectedServiceIds}
       />
     );
-  }, [selectedSparePartIds]);
-
-  const handleSelectSpareParts = (ids: string[]) => {
-    setSelectedSparePartIds(ids);
-    const newSelectedSpareParts = data.filter((item) =>
-      ids.includes(item.id.toString())
-    );
-    setSelectedSpareParts(newSelectedSpareParts);
-  };
+  }, [selectedServiceIds]);
 
   const handleOpenSelectModal = () => {
-    setBottomSheetTitle("Добавить запчасти");
-    setBottomSheetSnapPoints(["85%"]);
+    setBottomSheetTitle("Выбрать услуги");
+    setBottomSheetSnapPoints(["60%"]);
     openBottomSheet();
   };
 
-  const handleRemoveService = (id: number) => {
-    const filteredServices = selectedSpareParts.filter(
-      (item) => item.id !== id
+  const handleSelectServices = (ids: string[]) => {
+    setSelectedServiceIds(ids);
+    const newSelectedServices = data.filter((item) =>
+      ids.includes(item.id.toString())
     );
+    setSelectedServices(newSelectedServices);
+  };
+
+  const handleRemoveService = (id: number) => {
+    const filteredServices = selectedServices.filter((item) => item.id !== id);
     const newIds = filteredServices.map((item) => String(item.id));
-    setSelectedSpareParts(filteredServices);
-    setSelectedSparePartIds(newIds);
+    setSelectedServices(filteredServices);
+    setSelectedServiceIds(newIds);
   };
 
   return (
@@ -81,7 +75,7 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
         </View>
       </View>
       <View className="table-body flex-col">
-        {selectedSpareParts.map((item) => (
+        {selectedServices.map((item) => (
           <View
             key={item.id}
             className="flex-row justify-between items-center border-b border-grayLight py-3"
@@ -104,10 +98,10 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
         ))}
       </View>
       <View className="flex-row justify-end pt-3">
-        <Text>{`Итог: ${totalPrice}`}</Text>
+        <Text>{`Итог: ${totalAmount}`}</Text>
       </View>
     </View>
   );
 };
 
-export default SparePartTable;
+export default ServiceTable;
