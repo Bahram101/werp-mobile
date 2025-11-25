@@ -15,7 +15,7 @@ type Props = {
   isLast?: boolean;
 };
 
-const ServiceModalListItem = ({ value, label, isLast }: Props) => {
+const SparePartModalListItem = ({ value, label, isLast }: Props) => {
   return (
     <Checkbox
       value={value}
@@ -42,4 +42,4 @@ const ServiceModalListItem = ({ value, label, isLast }: Props) => {
   );
 };
 
-export default ServiceModalListItem;
+export default SparePartModalListItem;

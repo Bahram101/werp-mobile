@@ -15,7 +15,7 @@ const ServiceModalList = ({
   selectedServiceIds,
 }: Props) => {
   const handleChange = (values: string[]) => {
-    handleSelectServices(values);
+    handleSelectServices(values); 
   };
 
   return (

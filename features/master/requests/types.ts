@@ -57,9 +57,9 @@ export type ServiceItem = {
   currency: string;
 };
 
-export type PartItem = {
+export type SparePartItem = {
   id: number;
-  serialNumber: string;
   name: string;
   price: number;
+  serialNumber: string;
 };

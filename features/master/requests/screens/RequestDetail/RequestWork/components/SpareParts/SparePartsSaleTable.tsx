@@ -1,24 +1,21 @@
-import { PartItem } from "@/features/master/requests/types";
+import { SparePartItem } from "@/features/master/requests/types";
 import { useBottomSheet } from "@/providers/AppBottomSheetProvider";
 import { CirclePlus, CircleX } from "lucide-react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import ServiceModalList from "../Services/ServiceModalList";
+import SparePartModalList from "./SparePartModalList";
 
-type ServiceTableProps = {
-  data: PartItem[];
+type SparePartsTableProps = {
+  data: SparePartItem[];
 };
 
-const ServiceTable = ({ data }: ServiceTableProps) => {
-  const [selectedServices, setSelectedServices] = useState<PartItem[]>([]);
-
-  const selectedIds = selectedServices.map((s) => String(s.id));
-
-  const totalPrice = selectedServices.reduce(
-    (acc, item) => acc + item.price,
-    0
+const SparePartTable = ({ data }: SparePartsTableProps) => {
+  const [selectedSpareParts, setSelectedSpareParts] = useState<SparePartItem[]>(
+    []
   );
-
+  const [selectedSparePartIds, setSelectedSparePartIds] = useState<string[]>(
+    []
+  );
   const {
     openBottomSheet,
     setBottomSheetTitle,
@@ -26,29 +23,43 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
     setBottomSheetSnapPoints,
   } = useBottomSheet();
 
-  const onSelect = (selectedIds: string[]) => {
-    const selected = data.filter((item) =>
-      selectedIds.includes(item.id.toString())
-    );
-    setSelectedServices(selected);
-  };
+  const totalPrice = selectedSpareParts.reduce(
+    (acc, item) => acc + item.price,
+    0
+  );
 
-  const onAdd = () => {
-    setBottomSheetTitle("Выбрать услуги");
+  useEffect(() => {
+    setBottomSheetContent(null);
     setBottomSheetContent(
-      <ServiceModalList
-        key={selectedIds.join(",")}
+      <SparePartModalList
         data={data}
-        onSelect={onSelect}
-        selectedIds={selectedIds}
+        handleSelectSpareParts={handleSelectSpareParts}
+        selectedSparePartIds={selectedSparePartIds}
       />
     );
-    setBottomSheetSnapPoints(["60%"]);
+  }, [selectedSparePartIds]);
+
+  const handleSelectSpareParts = (ids: string[]) => {
+    setSelectedSparePartIds(ids);
+    const newSelectedSpareParts = data.filter((item) =>
+      ids.includes(item.id.toString())
+    );
+    setSelectedSpareParts(newSelectedSpareParts);
+  };
+
+  const handleOpenSelectModal = () => {
+    setBottomSheetTitle("Добавить запчасти");
+    setBottomSheetSnapPoints(["85%"]);
     openBottomSheet();
   };
 
-  const onDelete = (id: number) => {
-    setSelectedServices((prev) => prev.filter((item) => item.id !== id));
+  const handleRemoveService = (id: number) => {
+    const filteredServices = selectedSpareParts.filter(
+      (item) => item.id !== id
+    );
+    const newIds = filteredServices.map((item) => String(item.id));
+    setSelectedSpareParts(filteredServices);
+    setSelectedSparePartIds(newIds);
   };
 
   return (
@@ -64,13 +75,13 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
           <Text className="font-semibold">Сумма</Text>
         </View>
         <View className="table-head-col w-[20%] border-r border-grayLight">
-          <TouchableOpacity onPress={onAdd}>
+          <TouchableOpacity onPress={handleOpenSelectModal}>
             <CirclePlus color="green" size="20" />
           </TouchableOpacity>
         </View>
       </View>
       <View className="table-body flex-col">
-        {selectedServices.map((item) => (
+        {selectedSpareParts.map((item) => (
           <View
             key={item.id}
             className="flex-row justify-between items-center border-b border-grayLight py-3"
@@ -85,7 +96,7 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
               <Text>{item.price}</Text>
             </View>
             <View className="justify-center flex-row w-[20%]">
-              <TouchableOpacity onPress={() => onDelete(item.id)}>
+              <TouchableOpacity onPress={() => handleRemoveService(item.id)}>
                 <CircleX color="red" size="20" />
               </TouchableOpacity>
             </View>
@@ -99,4 +110,4 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
   );
 };
 
-export default ServiceTable;
+export default SparePartTable;

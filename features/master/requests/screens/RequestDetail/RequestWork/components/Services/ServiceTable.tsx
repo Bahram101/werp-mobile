@@ -13,12 +13,20 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
   const [selectedServices, setSelectedServices] = useState<ServiceItem[]>([]);
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
 
+  const {
+    openBottomSheet,
+    setBottomSheetTitle,
+    setBottomSheetContent,
+    setBottomSheetSnapPoints,
+  } = useBottomSheet();
+
   const totalAmount = selectedServices.reduce(
     (acc, item) => acc + item.price,
     0
   );
 
   useEffect(() => {
+    setBottomSheetContent(null);
     setBottomSheetContent(
       <ServiceModalList
         data={data}
@@ -28,12 +36,11 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
     );
   }, [selectedServiceIds]);
 
-  const {
-    openBottomSheet,
-    setBottomSheetTitle,
-    setBottomSheetContent,
-    setBottomSheetSnapPoints,
-  } = useBottomSheet();
+  const handleOpenSelectModal = () => {
+    setBottomSheetTitle("Выбрать услуги");
+    setBottomSheetSnapPoints(["60%"]);
+    openBottomSheet();
+  };
 
   const handleSelectServices = (ids: string[]) => {
     setSelectedServiceIds(ids);
@@ -41,12 +48,6 @@ const ServiceTable = ({ data }: ServiceTableProps) => {
       ids.includes(item.id.toString())
     );
     setSelectedServices(newSelectedServices);
-  };
-
-  const handleOpenSelectModal = () => {
-    setBottomSheetTitle("Выбрать услуги");
-    setBottomSheetSnapPoints(["60%"]);
-    openBottomSheet();
   };
 
   const handleRemoveService = (id: number) => {

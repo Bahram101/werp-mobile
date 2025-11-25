@@ -17,6 +17,7 @@ type BottomSheetContextType = {
   setBottomSheetTitle: (title: string) => void;
   setBottomSheetContent: (content: ReactNode) => void;
   setBottomSheetSnapPoints: (data: any) => void;
+  content: ReactNode;
 };
 
 export const BottomSheetContext = createContext<BottomSheetContextType | null>(
@@ -35,6 +36,8 @@ const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
   const setBottomSheetContent = (content: ReactNode) => setContent(content);
   const setBottomSheetSnapPoints = (data: any) => setSnapPoints(data);
 
+  console.log('content',JSON.stringify(content, null, 2))
+
   return (
     <BottomSheetContext.Provider
       value={{
@@ -43,6 +46,7 @@ const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
         setBottomSheetTitle,
         setBottomSheetContent,
         setBottomSheetSnapPoints,
+        content,
       }}
     >
       {children}

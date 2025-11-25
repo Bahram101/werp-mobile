@@ -4,6 +4,7 @@ import { tabItems } from "@/features/navigation/master-tabs";
 import { useBottomSheet } from "@/providers/AppBottomSheetProvider";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";
+import * as Haptics from "expo-haptics";
 import { Tabs } from "expo-router";
 import React from "react";
 import { TouchableOpacity } from "react-native";
@@ -62,6 +63,16 @@ export default function TabsLayout() {
                   />
                 );
               },
+              tabBarButton: (props) => (
+                <TouchableOpacity
+                  {...(props as any)}
+                  onPress={(e) => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    props.onPress?.(e);
+                  }}
+                  activeOpacity={0.8}
+                />
+              ),
               ...(tab.name === "profile" && {
                 headerRight() {
                   return (
