@@ -61,8 +61,6 @@ const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
     return Component ? <Component {...modalProps} /> : null;
   };
 
-  console.log('modalType',modalType)
-
   return (
     <BottomSheetContext.Provider
       value={{

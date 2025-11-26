@@ -1,8 +1,7 @@
 import RequestsScenes from "@/features/master/requests/components/RequestsScenes";
 import RequestsTabBar from "@/features/master/requests/components/RequestsTabBar";
 import { IRequest } from "@/features/master/requests/types";
-import BottomSheet from "@gorhom/bottom-sheet";
-import { useCallback, useRef, useState } from "react";
+import { useState } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { TabBarProps, TabView } from "react-native-tab-view";
 
@@ -14,15 +13,6 @@ export default function Requests() {
     { key: "done", title: "Выполненные" },
     { key: "finished", title: "Завершенные" },
   ]);
-  const bottomSheetRef = useRef<BottomSheet>(null);
-  // const snapPoints = useMemo(() => ["45%"], []);
-  // const [filter, setFilter] = useState<"all" | "date" | "moved" | "cancelled">(
-  //   "all"
-  // );
-
-  const openSheet = useCallback(() => {
-    console.log("openSheet called", bottomSheetRef.current);
-  }, []);
 
   const data: IRequest[] = [
     {
@@ -105,7 +95,7 @@ export default function Requests() {
         lazy
         navigationState={{ index, routes }}
         renderScene={({ route }) => (
-          <RequestsScenes route={route} data={data} openSheet={openSheet} />
+          <RequestsScenes route={route} data={data} />
         )}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}

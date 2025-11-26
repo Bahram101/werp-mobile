@@ -7,21 +7,6 @@ import { AuthService } from "@/features/auth/services/auth.service";
 import { getNewTokens } from "@/features/auth/services/token.helper";
 import { coreInstance } from "./core-instance";
 
-// export const authInstance = axios.create({
-//   baseURL: AUTH_URL,
-//   headers: {
-//     "Content-Type": "application/x-www-form-urlencoded",
-//     Authorization: "Basic V0VSUDpwYXNzd29yZA==",
-//   },
-// });
-
-// const coreInstance = axios.create({
-//   baseURL: CORE_URL,
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-// });
-
 coreInstance.interceptors.request.use(async (config) => {
   console.log("REQ interceptors");
   const accessToken = await getAccessToken();

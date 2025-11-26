@@ -60,7 +60,6 @@ export default function AnimatedButton({
           style={{
             transform: [{ scale }],
             backgroundColor: pressed ? COLORS[bgPressed] : COLORS[bg],
-            // minHeight: 60,
           }}
           className={cn(
             "rounded-2xl p-4 flex-row gap-3 justify-center items-center",

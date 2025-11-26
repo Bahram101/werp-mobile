@@ -3,7 +3,6 @@ import { IAuthResponse } from "@/types/auth.interface"
 import { getRefreshToken, saveAccessToken } from "./auth.storage"
 
 export const getNewTokens = async () => {
-  console.log('getNewTokens')
   try {
     const refreshToken = await getRefreshToken()
     if (!refreshToken) throw new Error('No refresh token found')

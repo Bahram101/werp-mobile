@@ -62,4 +62,5 @@ export type SparePartItem = {
   name: string;
   price: number;
   serialNumber: string;
+  quantity: number
 };

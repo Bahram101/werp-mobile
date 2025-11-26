@@ -9,11 +9,10 @@ import FinishedSummary from "./Summaries/FinishedSummary";
 
 type Props = {
   route: { key: string };
-  data: IRequest[];
-  openSheet: () => void;
+  data: IRequest[]; 
 };
 
-export default function RequestsScenes({ route, data, openSheet }: Props) {
+export default function RequestsScenes({ route, data }: Props) {
   let filteredData: IRequest[] = [];
 
   switch (route.key) {
@@ -34,7 +33,7 @@ export default function RequestsScenes({ route, data, openSheet }: Props) {
         <>
           <View className="mx-4 flex-row justify-between items-center mb-3 mt-2">
             <Text className="text-xl font-semibold">Назначенные заявки</Text>
-            <TouchableOpacity onPress={openSheet}>
+            <TouchableOpacity>
               <SlidersHorizontal size={21} />
             </TouchableOpacity>
           </View>

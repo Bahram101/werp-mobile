@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 /*REQUEST-WORK*/
-.work-block{
-  @apply bg-white mt-3 rounded-2xl p-3 mx-4
-}
-.work-block-top {
+/* .work-block{
+  @apply bg-white mt-3 rounded-2xl p-3 mx-5
+} */
+/* .work-block-top {
   @apply pb-4 pt-2 border-b mb-4 border-grayLight
-}
+} */
 .table-head-col {
   @apply flex-row justify-center border-l border-grayLight;
 }

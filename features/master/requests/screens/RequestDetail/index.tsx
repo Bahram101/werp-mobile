@@ -1,7 +1,7 @@
 import { Accordion } from "@/components/ui/accordion";
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import Layout from "@/components/ui/master/Layout";
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import Client from "./components/Client";
@@ -10,7 +10,6 @@ import { History } from "./components/History";
 import { Service } from "./components/Service";
 
 export default function RequestDetailScreen() {
-  const router = useRouter();
   const navigation = useNavigation();
   const { id, number } = useLocalSearchParams();
   const [status, setStatus] = useState<"accepted" | "arrived">("accepted");
@@ -29,11 +28,11 @@ export default function RequestDetailScreen() {
     } else {
       router.push({
         pathname: "/requests/work/[id]",
-        params: { id, number },        
+        params: { id: String(id), number },
       });
     }
-  }; 
-  
+  };
+
   const request = {
     client: {
       name: "Асрор Умаров",
@@ -99,8 +98,8 @@ export default function RequestDetailScreen() {
 
       <AnimatedButton
         className="h-20"
-        bg="primary"
-        bgPressed="primaryDark"
+        bg={status === "accepted" ? "primary" : "blue"}
+        bgPressed={status === "accepted" ? "primaryDark" : "blueDark"}
         icon={status === "accepted" ? "check" : "map-pin"}
         iconColor="white"
         onPress={() => handleMainButton()}
