@@ -1,7 +1,7 @@
 import { COLORS } from "@/constants/theme";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { tabItems } from "@/features/navigation/master-tabs";
-import { useBottomSheet } from "@/providers/AppBottomSheetProvider";
+import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";
 import * as Haptics from "expo-haptics";

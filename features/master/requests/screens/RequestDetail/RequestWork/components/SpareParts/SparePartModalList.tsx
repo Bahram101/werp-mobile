@@ -14,12 +14,11 @@ const SparePartModalList = ({
   handleSelectSpareParts,
   selectedSparePartIds,
 }: Props) => {
-  const handleChange = (values: string[]) => {
-    handleSelectSpareParts(values);
-  };
-
   return (
-    <CheckboxGroup value={selectedSparePartIds} onChange={handleChange}>
+    <CheckboxGroup
+      value={selectedSparePartIds}
+      onChange={handleSelectSpareParts}
+    >
       {data.map((item, index) => (
         <SparePartModalListItem
           key={item.id}

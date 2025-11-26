@@ -1,5 +1,5 @@
 import { SparePartItem } from "@/features/master/requests/types";
-import { useBottomSheet } from "@/providers/AppBottomSheetProvider";
+import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import { CirclePlus, CircleX } from "lucide-react-native";
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -9,44 +9,40 @@ type SparePartsTableProps = {
 };
 
 const SparePartTable = ({ data }: SparePartsTableProps) => {
-  const [selectedSpareParts, setSelectedSpareParts] = useState<SparePartItem[]>(
-    []
-  );
-  const [selectedSparePartIds, setSelectedSparePartIds] = useState<string[]>(
-    []
-  );
+  const { showBottomSheet, updateModalProps } = useBottomSheet();
 
-  const { showBottomSheet } = useBottomSheet();
+  const [selectedSpareParts, setSelectedSpareParts] = useState<SparePartItem[]>([]);
+  const [selectedSparePartIds, setSelectedSparePartIds] = useState<string[]>([]);
 
-  const totalPrice = selectedSpareParts.reduce(
+  const totalAmount = selectedSpareParts.reduce(
     (sum, item) => sum + item.price,
     0
   );
 
-  // ⭐ Открываем модалку
   const handleOpenSelectModal = () => {
-    showBottomSheet("spareParts", {
-      data,
-      selectedSparePartIds,
-      handleSelectSpareParts,
-    });
+    showBottomSheet(
+      "spareParts",
+      {
+        data,
+        selectedSparePartIds,
+        handleSelectSpareParts,
+      },
+      { title: "Продажа запчастей", snapPoints: ["90%"] }
+    );
   };
 
-  // ⭐ Выбор запчастей
   const handleSelectSpareParts = (ids: string[]) => {
     setSelectedSparePartIds(ids);
-
     const newSelected = data.filter((item) => ids.includes(item.id.toString()));
-
     setSelectedSpareParts(newSelected);
+    updateModalProps({ selectedSparePartIds: ids });
   };
 
-  // ⭐ Удаление запчасти
   const handleRemoveSparePart = (id: number) => {
     const updated = selectedSpareParts.filter((item) => item.id !== id);
-
     setSelectedSpareParts(updated);
     setSelectedSparePartIds(updated.map((i) => String(i.id)));
+    updateModalProps({ selectedSparePartIds: String(id) });
   };
 
   return (
@@ -86,7 +82,7 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
       </View>
 
       <View className="flex-row justify-end pt-3">
-        <Text>{`Итог: ${totalPrice}`}</Text>
+        <Text>{`Итог: ${totalAmount}`}</Text>
       </View>
     </View>
   );

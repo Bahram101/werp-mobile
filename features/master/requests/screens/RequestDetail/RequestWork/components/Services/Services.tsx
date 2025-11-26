@@ -1,5 +1,5 @@
 import { ServiceItem } from "@/features/master/requests/types";
-import { useBottomSheet } from "@/providers/AppBottomSheetProvider";
+import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import { CirclePlus, CircleX } from "lucide-react-native";
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -9,39 +9,40 @@ type ServiceTableProps = {
 };
 
 const ServiceTable = ({ data }: ServiceTableProps) => {
+  const { showBottomSheet, updateModalProps } = useBottomSheet();
+
   const [selectedServices, setSelectedServices] = useState<ServiceItem[]>([]);
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
-
-  const { showBottomSheet } = useBottomSheet();
 
   const totalAmount = selectedServices.reduce(
     (acc, item) => acc + item.price,
     0
   );
 
-  // ⭐ Упрощённое открытие модалки
   const handleOpenSelectModal = () => {
-    showBottomSheet("services", {
-      data,
-      selectedServiceIds,
-      handleSelectServices,
-    });
+    showBottomSheet(
+      "services",
+      {
+        data,
+        selectedServiceIds,
+        handleSelectServices,
+      },
+      { title: "Выбрать услуги", snapPoints: ["60%"] }
+    );
   };
 
-  // ⭐ Обновление выбранных услуг
   const handleSelectServices = (ids: string[]) => {
     setSelectedServiceIds(ids);
-
     const newSelected = data.filter((item) => ids.includes(String(item.id)));
-
     setSelectedServices(newSelected);
+    updateModalProps({ selectedServiceIds: ids });
   };
 
-  // ⭐ Удаление услуги
   const handleRemoveService = (id: number) => {
     const updated = selectedServices.filter((item) => item.id !== id);
     setSelectedServices(updated);
     setSelectedServiceIds(updated.map((i) => String(i.id)));
+    updateModalProps({ selectedServiceIds: String(id) });
   };
 
   return (

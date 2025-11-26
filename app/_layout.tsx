@@ -2,7 +2,7 @@ import { AppBottomSheetRef } from "@/components/ui/bottom-sheet/AppBottomSheet";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import AuthProvider from "@/features/auth/components/AuthProvider";
 import "@/global.css";
-import AppBottomSheetProvider from "@/providers/AppBottomSheetProvider";
+import AppBottomSheetProvider from "@/providers/BottomSheet/AppBottomSheetProvider";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { useEffect, useRef } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";

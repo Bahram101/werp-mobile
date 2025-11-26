@@ -90,8 +90,6 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
         snapPoints={snapPoints}
         backdropComponent={CustomBackdrop}
         enablePanDownToClose={true}
-        // enableContentPanningGesture={true}
-        // enableHandlePanningGesture={true}
       >
         <BottomSheetView className="p-4">
           {title && (
