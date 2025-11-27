@@ -1,30 +1,16 @@
-import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
+import { router } from "expo-router";
 import React from "react";
-import { Button, Text, TextInput, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
-const App = () => {
-  const { openBottomSheet, setBottomSheetTitle, setBottomSheetContent, setBottomSheetSnapPoints } =
-    useBottomSheet();
-
-  const openAddServiceSheet = () => {
-    openBottomSheet();
-    setBottomSheetTitle("Выбрать услуги!!!");
-    setBottomSheetSnapPoints(["95%"]);
-    setBottomSheetContent(
-      <View>
-        <Text>Форма добавления услуги</Text>
-        <TextInput placeholder="Название" />
-        <TextInput placeholder="Цена" keyboardType="numeric" />
-      </View>
-    );
-  };
-
+const Profile = () => {
   return (
     <View className="flex-1 items-center justify-center">
       <Text className="text-lg mb-4">Пример BottomSheet</Text>
-      <Button title="Создать задачу" onPress={openAddServiceSheet} />
+      <Pressable onPress={() => router.push("/magnum")}>
+        <Text>Button</Text>
+      </Pressable>
     </View>
   );
 };
 
-export default App;
+export default Profile;

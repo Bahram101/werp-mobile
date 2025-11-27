@@ -13,6 +13,15 @@ export default function MasterLayout() {
           headerShown: false,
         }}
       />
+
+      <Stack.Screen
+        name="magnum"
+        options={{
+          // presentation: "fullScreenModal",
+          headerShown: false,
+          animation: "slide_from_left",
+        }}
+      />
     </Stack>
   );
 }

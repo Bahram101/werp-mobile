@@ -7,10 +7,9 @@ import { X } from "lucide-react-native";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import {
   Pressable,
-  ScrollView,
   Text,
   TouchableWithoutFeedback,
-  View,
+  View
 } from "react-native";
 import Animated, {
   interpolate,
@@ -90,6 +89,7 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
         snapPoints={snapPoints}
         backdropComponent={CustomBackdrop}
         enablePanDownToClose={true}
+        handleStyle={{ display: "none" }}
       >
         <BottomSheetView className="p-4">
           {title && (
@@ -100,9 +100,9 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
               </Pressable>
             </View>
           )}
-          <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+          {/* <ScrollView contentContainerStyle={{ paddingBottom: 20 }}> */}
             {children}
-          </ScrollView>
+          {/* </ScrollView> */}
         </BottomSheetView>
       </BottomSheet>
     );

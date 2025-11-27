@@ -31,7 +31,7 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
         selectedSparePartIds,
         handleSelectSpareParts,
       },
-      { title: "Продажа запчастей", snapPoints: ["90%"] }
+      { title: "Продажа запчастей", snapPoints: ["95%"] }
     );
   };
 

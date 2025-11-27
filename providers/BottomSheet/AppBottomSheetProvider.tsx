@@ -71,7 +71,6 @@ const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
       }}
     >
       {children}
-
       <AppBottomSheet ref={modalRef} title={title} snapPoints={snapPoints}>
         {renderContent()}
       </AppBottomSheet>
