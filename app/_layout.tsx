@@ -2,6 +2,7 @@ import { AppBottomSheetRef } from "@/components/ui/bottom-sheet/AppBottomSheet";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import AuthProvider from "@/features/auth/components/AuthProvider";
 import "@/global.css";
+import ActionSheetProvider from "@/providers/ActionSheetProvider";
 import AppBottomSheetProvider from "@/providers/BottomSheet/AppBottomSheetProvider";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { useEffect, useRef } from "react";
@@ -18,15 +19,17 @@ export default function RootlayoutWrapper() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <AppBottomSheetProvider>
-        <GluestackUIProvider mode="light">
-          <AuthProvider>
-            <ReactQueryProvider>
-              <RootLayout />
-            </ReactQueryProvider>
-          </AuthProvider>
-        </GluestackUIProvider>
-      </AppBottomSheetProvider>
+      <GluestackUIProvider mode="light">
+        <AuthProvider>
+          <ReactQueryProvider>
+            <ActionSheetProvider>
+              <AppBottomSheetProvider>
+                <RootLayout />
+              </AppBottomSheetProvider>
+            </ActionSheetProvider>
+          </ReactQueryProvider>
+        </AuthProvider>
+      </GluestackUIProvider>
     </GestureHandlerRootView>
   );
 }
