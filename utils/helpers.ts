@@ -14,3 +14,5 @@ export const formatCurrency = (value: number, symbol: string = "₸"): string =>
 
   return value.toLocaleString("ru-RU") + ` ${symbol}`;
 };
+
+export const tenge = String.fromCharCode(0x20b8);

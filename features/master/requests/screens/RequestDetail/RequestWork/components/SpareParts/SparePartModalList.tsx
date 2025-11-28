@@ -14,6 +14,7 @@ const SparePartModalList = ({
   handleSelectSpareParts,
   selectedSparePartIds,
 }: Props) => {
+  // console.log('selectedSparePartIds',selectedSparePartIds)
   return (
     <CheckboxGroup
       value={selectedSparePartIds}
@@ -23,8 +24,7 @@ const SparePartModalList = ({
         <SparePartModalListItem
           key={item.id}
           isLast={index === data.length - 1}
-          value={String(item.id)}
-          label={item.name}
+          item={item}
         />
       ))}
     </CheckboxGroup>

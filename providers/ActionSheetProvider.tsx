@@ -14,7 +14,6 @@ const ActionSheetProvider = ({ children }: { children: ReactNode }) => {
   const [content, setContent] = useState<React.ReactNode>(null);
 
   const openSheet = (node: React.ReactNode) => {
-    console.log('OPEN SHEET')
     setContent(node);
     setIsOpen(true);
   };
@@ -34,7 +33,6 @@ const ActionSheetProvider = ({ children }: { children: ReactNode }) => {
           <ActionsheetDragIndicatorWrapper>
             <ActionsheetDragIndicator />
           </ActionsheetDragIndicatorWrapper>
-
           {content}
         </ActionsheetContent>
       </Actionsheet>

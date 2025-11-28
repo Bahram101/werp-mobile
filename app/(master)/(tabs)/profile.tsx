@@ -34,7 +34,7 @@ const Profile = () => {
       <Actionsheet
         isOpen={showActionsheet}
         onClose={handleClose}
-        snapPoints={[35]}
+        // snapPoints={[35]}
       >
         <ActionsheetBackdrop />
         <ActionsheetContent>

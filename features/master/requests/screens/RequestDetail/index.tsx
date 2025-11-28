@@ -77,6 +77,7 @@ export default function RequestDetailScreen() {
 
       <View className="flex-row gap-3 ">
         <AnimatedButton
+          className="p-4"
           bg="white"
           bgPressed="grayLight"
           icon="message-circle"
@@ -86,6 +87,7 @@ export default function RequestDetailScreen() {
           <Text style={{ lineHeight: 18 }}>{"Чат с\n клиентом"}</Text>
         </AnimatedButton>
         <AnimatedButton
+          className="p-4"
           bg="white"
           bgPressed="grayLight"
           icon="phone"
@@ -109,6 +111,7 @@ export default function RequestDetailScreen() {
 
       <View className="flex-row gap-3">
         <AnimatedButton
+          className="p-4"
           bg="yellow"
           bgPressed="yellowDark"
           icon="corner-down-right"
@@ -118,6 +121,7 @@ export default function RequestDetailScreen() {
           <Text>Перенос</Text>
         </AnimatedButton>
         <AnimatedButton
+          className="p-4"
           bg="red"
           bgPressed="redDark"
           icon="x-circle"
