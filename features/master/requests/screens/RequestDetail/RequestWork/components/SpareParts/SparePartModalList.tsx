@@ -7,14 +7,15 @@ type Props = {
   data: SparePartItem[];
   handleSelectSpareParts: (values: string[]) => void;
   selectedSparePartIds: string[];
+  handleAddPart: (item: SparePartItem, qty: number) => void;
 };
 
 const SparePartModalList = ({
   data,
   handleSelectSpareParts,
   selectedSparePartIds,
+  handleAddPart,
 }: Props) => {
-  // console.log('selectedSparePartIds',selectedSparePartIds)
   return (
     <CheckboxGroup
       value={selectedSparePartIds}
@@ -25,6 +26,7 @@ const SparePartModalList = ({
           key={item.id}
           isLast={index === data.length - 1}
           item={item}
+          onAddPart={handleAddPart}
         />
       ))}
     </CheckboxGroup>

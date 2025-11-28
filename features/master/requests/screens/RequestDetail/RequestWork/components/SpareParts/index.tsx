@@ -30,16 +30,17 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
         data,
         selectedSparePartIds,
         handleSelectSpareParts,
+        handleAddPart,
       },
       { title: "Продажа запчастей", snapPoints: ["95%"] }
     );
   };
 
   const handleSelectSpareParts = (ids: string[]) => {
-    setSelectedSparePartIds(ids);
-    const newSelected = data.filter((item) => ids.includes(item.id.toString()));
-    setSelectedSpareParts(newSelected);
-    updateModalProps({ selectedSparePartIds: ids });
+    // setSelectedSparePartIds(ids);
+    // const newSelected = data.filter((item) => ids.includes(item.id.toString()));
+    // setSelectedSpareParts(newSelected);
+    // updateModalProps({ selectedSparePartIds: ids });
   };
 
   const handleRemoveSparePart = (id: number) => {
@@ -47,6 +48,16 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
     setSelectedSpareParts(updated);
     setSelectedSparePartIds(updated.map((i) => String(i.id)));
     updateModalProps({ selectedSparePartIds: String(id) });
+  };
+
+  const handleAddPart = (item: SparePartItem, qty: number) => {
+    const updated = [
+      ...selectedSpareParts,
+      { ...item, quantity: qty, price: item.price * qty },
+    ];
+
+    setSelectedSpareParts(updated);
+    setSelectedSparePartIds(updated.map((i) => String(i.id)));
   };
 
   return (
