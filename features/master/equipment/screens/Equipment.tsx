@@ -60,7 +60,7 @@ const Equipment = () => {
   return (
     <Layout>
       <EquipmentList data={equipments} />
-      <AnimatedButton bg="primary" bgPressed="primaryDark">
+      <AnimatedButton bg="primary" bgPressed="primaryDark" className="p-4">
         Заказать запчасти
       </AnimatedButton> 
     </Layout>
