@@ -23,7 +23,7 @@ export const AuthService = {
             "Content-Type": "application/x-www-form-urlencoded",
             Authorization: "Basic V0VSUDpwYXNzd29yZA==",
           },
-        }
+        },
       );
       // console.log('data',data)
 
