@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { authInstance } from "@/services/api/auth-instance";
 import { errorCatch } from "@/services/api/error";
-import { EnumAsyncStorage, IAuthResponse } from "@/types/auth.interface";
+import { AuthResponse, EnumAsyncStorage } from "@/types/auth.interface";
 import Toast from "react-native-toast-message";
 import { deleteTokensFromStorage, saveToStorage } from "./auth.storage";
 
@@ -12,20 +12,12 @@ export const AuthService = {
       const bodyFormData = new URLSearchParams({
         username,
         password,
-        grant_type: "password",
       });
 
-      const { data } = await authInstance.post<IAuthResponse>(
+      const { data } = await authInstance.post<AuthResponse>(
         "/token",
-        bodyFormData.toString(),
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: "Basic V0VSUDpwYXNzd29yZA==",
-          },
-        },
+        bodyFormData,
       );
-      // console.log('data',data)
 
       if (data.access_token) {
         await saveToStorage(data);

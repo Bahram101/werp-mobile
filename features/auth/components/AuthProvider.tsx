@@ -32,7 +32,7 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
             const storedUser = await getUserFromStorage();
             if (isMounted) setUser(storedUser);
           } catch (e) {
-            console.log(e)
+            console.log(e);
           }
         } else {
           setUser(null);
@@ -58,7 +58,7 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
     AuthService.logout().then(() => setUser(null));
   };
 
-  console.log('user', user)
+  console.log("user", user);
 
   return (
     <AuthContext.Provider value={{ isInitialized, user, setUser, logout }}>

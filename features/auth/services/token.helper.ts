@@ -1,5 +1,5 @@
 import { authInstance } from "@/services/api/auth-instance";
-import { IAuthResponse } from "@/types/auth.interface";
+import { AuthResponse } from "@/types/auth.interface";
 import { getRefreshToken, saveAccessToken } from "./auth.storage";
 
 export const getNewTokens = async () => {
@@ -11,18 +11,10 @@ export const getNewTokens = async () => {
     body.set("grant_type", "refresh_token");
     body.set("refresh_token", refreshToken);
 
-    const { data } = await authInstance.post<IAuthResponse>(
+    const { data } = await authInstance.post<AuthResponse>(
       "/token",
       body.toString(),
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: "Basic V0VSUDpwYXNzd29yZA==",
-        },
-      },
     );
-
-    console.log("dddd", data);
 
     if (data.access_token) await saveAccessToken(data.access_token);
 
