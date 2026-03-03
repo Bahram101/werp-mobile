@@ -1,4 +1,4 @@
-import { IRequest } from "@/features/master/requests/types";
+import { IRequest } from "@/modules/service/features/requests/types";
 import cn from "clsx";
 
 import { ReactNode, useRef } from "react";
@@ -8,14 +8,14 @@ type AnimatedBlockProps = {
   children: ReactNode;
   item?: IRequest;
   bg?: string;
-  onPress?: () => void
+  onPress?: () => void;
 };
 
 export default function AnimatedBlock({
   children,
   item,
   bg,
-  onPress
+  onPress,
 }: AnimatedBlockProps) {
   const scale = useRef(new Animated.Value(1)).current;
 
@@ -36,7 +36,7 @@ export default function AnimatedBlock({
   };
 
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       activeOpacity={0.7}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
@@ -44,7 +44,10 @@ export default function AnimatedBlock({
     >
       <Animated.View
         style={{ transform: [{ scale }] }}
-        className={cn("mb-3 rounded-2xl p-3 w-full", bg ? 'bg-primary' : 'bg-white')}
+        className={cn(
+          "mb-3 rounded-2xl p-3 w-full",
+          bg ? "bg-primary" : "bg-white",
+        )}
       >
         {children}
       </Animated.View>

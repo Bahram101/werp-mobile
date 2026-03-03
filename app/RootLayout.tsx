@@ -21,8 +21,10 @@ export default function RootLayout() {
     if (!user) {
       router.replace("/(auth)/login");
     } else if (user.user_id === 1) {
-      router.replace("/(master)/(tabs)/home");
-    } else if (user.user_id === 4957) {
+      router.replace("/(modules)/service/(tabs)/home");
+      // } else if (user.user_id === 2) {
+      //   router.replace("/(master)/(tabs)/home");
+    } else if (user.user_id === 3) {
       router.replace("/(main)/(tabs)");
     }
   }, [isInitialized, navigationState?.key, user]);
