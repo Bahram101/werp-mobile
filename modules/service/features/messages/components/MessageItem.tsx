@@ -18,7 +18,7 @@ export default function MessageItem({
   return (
     <Link
       href={{
-        pathname: "/(modules)/service/(tabs)/messages/[id]",
+        pathname: "/(modules)/service/(master-tabs)/messages/[id]",
         params: { id: item.id, title: item.name },
       }}
       asChild

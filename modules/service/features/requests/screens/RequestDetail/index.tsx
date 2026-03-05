@@ -27,7 +27,7 @@ export default function RequestDetailScreen() {
       setStatus("arrived");
     } else {
       router.push({
-        pathname: "/(modules)/service/(tabs)/requests/work/[id]", // /(modules)/service/(tabs)/messages/[id]
+        pathname: "/(modules)/service/(master-tabs)/requests/work/[id]", // /(modules)/service/(tabs)/messages/[id]
         params: { id: String(id), number },
       });
     }

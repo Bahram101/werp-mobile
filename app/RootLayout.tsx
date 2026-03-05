@@ -20,12 +20,14 @@ export default function RootLayout() {
 
     if (!user) {
       router.replace("/(auth)/login");
-    } else if (user.user_id === 1) {
-      router.replace("/(modules)/service/(tabs)/home");
-      // } else if (user.user_id === 2) {
-      //   router.replace("/(master)/(tabs)/home");
-    } else if (user.user_id === 3) {
-      router.replace("/(main)/(tabs)");
+    }
+    // else if (user.user_id === 1) {
+    //   router.replace("/service/home");
+    // } else if (user.user_id === 4047) {
+    //   router.replace("/(main)/(tabs)");
+    // }
+    else {
+      router.replace("/(modules)/service" as any);
     }
   }, [isInitialized, navigationState?.key, user]);
 

@@ -20,15 +20,19 @@ export function History({ data }: Props) {
         {data.map((item, index) => (
           <TouchableOpacity
             key={item.id}
-            onPress={() => router.push(`/requests/history/${item.id}`)}
+            onPress={() =>
+              router.push(
+                `/(modules)/service/(master-tabs)/requests/history/${item.id}`,
+              )
+            }
             className={cn(
               "flex-row justify-between items-center w-full border-gray-200",
-              data.length - 1 !== index ? "border-b pb-4" : "pb-1",              
-              index !== 0 ? "pt-4" : 'pt-1',              
+              data.length - 1 !== index ? "border-b pb-4" : "pb-1",
+              index !== 0 ? "pt-4" : "pt-1",
             )}
           >
             <Text className="text-base text-gray-700">{item.date}</Text>
-            <Feather name="chevron-right" size={18} className="-mr-2"/>
+            <Feather name="chevron-right" size={18} className="-mr-2" />
           </TouchableOpacity>
         ))}
       </View>

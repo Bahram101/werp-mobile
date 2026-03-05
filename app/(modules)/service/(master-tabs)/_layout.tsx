@@ -1,6 +1,6 @@
 import { COLORS } from "@/constants/theme";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { tabItems } from "@/modules/service/navigation/ServiceTabs";
+import { tabItems } from "@/modules/service/navigation/MasterTabs";
 import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";
@@ -27,6 +27,13 @@ export default function TabsLayout() {
         tabBarInactiveTintColor: "#B0B2B5",
       }}
     >
+      <Tabs.Screen
+        name="index"
+        options={{
+          href: null,
+          headerShown: false,
+        }}
+      />
       {tabItems.map((tab) => {
         return (
           <Tabs.Screen

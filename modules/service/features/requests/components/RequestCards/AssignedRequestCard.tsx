@@ -16,7 +16,7 @@ type AssignedRequestCardProps = {
 const AssignedRequestCard: FC<AssignedRequestCardProps> = ({ item }) => {
   const handlePress = useCallback(() => {
     router.push({
-      pathname: "/(modules)/service/(tabs)/requests/[id]",
+      pathname: "/(modules)/service/(master-tabs)/requests/[id]",
       params: { id: item.id, number: item.number },
     });
   }, [item.id, item.number]);
