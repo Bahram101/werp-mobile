@@ -23,17 +23,17 @@ export default function RootLayout() {
         name: "Начальник отдела Маркетинг",
       },
       {
-        id: 618,
-        name: "E-Contract",
-      },
-      {
         id: 620,
         name: "mobile",
       },
       {
         id: 622,
-        name: "mobile-master",
+        name: "mobile-marketing",
       },
+      // {
+      //   id: 624,
+      //   name: "mobile-master",
+      // },
     ],
   };
 
