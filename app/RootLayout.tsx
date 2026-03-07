@@ -15,19 +15,42 @@ export default function RootLayout() {
   const navigationState = useRootNavigationState();
   const { user, isInitialized } = useAuth();
 
+  const userInfo = {
+    ...user,
+    rids: [
+      {
+        id: 52,
+        name: "Начальник отдела Маркетинг",
+      },
+      {
+        id: 618,
+        name: "E-Contract",
+      },
+      {
+        id: 620,
+        name: "mobile",
+      },
+      {
+        id: 622,
+        name: "mobile-master",
+      },
+    ],
+  };
+
   useEffect(() => {
     if (!isInitialized || !navigationState?.key) return;
 
     if (!user) {
       router.replace("/(auth)/login");
+      return;
     }
-    // else if (user.user_id === 1) {
-    //   router.replace("/*-service/home");
-    // } else if (user.user_id === 4047) {
-    //   router.replace("/(main)/(tabs)");
-    // }
-    else {
-      router.replace("/(modules)/service" as any);
+
+    const roles = userInfo.rids.map((role) => role.name);
+
+    if (roles.includes("mobile-master")) {
+      router.replace("/(apps)/master");
+    } else {
+      router.replace("/(hub)");
     }
   }, [isInitialized, navigationState?.key, user]);
 
