@@ -22,7 +22,7 @@ export default function RootLayout() {
       router.replace("/(auth)/login");
     }
     // else if (user.user_id === 1) {
-    //   router.replace("/service/home");
+    //   router.replace("/*-service/home");
     // } else if (user.user_id === 4047) {
     //   router.replace("/(main)/(tabs)");
     // }
