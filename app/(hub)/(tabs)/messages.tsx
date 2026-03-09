@@ -1,12 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-const Requests = () => {
+const Messages = () => {
   return (
     <View>
-      <Text>Requests</Text>
+      <Text>Messages</Text>
     </View>
   );
 };
 
-export default Requests;
+export default Messages;

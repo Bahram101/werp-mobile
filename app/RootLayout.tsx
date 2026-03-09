@@ -26,14 +26,16 @@ export default function RootLayout() {
         id: 620,
         name: "mobile",
       },
-      {
-        id: 622,
-        name: "mobile-marketing",
-      },
+
       // {
-      //   id: 624,
-      //   name: "mobile-master",
+      //   id: 622,
+      //   name: "mobile-marketing",
       // },
+
+      {
+        id: 624,
+        name: "mobile-master",
+      },
     ],
   };
 
@@ -46,13 +48,19 @@ export default function RootLayout() {
     }
 
     const roles = userInfo.rids.map((role) => role.name);
+    const hasMobileAccess = roles.includes("mobile");
+
+    if (!hasMobileAccess) {
+      router.replace("/(auth)/no-access");
+      return;
+    }
 
     if (roles.includes("mobile-master")) {
-      router.replace("/(apps)/master");
+      router.replace("/(apps)/master/(tabs)/home");
     } else {
-      router.replace("/(hub)");
+      router.replace("/(hub)/(tabs)/home");
     }
-  }, [isInitialized, navigationState?.key, user]);
+  }, [isInitialized, navigationState?.key, user, userInfo.rids]);
 
   if (!isInitialized || !navigationState?.key) {
     return <Loader />;

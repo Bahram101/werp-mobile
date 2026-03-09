@@ -4,7 +4,7 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import { router } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
-export default function HubScreen() {
+export default function HomeScreen() {
   const { user } = useAuth();
 
   const userInfo = {

@@ -2,7 +2,7 @@ import { ITabItem } from "@/types/tab.interface";
 
 export const mainTabs: ITabItem[] = [
   {
-    name: "index",
+    name: "home",
     title: "Главная",
     icon: "home",
   },

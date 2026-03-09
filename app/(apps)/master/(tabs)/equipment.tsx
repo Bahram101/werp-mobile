@@ -1,12 +1,3 @@
-import React from "react";
-import { Text, View } from "react-native";
-
-const Equipment = () => {
-  return (
-    <View>
-      <Text>Equipment</Text>
-    </View>
-  );
-};
+import Equipment from "@/modules/service/features/equipment/screens/Equipment";
 
 export default Equipment;
