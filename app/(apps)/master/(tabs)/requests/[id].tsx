@@ -1,3 +1,3 @@
-import RequestDetail from "@/modules/service/features/requests/screens/RequestDetail";
+import RequestDetail from "@/features/master/requests/screens/RequestDetail";
 
 export default RequestDetail;

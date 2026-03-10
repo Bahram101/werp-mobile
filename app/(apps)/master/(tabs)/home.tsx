@@ -1,6 +1,6 @@
 import Banner from "@/components/ui/master/Banner";
 import Header from "@/components/ui/master/Header";
-import RequestTypesToday from "@/modules/service/features/requests/components/RequestTypesToday";
+import RequestTypesToday from "@/features/master/requests/components/RequestTypesToday";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 

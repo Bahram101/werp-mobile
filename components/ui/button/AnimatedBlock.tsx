@@ -1,4 +1,4 @@
-import { IRequest } from "@/modules/service/features/requests/types";
+import { IRequest } from "@/features/master/requests/types";
 import cn from "clsx";
 
 import { ReactNode, useRef } from "react";

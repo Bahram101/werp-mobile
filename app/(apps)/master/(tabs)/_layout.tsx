@@ -1,6 +1,6 @@
 import { COLORS } from "@/constants/theme";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { tabItems } from "@/modules/service/navigation/MasterTabs";
+import { tabItems } from "@/navigation/master/tabs";
 import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import cn from "clsx";

@@ -1,3 +1,3 @@
-import Equipment from "@/modules/service/features/equipment/screens/Equipment";
+import Equipment from "@/features/master/equipment/screens/Equipment";
 
 export default Equipment;

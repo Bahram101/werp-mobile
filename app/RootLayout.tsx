@@ -26,12 +26,10 @@ export default function RootLayout() {
         id: 620,
         name: "mobile",
       },
-
       // {
       //   id: 622,
       //   name: "mobile-marketing",
       // },
-
       {
         id: 624,
         name: "mobile-master",
@@ -56,7 +54,7 @@ export default function RootLayout() {
     }
 
     if (roles.includes("mobile-master")) {
-      router.replace("/(apps)/master/(tabs)/home");
+      router.replace("/(apps)/master");
     } else {
       router.replace("/(hub)/(tabs)/home");
     }

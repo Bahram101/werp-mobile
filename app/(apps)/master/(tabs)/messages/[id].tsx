@@ -1,3 +1,3 @@
-import MessageDetail from "@/modules/service/features/messages/screens/MessageDetail";
+import MessageDetail from "@/features/master/messages/screens/MessageDetail";
 
 export default MessageDetail;

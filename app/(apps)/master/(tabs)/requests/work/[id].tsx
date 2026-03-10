@@ -1,2 +1,2 @@
-import RequestWorkScreen from "@/modules/service/features/requests/screens/RequestDetail/RequestWork";
+import RequestWorkScreen from "@/features/master/requests/screens/RequestDetail/RequestWork";
 export default RequestWorkScreen;
