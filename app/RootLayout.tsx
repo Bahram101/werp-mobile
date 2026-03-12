@@ -1,5 +1,6 @@
 import { Loader } from "@/components/ui/Loader";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { AuthService } from "@/features/auth/services/auth.service";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import {
   DarkTheme,
@@ -9,33 +10,27 @@ import {
 import { router, Slot, useRootNavigationState } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
+import Toast from "react-native-toast-message";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const navigationState = useRootNavigationState();
-  const { user, isInitialized } = useAuth();
+  const { user, setUser, isInitialized } = useAuth();
 
-  const userInfo = {
-    ...user,
-    rids: [
-      {
-        id: 52,
-        name: "Начальник отдела Маркетинг",
-      },
-      {
-        id: 620,
-        name: "mobile",
-      },
-      // {
-      //   id: 622,
-      //   name: "mobile-marketing",
-      // },
-      {
-        id: 624,
-        name: "mobile-master",
-      },
-    ],
-  };
+  useEffect(() => {
+    const loadUserInfo = async () => {
+      if (!user || user.extraLoaded) return;
+
+      const currentStaff = await AuthService.getUserInfo();
+
+      setUser({
+        ...user,
+        currentStaff,
+        extraLoaded: true,
+      });
+    };
+    loadUserInfo();
+  }, [user, setUser]);
 
   useEffect(() => {
     if (!isInitialized || !navigationState?.key) return;
@@ -45,20 +40,25 @@ export default function RootLayout() {
       return;
     }
 
-    const roles = userInfo.rids.map((role) => role.name);
+    if (!user?.currentStaff) return;
+
+    const roles = user.currentStaff.roles?.map((role: any) => role.name) ?? [];
     const hasMobileAccess = roles.includes("mobile");
 
     if (!hasMobileAccess) {
-      router.replace("/(auth)/no-access");
+      Toast.show({
+        type: "error",
+        text1: "У вас нет доступа к мобильному приложению",
+      });
       return;
     }
 
     if (roles.includes("mobile-master")) {
       router.replace("/(apps)/master");
     } else {
-      router.replace("/(hub)/(tabs)/home");
+      router.replace("/(hub)");
     }
-  }, [isInitialized, navigationState?.key, user, userInfo.rids]);
+  }, [isInitialized, navigationState?.key, user]);
 
   if (!isInitialized || !navigationState?.key) {
     return <Loader />;
@@ -67,6 +67,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Slot />
+      <Toast />
       <StatusBar style="auto" />
     </ThemeProvider>
   );

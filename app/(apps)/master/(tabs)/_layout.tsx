@@ -41,11 +41,11 @@ export default function TabsLayout() {
             name={tab.name}
             options={{
               tabBarStyle: {
-                // backgroundColor: "#111827",
-                // borderTopColor: "transparent",
                 elevation: 0,
                 borderTopWidth: 1,
                 borderTopColor: "#E5E7EB",
+                // backgroundColor: "#111827",
+                // borderTopColor: "transparent",
                 // borderRadius: 25,
               },
               headerShown: ["home", "requests", "messages"].includes(tab.name)

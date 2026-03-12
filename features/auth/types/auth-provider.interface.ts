@@ -1,12 +1,12 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction } from "react";
 
-import { IUser } from '@/types/user.interface'
+import { IUser } from "@/types/user.interface";
 
-export type TypeUserState = IUser | null
+export type TypeUserState = IUser | null;
 
 export interface IContext {
-  user: TypeUserState
-  setUser: Dispatch<SetStateAction<TypeUserState>>
-  isInitialized: boolean
-  logout: () => void
+  user: TypeUserState;
+  setUser: Dispatch<SetStateAction<TypeUserState>>;
+  isInitialized: boolean;
+  logout: () => void;
 }

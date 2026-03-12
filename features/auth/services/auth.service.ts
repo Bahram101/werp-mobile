@@ -38,4 +38,10 @@ export const AuthService = {
     await deleteTokensFromStorage();
     await AsyncStorage.removeItem(EnumAsyncStorage.USER);
   },
+
+  async getUserInfo() {
+    const { data } = await authInstance.get("/userInfo");
+    console.log("metaa", JSON.stringify(data.currentStaff, null, 2));
+    return data.currentStaff;
+  },
 };

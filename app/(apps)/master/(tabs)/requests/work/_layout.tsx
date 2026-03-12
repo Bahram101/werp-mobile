@@ -12,7 +12,7 @@ export default function ReqeustWorkLayout() {
           headerLeft: () => (
             <Pressable
               onPress={() => navigation.goBack()}
-              style={{ marginLeft: -8 }}
+              style={{ marginLeft: 2 }}
             >
               <Feather name="chevron-left" size={30} color="#000" />
             </Pressable>

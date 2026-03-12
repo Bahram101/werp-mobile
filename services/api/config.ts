@@ -1,9 +1,10 @@
-export const SERVER = process.env.EXPO_PUBLIC_SERVER;
+export const SERVER_URL = process.env.EXPO_PUBLIC_SERVER;
+export const API_URL = `${SERVER_URL}/api`;
 
-export const AUTH_URL = `${SERVER}:${process.env.EXPO_PUBLIC_PORT_AUTH}`;
-export const CORE_URL = `${SERVER}:${process.env.EXPO_PUBLIC_PORT_CORE}`;
-export const SERVICE_URL = `${SERVER}:${process.env.EXPO_PUBLIC_PORT_SERVICE}`;
-export const CALL_CENTER_URL = `${SERVER}:${process.env.EXPO_PUBLIC_PORT_CALL_CENTER}`;
-export const CRM_URL = `${SERVER}:${process.env.EXPO_PUBLIC_PORT_CRM}`;
+// export const AUTH_URL = `${SERVER_URL}:${process.env.EXPO_PUBLIC_PORT_AUTH}`;
+// export const CORE_URL = `${SERVER_URL}:${process.env.EXPO_PUBLIC_PORT_CORE}`;
+// export const SERVICE_URL = `${SERVER_URL}:${process.env.EXPO_PUBLIC_PORT_SERVICE}`;
+// export const CALL_CENTER_URL = `${SERVER_URL}:${process.env.EXPO_PUBLIC_PORT_CALL_CENTER}`;
+// export const CRM_URL = `${SERVER_URL}:${process.env.EXPO_PUBLIC_PORT_CRM}`;
 
-console.log("SERVER", SERVER);
+console.log("SERVER", SERVER_URL);
