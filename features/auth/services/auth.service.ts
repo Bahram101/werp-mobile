@@ -41,7 +41,6 @@ export const AuthService = {
 
   async getUserInfo() {
     const { data } = await authInstance.get("/userInfo");
-    console.log("metaa", JSON.stringify(data.currentStaff, null, 2));
     return data.currentStaff;
   },
 };

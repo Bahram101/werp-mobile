@@ -1,6 +1,5 @@
 import { Loader } from "@/components/ui/Loader";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { AuthService } from "@/features/auth/services/auth.service";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import {
   DarkTheme,
@@ -15,27 +14,29 @@ import Toast from "react-native-toast-message";
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const navigationState = useRootNavigationState();
-  const { user, setUser, isInitialized } = useAuth();
+  const { user, isInitialized } = useAuth();
 
-  useEffect(() => {
-    const loadUserInfo = async () => {
-      if (!user || user.extraLoaded) return;
+  // console.log("user", JSON.stringify(user, null, 2));
 
-      try {
-        const currentStaff = await AuthService.getUserInfo();
+  // useEffect(() => {
+  //   const loadUserInfo = async () => {
+  //     if (!user || user.extraLoaded) return;
 
-        setUser({
-          ...user,
-          currentStaff,
-          extraLoaded: true,
-        });
-      } catch (e) {
-        console.log("getUserInfo error", e);
-      }
-    };
+  //     try {
+  //       const currentStaff = await AuthService.getUserInfo();
 
-    loadUserInfo();
-  }, [user, setUser]);
+  //       setUser({
+  //         ...user,
+  //         currentStaff,
+  //         extraLoaded: true,
+  //       });
+  //     } catch (e) {
+  //       console.log("getUserInfo error", e);
+  //     }
+  //   };
+
+  //   loadUserInfo();
+  // }, [user, setUser]);
 
   useEffect(() => {
     if (!isInitialized || !navigationState?.key) return;
@@ -45,9 +46,10 @@ export default function RootLayout() {
       return;
     }
 
-    if (!user.extraLoaded || !user.currentStaff) return;
+    if (!user?.extraLoaded || !user.currentStaff?.roles?.length) return;
 
-    const roles = user.currentStaff.roles?.map((role: any) => role.name) ?? [];
+    const roles =
+      user?.currentStaff?.roles?.map((role: any) => role.name) ?? [];
     const hasMobileAccess = roles.includes("mobile");
 
     if (!hasMobileAccess) {

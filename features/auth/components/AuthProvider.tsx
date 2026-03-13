@@ -27,16 +27,31 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
     const initAuth = async () => {
       try {
         const accessToken = await getAccessToken();
-        if (accessToken) {
-          try {
-            const storedUser = await getUserFromStorage();
-            if (isMounted) setUser(storedUser);
-          } catch (e) {
-            console.log(e);
-          }
-        } else {
+
+        if (!accessToken) {
           setUser(null);
+          return;
         }
+
+        const storedUser = await getUserFromStorage();
+        if (!storedUser) {
+          setUser(null);
+          return;
+        }
+
+        // загружаем roles
+        const currentStaff = await AuthService.getUserInfo();
+
+        if (isMounted) {
+          setUser({
+            ...storedUser,
+            currentStaff,
+            extraLoaded: true,
+          });
+        }
+      } catch (e) {
+        console.log("Auth init error:", e);
+        setUser(null);
       } finally {
         setIsInitialized(true);
         await SplashScreen.hideAsync();
@@ -58,7 +73,7 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
     AuthService.logout().then(() => setUser(null));
   };
 
-  console.log("user", JSON.stringify(user, null, 2));
+  // console.log("user", JSON.stringify(user, null, 2));
 
   return (
     <AuthContext.Provider value={{ isInitialized, user, setUser, logout }}>

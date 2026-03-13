@@ -4,6 +4,7 @@ import { IRequest } from "@/features/master/requests/types";
 import { useState } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { TabBarProps, TabView } from "react-native-tab-view";
+import { useRequests } from "../hooks/useRequests";
 
 export default function Requests() {
   const layout = useWindowDimensions();
@@ -13,6 +14,10 @@ export default function Requests() {
     { key: "done", title: "Выполненные" },
     { key: "finished", title: "Завершенные" },
   ]);
+
+  const { requests, isLoading } = useRequests();
+
+  console.log("requests", isLoading, requests);
 
   const data: IRequest[] = [
     {
