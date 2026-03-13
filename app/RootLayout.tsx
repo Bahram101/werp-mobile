@@ -21,14 +21,19 @@ export default function RootLayout() {
     const loadUserInfo = async () => {
       if (!user || user.extraLoaded) return;
 
-      const currentStaff = await AuthService.getUserInfo();
+      try {
+        const currentStaff = await AuthService.getUserInfo();
 
-      setUser({
-        ...user,
-        currentStaff,
-        extraLoaded: true,
-      });
+        setUser({
+          ...user,
+          currentStaff,
+          extraLoaded: true,
+        });
+      } catch (e) {
+        console.log("getUserInfo error", e);
+      }
     };
+
     loadUserInfo();
   }, [user, setUser]);
 
@@ -40,7 +45,7 @@ export default function RootLayout() {
       return;
     }
 
-    if (!user?.currentStaff) return;
+    if (!user.extraLoaded || !user.currentStaff) return;
 
     const roles = user.currentStaff.roles?.map((role: any) => role.name) ?? [];
     const hasMobileAccess = roles.includes("mobile");
