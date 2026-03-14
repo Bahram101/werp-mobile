@@ -16,27 +16,7 @@ export default function RootLayout() {
   const navigationState = useRootNavigationState();
   const { user, isInitialized } = useAuth();
 
-  // console.log("user", JSON.stringify(user, null, 2));
-
-  // useEffect(() => {
-  //   const loadUserInfo = async () => {
-  //     if (!user || user.extraLoaded) return;
-
-  //     try {
-  //       const currentStaff = await AuthService.getUserInfo();
-
-  //       setUser({
-  //         ...user,
-  //         currentStaff,
-  //         extraLoaded: true,
-  //       });
-  //     } catch (e) {
-  //       console.log("getUserInfo error", e);
-  //     }
-  //   };
-
-  //   loadUserInfo();
-  // }, [user, setUser]);
+  console.log("user", JSON.stringify(user, null, 2));
 
   useEffect(() => {
     if (!isInitialized || !navigationState?.key) return;
