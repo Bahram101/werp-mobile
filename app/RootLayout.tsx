@@ -16,8 +16,6 @@ export default function RootLayout() {
   const navigationState = useRootNavigationState();
   const { user, isInitialized } = useAuth();
 
-  console.log("user", JSON.stringify(user, null, 2));
-
   useEffect(() => {
     if (!isInitialized || !navigationState?.key) return;
 

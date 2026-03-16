@@ -1,3 +1,4 @@
+import { Loader } from "@/components/ui/Loader";
 import { SlidersHorizontal } from "lucide-react-native";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { IRequest } from "../types";
@@ -9,23 +10,29 @@ import FinishedSummary from "./Summaries/FinishedSummary";
 
 type Props = {
   route: { key: string };
-  data: IRequest[]; 
+  data: IRequest[];
+  isLoading: boolean;
 };
 
-export default function RequestsScenes({ route, data }: Props) {
+export default function RequestsScenes({ route, data, isLoading }: Props) {
   let filteredData: IRequest[] = [];
 
   switch (route.key) {
     case "assigned":
-      filteredData = data.filter((item) => item.status === 1);
+      filteredData = data?.filter((item) => item.applicationStatusId === 2);
       break;
     case "done":
-      filteredData = data.filter((item) => item.status === 2);
+      filteredData = data?.filter((item) => item.applicationStatusId === 5);
       break;
     case "finished":
-      filteredData = data.filter((item) => item.status === 3);
+      filteredData = data?.filter((item) => item.applicationStatusId === 9);
       break;
   }
+
+  const style = {
+    paddingBottom: 10,
+    paddingHorizontal: 14,
+  };
 
   switch (route.key) {
     case "assigned":
@@ -38,12 +45,16 @@ export default function RequestsScenes({ route, data }: Props) {
             </TouchableOpacity>
           </View>
 
-          <FlatList
-            data={filteredData}
-            renderItem={({ item }) => <AssignedRequestCard item={item} />}
-            keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={{ paddingBottom: 10, paddingHorizontal: 14 }}
-          />
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <FlatList
+              data={filteredData}
+              renderItem={({ item }) => <AssignedRequestCard item={item} />}
+              keyExtractor={(item) => item?.applicationNumber?.toString()}
+              contentContainerStyle={style}
+            />
+          )}
         </>
       );
     case "done":
@@ -55,8 +66,8 @@ export default function RequestsScenes({ route, data }: Props) {
           <FlatList
             data={filteredData}
             renderItem={({ item }) => <DoneRequestCard item={item} />}
-            keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={{ paddingBottom: 10, paddingHorizontal: 14 }}
+            keyExtractor={(item) => item.applicationNumber?.toString()}
+            contentContainerStyle={style}
             ListFooterComponent={<DoneSummary />}
           />
         </>
@@ -72,8 +83,8 @@ export default function RequestsScenes({ route, data }: Props) {
           <FlatList
             data={filteredData}
             renderItem={({ item }) => <FinishedRequestCard item={item} />}
-            keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={{ paddingBottom: 10, paddingHorizontal: 14 }}
+            keyExtractor={(item) => item.applicationNumber?.toString()}
+            contentContainerStyle={style}
             ListFooterComponent={<FinishedSummary />}
           />
         </>

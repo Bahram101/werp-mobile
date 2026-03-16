@@ -21,6 +21,11 @@ export interface IRequest {
   type: number;
   paymentType: string;
   paid: string;
+  applicationStatusId: number;
+  applicationNumber: number;
+  applicationTypeName: string;
+  applicationDate: string;
+  fullAddress: string;
 }
 
 export interface ClientType {
@@ -62,5 +67,5 @@ export type SparePartItem = {
   name: string;
   price: number;
   serialNumber: string;
-  quantity: number
+  quantity: number;
 };

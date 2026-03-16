@@ -8,7 +8,6 @@ import { getNewTokens } from "@/features/auth/services/token.helper";
 import { coreInstance } from "./core-instance";
 
 coreInstance.interceptors.request.use(async (config) => {
-  console.log("REQ interceptors");
   const accessToken = await getAccessToken();
   if (config.headers && accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;

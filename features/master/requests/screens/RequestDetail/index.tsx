@@ -11,24 +11,24 @@ import { Service } from "./components/Service";
 
 export default function RequestDetailScreen() {
   const navigation = useNavigation();
-  const { id, number } = useLocalSearchParams();
+  const { id, applicationNumber } = useLocalSearchParams();
   const [status, setStatus] = useState<"accepted" | "arrived">("accepted");
 
   useEffect(() => {
-    if (number) {
+    if (applicationNumber) {
       navigation.setOptions({
-        headerTitle: `Заявка №${String(number)}`,
+        headerTitle: `Заявка №${String(applicationNumber)}`,
       });
     }
-  }, [navigation, number]);
+  }, [navigation, applicationNumber]);
 
   const handleMainButton = () => {
     if (status === "accepted") {
       setStatus("arrived");
     } else {
       router.push({
-        pathname: "/(apps)/master/(tabs)/requests/work/[id]", // /(modules)/service/(tabs)/messages/[id]
-        params: { id: String(id), number },
+        pathname: "/(apps)/master/(tabs)/requests/work/[id]",
+        params: { id: String(id), applicationNumber },
       });
     }
   };

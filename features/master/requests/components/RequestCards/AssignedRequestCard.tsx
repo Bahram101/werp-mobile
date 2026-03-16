@@ -7,6 +7,8 @@ import { Text, View } from "react-native";
 
 import AnimatedBlock from "@/components/ui/button/AnimatedBlock";
 import { COLORS } from "@/constants/theme";
+import { formatDate } from "@/utils/helpers";
+import { CalendarDays, Clock } from "lucide-react-native";
 import { IRequest } from "../../types";
 
 type AssignedRequestCardProps = {
@@ -16,31 +18,41 @@ type AssignedRequestCardProps = {
 const AssignedRequestCard: FC<AssignedRequestCardProps> = ({ item }) => {
   const handlePress = useCallback(() => {
     router.push({
-      pathname: "/(apps)/master/(tabs)/requests/[id]",
-      params: { id: item.id, number: item.number },
+      pathname: "/(apps)/master/(tabs)/requests/[applicationNumber]",
+      params: { id: item.id, applicationNumber: item.applicationNumber },
     });
-  }, [item.id, item.number]);
+  }, [item.id, item.applicationNumber]);
 
   return (
     <AnimatedBlock item={item} onPress={handlePress}>
       <View className="flex-row items-center justify-between mb-3 border-b border-grayLight pb-2">
         <View className="bg-primary h-6 justify-center flex rounded px-3">
-          <Text className="text-white text-xs">{item.title}</Text>
+          <Text className="text-white text-sm">{item.applicationTypeName}</Text>
         </View>
         <View>
-          <Text className="text-sm font-semibold">ЗАЯВКА № {item.number}</Text>
+          <Text className="text-sm font-semibold">
+            ЗАЯВКА № {item.applicationNumber}
+          </Text>
         </View>
       </View>
       <View className="flex-row justify-between">
-        <View className="flex-row items-start gap-3 pl-3 border-l-4 border-primary">
-          <View className="gap-2">
-            <>
-              <Text>{item.date}</Text>
-              <Text>{item.time}</Text>
-            </>
-            <View className="flex-row mb-1 items-center gap-2">
+        <View className="flex-row items-start gap-3 pl-3 border-l-4 border-primary flex-1">
+          <View className="gap-2 flex-1">
+            <View className="gap-2">
+              <View className="flex-row items-center gap-2">
+                <CalendarDays size={18} color={COLORS.grayDark} />
+                <Text>{formatDate(item.applicationDate)}</Text>
+              </View>
+              <View className="flex-row items-center gap-2">
+                <Clock size={18} color={COLORS.grayDark} />
+                <Text>{item.applicationDate.split(" ")[1]}</Text>
+              </View>
+            </View>
+            <View className="flex-row items-start gap-2 flex-1">
               <Feather name="map-pin" size={18} color={COLORS.grayDark} />
-              <Text>{item.address}</Text>
+              <Text style={{ flex: 1, flexWrap: "wrap" }}>
+                {item.fullAddress}
+              </Text>
             </View>
           </View>
         </View>
