@@ -10,7 +10,7 @@ export const serviceInstance = axios.create({
 
 serviceInstance.interceptors.request.use(async (config) => {
   const token = await getAccessToken();
-  console.log("token", token);
+  console.log("tokenn", token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
