@@ -20,7 +20,11 @@ export const RequestService = {
 
   async getMasterRequestDetails(reqId: number) {
     try {
-      const { data } = await serviceInstance.get(``);
-    } catch (error) {}
+      const { data } = await serviceInstance.get(`/smecam/${reqId}`);
+      return data.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   },
 };

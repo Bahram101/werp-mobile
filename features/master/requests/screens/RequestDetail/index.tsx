@@ -1,9 +1,11 @@
 import { Accordion } from "@/components/ui/accordion";
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
+import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
+import { useRequestDetail } from "../../hooks/useRequests";
 import Client from "./components/Client";
 import DeviceData from "./components/Device";
 import { History } from "./components/History";
@@ -11,7 +13,9 @@ import { Service } from "./components/Service";
 
 export default function RequestDetailScreen() {
   const navigation = useNavigation();
-  const { id, applicationNumber } = useLocalSearchParams();
+  const { applicationNumber } = useLocalSearchParams();
+  const appNumber = Number(applicationNumber);
+  const { requestDetail, isFetching } = useRequestDetail(appNumber);
   const [status, setStatus] = useState<"accepted" | "arrived">("accepted");
 
   useEffect(() => {
@@ -22,29 +26,39 @@ export default function RequestDetailScreen() {
     }
   }, [navigation, applicationNumber]);
 
+  if (isFetching) {
+    return <Loader />;
+  }
+
   const handleMainButton = () => {
     if (status === "accepted") {
       setStatus("arrived");
     } else {
       router.push({
-        pathname: "/(apps)/master/(tabs)/requests/work/[id]",
-        params: { id: String(id), applicationNumber },
+        pathname: "/(apps)/master/(tabs)/requests/work/[applicationNumber]",
+        params: { applicationNumber: appNumber },
       });
     }
   };
 
   const request = {
     client: {
-      name: "Асрор Умаров",
-      address: "Мкр. Аксай-4, дом 96, кв 10",
-      problem: "Устранить проблемы",
+      name: requestDetail.customerFIO,
+      address: requestDetail.addressName,
     },
-    service: ["Замена картриджа", "Замена помпы", "Устранить проблемы"],
+    service: { type: requestDetail.applicationTypeName },
     device: {
-      id: "4635-001495",
-      product: "CEBILON DIGITAL UNIQUE",
-      cn: "348045",
-      date: "2017-10-11",
+      id: requestDetail.tovarSn,
+      productName: requestDetail.matnrName,
+      contractNumber: requestDetail.contractNumber,
+      contractDate: requestDetail.contractDate,
+      filterState: {
+        f1: requestDetail.f1MtLeft,
+        f2: requestDetail.f2MtLeft,
+        f3: requestDetail.f3MtLeft,
+        f4: requestDetail.f4MtLeft,
+        f5: requestDetail.f5MtLeft,
+      },
     },
     history: [
       {

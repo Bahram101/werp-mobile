@@ -14,7 +14,7 @@ export default function RequestsLayout() {
     >
       <Stack.Screen name="index" options={{ title: "Заявки" }} />
       <Stack.Screen
-        name="[id]"
+        name="[applicationNumber]"
         options={({ navigation }) => ({
           headerBackVisible: false,
           headerLeft: () => (

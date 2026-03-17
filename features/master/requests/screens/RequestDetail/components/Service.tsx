@@ -1,14 +1,14 @@
 import BaseAccordion from "@/components/ui/accordion/BaseAccordion";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
+import { ServiceType } from "../../../types";
 
-export function Service({ data }: { data: string[] }) {
+export function Service({ data }: { data: ServiceType }) {
   return (
-    <BaseAccordion title="Вид сервиса" icon="settings" value='service'>
-      {data.map((item, i) => (
-        <Text key={i}>
-          {i + 1}. {item}
-        </Text>
-      ))}
+    <BaseAccordion title="Вид сервиса" icon="settings" value="service">
+      <View className="flex-row gap-2">
+        <Text className="text-gray-500">Тип:</Text>
+        <Text className="font-semibold">{data.type}</Text>
+      </View>
     </BaseAccordion>
   );
 }

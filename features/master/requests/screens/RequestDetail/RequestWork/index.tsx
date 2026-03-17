@@ -6,16 +6,16 @@ import Services from "./components/Services";
 import SparePartsSale from "./components/SpareParts";
 
 const RequestWorkScreen = () => {
-  const { number } = useLocalSearchParams();
+  const { applicationNumber } = useLocalSearchParams();
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (number) {
+    if (applicationNumber) {
       navigation.setOptions({
-        headerTitle: `Заявка №${String(number)}`,
+        headerTitle: `Заявка №${String(applicationNumber)}`,
       });
     }
-  }, [navigation, number]);
+  }, [navigation, applicationNumber]);
 
   const services: ServiceItem[] = [
     { id: 1, name: "Установка", price: 7500, currency: "KZT" },
@@ -115,7 +115,10 @@ const RequestWorkScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-      <View className="request-work flex-1">
+      <View
+        className="request-work flex-1 "
+        // style={{ flex: 1, backgroundColor: "#fff" }}
+      >
         <Services data={services} />
         <SparePartsSale data={spareParts} />
       </View>

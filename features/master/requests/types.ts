@@ -31,16 +31,24 @@ export interface IRequest {
 export interface ClientType {
   name: string;
   address: string;
-  problem: string;
 }
 
-export type ServiceType = string[];
+export type ServiceType = {
+  type: string;
+};
 
 export interface DeviceType {
   id: string;
-  product: string;
-  cn: string;
-  date: string;
+  productName: string;
+  contractNumber: string;
+  contractDate: string;
+  filterState: {
+    f1: number;
+    f2: number;
+    f3: number;
+    f4: number;
+    f5: number;
+  };
 }
 
 export interface HistoryItemType {

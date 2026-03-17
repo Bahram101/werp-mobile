@@ -6,7 +6,7 @@ export default function ReqeustWorkLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="[id]"
+        name="[applicationNumber]"
         options={({ navigation }) => ({
           headerTitleAlign: "center",
           headerLeft: () => (

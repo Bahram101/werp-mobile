@@ -2,7 +2,7 @@ import { getStatusMeta } from "@/utils/status.helper";
 import { Feather } from "@expo/vector-icons";
 import cn from "clsx";
 import { router } from "expo-router";
-import React, { FC, useCallback } from "react";
+import React, { FC } from "react";
 import { Text, View } from "react-native";
 
 import AnimatedBlock from "@/components/ui/button/AnimatedBlock";
@@ -16,12 +16,12 @@ type AssignedRequestCardProps = {
 };
 
 const AssignedRequestCard: FC<AssignedRequestCardProps> = ({ item }) => {
-  const handlePress = useCallback(() => {
+  const handlePress = () => {
     router.push({
       pathname: "/(apps)/master/(tabs)/requests/[applicationNumber]",
-      params: { id: item.id, applicationNumber: item.applicationNumber },
+      params: { applicationNumber: item.applicationNumber },
     });
-  }, [item.id, item.applicationNumber]);
+  };
 
   return (
     <AnimatedBlock item={item} onPress={handlePress}>

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 import BaseAccordion from "@/components/ui/accordion/BaseAccordion";
 import { ClientType } from "@/features/master/requests/types";
@@ -8,11 +8,18 @@ type ClientAccordionProps = {
   data: ClientType;
 };
 
-const Client: FC<ClientAccordionProps> = ({ data }) => (
-  <BaseAccordion title="Данные клиента" icon="user" value="client">
-    <Text>{data.name}</Text>
-    <Text>{data.address}</Text>
-    <Text>{data.problem}</Text>
-  </BaseAccordion>
-);
+const Client: FC<ClientAccordionProps> = ({ data }) => {
+  return (
+    <BaseAccordion title="Данные клиента" icon="user" value="client">
+      <View className="flex-row gap-2">
+        <Text className="text-gray-500">Имя:</Text>
+        <Text className="font-semibold">{data.name}</Text>
+      </View>
+      <View className="flex-row gap-2">
+        <Text className="text-gray-500">Адрес:</Text>
+        <Text className="font-semibold">{data.address}</Text>
+      </View>
+    </BaseAccordion>
+  );
+};
 export default Client;

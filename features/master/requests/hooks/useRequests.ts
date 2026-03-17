@@ -15,3 +15,16 @@ export const useRequests = () => {
   });
   return { requests, isLoading };
 };
+
+export const useRequestDetail = (id: number) => {
+  const {
+    data: requestDetail,
+    isPending: isLoading,
+    isFetching,
+  } = useQuery({
+    queryKey: ["get-master-request-details"],
+    queryFn: () => RequestService.getMasterRequestDetails(id),
+  });
+
+  return { requestDetail: requestDetail?.application, isLoading, isFetching };
+};

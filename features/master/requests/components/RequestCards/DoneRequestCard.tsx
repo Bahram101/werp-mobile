@@ -13,7 +13,6 @@ type DoneRequestCardProps = {
 const DoneRequestCard: FC<DoneRequestCardProps> = ({ item }) => {
   const paymentType = item.paymentType;
 
-  console.log("ITEM", JSON.stringify(item, null, 2));
   return (
     <View className="bg-white mt-3 rounded-2xl p-3 w-full">
       <View className="flex-row items-center pb-3 border-b mb-3 border-grayLight gap-2">
