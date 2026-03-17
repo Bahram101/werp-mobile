@@ -13,6 +13,7 @@ export default function RequestsLayout() {
       }}
     >
       <Stack.Screen name="index" options={{ title: "Заявки" }} />
+
       <Stack.Screen
         name="[applicationNumber]"
         options={({ navigation }) => ({
@@ -27,8 +28,10 @@ export default function RequestsLayout() {
           ),
         })}
       />
-      <Stack.Screen name="history" options={{ headerShown: false }} />
+
       <Stack.Screen name="work" options={{ headerShown: false }} />
+
+      <Stack.Screen name="history" options={{ headerShown: false }} />
     </Stack>
   );
 }

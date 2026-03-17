@@ -1,3 +1,4 @@
+import Layout from "@/components/ui/master/Layout";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
 import { ScrollView, View } from "react-native";
@@ -114,15 +115,14 @@ const RequestWorkScreen = () => {
   ];
 
   return (
-    <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-      <View
-        className="request-work flex-1 "
-        // style={{ flex: 1, backgroundColor: "#fff" }}
-      >
-        <Services data={services} />
-        <SparePartsSale data={spareParts} />
-      </View>
-    </ScrollView>
+    <Layout className=" ">
+      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+        <View className="request-work flex-1">
+          <Services data={services} />
+          <SparePartsSale data={spareParts} />
+        </View>
+      </ScrollView>
+    </Layout>
   );
 };
 

@@ -16,7 +16,7 @@ const Layout: FC<ILayout> = ({ children, className, header = false }) => {
         paddingHorizontal: 14,
         paddingTop: 14,
         paddingBottom: 10,
-      }} 
+      }}
     >
       <View className={className}>{children}</View>
     </ScrollView>
