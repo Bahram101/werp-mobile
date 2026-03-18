@@ -31,6 +31,8 @@ export default function Requests() {
   //   },
   // ];
 
+  // console.log("requests", JSON.stringify(requests, null, 2));
+
   return (
     <View className="flex-1 pt-2" style={{ position: "relative" }}>
       <TabView

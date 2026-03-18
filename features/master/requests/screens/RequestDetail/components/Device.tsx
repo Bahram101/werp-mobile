@@ -1,10 +1,13 @@
 import BaseAccordion from "@/components/ui/accordion/BaseAccordion";
 import { filterColors } from "@/constants/theme";
 import cn from "clsx";
+import { format, parseISO } from "date-fns";
 import { Text, View } from "react-native";
 import { DeviceType } from "../../../types";
 
 const DeviceData = ({ data }: { data: DeviceType }) => {
+  const date = parseISO(data.contractDate);
+  const cnDate = format(date, "dd.MM.yyyy");
   return (
     <BaseAccordion title="Данные аппарата" icon="alert-circle" value="device">
       <View className="flex-row gap-2">
@@ -21,30 +24,36 @@ const DeviceData = ({ data }: { data: DeviceType }) => {
       </View>
       <View className="flex-row gap-2">
         <Text className="text-gray-500">Дата продажи:</Text>
-        <Text className="font-semibold"> {data.contractDate}</Text>
+        <Text className="font-semibold"> {cnDate}</Text>
       </View>
-      <View className="flex-row w-full justify-between border-t border-grayLight pt-3 mt-1 flex-wrap">
-        {Object.entries(data.filterState).map(([key, value]) => {
-          const color = filterColors[key as keyof typeof filterColors];
-          return (
-            <View
-              key={key}
-              className={cn(
-                "flex-row items-center rounded-lg mr-2 mb-3 flex-wrap gap-2",
-                // `bg-[${colors[key]}]`,
-              )}
-              style={{ backgroundColor: color }}
-            >
-              <Text className="px-2">{key.toUpperCase()}</Text>
-              <Text
-                className={cn("px-2 py-1 bg-white border-2 rounded-lg")}
-                style={{ borderColor: color }}
-              >
-                {value}
-              </Text>
-            </View>
-          );
-        })}
+      <View className="flex-row">
+        <View className="flex-row w-full flex-wrap border-t border-grayLight pt-3 mt-1 gap-y-2">
+          {Object.entries(data.filterState).map(([key, value]) => {
+            const color = filterColors[key as keyof typeof filterColors];
+            if (value) {
+              return (
+                <View
+                  key={key}
+                  className={cn(
+                    "flex-row items-center rounded-lg mr-2 flex-wrap gap-1",
+                    // `bg-[${colors[key]}]`,
+                  )}
+                  style={{ backgroundColor: color }}
+                >
+                  <Text className="px-2">{key.toUpperCase()}</Text>
+                  <Text
+                    className={cn("px-2 py-1 bg-white border-2 rounded-lg")}
+                    style={{ borderColor: color }}
+                  >
+                    {value}
+                  </Text>
+                </View>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </View>
       </View>
     </BaseAccordion>
   );

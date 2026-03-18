@@ -1,0 +1,16 @@
+import { format, parse } from "date-fns";
+
+export const parseDate = (value: string, formatStr: string) =>
+  parse(value, formatStr, new Date());
+
+export const formatDate = (date: Date, formatStr: string) =>
+  format(date, formatStr);
+
+export const convertDateFormat = (
+  dateStr: string,
+  fromFormat: string,
+  toFormat: string,
+) => {
+  const date = parse(dateStr, fromFormat, new Date());
+  return format(date, toFormat);
+};
