@@ -14,3 +14,10 @@ export const convertDateFormat = (
   const date = parse(dateStr, fromFormat, new Date());
   return format(date, toFormat);
 };
+
+export const formatDayMonth = (date: string) => {
+  return new Date(date).toLocaleDateString("ru-RU", {
+    day: "numeric",
+    month: "long",
+  });
+};

@@ -3,28 +3,18 @@ import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { useRequestDetail } from "../../hooks/useRequests";
 import Client from "./components/Client";
 import DeviceData from "./components/Device";
-import { History } from "./components/History";
 import { Service } from "./components/Service";
 
 export default function RequestDetailScreen() {
   const navigation = useNavigation();
-  const { applicationNumber } = useLocalSearchParams();
-  const appNumber = Number(applicationNumber);
-  const { requestDetail, isFetching } = useRequestDetail(appNumber);
+  const { appNumber } = useLocalSearchParams();
+  const { requestDetail, isFetching } = useRequestDetail(Number(appNumber));
   const [status, setStatus] = useState<"accepted" | "arrived">("accepted");
-
-  useEffect(() => {
-    if (applicationNumber) {
-      navigation.setOptions({
-        headerTitle: `Заявка №${String(applicationNumber)}`,
-      });
-    }
-  }, [navigation, applicationNumber]);
 
   if (isFetching) {
     return <Loader />;
@@ -35,9 +25,9 @@ export default function RequestDetailScreen() {
       setStatus("arrived");
     } else {
       router.push({
-        pathname: "/(apps)/master/(tabs)/requests/work/[applicationNumber]",
-        params: { applicationNumber: appNumber },
-      });
+        pathname: "/(apps)/master/(tabs)/requests/[appNumber]/work",
+        params: { appNumber },
+      } as any);
     }
   };
 
@@ -86,7 +76,6 @@ export default function RequestDetailScreen() {
         <Client data={request.client} />
         <Service data={request.service} />
         <DeviceData data={request.device} />
-        <History data={request.history} />
       </Accordion>
 
       <View className="flex-row gap-3 ">

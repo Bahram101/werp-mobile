@@ -9,27 +9,12 @@ export default function Requests() {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: "assigned", title: "Назначенные" },
+    { key: "assigned", title: "Распределенные" },
     { key: "done", title: "Выполненные" },
     { key: "finished", title: "Завершенные" },
   ]);
 
   const { requests, isLoading } = useRequests();
-
-  // const data: IRequest[] = [
-  //   {
-  //     id: 1,
-  //     title: "ЗАМЕНА КАРТРИДЖА",
-  //     number: "1564654",
-  //     date: "13 август",
-  //     time: "11:00 — 11:40",
-  //     address: "Мкр. Мамыр-4, дом 138",
-  //     status: 1,
-  //     type: 1,
-  //     paymentType: "1",
-  //     paid: "34700",
-  //   },
-  // ];
 
   // console.log("requests", JSON.stringify(requests, null, 2));
 

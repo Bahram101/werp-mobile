@@ -9,13 +9,6 @@ export const formatMoney = (value: number): string => {
   return new Intl.NumberFormat("ru-RU").format(value) + " ₸";
 };
 
-export const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString("ru-RU", {
-    day: "numeric",
-    month: "long",
-  });
-};
-
 export const formatCurrency = (value: number, symbol: string = "₸"): string => {
   if (value == null || isNaN(value)) return `0 ${symbol}`;
 

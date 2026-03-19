@@ -7,7 +7,7 @@ import { Text, View } from "react-native";
 
 import AnimatedBlock from "@/components/ui/button/AnimatedBlock";
 import { COLORS } from "@/constants/theme";
-import { formatDate } from "@/utils/helpers";
+import { formatDayMonth } from "@/utils/date.utils";
 import { CalendarDays, Clock } from "lucide-react-native";
 import { IRequest } from "../../types";
 
@@ -18,8 +18,8 @@ type AssignedRequestCardProps = {
 const AssignedRequestCard: FC<AssignedRequestCardProps> = ({ item }) => {
   const handlePress = () => {
     router.push({
-      pathname: "/(apps)/master/(tabs)/requests/[applicationNumber]",
-      params: { applicationNumber: item.applicationNumber },
+      pathname: "/(apps)/master/(tabs)/requests/[appNumber]",
+      params: { appNumber: item.applicationNumber },
     });
   };
 
@@ -41,7 +41,7 @@ const AssignedRequestCard: FC<AssignedRequestCardProps> = ({ item }) => {
             <View className="gap-2">
               <View className="flex-row items-center gap-2">
                 <CalendarDays size={18} color={COLORS.grayDark} />
-                <Text>{formatDate(item.applicationDate)}</Text>
+                <Text>{formatDayMonth(item.applicationDate)}</Text>
               </View>
               <View className="flex-row items-center gap-2">
                 <Clock size={18} color={COLORS.grayDark} />

@@ -17,7 +17,7 @@ type StatItem = {
 const DATA: StatItem[] = [
   {
     id: "assigned",
-    title: "Назначенные заявки на сегодня",
+    title: "Распределенные заявки на сегодня",
     value: 17,
     scheme: "red",
     icon: "doc",
@@ -51,7 +51,7 @@ const Banner: FC<Props> = ({ className, style }) => {
 
   return (
     <View
-      className={cn('px-4',className)}
+      className={cn("px-4", className)}
       style={{
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
@@ -68,7 +68,7 @@ const Banner: FC<Props> = ({ className, style }) => {
             style={{ width: CARD_WIDTH }}
             className={cn(
               `px-3 items-center justify-center border-grayLight`,
-              index !== 2 && "border-r"
+              index !== 2 && "border-r",
             )}
           >
             <Text
@@ -80,7 +80,7 @@ const Banner: FC<Props> = ({ className, style }) => {
             <Text
               className={cn(
                 "font-bold mt-1 text-5xl",
-                getStatusColor(item.id as StatusText)
+                getStatusColor(item.id as StatusText),
               )}
             >
               {item.value}

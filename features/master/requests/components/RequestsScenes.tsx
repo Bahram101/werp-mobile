@@ -39,7 +39,7 @@ export default function RequestsScenes({ route, data, isLoading }: Props) {
       return (
         <>
           <View className="mx-4 flex-row justify-between items-center mb-3 mt-2">
-            <Text className="text-xl font-semibold">Назначенные заявки</Text>
+            <Text className="text-xl font-semibold">Распределенные заявки</Text>
             <TouchableOpacity>
               <SlidersHorizontal size={21} />
             </TouchableOpacity>

@@ -7,16 +7,16 @@ import Services from "./components/Services";
 import SparePartsSale from "./components/SpareParts";
 
 const RequestWorkScreen = () => {
-  const { applicationNumber } = useLocalSearchParams();
+  const { appNumber } = useLocalSearchParams();
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (applicationNumber) {
+    if (appNumber) {
       navigation.setOptions({
-        headerTitle: `Заявка №${String(applicationNumber)}`,
+        headerTitle: `Заявка №${String(appNumber)}`,
       });
     }
-  }, [navigation, applicationNumber]);
+  }, [navigation, appNumber]);
 
   const services: ServiceItem[] = [
     { id: 1, name: "Установка", price: 7500, currency: "KZT" },
