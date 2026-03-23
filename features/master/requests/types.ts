@@ -1,5 +1,7 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 export interface IRequestType {
-  id: string;
+  id: number;
   title: string;
   count: number;
 }
@@ -71,12 +73,15 @@ export type SparePartItem = {
   quantity: number;
 };
 
-const iconMap: Record<number, string> = {
+export const iconMap: Record<
+  number,
+  keyof typeof MaterialCommunityIcons.glyphMap
+> = {
   1: "trending-down",
   2: "waves",
   3: "alert-outline",
   4: "tools",
-  5: "volume",
+  5: "volume-high",
   6: "package",
   7: "shield-outline",
 };

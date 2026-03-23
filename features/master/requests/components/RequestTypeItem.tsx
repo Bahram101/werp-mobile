@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { Text, View } from "react-native";
-import { IRequestType } from "../types";
+import { iconMap, IRequestType } from "../types";
 
 interface IRequestItem {
   request: IRequestType;
@@ -13,7 +13,7 @@ export default function RequestTypeItem({ request }: IRequestItem) {
       <View className="flex-row items-center">
         <MaterialCommunityIcons
           className="mr-3"
-          name={request.icon as any}
+          name={iconMap[request.id]}
           size={24}
         />
         <Text className="ml-2">{request.title}</Text>

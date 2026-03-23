@@ -27,13 +27,10 @@ export default function Home() {
       acc[key].count += 1;
       return acc;
     },
-    {} as Record<string, { id: number; title: string; count: number }>,
+    {} as Record<number, { id: number; title: string; count: number }>,
   );
 
   const result = Object.values(groupedRequestList);
-
-  console.log("grouped", JSON.stringify(groupedRequestList, null, 2));
-  console.log("isLoading", isLoading);
 
   return (
     <View>
