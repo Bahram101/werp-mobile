@@ -3,51 +3,58 @@ import React, { FC } from "react";
 import { Dimensions, Text, View } from "react-native";
 
 import { getStatusColor, StatusText } from "@/utils/status.helper";
+import { Loader } from "../Loader";
 
 type Scheme = "red" | "blue" | "green";
+type StatId = "assigned" | "done" | "total";
 
 type StatItem = {
-  id: string;
+  id: StatId;
   title: string;
-  value: number;
   scheme: Scheme;
-  icon: "doc" | "check" | "card";
 };
-
-const DATA: StatItem[] = [
-  {
-    id: "assigned",
-    title: "Распределенные заявки на сегодня",
-    value: 17,
-    scheme: "red",
-    icon: "doc",
-  },
-  {
-    id: "done",
-    title: "Выпол. заявки на сегодня",
-    value: 7,
-    scheme: "blue",
-    icon: "check",
-  },
-  {
-    id: "total",
-    title: "Завершенные заявки на месяц",
-    value: 32,
-    scheme: "green",
-    icon: "card",
-  },
-];
 
 type Props = {
   className?: string;
   style?: object;
+  assigned: number;
+  isAssignedLoading: boolean;
+  done: number;
 };
 
-const Banner: FC<Props> = ({ className, style }) => {
+const Banner: FC<Props> = ({
+  className,
+  style,
+  assigned,
+  isAssignedLoading,
+  done,
+}) => {
+  const DATA: StatItem[] = [
+    {
+      id: "assigned",
+      title: "Распределенные заявки на сегодня",
+      scheme: "red",
+    },
+    {
+      id: "done",
+      title: "Выпол. заявки на сегодня",
+      scheme: "blue",
+    },
+    {
+      id: "total",
+      title: "Завершенные заявки на месяц",
+      scheme: "green",
+    },
+  ];
   const { width } = Dimensions.get("window");
   const H_PADDING = 16;
   const GAP = 12;
   const CARD_WIDTH = (width - H_PADDING * 2 - GAP * 1) / 3;
+  const valueMap: Record<StatId, number> = {
+    assigned,
+    done,
+    total: 0,
+  };
 
   return (
     <View
@@ -83,7 +90,7 @@ const Banner: FC<Props> = ({ className, style }) => {
                 getStatusColor(item.id as StatusText),
               )}
             >
-              {item.value}
+              {isAssignedLoading ? <Loader /> : valueMap[item.id]}
             </Text>
           </View>
         ))}

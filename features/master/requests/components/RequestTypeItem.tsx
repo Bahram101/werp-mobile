@@ -18,7 +18,7 @@ export default function RequestTypeItem({ request }: IRequestItem) {
         />
         <Text className="ml-2">{request.title}</Text>
       </View>
-      <Text>3 шт</Text>
+      <Text>{request.count} шт</Text>
     </View>
   );
 }

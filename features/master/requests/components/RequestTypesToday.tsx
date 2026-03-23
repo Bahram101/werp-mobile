@@ -1,18 +1,23 @@
+import { Loader } from "@/components/ui/Loader";
 import React, { FC } from "react";
 import { View } from "react-native";
-import { IRequestType } from "../types";
 import RequestTypeItem from "./RequestTypeItem";
 
 interface IRequestList {
-  requests: IRequestType[];
+  requests: any[];
+  isLoading: boolean;
 }
 
-const RequestTypesToday: FC<IRequestList> = ({ requests }) => {
+const RequestTypesToday: FC<IRequestList> = ({ requests, isLoading }) => {
   return (
     <View>
-      {requests.map((request: IRequestType) => (
-        <RequestTypeItem key={request.id} request={request} />
-      ))}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        requests.map((request: any) => (
+          <RequestTypeItem key={request.id} request={request} />
+        ))
+      )}
     </View>
   );
 };

@@ -25,7 +25,7 @@ export default function RequestsScenes({ route, data, isLoading }: Props) {
       filteredData = data?.filter((item) => item.applicationStatusId === 5);
       break;
     case "finished":
-      filteredData = data?.filter((item) => item.applicationStatusId === 9);
+      filteredData = data?.filter((item) => item.applicationStatusId === 99);
       break;
   }
 

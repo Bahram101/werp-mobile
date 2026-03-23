@@ -6,10 +6,12 @@ export const useRequests = () => {
   const { user } = useAuth();
 
   const masterId = user?.currentStaff?.staffId;
+  const today = new Date().toISOString().split("T")[0];
+  const status = "2,5";
 
   const { data: requests = [], isFetching: isLoading } = useQuery({
     queryKey: ["get-master-requests"],
-    queryFn: () => RequestService.getMasterRequests(masterId!),
+    queryFn: () => RequestService.getMasterRequests(masterId!, today, status),
     enabled: !!masterId,
     retry: 1,
   });
@@ -22,9 +24,23 @@ export const useRequestDetail = (id: number) => {
     isPending: isLoading,
     isFetching,
   } = useQuery({
-    queryKey: ["get-master-request-details"],
+    queryKey: ["get-master-request-details", id],
     queryFn: () => RequestService.getMasterRequestDetails(id),
+    staleTime: 1000 * 60 * 5,
   });
 
   return { requestDetail: requestDetail?.application, isLoading, isFetching };
+};
+
+export const useRequestsCount = (status: string) => {
+  const { user } = useAuth();
+  const masterId = user?.currentStaff.staffId;
+  const today = new Date().toISOString().split("T")[0];
+
+  const { data = [], isFetching: isLoading } = useQuery({
+    queryKey: ["requests-count", status, masterId],
+    queryFn: () => RequestService.getMasterRequests(masterId!, today, status),
+    enabled: !!masterId,
+  });
+  return { count: data.length, isLoading };
 };

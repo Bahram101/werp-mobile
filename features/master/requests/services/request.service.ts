@@ -1,14 +1,14 @@
 import { serviceInstance } from "@/services/api/service-instance";
 
 export const RequestService = {
-  async getMasterRequests(masterId: number) {
+  async getMasterRequests(masterId: number, today: string, status: string) {
     try {
       const { data } = await serviceInstance.get("/smappl/appList", {
         params: {
-          appStatusIds: "2,5",
           bukrs: 1000,
           branchIds: 61,
-          dateOpenAt: "2025-03-06",
+          appStatusIds: status,
+          dateOpenAt: today,
           masterId,
         },
       });
@@ -23,7 +23,6 @@ export const RequestService = {
       const { data } = await serviceInstance.get(`/smecam/${reqId}`);
       return data.data;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   },

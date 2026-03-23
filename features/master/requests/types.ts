@@ -1,14 +1,7 @@
 export interface IRequestType {
   id: string;
   title: string;
-  number: number;
-  date: string;
-  address: string;
-  category: string;
-  timeFrom: string;
-  timeTo: string;
-  scheme: string;
-  icon: string;
+  count: number;
 }
 export interface IRequest {
   id: number;
@@ -76,4 +69,14 @@ export type SparePartItem = {
   price: number;
   serialNumber: string;
   quantity: number;
+};
+
+const iconMap: Record<number, string> = {
+  1: "trending-down",
+  2: "waves",
+  3: "alert-outline",
+  4: "tools",
+  5: "volume",
+  6: "package",
+  7: "shield-outline",
 };
