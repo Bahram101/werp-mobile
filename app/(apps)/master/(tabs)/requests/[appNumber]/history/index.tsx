@@ -1,9 +1,2 @@
-import { Text, View } from "react-native";
-
-export default function HistoryScreen() {
-  return (
-    <View>
-      <Text>sdf</Text>
-    </View>
-  );
-}
+import HistoryListScreen from "@/features/master/requests/screens/RequestDetail/History";
+export default HistoryListScreen;

@@ -3,7 +3,7 @@ import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { useRequestDetail } from "../../hooks/useRequests";
 import Client from "./components/Client";
@@ -15,6 +15,14 @@ export default function RequestDetailScreen() {
   const { appNumber } = useLocalSearchParams();
   const { requestDetail, isFetching } = useRequestDetail(Number(appNumber));
   const [status, setStatus] = useState<"accepted" | "arrived">("accepted");
+
+  useEffect(() => {
+    if (appNumber) {
+      navigation.setOptions({
+        headerTitle: `Заявка №${String(appNumber)}`,
+      });
+    }
+  }, [navigation, appNumber]);
 
   if (isFetching) {
     return <Loader />;
