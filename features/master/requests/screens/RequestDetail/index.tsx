@@ -2,17 +2,18 @@ import { Accordion } from "@/components/ui/accordion";
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
+import { RequestDetailParams } from "@/types/navigation.interface";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { useRequestDetail } from "../../hooks/useRequests";
+import { useRequestDetail } from "../../hooks/useRequest";
 import Client from "./components/Client";
 import DeviceData from "./components/Device";
 import { Service } from "./components/Service";
 
 export default function RequestDetailScreen() {
   const navigation = useNavigation();
-  const { appNumber } = useLocalSearchParams();
+  const { appNumber } = useLocalSearchParams<RequestDetailParams>();
   const { requestDetail, isFetching } = useRequestDetail(Number(appNumber));
   const [status, setStatus] = useState<"accepted" | "arrived">("accepted");
 
@@ -23,6 +24,14 @@ export default function RequestDetailScreen() {
       });
     }
   }, [navigation, appNumber]);
+
+  useEffect(() => {
+    if (requestDetail?.contractNumber) {
+      router.setParams({
+        contractNumber: requestDetail.contractNumber,
+      });
+    }
+  }, [requestDetail, navigation]);
 
   if (isFetching) {
     return <Loader />;
@@ -35,7 +44,7 @@ export default function RequestDetailScreen() {
       router.push({
         pathname: "/(apps)/master/(tabs)/requests/[appNumber]/work",
         params: { appNumber },
-      } as any);
+      });
     }
   };
 
@@ -58,20 +67,6 @@ export default function RequestDetailScreen() {
         f5: requestDetail.f5MtLeft,
       },
     },
-    history: [
-      {
-        id: 1,
-        date: "13 август 2023",
-      },
-      {
-        id: 2,
-        date: "19 ноябрь 2023",
-      },
-      {
-        id: 3,
-        date: "21 январь 2024",
-      },
-    ],
   };
 
   return (

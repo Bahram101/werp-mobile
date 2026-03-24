@@ -79,9 +79,9 @@ export const iconMap: Record<
 > = {
   1: "trending-down",
   2: "waves",
-  3: "alert-outline",
+  3: "volume-high",
   4: "tools",
-  5: "volume-high",
+  5: "alert-outline",
   6: "package",
   7: "shield-outline",
 };

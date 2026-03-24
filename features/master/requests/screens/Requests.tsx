@@ -3,7 +3,7 @@ import RequestsTabBar from "@/features/master/requests/components/RequestsTabBar
 import { useState } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { TabBarProps, TabView } from "react-native-tab-view";
-import { useRequests } from "../hooks/useRequests";
+import { useRequests } from "../hooks/useRequest";
 
 export default function Requests() {
   const layout = useWindowDimensions();

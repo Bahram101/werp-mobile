@@ -4,15 +4,20 @@ import RequestTypesToday from "@/features/master/requests/components/RequestType
 import {
   useRequests,
   useRequestsCount,
-} from "@/features/master/requests/hooks/useRequests";
-import React from "react";
+} from "@/features/master/requests/hooks/useRequest";
+import React, { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
+import { RefreshControl } from "react-native-gesture-handler";
 
 export default function Home() {
-  const { count: assigned, isLoading: isAssignedLoading } =
-    useRequestsCount("2");
-  const { count: done } = useRequestsCount("5");
-  const { requests, isLoading } = useRequests();
+  const [refreshing, setRefreshing] = useState(false);
+  const {
+    count: assigned,
+    isLoading: isAssignedLoading,
+    refetch: refetchAssigned,
+  } = useRequestsCount("2");
+  const { count: done, refetch: refetchDone } = useRequestsCount("5");
+  const { requests, isLoading, refetch: refetchRequests } = useRequests();
 
   const groupedRequestList = requests.reduce(
     (acc: any, item: any) => {
@@ -32,6 +37,17 @@ export default function Home() {
 
   const result = Object.values(groupedRequestList);
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await Promise.all([refetchAssigned(), refetchDone(), refetchRequests()]);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  // console.log("result", JSON.stringify(requests, null, 2));
+
   return (
     <View>
       <Header />
@@ -44,6 +60,15 @@ export default function Home() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 230 }}
+        refreshControl={
+          <RefreshControl
+            tintColor="#fff"
+            refreshing={isLoading}
+            onRefresh={() => {
+              onRefresh();
+            }}
+          />
+        }
       >
         <View className="mt-5 flex-1 px-4">
           <Text className="text-2xl font-semibold mb-2">

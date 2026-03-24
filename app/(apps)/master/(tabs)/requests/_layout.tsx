@@ -21,28 +21,33 @@ export default function RequestsLayout() {
       />
       <Stack.Screen
         name="[appNumber]/index"
-        options={({ navigation, route }) => ({
-          headerRight: () => (
-            <Pressable
-              onPress={() =>
-                router.push({
-                  pathname:
-                    "/(apps)/master/(tabs)/requests/[appNumber]/history",
-                  params: { appNumber: (route.params as any)?.appNumber },
-                })
-              }
-              style={{
-                marginRight: 12,
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 4,
-              }}
-            >
-              <Feather name="clock" size={18} color="#000" />
-              <Text className="text-sm">История</Text>
-            </Pressable>
-          ),
-        })}
+        options={({ navigation, route }) => {
+          return {
+            headerRight: () => (
+              <Pressable
+                onPress={() => {
+                  router.push({
+                    pathname:
+                      "/(apps)/master/(tabs)/requests/[appNumber]/history",
+                    params: {
+                      appNumber: (route.params as any)?.appNumber,
+                      contractNumber: (route.params as any)?.contractNumber,
+                    },
+                  } as any);
+                }}
+                style={{
+                  marginRight: 12,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 4,
+                }}
+              >
+                <Feather name="clock" size={18} color="#000" />
+                <Text className="text-sm">История</Text>
+              </Pressable>
+            ),
+          };
+        }}
       />
       <Stack.Screen
         name="[appNumber]/history/index.tsx"
