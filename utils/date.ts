@@ -22,6 +22,15 @@ export const formatDayMonth = (date: string) => {
   });
 };
 
+export const formatFullDate = (date: string) => {
+  const normalized = date.replace(" ", "T");
+  return new Date(normalized).toLocaleDateString("ru-RU", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+};
+
 export const getLastDaysRange = (days: number) => {
   const today = new Date();
   const fromDate = new Date();

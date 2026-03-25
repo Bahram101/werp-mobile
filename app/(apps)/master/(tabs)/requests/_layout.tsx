@@ -50,10 +50,17 @@ export default function RequestsLayout() {
         }}
       />
       <Stack.Screen
-        name="[appNumber]/history/index.tsx"
+        name="[appNumber]/history/index"
         options={{
           title: "История",
           headerShown: true, // список заявок
+        }}
+      />
+      <Stack.Screen
+        name="[appNumber]/history/[historyId]"
+        options={{
+          title: "Детальная история",
+          headerShown: true,
         }}
       />
     </Stack>

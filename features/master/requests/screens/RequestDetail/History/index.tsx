@@ -1,8 +1,10 @@
+import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { useHistories } from "../../../hooks/useHistory";
+import HistoryList from "./components/HistoryList";
 type Params = {
   contractNumber?: string;
   appNumber?: string;
@@ -11,9 +13,9 @@ export default function HistoryListScreen() {
   const navigation = useNavigation();
   const { contractNumber } = useLocalSearchParams<Params>();
 
-  const cn = contractNumber ? Number(contractNumber) : undefined;
+  const contractNum = contractNumber ? Number(contractNumber) : undefined;
 
-  const { historyList, isLoading } = useHistories(cn!);
+  const { historyList, isLoading } = useHistories(contractNum!);
 
   useEffect(() => {
     navigation.setOptions({
@@ -21,12 +23,28 @@ export default function HistoryListScreen() {
     });
   }, [navigation]);
 
-  console.log("historyList", historyList);
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  // console.log("historyList", JSON.stringify(historyList, null, 2));
 
   return (
     <Layout>
       <View className="bg-white rounded-2xl p-4">
-        <Text className="text-lg font-bold mb-2">asdf</Text>
+        <HistoryList
+          data={historyList.data}
+          onPressItem={(item) => {
+            router.push({
+              pathname:
+                "/(apps)/master/(tabs)/requests/[appNumber]/history/[historyId]",
+              params: {
+                appNumber: item.applicationNumber,
+                historyId: item.id,
+              },
+            });
+          }}
+        />
       </View>
     </Layout>
   );
