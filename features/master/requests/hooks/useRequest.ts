@@ -1,13 +1,13 @@
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { getLastDaysRange } from "@/utils/date";
 import { useQuery } from "@tanstack/react-query";
 import { RequestService } from "../services/request.service";
 
 export const useRequests = () => {
   const { user } = useAuth();
-
   const masterId = user?.currentStaff?.staffId;
-  const today = new Date().toISOString().split("T")[0];
-  const status = "2,5";
+  const { from, to } = getLastDaysRange(3);
+  const status = "2";
 
   const {
     data: requests = [],
@@ -15,7 +15,7 @@ export const useRequests = () => {
     refetch,
   } = useQuery({
     queryKey: ["get-master-requests"],
-    queryFn: () => RequestService.getMasterRequests(masterId!, today, status),
+    queryFn: () => RequestService.getMasterRequests(masterId!, status),
     enabled: !!masterId,
     retry: 1,
   });
@@ -39,7 +39,14 @@ export const useRequestDetail = (id: number) => {
 export const useRequestsCount = (status: string) => {
   const { user } = useAuth();
   const masterId = user?.currentStaff.staffId;
-  const today = new Date().toISOString().split("T")[0];
+  // const { from, to } = getLastDaysRange(3);
+  const today = new Date();
+  const from = new Date(today.getFullYear(), today.getMonth(), 1)
+    .toISOString()
+    .split("T")[0];
+  const to = new Date(today.getFullYear(), today.getMonth() + 1, 0)
+    .toISOString()
+    .split("T")[0];
 
   const {
     data = [],
@@ -47,7 +54,8 @@ export const useRequestsCount = (status: string) => {
     refetch,
   } = useQuery({
     queryKey: ["requests-count", status, masterId],
-    queryFn: () => RequestService.getMasterRequests(masterId!, today, status),
+    queryFn: () =>
+      RequestService.getMasterRequests(masterId!, status, from, to),
     enabled: !!masterId,
   });
   return { count: data.length, isLoading, refetch };

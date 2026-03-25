@@ -7,7 +7,7 @@ import { Text, View } from "react-native";
 
 import AnimatedBlock from "@/components/ui/button/AnimatedBlock";
 import { COLORS } from "@/constants/theme";
-import { formatDayMonth } from "@/utils/date.utils";
+import { formatDayMonth } from "@/utils/date";
 import { CalendarDays, Clock } from "lucide-react-native";
 import { IRequest } from "../../types";
 

@@ -2,7 +2,7 @@ import Layout from "@/components/ui/master/Layout";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect } from "react";
 import { Text, View } from "react-native";
-import { useContractHistory } from "../../../hooks/useContractHistory";
+import { useHistories } from "../../../hooks/useHistory";
 type Params = {
   contractNumber?: string;
   appNumber?: string;
@@ -13,7 +13,7 @@ export default function HistoryListScreen() {
 
   const cn = contractNumber ? Number(contractNumber) : undefined;
 
-  const { history, isLoading } = useContractHistory(cn!);
+  const { historyList, isLoading } = useHistories(cn!);
 
   useEffect(() => {
     navigation.setOptions({
@@ -21,12 +21,12 @@ export default function HistoryListScreen() {
     });
   }, [navigation]);
 
-  console.log("history", history);
+  console.log("historyList", historyList);
 
   return (
     <Layout>
       <View className="bg-white rounded-2xl p-4">
-        <Text className="text-lg font-bold mb-2">История №</Text>
+        <Text className="text-lg font-bold mb-2">asdf</Text>
       </View>
     </Layout>
   );

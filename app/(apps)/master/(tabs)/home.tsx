@@ -12,11 +12,12 @@ import { RefreshControl } from "react-native-gesture-handler";
 export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
   const {
-    count: assigned,
+    count: assignedReqCount,
     isLoading: isAssignedLoading,
     refetch: refetchAssigned,
   } = useRequestsCount("2");
-  const { count: done, refetch: refetchDone } = useRequestsCount("5");
+  const { count: finishedReqCount, refetch: refetchFinished } =
+    useRequestsCount("5");
   const { requests, isLoading, refetch: refetchRequests } = useRequests();
 
   const groupedRequestList = requests.reduce(
@@ -40,22 +41,27 @@ export default function Home() {
   const onRefresh = async () => {
     setRefreshing(true);
     try {
-      await Promise.all([refetchAssigned(), refetchDone(), refetchRequests()]);
+      await Promise.all([
+        refetchAssigned(),
+        refetchFinished(),
+        refetchRequests(),
+      ]);
     } finally {
       setRefreshing(false);
     }
   };
 
   // console.log("result", JSON.stringify(requests, null, 2));
+  console.log(finishedReqCount);
 
   return (
     <View>
       <Header />
       <Banner
         style={{ marginTop: -55 }}
-        assigned={assigned}
+        assigned={assignedReqCount}
         isAssignedLoading={isAssignedLoading}
-        done={done}
+        finished={finishedReqCount}
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -71,9 +77,7 @@ export default function Home() {
         }
       >
         <View className="mt-5 flex-1 px-4">
-          <Text className="text-2xl font-semibold mb-2">
-            Виды заявки на сегодня
-          </Text>
+          <Text className="text-2xl font-semibold mb-2">Виды заявки</Text>
           <RequestTypesToday requests={result} isLoading={isLoading} />
         </View>
       </ScrollView>

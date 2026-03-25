@@ -21,3 +21,15 @@ export const formatDayMonth = (date: string) => {
     month: "long",
   });
 };
+
+export const getLastDaysRange = (days: number) => {
+  const today = new Date();
+  const fromDate = new Date();
+
+  fromDate.setDate(today.getDate() - days);
+
+  return {
+    from: fromDate.toISOString().split("T")[0],
+    to: today.toISOString().split("T")[0],
+  };
+};

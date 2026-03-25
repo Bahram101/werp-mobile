@@ -6,7 +6,7 @@ import { getStatusColor, StatusText } from "@/utils/status.helper";
 import { Loader } from "../Loader";
 
 type Scheme = "red" | "blue" | "green";
-type StatId = "assigned" | "done" | "total";
+type StatId = "assigned" | "done" | "finished";
 
 type StatItem = {
   id: StatId;
@@ -19,7 +19,7 @@ type Props = {
   style?: object;
   assigned: number;
   isAssignedLoading: boolean;
-  done: number;
+  finished: number;
 };
 
 const Banner: FC<Props> = ({
@@ -27,12 +27,12 @@ const Banner: FC<Props> = ({
   style,
   assigned,
   isAssignedLoading,
-  done,
+  finished,
 }) => {
   const DATA: StatItem[] = [
     {
       id: "assigned",
-      title: "Распределенные заявки на сегодня",
+      title: "Распределенные заявки",
       scheme: "red",
     },
     {
@@ -41,7 +41,7 @@ const Banner: FC<Props> = ({
       scheme: "blue",
     },
     {
-      id: "total",
+      id: "finished",
       title: "Завершенные заявки на месяц",
       scheme: "green",
     },
@@ -52,8 +52,8 @@ const Banner: FC<Props> = ({
   const CARD_WIDTH = (width - H_PADDING * 2 - GAP * 1) / 3;
   const valueMap: Record<StatId, number> = {
     assigned,
-    done,
-    total: 0,
+    done: 0,
+    finished,
   };
 
   return (
