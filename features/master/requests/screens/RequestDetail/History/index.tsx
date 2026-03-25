@@ -11,7 +11,7 @@ type Params = {
 };
 export default function HistoryListScreen() {
   const navigation = useNavigation();
-  const { contractNumber } = useLocalSearchParams<Params>();
+  const { contractNumber, appNumber } = useLocalSearchParams<Params>();
 
   const contractNum = contractNumber ? Number(contractNumber) : undefined;
 
@@ -27,8 +27,6 @@ export default function HistoryListScreen() {
     return <Loader />;
   }
 
-  // console.log("historyList", JSON.stringify(historyList, null, 2));
-
   return (
     <Layout>
       <View className="bg-white rounded-2xl p-4">
@@ -39,7 +37,7 @@ export default function HistoryListScreen() {
               pathname:
                 "/(apps)/master/(tabs)/requests/[appNumber]/history/[historyId]",
               params: {
-                appNumber: item.applicationNumber,
+                appNumber: Number(appNumber),
                 historyId: item.id,
               },
             });

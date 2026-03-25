@@ -52,7 +52,7 @@ export default function Home() {
   };
 
   // console.log("result", JSON.stringify(requests, null, 2));
-  console.log(finishedReqCount);
+  // console.log(finishedReqCount);
 
   return (
     <View>

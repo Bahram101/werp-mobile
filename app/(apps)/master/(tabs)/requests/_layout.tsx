@@ -53,14 +53,14 @@ export default function RequestsLayout() {
         name="[appNumber]/history/index"
         options={{
           title: "История",
-          headerShown: true, // список заявок
+          headerShown: true, //список истории
         }}
       />
       <Stack.Screen
         name="[appNumber]/history/[historyId]"
         options={{
           title: "Детальная история",
-          headerShown: true,
+          headerShown: true, //детальная история
         }}
       />
     </Stack>
