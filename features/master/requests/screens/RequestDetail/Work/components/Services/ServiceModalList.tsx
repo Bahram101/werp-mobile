@@ -19,9 +19,9 @@ const ServiceModalList = ({
       {data.map((item, index) => (
         <ServiceModalListItem
           key={item.id}
-          isLast={index === data.length - 1}
           value={String(item.id)}
           label={item.name}
+          isLast={index === data.length - 1}
         />
       ))}
     </CheckboxGroup>

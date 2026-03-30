@@ -1,2 +1,2 @@
-import RequestWorkScreen from "@/features/master/requests/screens/RequestDetail/RequestWork";
-export default RequestWorkScreen;
+import WorkScreen from "@/features/master/requests/screens/RequestDetail/Work";
+export default WorkScreen;

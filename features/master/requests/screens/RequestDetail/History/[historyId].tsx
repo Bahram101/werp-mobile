@@ -12,7 +12,7 @@ const HistoryDetailScreen = () => {
     });
   }, [navigation]);
 
-  console.log("HistoryDetailScreen", appNumber, historyId);
+  // console.log("HistoryDetailScreen", appNumber, historyId);
 
   return (
     <View>

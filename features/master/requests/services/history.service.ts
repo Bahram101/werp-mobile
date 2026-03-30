@@ -1,7 +1,7 @@
 import { serviceInstance } from "@/services/api/service-instance";
 
 export const HistoryService = {
-  async getHistory(contractNumber: number) {
+  async getHistoryList(contractNumber: number) {
     try {
       const { data } = await serviceInstance.get(
         `/smcuspor/serviceCrmHistoryService?contractNumber=${contractNumber}`,
@@ -11,4 +11,6 @@ export const HistoryService = {
       throw e;
     }
   },
+
+  async getHistory() {},
 };

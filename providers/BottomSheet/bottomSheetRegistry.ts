@@ -1,5 +1,5 @@
-import ServiceModalList from "@/features/master/requests/screens/RequestDetail/RequestWork/components/Services/ServiceModalList";
-import SparePartModalList from "@/features/master/requests/screens/RequestDetail/RequestWork/components/SpareParts/SparePartModalList";
+import ServiceModalList from "@/features/master/requests/screens/RequestDetail/Work/components/Services/ServiceModalList";
+import SparePartModalList from "@/features/master/requests/screens/RequestDetail/Work/components/SpareParts/SparePartModalList";
 
 export const bottomSheetRegistry = {
   services: ServiceModalList,

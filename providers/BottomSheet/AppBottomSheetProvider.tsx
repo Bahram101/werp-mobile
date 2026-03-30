@@ -20,12 +20,12 @@ type BottomSheetContextType = {
   showBottomSheet: (
     type: BottomSheetType,
     props?: any,
-    options?: { title?: string; snapPoints?: string[] }
+    options?: { title?: string; snapPoints?: string[] },
   ) => void;
 };
 
 export const BottomSheetContext = createContext<BottomSheetContextType | null>(
-  null
+  null,
 );
 
 const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -37,22 +37,23 @@ const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
   const [modalProps, setModalProps] = useState<any>({});
 
   const openBottomSheet = () => modalRef.current?.open();
-  const closeBottomSheet = () => modalRef.current?.close();
 
-  const updateModalProps = (nextProps: string[]) => {
-    setModalProps((prev: any) => ({ ...prev, ...nextProps }));
-  };
+  const closeBottomSheet = () => modalRef.current?.close();
 
   const showBottomSheet = (
     type: BottomSheetType,
     props: any = {},
-    options: { title?: string; snapPoints?: string[] } = {}
+    options: { title?: string; snapPoints?: string[] } = {},
   ) => {
     setModalType(type);
     setModalProps(props);
+    openBottomSheet();
     if (options.title) setTitle(options.title);
     if (options.snapPoints) setSnapPoints(options.snapPoints);
-    openBottomSheet();
+  };
+
+  const updateModalProps = (nextProps: string[]) => {
+    setModalProps((prev: any) => ({ ...prev, ...nextProps }));
   };
 
   const renderContent = () => {
@@ -82,7 +83,7 @@ export const useBottomSheet = () => {
   const ctx = useContext(BottomSheetContext);
   if (!ctx)
     throw new Error(
-      "useBottomSheet must be used within AppBottomSheetProvider"
+      "useBottomSheet must be used within AppBottomSheetProvider",
     );
   return ctx;
 };

@@ -1,14 +1,18 @@
+import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
 import { ScrollView, View } from "react-native";
-import { ServiceItem, SparePartItem } from "../../../types";
+import { useServices } from "../../../hooks/useService";
+import { SparePartItem } from "../../../types";
 import Services from "./components/Services";
 import SparePartsSale from "./components/SpareParts";
 
 const RequestWorkScreen = () => {
   const { appNumber } = useLocalSearchParams();
   const navigation = useNavigation();
+
+  const { services, isLoading } = useServices();
 
   useEffect(() => {
     if (appNumber) {
@@ -18,14 +22,9 @@ const RequestWorkScreen = () => {
     }
   }, [navigation, appNumber]);
 
-  const services: ServiceItem[] = [
-    { id: 1, name: "Установка", price: 7500, currency: "KZT" },
-    { id: 2, name: "Услуга", price: 2500, currency: "KZT" },
-    { id: 3, name: "Монтаж", price: 1500, currency: "KZT" },
-    { id: 4, name: "Демонтаж", price: 1500, currency: "KZT" },
-    { id: 5, name: "Профилактика", price: 3500, currency: "KZT" },
-    { id: 6, name: "Ремонт товара", price: 5500, currency: "KZT" },
-  ];
+  if (isLoading) {
+    return <Loader />;
+  }
 
   const spareParts: SparePartItem[] = [
     {
@@ -115,7 +114,7 @@ const RequestWorkScreen = () => {
   ];
 
   return (
-    <Layout className=" ">
+    <Layout>
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
         <View className="request-work flex-1">
           <Services data={services} />
