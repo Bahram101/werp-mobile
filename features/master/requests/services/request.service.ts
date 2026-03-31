@@ -14,8 +14,10 @@ export const RequestService = {
           branchIds: 61,
           appStatusIds: status,
           masterId,
-          dateOpenAt: status === "5" ? from : null,
-          dateOpenTo: status === "5" ? to : null,
+          ...((status === "5" || status === "8") && {
+            dateOpenAt: from,
+            dateOpenTo: to,
+          }),
         },
       });
       return data.data;

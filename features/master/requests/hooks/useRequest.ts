@@ -1,12 +1,10 @@
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { getLastDaysRange } from "@/utils/date";
 import { useQuery } from "@tanstack/react-query";
 import { RequestService } from "../services/request.service";
 
 export const useRequests = () => {
   const { user } = useAuth();
   const masterId = user?.currentStaff?.staffId;
-  const { from, to } = getLastDaysRange(3);
   const status = "2";
 
   const {
@@ -39,14 +37,6 @@ export const useRequestDetail = (id: number) => {
 export const useRequestsCount = (status: string) => {
   const { user } = useAuth();
   const masterId = user?.currentStaff.staffId;
-  // const { from, to } = getLastDaysRange(3);
-  const today = new Date();
-  const from = new Date(today.getFullYear(), today.getMonth(), 1)
-    .toISOString()
-    .split("T")[0];
-  const to = new Date(today.getFullYear(), today.getMonth() + 1, 0)
-    .toISOString()
-    .split("T")[0];
 
   const {
     data = [],
@@ -54,9 +44,46 @@ export const useRequestsCount = (status: string) => {
     refetch,
   } = useQuery({
     queryKey: ["requests-count", status, masterId],
-    queryFn: () =>
-      RequestService.getMasterRequests(masterId!, status, from, to),
+    queryFn: () => RequestService.getMasterRequests(masterId!, "2"),
     enabled: !!masterId,
+  });
+  return { count: data.length, isLoading, refetch };
+};
+
+export const useDoneTodayCount = () => {
+  const { user } = useAuth();
+  const masterId = user?.currentStaff.staffId;
+  const today = new Date().toISOString().split("T")[0];
+
+  const {
+    data = [],
+    isFetching: isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["done-today", masterId],
+    queryFn: () =>
+      RequestService.getMasterRequests(masterId!, "8", today, today),
+  });
+  return { count: data.length, isLoading, refetch };
+};
+
+export const useFinishedMonthCount = () => {
+  const { user } = useAuth();
+  const masterId = user?.currentStaff.staffId;
+
+  const today = new Date();
+  const from = new Date(today.getFullYear(), today.getMonth(), 1)
+    .toISOString()
+    .split("T")[0];
+  const to = today.toISOString().split("T")[0];
+
+  const {
+    data = [],
+    isFetching: isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["finished-month", masterId],
+    queryFn: () => RequestService.getMasterRequests(masterId!, "5", from, to),
   });
   return { count: data.length, isLoading, refetch };
 };

@@ -19,6 +19,7 @@ type Props = {
   style?: object;
   assigned: number;
   isAssignedLoading: boolean;
+  done: number;
   finished: number;
 };
 
@@ -27,6 +28,7 @@ const Banner: FC<Props> = ({
   style,
   assigned,
   isAssignedLoading,
+  done,
   finished,
 }) => {
   const DATA: StatItem[] = [
@@ -52,7 +54,7 @@ const Banner: FC<Props> = ({
   const CARD_WIDTH = (width - H_PADDING * 2 - GAP * 1) / 3;
   const valueMap: Record<StatId, number> = {
     assigned,
-    done: 0,
+    done,
     finished,
   };
 

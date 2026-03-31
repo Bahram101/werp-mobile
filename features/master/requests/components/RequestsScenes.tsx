@@ -16,16 +16,23 @@ type Props = {
 
 export default function RequestsScenes({ route, data, isLoading }: Props) {
   let filteredData: IRequest[] = [];
+  console.log("route.key", route.key);
 
   switch (route.key) {
     case "assigned":
-      filteredData = data?.filter((item) => item.applicationStatusId === 2);
+      filteredData = data?.filter(
+        (item) => Number(item.applicationStatusId) === 2,
+      );
       break;
     case "done":
-      filteredData = data?.filter((item) => item.applicationStatusId === 5);
+      filteredData = data?.filter(
+        (item) => Number(item.applicationStatusId) === 8,
+      );
       break;
     case "finished":
-      filteredData = data?.filter((item) => item.applicationStatusId === 99);
+      filteredData = data?.filter(
+        (item) => Number(item.applicationStatusId) === 5,
+      );
       break;
   }
 
@@ -33,6 +40,8 @@ export default function RequestsScenes({ route, data, isLoading }: Props) {
     paddingBottom: 10,
     paddingHorizontal: 14,
   };
+
+  console.log("filteredData", filteredData.length);
 
   switch (route.key) {
     case "assigned":

@@ -2,6 +2,8 @@ import Banner from "@/components/ui/master/Banner";
 import Header from "@/components/ui/master/Header";
 import RequestTypesToday from "@/features/master/requests/components/RequestTypesToday";
 import {
+  useDoneTodayCount,
+  useFinishedMonthCount,
   useRequests,
   useRequestsCount,
 } from "@/features/master/requests/hooks/useRequest";
@@ -16,8 +18,12 @@ export default function Home() {
     isLoading: isAssignedLoading,
     refetch: refetchAssigned,
   } = useRequestsCount("2");
+
+  const { count: doneReqCount, refetch: refetchDone } = useDoneTodayCount();
+
   const { count: finishedReqCount, refetch: refetchFinished } =
-    useRequestsCount("5");
+    useFinishedMonthCount();
+
   const { requests, isLoading, refetch: refetchRequests } = useRequests();
 
   const groupedRequestList = requests.reduce(
@@ -43,6 +49,7 @@ export default function Home() {
     try {
       await Promise.all([
         refetchAssigned(),
+        refetchDone(),
         refetchFinished(),
         refetchRequests(),
       ]);
@@ -51,16 +58,14 @@ export default function Home() {
     }
   };
 
-  // console.log("result", JSON.stringify(requests, null, 2));
-  // console.log(finishedReqCount);
-
   return (
     <View>
       <Header />
       <Banner
         style={{ marginTop: -55 }}
-        assigned={assignedReqCount}
         isAssignedLoading={isAssignedLoading}
+        assigned={assignedReqCount}
+        done={doneReqCount}
         finished={finishedReqCount}
       />
       <ScrollView
@@ -69,7 +74,7 @@ export default function Home() {
         refreshControl={
           <RefreshControl
             tintColor="#fff"
-            refreshing={isLoading}
+            refreshing={refreshing}
             onRefresh={() => {
               onRefresh();
             }}
