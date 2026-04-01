@@ -4,6 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import cn from "clsx";
 import { useRef } from "react";
 import { Animated, Pressable, Text } from "react-native";
+import { Loader } from "../Loader";
 
 type AnimatedButtonProps = {
   className?: string;
@@ -15,6 +16,7 @@ type AnimatedButtonProps = {
   iconColor?: ColorKeys;
   textColor?: ColorKeys;
   icon?: TypeFeatherIconNames;
+  isLoading?: boolean;
 };
 
 export default function AnimatedButton({
@@ -26,6 +28,7 @@ export default function AnimatedButton({
   iconColor = "white",
   textColor = "white",
   icon,
+  isLoading,
 }: AnimatedButtonProps) {
   const scale = useRef(new Animated.Value(1)).current;
   const pressed = useRef(false);
@@ -63,17 +66,23 @@ export default function AnimatedButton({
           }}
           className={cn(
             "rounded-2xl flex-row gap-3 justify-center items-center",
-            className
+            className,
           )}
         >
-          <>
-            {icon && (
-              <Feather name={icon} size={33} color={COLORS[iconColor]} />
-            )}
-            <Text className={`text-lg font-semibold text-center text-${textColor}`}>
-              {children}
-            </Text>
-          </>
+          {isLoading ? (
+            <Loader color="text-white" />
+          ) : (
+            <>
+              {icon && (
+                <Feather name={icon} size={33} color={COLORS[iconColor]} />
+              )}
+              <Text
+                className={`text-lg font-semibold text-center text-${textColor}`}
+              >
+                {children}
+              </Text>
+            </>
+          )}
         </Animated.View>
       )}
     </Pressable>

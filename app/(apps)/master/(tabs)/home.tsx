@@ -2,10 +2,10 @@ import Banner from "@/components/ui/master/Banner";
 import Header from "@/components/ui/master/Header";
 import RequestTypesToday from "@/features/master/requests/components/RequestTypesToday";
 import {
+  useAssignedTotalCount,
   useDoneTodayCount,
   useFinishedMonthCount,
   useRequests,
-  useRequestsCount,
 } from "@/features/master/requests/hooks/useRequest";
 import React, { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
@@ -14,17 +14,16 @@ import { RefreshControl } from "react-native-gesture-handler";
 export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
   const {
-    count: assignedReqCount,
+    assignedReqCount,
     isLoading: isAssignedLoading,
-    refetch: refetchAssigned,
-  } = useRequestsCount("2");
+    refetchAssigned,
+  } = useAssignedTotalCount("2,9");
 
-  const { count: doneReqCount, refetch: refetchDone } = useDoneTodayCount();
+  const { doneReqCount, refetchDone } = useDoneTodayCount("8");
 
-  const { count: finishedReqCount, refetch: refetchFinished } =
-    useFinishedMonthCount();
+  const { finishedReqCount, refetchFinished } = useFinishedMonthCount("5");
 
-  const { requests, isLoading, refetch: refetchRequests } = useRequests();
+  const { requests, isLoading, refetchRequests } = useRequests("2,9");
 
   const groupedRequestList = requests.reduce(
     (acc: any, item: any) => {

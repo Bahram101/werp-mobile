@@ -42,3 +42,26 @@ export const getLastDaysRange = (days: number) => {
     to: today.toISOString().split("T")[0],
   };
 };
+
+export const getCurrentMonthStart = () => {
+  const today = new Date();
+  const res = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    1,
+  ).toLocaleDateString("sv-SE");
+  return res;
+};
+
+export const getToday = () => {
+  return new Date().toLocaleDateString("sv-SE");
+};
+
+export const getCurrentMonthName = () => {
+  return new Date()
+    .toLocaleDateString("ru-RU", {
+      month: "long",
+      day: "numeric",
+    })
+    .split(" ")[1];
+};

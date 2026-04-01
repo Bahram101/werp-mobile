@@ -16,7 +16,7 @@ export default function RequestTypeItem({ request }: IRequestItem) {
           name={iconMap[request.id]}
           size={24}
         />
-        <Text className="ml-2">{request.title}</Text>
+        <Text className="ml-1">{request.title}</Text>
       </View>
       <Text>{request.count} шт</Text>
     </View>

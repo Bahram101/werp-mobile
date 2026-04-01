@@ -50,7 +50,7 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
           });
         }
       } catch (e) {
-        console.log("Auth init error:", e);
+        // console.log("Auth init error:", e);
         setUser(null);
       } finally {
         setIsInitialized(true);

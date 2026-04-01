@@ -58,21 +58,19 @@ const AssignedRequestCard: FC<AssignedRequestCardProps> = ({ item }) => {
         </View>
         <View className="flex-col-reverse">
           <View className="flex-row items-center">
-            <Text
-              className={cn("text-sm mr-2", getStatusMeta(item.status).text)}
-            >
-              {getStatusMeta(item.status).label}
+            <Text className={cn("text-sm mr-2", getStatusMeta(item).text)}>
+              {getStatusMeta(item).label}
             </Text>
             <View
               className={cn(
                 "w-6 h-6 rounded-full justify-center items-center ml-2",
-                getStatusMeta(item.status).bgOuter,
+                getStatusMeta(item).bgOuter,
               )}
             >
               <View
                 className={cn(
                   "w-4 h-4 rounded-full",
-                  getStatusMeta(item.status).bgInner,
+                  getStatusMeta(item).bgInner,
                 )}
               />
             </View>

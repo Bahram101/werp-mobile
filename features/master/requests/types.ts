@@ -83,5 +83,5 @@ export const iconMap: Record<
   4: "tools",
   5: "alert-outline",
   6: "package",
-  7: "shield-outline",
+  7: "shield-half-full",
 };

@@ -1,28 +1,31 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-import React, { FC } from 'react'
-import { Text, View } from 'react-native'
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { FC } from "react";
+import { Text, View } from "react-native";
 
-import { COLORS } from '@/constants/theme'
-import { IRequest } from '../../types'
+import { iconMap } from "../../types";
 
-type DoneRequestCardProps = {
-  item: IRequest
-}
+type FinishRequestCardProps = {
+  item: any;
+};
 
-const DoneRequestCard: FC<DoneRequestCardProps> = ({ item }) => {
+const FinishRequestCard: FC<FinishRequestCardProps> = ({ item }) => {
   return (
-    <View className='bg-white mt-3 rounded-2xl p-4'>
-      <View className='flex-row justify-between items-center'>
-        <View className='flex-row items-center'>
-          <MaterialCommunityIcons name='cog' size={22} color={COLORS.grayDark} />
-          <Text className='ml-2'>{item.title}</Text>
+    <View className="flex-col gap-3 rounded-2xl">
+      <View className="flex-row justify-between items-center bg-white rounded-2xl p-4">
+        <View className="flex-row items-center">
+          <MaterialCommunityIcons
+            className="mr-3"
+            name={iconMap[item.id]}
+            size={24}
+          />
+          <Text className="ml-1">{item.title}</Text>
         </View>
-        <View className='flex-col-reverse'>
-          <Text>3 шт</Text>
+        <View className="flex-col-reverse">
+          <Text>{item.count} шт</Text>
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default DoneRequestCard
+export default FinishRequestCard;

@@ -1,47 +1,92 @@
 import { Loader } from "@/components/ui/Loader";
+import {
+  getCurrentMonthName,
+  getCurrentMonthStart,
+  getToday,
+} from "@/utils/date";
 import { SlidersHorizontal } from "lucide-react-native";
+import { useState } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import { IRequest } from "../types";
+import { useRequests } from "../hooks/useRequest";
 import AssignedRequestCard from "./RequestCards/AssignedRequestCard";
 import DoneRequestCard from "./RequestCards/DoneRequestCard";
 import FinishedRequestCard from "./RequestCards/FinishedRequestCard";
-import DoneSummary from "./Summaries/DoneSummary";
 import FinishedSummary from "./Summaries/FinishedSummary";
 
 type Props = {
   route: { key: string };
-  data: IRequest[];
-  isLoading: boolean;
 };
 
-export default function RequestsScenes({ route, data, isLoading }: Props) {
-  let filteredData: IRequest[] = [];
-  console.log("route.key", route.key);
+export default function RequestsScenes({ route }: Props) {
+  let status = "";
+  let from: string | undefined;
+  let to: string | undefined;
+
+  const monthFrom = getCurrentMonthStart();
+  const todayStr = getToday();
 
   switch (route.key) {
     case "assigned":
-      filteredData = data?.filter(
-        (item) => Number(item.applicationStatusId) === 2,
-      );
+      status = "2,9";
       break;
     case "done":
-      filteredData = data?.filter(
-        (item) => Number(item.applicationStatusId) === 8,
-      );
+      status = "8";
+      from = todayStr;
+      to = todayStr;
       break;
     case "finished":
-      filteredData = data?.filter(
-        (item) => Number(item.applicationStatusId) === 5,
-      );
+      status = "5";
+      from = monthFrom;
+      to = todayStr;
       break;
   }
+
+  const { requests, isLoading, refetchRequests } = useRequests(
+    status,
+    from,
+    to,
+  );
+  const [refreshing, setRefreshing] = useState(false);
 
   const style = {
     paddingBottom: 10,
     paddingHorizontal: 14,
   };
 
-  console.log("filteredData", filteredData.length);
+  console.log("requests", requests.length);
+  // console.log("req", requests[0]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await refetchRequests();
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  let groupedList = [];
+  if (route.key === "finished") {
+    groupedList = requests.reduce(
+      (acc: any, curr: any) => {
+        const key = curr.applicationTypeId;
+        if (!acc[key]) {
+          acc[key] = {
+            id: key,
+            title: curr.applicationTypeName,
+            count: 0,
+          };
+        }
+        acc[key].count += 1;
+        return acc;
+      },
+      {} as Record<number, { id: number; title: string; count: number }>,
+    );
+  }
 
   switch (route.key) {
     case "assigned":
@@ -54,16 +99,14 @@ export default function RequestsScenes({ route, data, isLoading }: Props) {
             </TouchableOpacity>
           </View>
 
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <FlatList
-              data={filteredData}
-              renderItem={({ item }) => <AssignedRequestCard item={item} />}
-              keyExtractor={(item) => item?.applicationNumber?.toString()}
-              contentContainerStyle={style}
-            />
-          )}
+          <FlatList
+            data={requests}
+            renderItem={({ item }) => <AssignedRequestCard item={item} />}
+            keyExtractor={(item) => item?.applicationNumber?.toString()}
+            contentContainerStyle={style}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
+          />
         </>
       );
     case "done":
@@ -73,11 +116,12 @@ export default function RequestsScenes({ route, data, isLoading }: Props) {
             <Text className="text-xl font-semibold">Выполненные заявки</Text>
           </View>
           <FlatList
-            data={filteredData}
+            data={requests}
             renderItem={({ item }) => <DoneRequestCard item={item} />}
-            keyExtractor={(item) => item.applicationNumber?.toString()}
+            keyExtractor={(item) => item.applicationId?.toString()}
             contentContainerStyle={style}
-            ListFooterComponent={<DoneSummary />}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
           />
         </>
       );
@@ -86,15 +130,17 @@ export default function RequestsScenes({ route, data, isLoading }: Props) {
         <>
           <View className="mx-4 mt-2">
             <Text className="text-xl font-semibold">
-              Завершенные заявки с 1 августа
+              Завершенные заявки с 1 {getCurrentMonthName()}
             </Text>
           </View>
           <FlatList
-            data={filteredData}
+            data={groupedList ? Object.values(groupedList) : ([] as any)}
             renderItem={({ item }) => <FinishedRequestCard item={item} />}
-            keyExtractor={(item) => item.applicationNumber?.toString()}
+            keyExtractor={(item) => item.id?.toString()}
             contentContainerStyle={style}
-            ListFooterComponent={<FinishedSummary />}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
+            ListHeaderComponent={<FinishedSummary data={requests} />}
           />
         </>
       );

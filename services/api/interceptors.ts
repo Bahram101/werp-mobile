@@ -24,14 +24,14 @@ coreInstance.interceptors.response.use(
       originalRequest._isRetry = true;
       try {
         await getNewTokens();
-        console.log("getNewTokens success");
+        // console.log("getNewTokens success");
         return coreInstance.request(originalRequest);
       } catch (err) {
-        console.log("Invalid Refresh Token", err);
+        // console.log("Invalid Refresh Token", err);
         const refreshError = err as AxiosError<{ error: string }>;
         const errorMessage = refreshError.response?.data?.error;
         if (errorMessage === "invalid_token") {
-          console.log("Invalid token, logging out");
+          // console.log("Invalid token, logging out");
           await logoutWithContext(AuthService.logout);
         }
       }

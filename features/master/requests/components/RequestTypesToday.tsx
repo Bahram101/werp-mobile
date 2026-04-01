@@ -14,8 +14,8 @@ const RequestTypesToday: FC<IRequestList> = ({ requests, isLoading }) => {
       {isLoading ? (
         <Loader />
       ) : (
-        requests.map((request: any) => (
-          <RequestTypeItem key={request.id} request={request} />
+        requests.map((req: any) => (
+          <RequestTypeItem key={req.id} request={req} />
         ))
       )}
     </View>

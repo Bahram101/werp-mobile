@@ -4,9 +4,12 @@ import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
 import { RequestDetailParams } from "@/types/navigation.interface";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Text, View } from "react-native";
-import { useRequestDetail } from "../../hooks/useRequest";
+import {
+  useRequestDetail,
+  useUpdateRequestStatus,
+} from "../../hooks/useRequest";
 import Client from "./components/Client";
 import DeviceData from "./components/Device";
 import { Service } from "./components/Service";
@@ -15,7 +18,8 @@ export default function RequestDetailScreen() {
   const navigation = useNavigation();
   const { appNumber } = useLocalSearchParams<RequestDetailParams>();
   const { requestDetail, isFetching } = useRequestDetail(Number(appNumber));
-  const [status, setStatus] = useState<"accepted" | "arrived">("accepted");
+  const { updateRequestStatus, isLoading } = useUpdateRequestStatus();
+  // const [status, setStatus] = useState<"accepted" | "arrived">("accepted");
 
   useEffect(() => {
     if (appNumber) {
@@ -38,8 +42,12 @@ export default function RequestDetailScreen() {
   }
 
   const handleMainButton = () => {
-    if (status === "accepted") {
-      setStatus("arrived");
+    if (requestDetail.applicationStatusId === 2) {
+      updateRequestStatus({
+        reqId: requestDetail.applicationNumber,
+        statusId: 9,
+      });
+      // setStatus("arrived");
     } else {
       router.push({
         pathname: "/(apps)/master/(tabs)/requests/[appNumber]/work",
@@ -81,7 +89,7 @@ export default function RequestDetailScreen() {
         <DeviceData data={request.device} />
       </Accordion>
 
-      <View className="flex-row gap-3 ">
+      {/* <View className="flex-row gap-3 ">
         <AnimatedButton
           className="p-4"
           bg="white"
@@ -102,17 +110,24 @@ export default function RequestDetailScreen() {
         >
           <Text style={{ lineHeight: 18 }}>{"Позвонить \n клиенту"}</Text>
         </AnimatedButton>
-      </View>
+      </View> */}
 
       <AnimatedButton
         className="h-20"
-        bg={status === "accepted" ? "primary" : "blue"}
-        bgPressed={status === "accepted" ? "primaryDark" : "blueDark"}
-        icon={status === "accepted" ? "check" : "map-pin"}
+        bg={requestDetail.applicationStatusId === 2 ? "primary" : "blue"}
+        bgPressed={
+          requestDetail.applicationStatusId === 2 ? "primaryDark" : "blueDark"
+        }
+        icon={requestDetail.applicationStatusId === 2 ? "check" : "map-pin"}
         iconColor="white"
-        onPress={() => handleMainButton()}
+        onPress={handleMainButton}
+        isLoading={isLoading}
       >
-        {status === "accepted" ? "Принять" : "Я на месте"}
+        {requestDetail.applicationStatusId === 2
+          ? "Принять"
+          : requestDetail.applicationStatusId === 9
+            ? "Прибыл"
+            : ""}
       </AnimatedButton>
 
       <View className="flex-row gap-3">

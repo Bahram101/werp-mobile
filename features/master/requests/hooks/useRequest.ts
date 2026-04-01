@@ -1,23 +1,25 @@
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
+import { getCurrentMonthStart, getToday } from "@/utils/date";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { RequestService } from "../services/request.service";
 
-export const useRequests = () => {
+export const useRequests = (status: string, from?: string, to?: string) => {
   const { user } = useAuth();
   const masterId = user?.currentStaff?.staffId;
-  const status = "2";
 
   const {
     data: requests = [],
     isFetching: isLoading,
-    refetch,
+    refetch: refetchRequests,
   } = useQuery({
-    queryKey: ["get-master-requests"],
-    queryFn: () => RequestService.getMasterRequests(masterId!, status),
+    queryKey: ["get-master-requests", masterId, status, from, to],
+    queryFn: () =>
+      RequestService.getMasterRequests(masterId!, status, from, to),
     enabled: !!masterId,
     retry: 1,
+    staleTime: 1000 * 30,
   });
-  return { requests, isLoading, refetch };
+  return { requests, isLoading, refetchRequests };
 };
 
 export const useRequestDetail = (id: number) => {
@@ -34,56 +36,62 @@ export const useRequestDetail = (id: number) => {
   return { requestDetail: requestDetail?.application, isLoading, isFetching };
 };
 
-export const useRequestsCount = (status: string) => {
+export const useAssignedTotalCount = (status: string) => {
   const { user } = useAuth();
   const masterId = user?.currentStaff.staffId;
-
   const {
     data = [],
     isFetching: isLoading,
-    refetch,
+    refetch: refetchAssigned,
   } = useQuery({
-    queryKey: ["requests-count", status, masterId],
-    queryFn: () => RequestService.getMasterRequests(masterId!, "2"),
-    enabled: !!masterId,
+    queryKey: ["assigned-total", status, masterId],
+    queryFn: () => RequestService.getMasterRequests(masterId!, status),
+    enabled: !!masterId && !!status,
   });
-  return { count: data.length, isLoading, refetch };
+  return { assignedReqCount: data.length, isLoading, refetchAssigned };
 };
 
-export const useDoneTodayCount = () => {
+export const useDoneTodayCount = (status: string) => {
   const { user } = useAuth();
   const masterId = user?.currentStaff.staffId;
-  const today = new Date().toISOString().split("T")[0];
+  const today = getToday();
 
-  const {
-    data = [],
-    isFetching: isLoading,
-    refetch,
-  } = useQuery({
+  const { data = [], refetch: refetchDone } = useQuery({
     queryKey: ["done-today", masterId],
     queryFn: () =>
-      RequestService.getMasterRequests(masterId!, "8", today, today),
+      RequestService.getMasterRequests(masterId!, status, today, today),
   });
-  return { count: data.length, isLoading, refetch };
+  return { doneReqCount: data.length, refetchDone };
 };
 
-export const useFinishedMonthCount = () => {
+export const useFinishedMonthCount = (status: string) => {
   const { user } = useAuth();
   const masterId = user?.currentStaff.staffId;
+  const from = getCurrentMonthStart();
+  const to = getToday();
 
-  const today = new Date();
-  const from = new Date(today.getFullYear(), today.getMonth(), 1)
-    .toISOString()
-    .split("T")[0];
-  const to = today.toISOString().split("T")[0];
-
-  const {
-    data = [],
-    isFetching: isLoading,
-    refetch,
-  } = useQuery({
+  const { data = [], refetch: refetchFinished } = useQuery({
     queryKey: ["finished-month", masterId],
-    queryFn: () => RequestService.getMasterRequests(masterId!, "5", from, to),
+    queryFn: () =>
+      RequestService.getMasterRequests(masterId!, status, from, to),
   });
-  return { count: data.length, isLoading, refetch };
+  return { finishedReqCount: data.length, refetchFinished };
+};
+
+export const useUpdateRequestStatus = () => {
+  const queryClient = useQueryClient();
+  const { mutate: updateRequestStatus, isPending: isLoading } = useMutation({
+    mutationKey: ["update-request-status"],
+    mutationFn: ({ reqId, statusId }: { reqId: number; statusId: number }) =>
+      RequestService.updateRequestStatus(reqId, statusId),
+    onSuccess: ({ data: { application } }) => {
+      queryClient.invalidateQueries({
+        queryKey: ["get-master-requests"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["get-master-request-details", application.applicationNumber],
+      });
+    },
+  });
+  return { updateRequestStatus, isLoading };
 };

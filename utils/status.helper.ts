@@ -10,21 +10,22 @@ export const getStatusColor = (status: StatusText): string => {
   return map[status];
 };
 /****************************************************************** */
-export const getStatusMeta = (status: number) => {
-  switch (status) {
-    case 1:
+export const getStatusMeta = (item: any) => {
+  if (item.urgencyLevel) {
+    return {
+      label: "Срочная",
+      text: "text-error-400",
+      bgInner: "bg-error-400",
+      bgOuter: "bg-error-50",
+    };
+  }
+  switch (item.applicationStatusId) {
+    case 9:
       return {
         label: "Активная",
         text: "text-primary",
         bgInner: "bg-success-300",
         bgOuter: "bg-success-50",
-      };
-    case 2:
-      return {
-        label: "Срочная",
-        text: "text-error-400",
-        bgInner: "bg-error-400",
-        bgOuter: "bg-error-50",
       };
     default:
       return {};

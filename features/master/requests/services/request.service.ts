@@ -34,4 +34,18 @@ export const RequestService = {
       throw error;
     }
   },
+
+  async updateRequestStatus(reqId: number, statusId: number) {
+    try {
+      const { data } = await serviceInstance.put("/smecam/edit", {
+        applicationStatusId: statusId,
+        id: reqId,
+        branchId: 61,
+        operatorId: 706,
+      });
+      return data;
+    } catch (e) {
+      throw e;
+    }
+  },
 };
