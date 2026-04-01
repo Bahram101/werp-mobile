@@ -4,7 +4,7 @@ import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
 import { RequestDetailParams } from "@/types/navigation.interface";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import {
   useRequestDetail,
@@ -17,9 +17,10 @@ import { Service } from "./components/Service";
 export default function RequestDetailScreen() {
   const navigation = useNavigation();
   const { appNumber } = useLocalSearchParams<RequestDetailParams>();
-  const { requestDetail, isFetching } = useRequestDetail(Number(appNumber));
+  const { requestDetail, isLoadingReqDetail, refetchRequestDetail } =
+    useRequestDetail(Number(appNumber));
   const { updateRequestStatus, isLoading } = useUpdateRequestStatus();
-  // const [status, setStatus] = useState<"accepted" | "arrived">("accepted");
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     if (appNumber) {
@@ -37,7 +38,7 @@ export default function RequestDetailScreen() {
     }
   }, [requestDetail, navigation]);
 
-  if (isFetching) {
+  if (isLoadingReqDetail) {
     return <Loader />;
   }
 
@@ -47,8 +48,24 @@ export default function RequestDetailScreen() {
         reqId: requestDetail.applicationNumber,
         statusId: 9,
       });
-      // setStatus("arrived");
-    } else {
+    }
+    if (requestDetail.applicationStatusId === 9) {
+      updateRequestStatus(
+        {
+          reqId: requestDetail.applicationNumber,
+          statusId: 10,
+        },
+        {
+          onSuccess: () => {
+            router.push({
+              pathname: "/(apps)/master/(tabs)/requests/[appNumber]/work",
+              params: { appNumber },
+            });
+          },
+        },
+      );
+    }
+    if (requestDetail.applicationStatusId === 10) {
       router.push({
         pathname: "/(apps)/master/(tabs)/requests/[appNumber]/work",
         params: { appNumber },
@@ -77,8 +94,17 @@ export default function RequestDetailScreen() {
     },
   };
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await refetchRequestDetail();
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   return (
-    <Layout className="gap-3">
+    <Layout className="gap-3" refreshing={refreshing} onRefresh={onRefresh}>
       <Accordion
         type="multiple"
         defaultValue={["client", "service"]}
@@ -89,7 +115,7 @@ export default function RequestDetailScreen() {
         <DeviceData data={request.device} />
       </Accordion>
 
-      {/* <View className="flex-row gap-3 ">
+      <View className="flex-row gap-3 ">
         <AnimatedButton
           className="p-4"
           bg="white"
@@ -110,7 +136,7 @@ export default function RequestDetailScreen() {
         >
           <Text style={{ lineHeight: 18 }}>{"Позвонить \n клиенту"}</Text>
         </AnimatedButton>
-      </View> */}
+      </View>
 
       <AnimatedButton
         className="h-20"
@@ -118,7 +144,13 @@ export default function RequestDetailScreen() {
         bgPressed={
           requestDetail.applicationStatusId === 2 ? "primaryDark" : "blueDark"
         }
-        icon={requestDetail.applicationStatusId === 2 ? "check" : "map-pin"}
+        icon={
+          requestDetail.applicationStatusId === 2
+            ? "check"
+            : requestDetail.applicationStatusId === 9
+              ? "map-pin"
+              : "tool"
+        }
         iconColor="white"
         onPress={handleMainButton}
         isLoading={isLoading}
@@ -127,7 +159,7 @@ export default function RequestDetailScreen() {
           ? "Принять"
           : requestDetail.applicationStatusId === 9
             ? "Прибыл"
-            : ""}
+            : "В работе"}
       </AnimatedButton>
 
       <View className="flex-row gap-3">

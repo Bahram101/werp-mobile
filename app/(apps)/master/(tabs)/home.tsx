@@ -17,13 +17,13 @@ export default function Home() {
     assignedReqCount,
     isLoading: isAssignedLoading,
     refetchAssigned,
-  } = useAssignedTotalCount("2,9");
+  } = useAssignedTotalCount("2,9,10");
 
   const { doneReqCount, refetchDone } = useDoneTodayCount("8");
 
   const { finishedReqCount, refetchFinished } = useFinishedMonthCount("5");
 
-  const { requests, isLoading, refetchRequests } = useRequests("2,9");
+  const { requests, isLoading, refetchRequests } = useRequests("2,9,10");
 
   const groupedRequestList = requests.reduce(
     (acc: any, item: any) => {

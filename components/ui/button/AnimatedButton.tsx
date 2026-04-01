@@ -57,6 +57,7 @@ export default function AnimatedButton({
       onPressOut={onPressOut}
       onPress={onPress}
       className={cn("flex-1")}
+      disabled={isLoading}
     >
       {({ pressed }) => (
         <Animated.View

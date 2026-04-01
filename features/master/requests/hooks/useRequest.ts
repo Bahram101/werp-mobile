@@ -25,15 +25,19 @@ export const useRequests = (status: string, from?: string, to?: string) => {
 export const useRequestDetail = (id: number) => {
   const {
     data: requestDetail,
-    isPending: isLoading,
-    isFetching,
+    isFetching: isLoadingReqDetail,
+    refetch: refetchRequestDetail,
   } = useQuery({
     queryKey: ["get-master-request-details", id],
     queryFn: () => RequestService.getMasterRequestDetail(id),
     staleTime: 1000 * 60 * 5,
   });
 
-  return { requestDetail: requestDetail?.application, isLoading, isFetching };
+  return {
+    requestDetail: requestDetail?.application,
+    isLoadingReqDetail,
+    refetchRequestDetail,
+  };
 };
 
 export const useAssignedTotalCount = (status: string) => {

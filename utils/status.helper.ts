@@ -21,6 +21,7 @@ export const getStatusMeta = (item: any) => {
   }
   switch (item.applicationStatusId) {
     case 9:
+    case 10:
       return {
         label: "Активная",
         text: "text-primary",

@@ -27,7 +27,7 @@ export default function RequestsScenes({ route }: Props) {
 
   switch (route.key) {
     case "assigned":
-      status = "2,9";
+      status = "2,9,10";
       break;
     case "done":
       status = "8";
