@@ -61,8 +61,8 @@ export type RequestType = {
 export type ServiceItem = {
   id: number;
   name: string;
-  price: number;
-  currency: string;
+  code: number;
+  info: string;
 };
 
 export type SparePartItem = {

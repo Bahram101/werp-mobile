@@ -5,7 +5,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
   data: ServiceItem[];
-  totalAmount: number;
+  totalAmount: any;
 };
 
 const Table = ({ data, totalAmount }: Props) => {
@@ -32,7 +32,7 @@ const Table = ({ data, totalAmount }: Props) => {
           >
             <Text className="w-[10%] text-center">{item.id}</Text>
             <Text className="w-[60%] text-center">{item.name}</Text>
-            <Text className="w-[23%] text-center">{item.price}</Text>
+            <Text className="w-[23%] text-center"> </Text>
             <View className="w-[7%]">
               <TouchableOpacity>
                 <EllipsisVertical />

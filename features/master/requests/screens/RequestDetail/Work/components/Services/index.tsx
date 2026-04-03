@@ -15,10 +15,10 @@ const Services = ({ data }: ServicesProps) => {
   const [selectedServices, setSelectedServices] = useState<ServiceItem[]>([]);
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
 
-  const totalAmount = selectedServices.reduce(
-    (acc, item) => acc + item.price,
-    0,
-  );
+  // const totalAmount = selectedServices.reduce(
+  //   (acc, item) => acc + item.code,
+  //   0,
+  // );
 
   const handleOpenSelectModal = () => {
     showBottomSheet(
@@ -46,6 +46,8 @@ const Services = ({ data }: ServicesProps) => {
     updateModalProps({ selectedServiceIds: String(id) });
   };
 
+  console.log("selectedServiceIds", selectedServiceIds);
+
   return (
     <View className="work-block bg-white mt-3 rounded-2xl p-4">
       <View className="work-block-top pb-4 pt-2 border-b mb-4 border-grayLight flex-row justify-between">
@@ -59,7 +61,7 @@ const Services = ({ data }: ServicesProps) => {
           </Pressable>
         </View>
       </View>
-      <ServiceTable data={selectedServices} totalAmount={totalAmount} />
+      <ServiceTable data={selectedServices} totalAmount={null} />
     </View>
   );
 };

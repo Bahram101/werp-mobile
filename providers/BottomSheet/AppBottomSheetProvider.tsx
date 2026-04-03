@@ -37,7 +37,6 @@ const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
   const [modalProps, setModalProps] = useState<any>({});
 
   const openBottomSheet = () => modalRef.current?.open();
-
   const closeBottomSheet = () => modalRef.current?.close();
 
   const showBottomSheet = (
