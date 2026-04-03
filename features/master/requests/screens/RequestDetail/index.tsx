@@ -2,6 +2,7 @@ import { Accordion } from "@/components/ui/accordion";
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
+import { ROUTES } from "@/constants/routes";
 import { RequestDetailParams } from "@/types/navigation.interface";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -58,7 +59,7 @@ export default function RequestDetailScreen() {
         {
           onSuccess: () => {
             router.push({
-              pathname: "/(apps)/master/(tabs)/requests/[appNumber]/work",
+              pathname: ROUTES.REQUEST_WORK,
               params: { appNumber },
             });
           },
@@ -67,7 +68,7 @@ export default function RequestDetailScreen() {
     }
     if (requestDetail.applicationStatusId === 10) {
       router.push({
-        pathname: "/(apps)/master/(tabs)/requests/[appNumber]/work",
+        pathname: ROUTES.REQUEST_WORK,
         params: { appNumber },
       });
     }
@@ -144,13 +145,7 @@ export default function RequestDetailScreen() {
         bgPressed={
           requestDetail.applicationStatusId === 2 ? "primaryDark" : "blueDark"
         }
-        icon={
-          requestDetail.applicationStatusId === 2
-            ? "check"
-            : requestDetail.applicationStatusId === 9
-              ? "map-pin"
-              : "tool"
-        }
+        icon={requestDetail.applicationStatusId === 2 ? "check" : "map-pin"}
         iconColor="white"
         onPress={handleMainButton}
         isLoading={isLoading}

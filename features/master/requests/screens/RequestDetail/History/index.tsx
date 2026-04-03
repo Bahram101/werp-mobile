@@ -1,5 +1,6 @@
 import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
+import { ROUTES } from "@/constants/routes";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect } from "react";
 import { View } from "react-native";
@@ -34,8 +35,7 @@ export default function HistoryListScreen() {
           data={historyList.data}
           onPressItem={(item) => {
             router.push({
-              pathname:
-                "/(apps)/master/(tabs)/requests/[appNumber]/history/[historyId]",
+              pathname: ROUTES.REQUEST_HISTORY_DETAIL,
               params: {
                 appNumber: Number(appNumber),
                 historyId: item.id,

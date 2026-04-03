@@ -11,6 +11,14 @@ export const getStatusColor = (status: StatusText): string => {
 };
 /****************************************************************** */
 export const getStatusMeta = (item: any) => {
+  if (item.applicationStatusId === 9 || item.applicationStatusId === 10) {
+    return {
+      label: "Активная",
+      text: "text-primary",
+      bgInner: "bg-success-300",
+      bgOuter: "bg-success-50",
+    };
+  }
   if (item.urgencyLevel) {
     return {
       label: "Срочная",
@@ -19,18 +27,8 @@ export const getStatusMeta = (item: any) => {
       bgOuter: "bg-error-50",
     };
   }
-  switch (item.applicationStatusId) {
-    case 9:
-    case 10:
-      return {
-        label: "Активная",
-        text: "text-primary",
-        bgInner: "bg-success-300",
-        bgOuter: "bg-success-50",
-      };
-    default:
-      return {};
-  }
+
+  return {};
 };
 
 export const getPaymentLabel = (payment: string) => {

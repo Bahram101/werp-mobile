@@ -25,7 +25,7 @@ export const useRequests = (status: string, from?: string, to?: string) => {
 export const useRequestDetail = (id: number) => {
   const {
     data: requestDetail,
-    isFetching: isLoadingReqDetail,
+    isLoading: isLoadingReqDetail,
     refetch: refetchRequestDetail,
   } = useQuery({
     queryKey: ["get-master-request-details", id],
@@ -88,12 +88,21 @@ export const useUpdateRequestStatus = () => {
     mutationKey: ["update-request-status"],
     mutationFn: ({ reqId, statusId }: { reqId: number; statusId: number }) =>
       RequestService.updateRequestStatus(reqId, statusId),
+    retry: false,
+
     onSuccess: ({ data: { application } }) => {
+      queryClient.setQueryData(
+        ["get-master-request-details", application.applicationNumber],
+        (old: any) => ({
+          ...old,
+          application: {
+            ...old.application,
+            applicationStatusId: application.applicationStatusId,
+          },
+        }),
+      );
       queryClient.invalidateQueries({
         queryKey: ["get-master-requests"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["get-master-request-details", application.applicationNumber],
       });
     },
   });

@@ -88,6 +88,16 @@ export default function RequestsScenes({ route }: Props) {
     );
   }
 
+  const assignedReqList = [...requests].sort((a, b) => {
+    const getPriority = (item: any) => {
+      if (item.applicationStatusId === 9 || item.applicationStatusId === 10)
+        return 1;
+      if (item.urgencyLevel) return 2;
+      return 3;
+    };
+    return getPriority(a) - getPriority(b);
+  });
+
   switch (route.key) {
     case "assigned":
       return (
@@ -100,7 +110,7 @@ export default function RequestsScenes({ route }: Props) {
           </View>
 
           <FlatList
-            data={requests}
+            data={assignedReqList}
             renderItem={({ item }) => <AssignedRequestCard item={item} />}
             keyExtractor={(item) => item?.applicationNumber?.toString()}
             contentContainerStyle={style}

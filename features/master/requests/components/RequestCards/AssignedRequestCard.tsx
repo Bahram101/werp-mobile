@@ -6,6 +6,7 @@ import React, { FC } from "react";
 import { Text, View } from "react-native";
 
 import AnimatedBlock from "@/components/ui/button/AnimatedBlock";
+import { ROUTES } from "@/constants/routes";
 import { COLORS } from "@/constants/theme";
 import { formatDayMonth } from "@/utils/date";
 import { CalendarDays, Clock } from "lucide-react-native";
@@ -18,7 +19,8 @@ type AssignedRequestCardProps = {
 const AssignedRequestCard: FC<AssignedRequestCardProps> = ({ item }) => {
   const handlePress = () => {
     router.push({
-      pathname: "/(apps)/master/(tabs)/requests/[appNumber]",
+      pathname:
+        item.applicationStatusId === 10 ? ROUTES.REQUEST_WORK : ROUTES.REQUEST,
       params: { appNumber: item.applicationNumber },
     });
   };

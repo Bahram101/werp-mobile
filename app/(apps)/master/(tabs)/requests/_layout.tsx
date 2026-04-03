@@ -1,3 +1,4 @@
+import { ROUTES } from "@/constants/routes";
 import { Feather } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
 import { Pressable, Text } from "react-native";
@@ -27,8 +28,7 @@ export default function RequestsLayout() {
               <Pressable
                 onPress={() => {
                   router.push({
-                    pathname:
-                      "/(apps)/master/(tabs)/requests/[appNumber]/history",
+                    pathname: ROUTES.REQUEST_HISTORY,
                     params: {
                       appNumber: (route.params as any)?.appNumber,
                       contractNumber: (route.params as any)?.contractNumber,
@@ -63,6 +63,22 @@ export default function RequestsLayout() {
           headerShown: true, //детальная история
         }}
       />
+      <Stack.Screen
+        name="[appNumber]/work/index"
+        options={({ navigation, route }) => ({
+          headerLeft: () => (
+            <Pressable onPress={() => navigation.pop(2)}>
+              <Feather name="chevron-left" size={28} className="pl-1" />
+            </Pressable>
+          ),
+        })}
+      />
+
+      {/* <Stack.Screen name="[appNumber]/work/index" options={({navigation, route}) => {
+        return {
+          headerLeft: 
+        }
+      }} /> */}
     </Stack>
   );
 }
