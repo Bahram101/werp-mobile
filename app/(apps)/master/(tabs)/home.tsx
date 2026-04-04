@@ -13,17 +13,14 @@ import { RefreshControl } from "react-native-gesture-handler";
 
 export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
-  const {
-    assignedReqCount,
-    isLoading: isAssignedLoading,
-    refetchAssigned,
-  } = useAssignedTotalCount("2,9,10");
+  const { assignedReqCount, isAssignedLoading, refetchAssigned } =
+    useAssignedTotalCount("2");
 
   const { doneReqCount, refetchDone } = useDoneTodayCount("8");
 
   const { finishedReqCount, refetchFinished } = useFinishedMonthCount("5");
 
-  const { requests, isLoading, refetchRequests } = useRequests("2,9,10");
+  const { requests, isLoading, refetchRequests } = useRequests("2");
 
   const groupedRequestList = requests.reduce(
     (acc: any, item: any) => {

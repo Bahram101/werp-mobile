@@ -45,14 +45,14 @@ export const useAssignedTotalCount = (status: string) => {
   const masterId = user?.currentStaff.staffId;
   const {
     data = [],
-    isFetching: isLoading,
+    isFetching: isAssignedLoading,
     refetch: refetchAssigned,
   } = useQuery({
     queryKey: ["assigned-total", status, masterId],
     queryFn: () => RequestService.getMasterRequests(masterId!, status),
     enabled: !!masterId && !!status,
   });
-  return { assignedReqCount: data.length, isLoading, refetchAssigned };
+  return { assignedReqCount: data.length, isAssignedLoading, refetchAssigned };
 };
 
 export const useDoneTodayCount = (status: string) => {
