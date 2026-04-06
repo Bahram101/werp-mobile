@@ -20,7 +20,7 @@ export default function Home() {
 
   const { finishedReqCount, refetchFinished } = useFinishedMonthCount("5");
 
-  const { requests, isLoading, refetchRequests } = useRequests("2");
+  const { requests, isLoadingRequests, refetchRequests } = useRequests("2");
 
   const groupedRequestList = requests.reduce(
     (acc: any, item: any) => {
@@ -79,7 +79,10 @@ export default function Home() {
       >
         <View className="mt-5 flex-1 px-4">
           <Text className="text-2xl font-semibold mb-2">Виды заявки</Text>
-          <RequestTypesToday requests={result} isLoading={isLoading} />
+          <RequestTypesToday
+            requests={result}
+            isLoadingRequests={isLoadingRequests}
+          />
         </View>
       </ScrollView>
     </View>

@@ -1,4 +1,3 @@
-import { Loader } from "@/components/ui/Loader";
 import {
   getCurrentMonthName,
   getCurrentMonthStart,
@@ -7,7 +6,7 @@ import {
 import { SlidersHorizontal } from "lucide-react-native";
 import { useState } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import { useRequests } from "../hooks/useRequest";
+import { useFinishedSummary, useRequests } from "../hooks/useRequest";
 import AssignedRequestCard from "./RequestCards/AssignedRequestCard";
 import DoneRequestCard from "./RequestCards/DoneRequestCard";
 import FinishedRequestCard from "./RequestCards/FinishedRequestCard";
@@ -21,6 +20,7 @@ export default function RequestsScenes({ route }: Props) {
   let status = "";
   let from: string | undefined;
   let to: string | undefined;
+  let isFinished = false;
 
   const monthFrom = getCurrentMonthStart();
   const todayStr = getToday();
@@ -38,32 +38,20 @@ export default function RequestsScenes({ route }: Props) {
       status = "5";
       from = monthFrom;
       to = todayStr;
+      isFinished = true;
       break;
   }
 
-  const { requests, isLoading, refetchRequests } = useRequests(
-    status,
-    from,
-    to,
-  );
   const [refreshing, setRefreshing] = useState(false);
-
-  const style = {
-    paddingBottom: 10,
-    paddingHorizontal: 14,
-  };
-
-  console.log("requests", requests.length);
-  // console.log("req", requests[0]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
+  const { requests, refetchRequests } = useRequests(status, from, to);
+  const { finishedSummaryData, refetchSummary } = useFinishedSummary({
+    enabled: isFinished,
+  });
 
   const onRefresh = async () => {
     setRefreshing(true);
     try {
-      await refetchRequests();
+      await Promise.all([refetchRequests(), refetchSummary()]);
     } finally {
       setRefreshing(false);
     }
@@ -97,6 +85,11 @@ export default function RequestsScenes({ route }: Props) {
     };
     return getPriority(a) - getPriority(b);
   });
+
+  const style = {
+    paddingBottom: 10,
+    paddingHorizontal: 14,
+  };
 
   switch (route.key) {
     case "assigned":
@@ -144,13 +137,18 @@ export default function RequestsScenes({ route }: Props) {
             </Text>
           </View>
           <FlatList
+            ListHeaderComponent={
+              <FinishedSummary
+                data={requests}
+                premiumData={finishedSummaryData}
+              />
+            }
             data={groupedList ? Object.values(groupedList) : ([] as any)}
             renderItem={({ item }) => <FinishedRequestCard item={item} />}
             keyExtractor={(item) => item.id?.toString()}
             contentContainerStyle={style}
             onRefresh={onRefresh}
             refreshing={refreshing}
-            ListHeaderComponent={<FinishedSummary data={requests} />}
           />
         </>
       );

@@ -9,7 +9,7 @@ export const useRequests = (status: string, from?: string, to?: string) => {
 
   const {
     data: requests = [],
-    isFetching: isLoading,
+    isLoading: isLoadingRequests,
     refetch: refetchRequests,
   } = useQuery({
     queryKey: ["get-master-requests", masterId, status, from, to],
@@ -19,7 +19,7 @@ export const useRequests = (status: string, from?: string, to?: string) => {
     retry: 1,
     staleTime: 1000 * 30,
   });
-  return { requests, isLoading, refetchRequests };
+  return { requests, isLoadingRequests, refetchRequests };
 };
 
 export const useRequestDetail = (id: number) => {
@@ -107,4 +107,18 @@ export const useUpdateRequestStatus = () => {
     },
   });
   return { updateRequestStatus, isLoading };
+};
+
+export const useFinishedSummary = ({ enabled }: { enabled: boolean }) => {
+  const { user } = useAuth();
+  const masterId = user?.currentStaff.staffId;
+  const from = getCurrentMonthStart();
+
+  const { data = [], refetch: refetchSummary } = useQuery({
+    queryKey: ["finished-summary", masterId],
+    queryFn: () => RequestService.getRquestPremiumSum(masterId!, "4", from),
+    enabled,
+  });
+
+  return { finishedSummaryData: data, refetchSummary };
 };

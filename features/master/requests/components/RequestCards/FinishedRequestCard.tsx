@@ -10,7 +10,7 @@ type FinishRequestCardProps = {
 
 const FinishRequestCard: FC<FinishRequestCardProps> = ({ item }) => {
   return (
-    <View className="flex-col gap-3 rounded-2xl">
+    <View className="flex-col gap-3 rounded-2xl mb-1">
       <View className="flex-row justify-between items-center bg-white rounded-2xl p-4">
         <View className="flex-row items-center">
           <MaterialCommunityIcons

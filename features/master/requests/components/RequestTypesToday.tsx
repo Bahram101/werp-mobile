@@ -5,13 +5,17 @@ import RequestTypeItem from "./RequestTypeItem";
 
 interface IRequestList {
   requests: any[];
-  isLoading: boolean;
+  isLoadingRequests: boolean;
 }
 
-const RequestTypesToday: FC<IRequestList> = ({ requests, isLoading }) => {
+const RequestTypesToday: FC<IRequestList> = ({
+  requests,
+  isLoadingRequests,
+}) => {
+  console.log("isLoadingRequests", isLoadingRequests);
   return (
     <View>
-      {isLoading ? (
+      {isLoadingRequests ? (
         <Loader />
       ) : (
         requests.map((req: any) => (

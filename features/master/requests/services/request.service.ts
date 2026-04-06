@@ -49,5 +49,20 @@ export const RequestService = {
     }
   },
 
-  // async
+  async getRquestPremiumSum(masterId: number, status: string, from?: string) {
+    try {
+      const { data } = await serviceInstance.get("/report/srlsm", {
+        params: {
+          bukrs: 1000,
+          branchIds: 61,
+          serviceStatusId: status,
+          masterId: masterId,
+          dateAt: from,
+        },
+      });
+      return data.data.listSum;
+    } catch (e) {
+      throw e;
+    }
+  },
 };
