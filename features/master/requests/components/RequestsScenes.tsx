@@ -1,3 +1,4 @@
+import { Loader } from "@/components/ui/Loader";
 import {
   getCurrentMonthName,
   getCurrentMonthStart,
@@ -43,7 +44,11 @@ export default function RequestsScenes({ route }: Props) {
   }
 
   const [refreshing, setRefreshing] = useState(false);
-  const { requests, refetchRequests } = useRequests(status, from, to);
+  const { requests, isLoadingRequests, refetch } = useRequests(
+    status,
+    from,
+    to,
+  );
   const { finishedSummaryData, refetchSummary } = useFinishedSummary({
     enabled: isFinished,
   });
@@ -51,7 +56,7 @@ export default function RequestsScenes({ route }: Props) {
   const onRefresh = async () => {
     setRefreshing(true);
     try {
-      await Promise.all([refetchRequests(), refetchSummary()]);
+      await Promise.all([refetch(), refetchSummary()]);
     } finally {
       setRefreshing(false);
     }
@@ -90,6 +95,12 @@ export default function RequestsScenes({ route }: Props) {
     paddingBottom: 10,
     paddingHorizontal: 14,
   };
+
+  if (isLoadingRequests) {
+    return <Loader />;
+  }
+
+  console.log("REQS", requests.length);
 
   switch (route.key) {
     case "assigned":

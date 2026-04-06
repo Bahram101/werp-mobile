@@ -1,26 +1,18 @@
 import Banner from "@/components/ui/master/Banner";
 import Header from "@/components/ui/master/Header";
 import RequestTypesToday from "@/features/master/requests/components/RequestTypesToday";
-import {
-  useAssignedTotalCount,
-  useDoneTodayCount,
-  useFinishedMonthCount,
-  useRequests,
-} from "@/features/master/requests/hooks/useRequest";
+import { useRequests } from "@/features/master/requests/hooks/useRequest";
 import React, { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 
 export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
-  const { assignedReqCount, isAssignedLoading, refetchAssigned } =
-    useAssignedTotalCount("2");
 
-  const { doneReqCount, refetchDone } = useDoneTodayCount("8");
-
-  const { finishedReqCount, refetchFinished } = useFinishedMonthCount("5");
-
-  const { requests, isLoadingRequests, refetchRequests } = useRequests("2");
+  const { requests, isLoadingRequests, refetch } = useRequests("2");
+  const { requests: doneReqCount, refetch: refetchDoneReqs } = useRequests("8");
+  const { requests: finishedReqCount, refetch: refetchFinishedReqs } =
+    useRequests("5");
 
   const groupedRequestList = requests.reduce(
     (acc: any, item: any) => {
@@ -43,12 +35,7 @@ export default function Home() {
   const onRefresh = async () => {
     setRefreshing(true);
     try {
-      await Promise.all([
-        refetchAssigned(),
-        refetchDone(),
-        refetchFinished(),
-        refetchRequests(),
-      ]);
+      await Promise.all([refetch(), refetchDoneReqs(), refetchFinishedReqs()]);
     } finally {
       setRefreshing(false);
     }
@@ -59,10 +46,10 @@ export default function Home() {
       <Header />
       <Banner
         style={{ marginTop: -55 }}
-        isAssignedLoading={isAssignedLoading}
-        assigned={assignedReqCount}
-        done={doneReqCount}
-        finished={finishedReqCount}
+        isAssignedLoading={isLoadingRequests}
+        assigned={requests.length}
+        done={doneReqCount.length}
+        finished={finishedReqCount.length}
       />
       <ScrollView
         showsVerticalScrollIndicator={false}

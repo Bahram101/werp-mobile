@@ -1,4 +1,5 @@
 import { serviceInstance } from "@/services/api/service-instance";
+import { getCurrentMonthStart, getToday } from "@/utils/date";
 
 export const RequestService = {
   async getMasterRequests(
@@ -11,12 +12,11 @@ export const RequestService = {
       const { data } = await serviceInstance.get("/smappl/appList", {
         params: {
           bukrs: 1000,
-          branchIds: 61,
           appStatusIds: status,
           masterId,
           ...((status === "5" || status === "8") && {
-            dateOpenAt: from,
-            dateOpenTo: to,
+            dateOpenAt: status === "5" ? getCurrentMonthStart() : getToday(),
+            dateOpenTo: status === "5" ? getToday() : getToday(),
           }),
         },
       });
@@ -40,7 +40,6 @@ export const RequestService = {
       const { data } = await serviceInstance.put("/smecam/edit", {
         applicationStatusId: statusId,
         id: reqId,
-        branchId: 61,
         operatorId: 706,
       });
       return data;
@@ -54,7 +53,6 @@ export const RequestService = {
       const { data } = await serviceInstance.get("/report/srlsm", {
         params: {
           bukrs: 1000,
-          branchIds: 61,
           serviceStatusId: status,
           masterId: masterId,
           dateAt: from,

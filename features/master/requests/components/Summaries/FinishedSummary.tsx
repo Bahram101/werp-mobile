@@ -18,7 +18,7 @@ const FinishedSummary = ({ data, premiumData }: Props) => {
         <Text className="font-bold text-grayDark">ПРЕМЯ:</Text>
         <Text className="font-bold">
           {" "}
-          {formatCurrency(premiumData.masterPremium)}
+          {formatCurrency(premiumData?.masterPremium ?? 0)}
         </Text>
       </View>
     </View>

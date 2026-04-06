@@ -1,5 +1,5 @@
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { getCurrentMonthStart, getToday } from "@/utils/date";
+import { getCurrentMonthStart } from "@/utils/date";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { RequestService } from "../services/request.service";
 
@@ -10,7 +10,8 @@ export const useRequests = (status: string, from?: string, to?: string) => {
   const {
     data: requests = [],
     isLoading: isLoadingRequests,
-    refetch: refetchRequests,
+    // refetch: refetchRequests,
+    refetch,
   } = useQuery({
     queryKey: ["get-master-requests", masterId, status, from, to],
     queryFn: () =>
@@ -19,7 +20,7 @@ export const useRequests = (status: string, from?: string, to?: string) => {
     retry: 1,
     staleTime: 1000 * 30,
   });
-  return { requests, isLoadingRequests, refetchRequests };
+  return { requests, isLoadingRequests, refetch };
 };
 
 export const useRequestDetail = (id: number) => {
@@ -38,48 +39,6 @@ export const useRequestDetail = (id: number) => {
     isLoadingReqDetail,
     refetchRequestDetail,
   };
-};
-
-export const useAssignedTotalCount = (status: string) => {
-  const { user } = useAuth();
-  const masterId = user?.currentStaff.staffId;
-  const {
-    data = [],
-    isFetching: isAssignedLoading,
-    refetch: refetchAssigned,
-  } = useQuery({
-    queryKey: ["assigned-total", status, masterId],
-    queryFn: () => RequestService.getMasterRequests(masterId!, status),
-    enabled: !!masterId && !!status,
-  });
-  return { assignedReqCount: data.length, isAssignedLoading, refetchAssigned };
-};
-
-export const useDoneTodayCount = (status: string) => {
-  const { user } = useAuth();
-  const masterId = user?.currentStaff.staffId;
-  const today = getToday();
-
-  const { data = [], refetch: refetchDone } = useQuery({
-    queryKey: ["done-today", masterId],
-    queryFn: () =>
-      RequestService.getMasterRequests(masterId!, status, today, today),
-  });
-  return { doneReqCount: data.length, refetchDone };
-};
-
-export const useFinishedMonthCount = (status: string) => {
-  const { user } = useAuth();
-  const masterId = user?.currentStaff.staffId;
-  const from = getCurrentMonthStart();
-  const to = getToday();
-
-  const { data = [], refetch: refetchFinished } = useQuery({
-    queryKey: ["finished-month", masterId],
-    queryFn: () =>
-      RequestService.getMasterRequests(masterId!, status, from, to),
-  });
-  return { finishedReqCount: data.length, refetchFinished };
 };
 
 export const useUpdateRequestStatus = () => {
