@@ -16,24 +16,23 @@ type Props = {
 };
 
 const ServiceModalListItem = ({ value, label, isLast }: Props) => {
+  // console.log("rendering item", value);
   return (
     <Checkbox
       value={value}
       size="md"
       className={cn(
         "flex-row justify-between items-center py-3 border-grayLight",
-        !isLast && "border-b"
+        !isLast && "border-b",
       )}
-      onChange={(isChecked: boolean) => {
-        if (isChecked) {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-        }
+      onChange={() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       }}
     >
       <CheckboxLabel className="text-base text-textDark">{label}</CheckboxLabel>
       <CheckboxIndicator
         className={cn(
-          "w-6 h-6 border border-gray-300 rounded-md items-center justify-center mr-[2px]"
+          "w-6 h-6 border border-gray-300 rounded-md items-center justify-center mr-[2px]",
         )}
       >
         <CheckboxIcon as={BoldCheck} className={cn("text-green-600")} />

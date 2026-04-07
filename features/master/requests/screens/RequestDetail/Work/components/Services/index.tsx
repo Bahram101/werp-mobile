@@ -11,14 +11,8 @@ type ServicesProps = {
 
 const Services = ({ data }: ServicesProps) => {
   const { showBottomSheet, updateModalProps } = useBottomSheet();
-
   const [selectedServices, setSelectedServices] = useState<ServiceItem[]>([]);
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
-
-  // const totalAmount = selectedServices.reduce(
-  //   (acc, item) => acc + item.code,
-  //   0,
-  // );
 
   const handleOpenSelectModal = () => {
     showBottomSheet(

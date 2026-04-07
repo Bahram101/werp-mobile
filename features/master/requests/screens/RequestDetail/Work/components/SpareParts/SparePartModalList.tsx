@@ -16,6 +16,8 @@ const SparePartModalList = ({
   selectedSparePartIds,
   handleAddPart,
 }: Props) => {
+  // console.log("selectedSparePartIds", selectedSparePartIds);
+  // console.log("data", JSON.stringify(data, null, 2));
   return (
     <CheckboxGroup
       value={selectedSparePartIds}

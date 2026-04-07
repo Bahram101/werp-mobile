@@ -18,7 +18,7 @@ const SparePartModalListItem = ({ item, isLast, onAddPart }: Props) => {
   const { openSheet, closeSheet } = useActionSheet();
 
   const handlePress = (isChecked: boolean) => {
-    // setChecked(isChecked);
+    // console.log("isChecked", isChecked);
 
     if (isChecked) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);

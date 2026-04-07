@@ -40,6 +40,7 @@ export const RequestService = {
       const { data } = await serviceInstance.put("/smecam/edit", {
         applicationStatusId: statusId,
         id: reqId,
+        branchId: 61,
         operatorId: 706,
       });
       return data;

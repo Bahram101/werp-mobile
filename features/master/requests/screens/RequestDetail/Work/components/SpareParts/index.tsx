@@ -37,10 +37,10 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
   };
 
   const handleSelectSpareParts = (ids: string[]) => {
-    // setSelectedSparePartIds(ids);
-    // const newSelected = data.filter((item) => ids.includes(item.id.toString()));
-    // setSelectedSpareParts(newSelected);
-    // updateModalProps({ selectedSparePartIds: ids });
+    setSelectedSparePartIds(ids);
+    const newSelected = data.filter((item) => ids.includes(item.id.toString()));
+    setSelectedSpareParts(newSelected);
+    updateModalProps({ selectedSparePartIds: ids });
   };
 
   const handleRemoveSparePart = (id: number) => {

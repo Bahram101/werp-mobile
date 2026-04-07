@@ -11,8 +11,8 @@ type Props = {
 
 const ServiceModalList = ({
   data,
-  handleSelectServices,
   selectedServiceIds,
+  handleSelectServices,
 }: Props) => {
   return (
     <CheckboxGroup value={selectedServiceIds} onChange={handleSelectServices}>
