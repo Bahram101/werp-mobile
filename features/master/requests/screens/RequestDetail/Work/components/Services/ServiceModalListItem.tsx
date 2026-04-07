@@ -16,7 +16,6 @@ type Props = {
 };
 
 const ServiceModalListItem = ({ value, label, isLast }: Props) => {
-  // console.log("rendering item", value);
   return (
     <Checkbox
       value={value}

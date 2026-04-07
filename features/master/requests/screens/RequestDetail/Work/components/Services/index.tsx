@@ -35,9 +35,10 @@ const Services = ({ data }: ServicesProps) => {
 
   const handleRemoveService = (id: number) => {
     const updated = selectedServices.filter((item) => item.id !== id);
+    const updatedIds = updated.map((i) => String(i.id));
     setSelectedServices(updated);
-    setSelectedServiceIds(updated.map((i) => String(i.id)));
-    updateModalProps({ selectedServiceIds: String(id) });
+    setSelectedServiceIds(updatedIds);
+    updateModalProps({ selectedServiceIds: updatedIds });
   };
 
   console.log("selectedServiceIds", selectedServiceIds);

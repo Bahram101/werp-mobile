@@ -1,10 +1,15 @@
-import { Checkbox, CheckboxLabel } from "@/components/ui/checkbox";
+import {
+  Checkbox,
+  CheckboxIcon,
+  CheckboxIndicator,
+  CheckboxLabel,
+} from "@/components/ui/checkbox";
+import BoldCheck from "@/components/ui/checkbox/BoldCheck";
 import { SparePartItem } from "@/features/master/requests/types";
 import { useActionSheet } from "@/providers/ActionSheetProvider";
 import cn from "clsx";
 import * as Haptics from "expo-haptics";
 import React, { useState } from "react";
-import { Text } from "react-native";
 import SparePartActionSheet from "./SparePartActionSheet";
 
 type Props = {
@@ -18,8 +23,6 @@ const SparePartModalListItem = ({ item, isLast, onAddPart }: Props) => {
   const { openSheet, closeSheet } = useActionSheet();
 
   const handlePress = (isChecked: boolean) => {
-    // console.log("isChecked", isChecked);
-
     if (isChecked) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       openSheet(
@@ -48,10 +51,10 @@ const SparePartModalListItem = ({ item, isLast, onAddPart }: Props) => {
         {item?.name}
       </CheckboxLabel>
 
-      <Text className="pr-1">{item.quantity} шт</Text>
-      {/* <CheckboxIndicator className="w-6 h-6 border border-gray-300 rounded-md items-center justify-center mr-[2px] ">
-        <CheckboxIcon as={BoldCheck} className="text-green-600" />
-      </CheckboxIndicator> */}
+      {/* <Text className="pr-1">{item.quantity} шт</Text> */}
+      <CheckboxIndicator className="w-6 h-6 border border-gray-300 rounded-md items-center justify-center mr-[2px] ">
+        <CheckboxIcon as={BoldCheck} className={cn("text-green-600")} />
+      </CheckboxIndicator>
     </Checkbox>
   );
 };
