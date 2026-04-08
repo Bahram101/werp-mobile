@@ -5,7 +5,7 @@ import {
 } from "@/features/master/requests/types";
 import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import { CirclePlus, Trash2 } from "lucide-react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 
 type SparePartsProps = {
@@ -14,65 +14,40 @@ type SparePartsProps = {
 
 const SparePart = ({ data }: SparePartsProps) => {
   const { showBottomSheet, updateModalProps } = useBottomSheet();
-  const [selectedSparePartIds, setSelectedSparePartIds] = useState<string[]>(
-    [],
-  );
+
   const [selectedSpareParts, setSelectedSpareParts] = useState<
     SelectedSparePartItem[]
   >([]);
 
+  const selectedIds = selectedSpareParts.map((i) => String(i.id));
+
   const totalAmount = selectedSpareParts.reduce(
-    (sum, item) => sum + item.price,
+    (sum, item) => sum + item.totalPrice,
     0,
   );
+
+  useEffect(() => {
+    updateModalProps({
+      selectedIds: selectedSpareParts.map((i) => String(i.id)),
+    });
+  }, [selectedSpareParts, updateModalProps]);
 
   const handleOpenSelectModal = () => {
     showBottomSheet(
       "spareParts",
       {
         data,
-        selectedSparePartIds,
-        handleSelectSpareParts,
+        selectedIds,
         handleAddPart,
       },
-      { title: "Продажа запчастей", snapPoints: ["95%"] },
+      { title: "Продажа запчастей", snapPoints: ["90%"] },
     );
-  };
-
-  // const handleSelectSpareParts = (ids: string[]) => {
-  //   console.log("handleSelectSpareParts", ids);
-  //   setSelectedSparePartIds(ids);
-  //   const newSelected = data.filter((item) => ids.includes(item.id.toString()));
-  //   setSelectedSpareParts(newSelected);
-  //   updateModalProps({ selectedSparePartIds: ids });
-  // };
-
-  const handleSelectSpareParts = (ids: string[]) => {
-    setSelectedSparePartIds(ids);
-    const selected = data
-      .filter((item) => ids.includes(String(item.id)))
-      .map((item) => {
-        // если уже есть — сохранить qty
-        const existing = selectedSpareParts.find((p) => p.id === item.id);
-
-        return (
-          existing || {
-            ...item,
-            selectedQty: 1,
-            totalPrice: item.price,
-          }
-        );
-      });
-
-    setSelectedSpareParts(selected);
-    updateModalProps({ selectedSparePartIds: ids });
   };
 
   const handleRemoveSparePart = (id: number) => {
     const updated = selectedSpareParts.filter((item) => item.id !== id);
     const updatedIds = updated.map((i) => String(i.id));
     setSelectedSpareParts(updated);
-    setSelectedSparePartIds(updatedIds);
     updateModalProps({ selectedSparePartIds: updatedIds });
   };
 
@@ -82,25 +57,23 @@ const SparePart = ({ data }: SparePartsProps) => {
       selectedQty: qty,
       totalPrice: item.price * qty,
     };
-    const existingIndex = selectedSpareParts.findIndex(
-      (part) => part.id === item.id,
-    );
 
-    const updated =
-      existingIndex >= 0
-        ? selectedSpareParts.map((part) =>
-            part.id === item.id ? preparedItem : part,
-          )
-        : [...selectedSpareParts, preparedItem];
+    setSelectedSpareParts((prev) => {
+      const exists = prev.find((p) => p.id === item.id);
 
-    setSelectedSpareParts(updated);
-    setSelectedSparePartIds(updated.map((i) => String(i.id)));
+      const updated = exists
+        ? prev.map((p) => (p.id === item.id ? preparedItem : p))
+        : [...prev, preparedItem];
+
+      return updated;
+    });
   };
 
   console.log(
     "selectedSpareParts",
     JSON.stringify(selectedSpareParts, null, 2),
   );
+  console.log("selectedIds", selectedIds);
 
   return (
     <View className="work-block bg-white mt-3 rounded-2xl p-4">
