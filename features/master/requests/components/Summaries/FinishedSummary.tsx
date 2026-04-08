@@ -4,21 +4,23 @@ import { Text, View } from "react-native";
 
 type Props = {
   data: any;
-  premiumData?: any;
+  finishedSummaryData?: any;
 };
 
-const FinishedSummary = ({ data, premiumData }: Props) => {
+const FinishedSummary = ({ data, finishedSummaryData }: Props) => {
   return (
-    <View className="p-5 bg-white rounded-2xl flex-col gap-4 my-3">
+    <View className="bg-white rounded-2xl flex-col gap-4 p-5 mt-2">
       <View className="flex-row justify-center border-b border-grayLight pb-4 font-bold">
-        <Text className="font-bold text-grayDark">ЗАВЕРЩЕНО: </Text>
-        <Text className="font-bold">{data.length} ЗАЯВОК</Text>
+        <Text className="font-bold text-grayDark"> ЗАВЕРЩЕНО: </Text>
+        <Text className="font-bold text-primary">
+          {finishedSummaryData.listData?.length} ЗАЯВОК
+        </Text>
       </View>
       <View className="flex-row justify-center">
         <Text className="font-bold text-grayDark">ПРЕМЯ:</Text>
-        <Text className="font-bold">
+        <Text className="font-bold text-primary">
           {" "}
-          {formatCurrency(premiumData?.masterPremium ?? 0)}
+          {formatCurrency(finishedSummaryData?.listSum?.masterPremium ?? 0)}
         </Text>
       </View>
     </View>

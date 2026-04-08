@@ -12,7 +12,6 @@ const RequestTypesToday: FC<IRequestList> = ({
   requests,
   isLoadingRequests,
 }) => {
-  console.log("isLoadingRequests", isLoadingRequests);
   return (
     <View>
       {isLoadingRequests ? (

@@ -59,7 +59,7 @@ export const RequestService = {
           dateAt: from,
         },
       });
-      return data.data.listSum;
+      return data.data;
     } catch (e) {
       throw e;
     }

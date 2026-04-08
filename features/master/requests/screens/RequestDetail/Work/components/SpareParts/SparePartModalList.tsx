@@ -16,8 +16,6 @@ const SparePartModalList = ({
   selectedSparePartIds,
   handleAddPart,
 }: Props) => {
-  // console.log("selectedSparePartIds", selectedSparePartIds);
-  // console.log("data", JSON.stringify(data, null, 2));
   return (
     <CheckboxGroup
       value={selectedSparePartIds}
@@ -26,9 +24,9 @@ const SparePartModalList = ({
       {data.map((item, index) => (
         <SparePartModalListItem
           key={item.id}
-          isLast={index === data.length - 1}
           item={item}
           onAddPart={handleAddPart}
+          isLast={index === data.length - 1}
         />
       ))}
     </CheckboxGroup>

@@ -49,9 +49,11 @@ export default function RequestsScenes({ route }: Props) {
     from,
     to,
   );
-  const { finishedSummaryData, refetchSummary } = useFinishedSummary({
-    enabled: isFinished,
-  });
+  const { finishedSummaryData, refetchSummary, isLoading } = useFinishedSummary(
+    {
+      enabled: isFinished,
+    },
+  );
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -61,25 +63,6 @@ export default function RequestsScenes({ route }: Props) {
       setRefreshing(false);
     }
   };
-
-  let groupedList = [];
-  if (route.key === "finished") {
-    groupedList = requests.reduce(
-      (acc: any, curr: any) => {
-        const key = curr.applicationTypeId;
-        if (!acc[key]) {
-          acc[key] = {
-            id: key,
-            title: curr.applicationTypeName,
-            count: 0,
-          };
-        }
-        acc[key].count += 1;
-        return acc;
-      },
-      {} as Record<number, { id: number; title: string; count: number }>,
-    );
-  }
 
   const assignedReqList = [...requests].sort((a, b) => {
     const getPriority = (item: any) => {
@@ -99,8 +82,6 @@ export default function RequestsScenes({ route }: Props) {
   if (isLoadingRequests) {
     return <Loader />;
   }
-
-  console.log("REQS", requests.length);
 
   switch (route.key) {
     case "assigned":
@@ -142,24 +123,24 @@ export default function RequestsScenes({ route }: Props) {
     case "finished":
       return (
         <>
-          <View className="mx-4 mt-2">
+          <View className="mx-4 mt-2 mb-3">
             <Text className="text-xl font-semibold">
               Завершенные заявки с 1 {getCurrentMonthName()}
             </Text>
           </View>
           <FlatList
-            ListHeaderComponent={
-              <FinishedSummary
-                data={requests}
-                premiumData={finishedSummaryData}
-              />
-            }
-            data={groupedList ? Object.values(groupedList) : ([] as any)}
+            data={finishedSummaryData?.premiumSum}
             renderItem={({ item }) => <FinishedRequestCard item={item} />}
-            keyExtractor={(item) => item.id?.toString()}
+            keyExtractor={(item, index) => index.toString()}
             contentContainerStyle={style}
             onRefresh={onRefresh}
             refreshing={refreshing}
+            ListFooterComponent={
+              <FinishedSummary
+                data={requests}
+                finishedSummaryData={finishedSummaryData}
+              />
+            }
           />
         </>
       );

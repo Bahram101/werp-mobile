@@ -73,6 +73,11 @@ export type SparePartItem = {
   quantity: number;
 };
 
+export type SelectedSparePartItem = SparePartItem & {
+  selectedQty: number;
+  totalPrice: number;
+};
+
 export const iconMap: Record<
   number,
   keyof typeof MaterialCommunityIcons.glyphMap

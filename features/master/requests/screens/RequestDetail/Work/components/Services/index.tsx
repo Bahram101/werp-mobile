@@ -20,13 +20,13 @@ const Services = ({ data }: ServicesProps) => {
       {
         data,
         selectedServiceIds,
-        handleSelectServices,
+        handleSelectService,
       },
       { title: "Выбрать услуги", snapPoints: ["60%"] },
     );
   };
 
-  const handleSelectServices = (ids: string[]) => {
+  const handleSelectService = (ids: string[]) => {
     setSelectedServiceIds(ids);
     const newSelected = data.filter((item) => ids.includes(String(item.id)));
     setSelectedServices(newSelected);
@@ -41,11 +41,11 @@ const Services = ({ data }: ServicesProps) => {
     updateModalProps({ selectedServiceIds: updatedIds });
   };
 
-  console.log("selectedServiceIds", selectedServiceIds);
+  // console.log("selectedServiceIds", selectedServiceIds);
 
   return (
-    <View className="work-block bg-white mt-3 rounded-2xl p-4">
-      <View className="work-block-top pb-4 pt-2 border-b mb-4 border-grayLight flex-row justify-between">
+    <View className="work-block bg-white mt-3 rounded-2xl p-4 ">
+      <View className="work-block-top pt-2 mb-4 py-3 border-b border-grayLight flex-row justify-between items-center ">
         <Text className="font-bold text-primary uppercase">Услуги</Text>
         <View>
           <Pressable
@@ -56,7 +56,11 @@ const Services = ({ data }: ServicesProps) => {
           </Pressable>
         </View>
       </View>
-      <ServiceTable data={selectedServices} totalAmount={null} />
+      <ServiceTable
+        data={selectedServices}
+        totalAmount={null}
+        handleRemoveService={handleRemoveService}
+      />
     </View>
   );
 };

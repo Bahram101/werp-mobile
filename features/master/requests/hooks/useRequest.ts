@@ -73,11 +73,15 @@ export const useFinishedSummary = ({ enabled }: { enabled: boolean }) => {
   const masterId = user?.currentStaff.staffId;
   const from = getCurrentMonthStart();
 
-  const { data = [], refetch: refetchSummary } = useQuery({
+  const {
+    data = [],
+    refetch: refetchSummary,
+    isLoading,
+  } = useQuery({
     queryKey: ["finished-summary", masterId],
     queryFn: () => RequestService.getRquestPremiumSum(masterId!, "4", from),
     enabled,
   });
 
-  return { finishedSummaryData: data, refetchSummary };
+  return { finishedSummaryData: data, refetchSummary, isLoading };
 };

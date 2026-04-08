@@ -1,22 +1,25 @@
-import { SparePartItem } from "@/features/master/requests/types";
+import { COLORS } from "@/constants/theme";
+import {
+  SelectedSparePartItem,
+  SparePartItem,
+} from "@/features/master/requests/types";
 import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
-import { CirclePlus, EllipsisVertical } from "lucide-react-native";
+import { CirclePlus, Trash2 } from "lucide-react-native";
 import React, { useState } from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 
-type SparePartsTableProps = {
+type SparePartsProps = {
   data: SparePartItem[];
 };
 
-const SparePartTable = ({ data }: SparePartsTableProps) => {
+const SparePart = ({ data }: SparePartsProps) => {
   const { showBottomSheet, updateModalProps } = useBottomSheet();
-
-  const [selectedSpareParts, setSelectedSpareParts] = useState<SparePartItem[]>(
-    [],
-  );
   const [selectedSparePartIds, setSelectedSparePartIds] = useState<string[]>(
     [],
   );
+  const [selectedSpareParts, setSelectedSpareParts] = useState<
+    SelectedSparePartItem[]
+  >([]);
 
   const totalAmount = selectedSpareParts.reduce(
     (sum, item) => sum + item.price,
@@ -36,10 +39,32 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
     );
   };
 
+  // const handleSelectSpareParts = (ids: string[]) => {
+  //   console.log("handleSelectSpareParts", ids);
+  //   setSelectedSparePartIds(ids);
+  //   const newSelected = data.filter((item) => ids.includes(item.id.toString()));
+  //   setSelectedSpareParts(newSelected);
+  //   updateModalProps({ selectedSparePartIds: ids });
+  // };
+
   const handleSelectSpareParts = (ids: string[]) => {
     setSelectedSparePartIds(ids);
-    const newSelected = data.filter((item) => ids.includes(item.id.toString()));
-    setSelectedSpareParts(newSelected);
+    const selected = data
+      .filter((item) => ids.includes(String(item.id)))
+      .map((item) => {
+        // если уже есть — сохранить qty
+        const existing = selectedSpareParts.find((p) => p.id === item.id);
+
+        return (
+          existing || {
+            ...item,
+            selectedQty: 1,
+            totalPrice: item.price,
+          }
+        );
+      });
+
+    setSelectedSpareParts(selected);
     updateModalProps({ selectedSparePartIds: ids });
   };
 
@@ -52,18 +77,34 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
   };
 
   const handleAddPart = (item: SparePartItem, qty: number) => {
-    const updated = [
-      ...selectedSpareParts,
-      { ...item, quantity: qty, price: item.price * qty },
-    ];
+    const preparedItem = {
+      ...item,
+      selectedQty: qty,
+      totalPrice: item.price * qty,
+    };
+    const existingIndex = selectedSpareParts.findIndex(
+      (part) => part.id === item.id,
+    );
+
+    const updated =
+      existingIndex >= 0
+        ? selectedSpareParts.map((part) =>
+            part.id === item.id ? preparedItem : part,
+          )
+        : [...selectedSpareParts, preparedItem];
 
     setSelectedSpareParts(updated);
     setSelectedSparePartIds(updated.map((i) => String(i.id)));
   };
 
+  console.log(
+    "selectedSpareParts",
+    JSON.stringify(selectedSpareParts, null, 2),
+  );
+
   return (
     <View className="work-block bg-white mt-3 rounded-2xl p-4">
-      <View className="work-block-top pb-4 pt-2 border-b mb-4 border-grayLight flex-row justify-between">
+      <View className="work-block-top py-4 pt-2 border-b mb-4 border-grayLight flex-row justify-between items-center">
         <Text className="font-bold text-primary uppercase">
           Продажа запчастей
         </Text>
@@ -101,19 +142,15 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
             >
               <Text className="w-[8%] text-center">{item.id}</Text>
               <Text className="w-[50%] text-center">{item.name}</Text>
-              <Text className="w-[15%] text-center">{item.quantity}</Text>
-              <Text className="w-[20%] text-center">{item.price}</Text>
-              <View className="w-[7%]">
-                <TouchableOpacity>
-                  <EllipsisVertical />
+              <Text className="w-[15%] text-center">{item.selectedQty}</Text>
+              <Text className="w-[20%] text-center">{item.totalPrice}</Text>
+              <View className="w-[7%] p-1 items-center justify-center">
+                <TouchableOpacity
+                  onPress={() => handleRemoveSparePart(item.id)}
+                >
+                  <Trash2 size={18} color={COLORS.red} />
                 </TouchableOpacity>
               </View>
-              {/* <TouchableOpacity
-                className="w-[20%] items-center"
-                onPress={() => handleRemoveSparePart(item.id)}
-              >
-                <CircleX color="red" size={20} />
-              </TouchableOpacity> */}
             </View>
           ))}
         </View>
@@ -126,4 +163,4 @@ const SparePartTable = ({ data }: SparePartsTableProps) => {
   );
 };
 
-export default SparePartTable;
+export default SparePart;
