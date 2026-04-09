@@ -2,12 +2,7 @@ import { serviceInstance } from "@/services/api/service-instance";
 import { getCurrentMonthStart, getToday } from "@/utils/date";
 
 export const RequestService = {
-  async getMasterRequests(
-    masterId: number,
-    status: string,
-    from?: string,
-    to?: string,
-  ) {
+  async getMasterRequests(masterId: number, status: string) {
     try {
       const { data } = await serviceInstance.get("/smappl/appList", {
         params: {
@@ -28,8 +23,8 @@ export const RequestService = {
 
   async getMasterRequestDetail(reqId: number) {
     try {
-      const { data } = await serviceInstance.get(`/smecam/${reqId}`);
-      return data.data;
+      const { data } = await serviceInstance.get(`/smecam-ma/${reqId}`);
+      return data.data.application;
     } catch (error) {
       throw error;
     }
@@ -37,12 +32,16 @@ export const RequestService = {
 
   async updateRequestStatus(reqId: number, statusId: number) {
     try {
-      const { data } = await serviceInstance.put("/smecam/edit", {
-        applicationStatusId: statusId,
-        id: reqId,
-        branchId: 61,
-        operatorId: 706,
-      });
+      const { data } = await serviceInstance.put(
+        "/smecam-ma-status-update",
+        {},
+        {
+          params: {
+            id: reqId,
+            statusId: statusId,
+          },
+        },
+      );
       return data;
     } catch (e) {
       throw e;

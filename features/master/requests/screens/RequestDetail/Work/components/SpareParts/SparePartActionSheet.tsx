@@ -7,11 +7,11 @@ import { Pressable, Text, View } from "react-native";
 
 type Props = {
   item: SparePartItem;
-  closeSheet: () => void;
   onAdd: (qty: number) => void;
+  closeSheet: () => void;
 };
 
-const SparePartActionSheet: FC<Props> = ({ item, closeSheet, onAdd }) => {
+const SparePartActionSheet: FC<Props> = ({ item, onAdd, closeSheet }) => {
   const [qty, setQty] = useState(1);
 
   const decreaseQty = () => {

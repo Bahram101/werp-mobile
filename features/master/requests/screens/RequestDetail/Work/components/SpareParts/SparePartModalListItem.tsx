@@ -27,19 +27,17 @@ const SparePartModalListItem = ({
     openSheet(
       <SparePartActionSheet
         item={item}
-        closeSheet={closeSheet}
         onAdd={(qty) => onAddPart(item, qty)}
+        closeSheet={closeSheet}
       />,
     );
   };
-
-  console.log("isSelected", isSelected);
 
   return (
     <Pressable onPress={handlePress}>
       <View
         className={cn(
-          "  py-3 flex-row items-center justify-between",
+          "py-3 flex-row items-center justify-between",
           !isLast && "border-b border-grayLight",
           isSelected && "bg-green-100",
         )}

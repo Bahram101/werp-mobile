@@ -1,15 +1,17 @@
 import BottomSheet, {
   BottomSheetBackdropProps,
+  BottomSheetScrollView,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
+import cn from "clsx";
 import { BlurView } from "expo-blur";
 import { X } from "lucide-react-native";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import {
-  Pressable,
   Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
 } from "react-native";
 import Animated, {
   interpolate,
@@ -90,23 +92,33 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
         backdropComponent={CustomBackdrop}
         enablePanDownToClose={true}
         handleStyle={{ display: "none" }}
+        enableDynamicSizing={false}
       >
         <BottomSheetView className="p-4">
           {title && (
-            <View className="flex-row justify-between items-center mb-3 ">
+            <View
+              className={cn(
+                "flex-row justify-between items-center mb-3",
+                // snapPoints[0] === "80%" && "mt-12",
+              )}
+            >
               <Text className="text-lg font-semibold">{title}</Text>
-              <Pressable onPress={() => bottomSheetRef.current?.close()}>
+              <TouchableOpacity onPress={() => bottomSheetRef.current?.close()}>
                 <X />
-              </Pressable>
+              </TouchableOpacity>
             </View>
           )}
-          {/* <ScrollView contentContainerStyle={{ paddingBottom: 20 }}> */}
+          <BottomSheetScrollView
+            showsVerticalScrollIndicator={true}
+            contentContainerStyle={{ paddingBottom: 100 }}
+            keyboardShouldPersistTaps="handled"
+          >
             {children}
-          {/* </ScrollView> */}
+          </BottomSheetScrollView>
         </BottomSheetView>
       </BottomSheet>
     );
-  }
+  },
 );
 
 AppBottomSheet.displayName = "AppBottomSheet";

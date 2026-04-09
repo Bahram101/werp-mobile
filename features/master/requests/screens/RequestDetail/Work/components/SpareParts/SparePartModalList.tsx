@@ -4,7 +4,6 @@ import SparePartModalListItem from "./SparePartModalListItem";
 
 type Props = {
   data: SparePartItem[];
-  handleSelectSpareParts: (values: string[]) => void;
   selectedIds: string[];
   handleAddPart: (item: SparePartItem, qty: number) => void;
 };
@@ -20,9 +19,9 @@ const SparePartModalList = ({
         <SparePartModalListItem
           key={item.id}
           item={item}
-          onAddPart={handleAddPart}
           isSelected={selectedIds?.includes(String(item.id))}
           isLast={index === data.length - 1}
+          onAddPart={handleAddPart}
         />
       ))}
     </>

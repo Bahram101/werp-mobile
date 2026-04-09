@@ -39,7 +39,7 @@ export default function RequestDetailScreen() {
     }
   }, [requestDetail, navigation]);
 
-  if (isLoadingReqDetail) {
+  if (isLoadingReqDetail || !requestDetail) {
     return <Loader />;
   }
 
@@ -103,6 +103,8 @@ export default function RequestDetailScreen() {
       setRefreshing(false);
     }
   };
+
+  console.log("requestDetail", JSON.stringify(requestDetail, null, 2));
 
   return (
     <Layout className="gap-3" refreshing={refreshing} onRefresh={onRefresh}>
@@ -175,6 +177,7 @@ export default function RequestDetailScreen() {
           icon="x-circle"
           iconColor="white"
           textColor="white"
+          onPress={handleMainButton}
         >
           <Text>Отменить</Text>
         </AnimatedButton>

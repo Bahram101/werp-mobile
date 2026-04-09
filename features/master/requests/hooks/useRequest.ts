@@ -14,8 +14,7 @@ export const useRequests = (status: string, from?: string, to?: string) => {
     refetch,
   } = useQuery({
     queryKey: ["get-master-requests", masterId, status, from, to],
-    queryFn: () =>
-      RequestService.getMasterRequests(masterId!, status, from, to),
+    queryFn: () => RequestService.getMasterRequests(masterId!, status),
     enabled: !!masterId,
     retry: 1,
     staleTime: 1000 * 30,
@@ -35,7 +34,7 @@ export const useRequestDetail = (id: number) => {
   });
 
   return {
-    requestDetail: requestDetail?.application,
+    requestDetail,
     isLoadingReqDetail,
     refetchRequestDetail,
   };
@@ -50,14 +49,12 @@ export const useUpdateRequestStatus = () => {
     retry: false,
 
     onSuccess: ({ data: { application } }) => {
+      console.log("APPLICATION", JSON.stringify(application, null, 2));
       queryClient.setQueryData(
         ["get-master-request-details", application.applicationNumber],
         (old: any) => ({
           ...old,
-          application: {
-            ...old.application,
-            applicationStatusId: application.applicationStatusId,
-          },
+          applicationStatusId: application.applicationStatusId,
         }),
       );
       queryClient.invalidateQueries({

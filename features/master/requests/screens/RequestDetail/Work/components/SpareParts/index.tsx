@@ -28,9 +28,9 @@ const SparePart = ({ data }: SparePartsProps) => {
 
   useEffect(() => {
     updateModalProps({
-      selectedIds: selectedSpareParts.map((i) => String(i.id)),
+      selectedIds,
     });
-  }, [selectedSpareParts, updateModalProps]);
+  }, [selectedSpareParts, selectedIds, updateModalProps]);
 
   const handleOpenSelectModal = () => {
     showBottomSheet(
@@ -40,7 +40,7 @@ const SparePart = ({ data }: SparePartsProps) => {
         selectedIds,
         handleAddPart,
       },
-      { title: "Продажа запчастей", snapPoints: ["90%"] },
+      { title: "Продажа запчастей", snapPoints: ["80%"] },
     );
   };
 

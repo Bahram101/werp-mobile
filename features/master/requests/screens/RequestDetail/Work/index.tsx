@@ -13,18 +13,7 @@ const RequestWorkScreen = () => {
   const navigation = useNavigation();
 
   const { services, isLoading } = useServices();
-
-  useEffect(() => {
-    if (appNumber) {
-      navigation.setOptions({
-        headerTitle: `Заявка №${String(appNumber)}`,
-      });
-    }
-  }, [navigation, appNumber]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
+  // const { matnrList, isMatnrLoading } = useMatnr();
 
   const spareParts: SparePartItem[] = [
     {
@@ -111,7 +100,47 @@ const RequestWorkScreen = () => {
       price: 300,
       quantity: 19,
     },
+    {
+      id: 13,
+      serialNumber: "345001Z",
+      name: "Белый шланг2",
+      price: 300,
+      quantity: 19,
+    },
+    {
+      id: 14,
+      serialNumber: "345001Z",
+      name: "Белый шланг3",
+      price: 300,
+      quantity: 19,
+    },
+    {
+      id: 15,
+      serialNumber: "345001Z",
+      name: "Белый шланг4",
+      price: 300,
+      quantity: 19,
+    },
+    {
+      id: 16,
+      serialNumber: "345001Z",
+      name: "Белый шланг5",
+      price: 300,
+      quantity: 19,
+    },
   ];
+
+  useEffect(() => {
+    if (appNumber) {
+      navigation.setOptions({
+        headerTitle: `Заявка №${String(appNumber)}`,
+      });
+    }
+  }, [navigation, appNumber]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Layout>
