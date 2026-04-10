@@ -49,7 +49,6 @@ export const useUpdateRequestStatus = () => {
     retry: false,
 
     onSuccess: ({ data: { application } }) => {
-      console.log("APPLICATION", JSON.stringify(application, null, 2));
       queryClient.setQueryData(
         ["get-master-request-details", application.applicationNumber],
         (old: any) => ({

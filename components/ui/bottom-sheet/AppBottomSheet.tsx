@@ -94,11 +94,11 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
         handleStyle={{ display: "none" }}
         enableDynamicSizing={false}
       >
-        <BottomSheetView className="p-4">
+        <BottomSheetView className="">
           {title && (
             <View
               className={cn(
-                "flex-row justify-between items-center mb-3",
+                "flex-row justify-between items-center mb-3 p-4",
                 // snapPoints[0] === "80%" && "mt-12",
               )}
             >
@@ -113,7 +113,7 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
             contentContainerStyle={{ paddingBottom: 100 }}
             keyboardShouldPersistTaps="handled"
           >
-            {children}
+            <View className=" ">{children}</View>
           </BottomSheetScrollView>
         </BottomSheetView>
       </BottomSheet>

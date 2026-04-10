@@ -11,7 +11,7 @@ import React, {
 } from "react";
 import { bottomSheetRegistry } from "./bottomSheetRegistry";
 
-type BottomSheetType = "services" | "spareParts" | null;
+type BottomSheetType = "services" | "spareParts" | "cartridges" | null;
 
 type BottomSheetContextType = {
   openBottomSheet: () => void;

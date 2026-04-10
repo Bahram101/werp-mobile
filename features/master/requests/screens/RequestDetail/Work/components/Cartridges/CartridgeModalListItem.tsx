@@ -1,20 +1,20 @@
 import {
-  SelectedSparePartItem,
-  SparePartItem,
+  CartridgeItem,
+  SelectedCartridgeItem,
 } from "@/features/master/requests/types";
 import { useActionSheet } from "@/providers/ActionSheetProvider";
 import cn from "clsx";
 import * as Haptics from "expo-haptics";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import SparePartActionSheet from "./SparePartActionSheet";
+import SparePartActionSheet from "../SpareParts/SparePartActionSheet";
 
 type Props = {
-  item: SparePartItem;
+  item: CartridgeItem;
   isSelected: boolean;
   isLast?: boolean;
-  selectedItems: SelectedSparePartItem[];
-  onAddPart: (item: SparePartItem, qty: number) => void;
+  selectedItems: SelectedCartridgeItem[];
+  onAddPart: (item: CartridgeItem, qty: number) => void;
 };
 
 const SparePartModalListItem = ({
@@ -26,7 +26,7 @@ const SparePartModalListItem = ({
 }: Props) => {
   const { openSheet, closeSheet } = useActionSheet();
 
-  const existing = selectedItems?.find((p) => p.id === item.id);
+  const existing = selectedItems?.find((p) => p.index === item.index);
 
   const handlePress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -49,23 +49,18 @@ const SparePartModalListItem = ({
           isSelected && "bg-green-100",
         )}
       >
-        <View className="flex-1">
-          <Text
-            className="text-base text-gray-900 font-medium"
-            numberOfLines={1}
-          >
-            {item.name}
-          </Text>
-
-          <Text className="text-xs text-gray-400 mt-1">
-            Арт: {item.serialNumber}
-          </Text>
-        </View>
-
-        <View className="items-end gap-1">
-          <Text className="text-sm font-semibold text-gray-800">
-            {item.quantity} шт
-          </Text>
+        <View className="flex-row items-center gap-2">
+          <View>
+            <Text
+              className="text-base text-gray-900 font-medium"
+              numberOfLines={1}
+            >
+              {item.matnrName}
+            </Text>
+            <Text className="text-xs text-gray-400 mt-1">
+              Арт: {item.matnrCode}
+            </Text>
+          </View>
         </View>
       </View>
     </Pressable>

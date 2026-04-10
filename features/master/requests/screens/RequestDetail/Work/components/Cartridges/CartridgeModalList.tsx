@@ -1,15 +1,15 @@
 import {
-  SelectedSparePartItem,
-  SparePartItem,
+  CartridgeItem,
+  SelectedCartridgeItem,
 } from "@/features/master/requests/types";
 import React from "react";
-import SparePartModalListItem from "./SparePartModalListItem";
+import SparePartModalListItem from "./CartridgeModalListItem";
 
 type Props = {
-  data: SparePartItem[];
+  data: CartridgeItem[];
   selectedIds: string[];
-  selectedItems: SelectedSparePartItem[];
-  handleAddPart: (item: SparePartItem, qty: number) => void;
+  selectedItems: SelectedCartridgeItem[];
+  handleAddPart: (item: CartridgeItem, qty: number) => void;
 };
 
 const SparePartModalList = ({
@@ -22,9 +22,9 @@ const SparePartModalList = ({
     <>
       {data.map((item, index) => (
         <SparePartModalListItem
-          key={item.id}
+          key={item.fno}
           item={item}
-          isSelected={selectedIds?.includes(String(item.id))}
+          isSelected={selectedIds?.includes(String(item.index))}
           isLast={index === data.length - 1}
           selectedItems={selectedItems}
           onAddPart={handleAddPart}

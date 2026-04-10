@@ -21,7 +21,7 @@ const ServiceModalListItem = ({ value, label, isLast }: Props) => {
       value={value}
       size="md"
       className={cn(
-        "flex-row justify-between items-center py-3 border-grayLight",
+        "flex-row justify-between items-center py-3 border-grayLight  px-4",
         !isLast && "border-b",
       )}
       onChange={() => {

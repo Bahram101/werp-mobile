@@ -1,18 +1,24 @@
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
-import { SparePartItem } from "@/features/master/requests/types";
+import { CartridgeItem } from "@/features/master/requests/types";
 import { tenge } from "@/utils/helpers";
 import { Minus, Plus, X } from "lucide-react-native";
 import React, { FC, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
 type Props = {
-  item: SparePartItem;
+  item: CartridgeItem;
   onAdd: (qty: number) => void;
+  initialQty?: number;
   closeSheet: () => void;
 };
 
-const SparePartActionSheet: FC<Props> = ({ item, onAdd, closeSheet }) => {
-  const [qty, setQty] = useState(1);
+const SparePartActionSheet: FC<Props> = ({
+  item,
+  onAdd,
+  closeSheet,
+  initialQty,
+}) => {
+  const [qty, setQty] = useState(initialQty || 1);
 
   const decreaseQty = () => {
     if (qty > 1) setQty(qty - 1);
@@ -40,7 +46,7 @@ const SparePartActionSheet: FC<Props> = ({ item, onAdd, closeSheet }) => {
 
       <View className="gap-4">
         <View className="flex-row justify-between">
-          <Text className="text-lg">{item?.name}</Text>
+          <Text className="text-lg">{item?.matnrName}</Text>
         </View>
         <View className="flex-row items-center justify-between">
           <View className="flex-row gap-3 items-center">
@@ -51,7 +57,7 @@ const SparePartActionSheet: FC<Props> = ({ item, onAdd, closeSheet }) => {
               <Minus size="20" />
             </Pressable>
             <View className="min-w-[60px]">
-              <Text className=" ">{qty} шт</Text>
+              <Text>{qty} шт</Text>
             </View>
             <Pressable
               className="px-1 py-1 border border-grayLight rounded-md items-center justify-center"

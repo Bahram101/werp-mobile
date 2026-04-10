@@ -78,6 +78,27 @@ export type SelectedSparePartItem = SparePartItem & {
   totalPrice: number;
 };
 
+export type CartridgeItem = {
+  index: number;
+  matnrId: number;
+  matnrCode: string;
+  matnrName: string;
+  price: number;
+  priceFromDate: string | null;
+  priceListId: number;
+  currencyId: number;
+  currencyName: string;
+  fno: string;
+  menge: number;
+  qminus: number;
+  qinit: number;
+};
+
+export type SelectedCartridgeItem = CartridgeItem & {
+  selectedQty: number;
+  totalPrice: number;
+};
+
 export const iconMap: Record<
   number,
   keyof typeof MaterialCommunityIcons.glyphMap

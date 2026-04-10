@@ -3,10 +3,12 @@ import Layout from "@/components/ui/master/Layout";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
 import { ScrollView, View } from "react-native";
+import { useMatnr } from "../../../hooks/useMatnr";
 import { useServices } from "../../../hooks/useService";
 import { SparePartItem } from "../../../types";
+import Cartridges from "./components/Cartridges";
 import Services from "./components/Services";
-import SparePartsSale from "./components/SpareParts";
+import SpareParts from "./components/SpareParts";
 
 const RequestWorkScreen = () => {
   const { appNumber } = useLocalSearchParams();
@@ -14,6 +16,8 @@ const RequestWorkScreen = () => {
 
   const { services, isLoading } = useServices();
   // const { matnrList, isMatnrLoading } = useMatnr();
+  const { matnrList: cartridgeList, isLoading: isCartridgeLoading } =
+    useMatnr(1);
 
   const spareParts: SparePartItem[] = [
     {
@@ -142,12 +146,15 @@ const RequestWorkScreen = () => {
     return <Loader />;
   }
 
+  console.log("cartridgeList", JSON.stringify(cartridgeList, null, 2));
+
   return (
     <Layout>
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
         <View className="request-work flex-1">
           <Services data={services} />
-          <SparePartsSale data={spareParts} />
+          <SpareParts data={spareParts} />
+          <Cartridges data={cartridgeList} />
         </View>
       </ScrollView>
     </Layout>
