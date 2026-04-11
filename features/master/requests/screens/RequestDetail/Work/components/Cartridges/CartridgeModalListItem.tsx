@@ -3,11 +3,12 @@ import {
   SelectedCartridgeItem,
 } from "@/features/master/requests/types";
 import { useActionSheet } from "@/providers/ActionSheetProvider";
+import { strToLowerCaase } from "@/utils/helpers";
 import cn from "clsx";
 import * as Haptics from "expo-haptics";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import SparePartActionSheet from "../SpareParts/SparePartActionSheet";
+import SparePartActionSheet from "../SparePartActionSheet";
 
 type Props = {
   item: CartridgeItem;
@@ -55,7 +56,7 @@ const SparePartModalListItem = ({
               className="text-base text-gray-900 font-medium"
               numberOfLines={1}
             >
-              {item.matnrName}
+              {strToLowerCaase(item.matnrName)}
             </Text>
             <Text className="text-xs text-gray-400 mt-1">
               Арт: {item.matnrCode}

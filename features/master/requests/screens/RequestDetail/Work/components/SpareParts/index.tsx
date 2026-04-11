@@ -1,4 +1,3 @@
-import { COLORS } from "@/constants/theme";
 import {
   SelectedSparePartItem,
   SparePartItem,
@@ -6,10 +5,11 @@ import {
 import { useActionSheet } from "@/providers/ActionSheetProvider";
 import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import * as Haptics from "expo-haptics";
-import { CirclePlus, Trash2 } from "lucide-react-native";
+import { CirclePlus } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
-import SparePartActionSheet from "./SparePartActionSheet";
+import { Pressable, Text, View } from "react-native";
+import SparePartActionSheet from "../SparePartActionSheet";
+import SparePartTable from "./SparePartTable";
 
 type SparePartsProps = {
   data: SparePartItem[];
@@ -18,13 +18,10 @@ type SparePartsProps = {
 const SparePart = ({ data }: SparePartsProps) => {
   const { showBottomSheet, updateModalProps } = useBottomSheet();
   const { openSheet, closeSheet } = useActionSheet();
-
   const [selectedItems, setSelectedItems] = useState<SelectedSparePartItem[]>(
     [],
   );
-
   const selectedIds = selectedItems.map((i) => String(i.id));
-
   const totalAmount = selectedItems.reduce(
     (sum, item) => sum + item.totalPrice,
     0,
@@ -104,51 +101,12 @@ const SparePart = ({ data }: SparePartsProps) => {
         </View>
       </View>
 
-      <View className="table">
-        <View className="table-header flex-row justify-between border-b border-grayLight pb-3">
-          <View className="table-head-col w-[8%]">
-            <Text className="font-semibold">№</Text>
-          </View>
-          <View className="table-head-col w-[50%]">
-            <Text className="font-semibold">Название</Text>
-          </View>
-          <View className="table-head-col w-[15%]">
-            <Text className="font-semibold">Кол.</Text>
-          </View>
-          <View className="table-head-col w-[20%]">
-            <Text className="font-semibold">Сумма</Text>
-          </View>
-          <View className="table-head-col w-[7%]"></View>
-        </View>
-        <View className="table-body flex-col">
-          {selectedItems.map((item) => (
-            <TouchableOpacity
-              key={item.id}
-              className="flex-row justify-between items-center border-b border-grayLight py-3 active:opacity-70"
-              onPress={() => handlePress(item)}
-            >
-              <Text className="w-[8%] text-center">{item.id}</Text>
-              <Text className="w-[50%] text-center">{item.name}</Text>
-              <Text className="w-[15%] text-center">{item.selectedQty}</Text>
-              <Text className="w-[20%] text-center">{item.totalPrice}</Text>
-              <View className="w-[7%] p-1 items-center justify-center">
-                <Pressable
-                  onPress={(e) => {
-                    e.stopPropagation();
-                    handleRemoveSparePart(item.id);
-                  }}
-                >
-                  <Trash2 size={18} color={COLORS.red} />
-                </Pressable>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        <View className="flex-row justify-end pt-3">
-          <Text>{`Итог: ${totalAmount}`}</Text>
-        </View>
-      </View>
+      <SparePartTable
+        handlePress={handlePress}
+        handleRemoveSparePart={handleRemoveSparePart}
+        selectedItems={selectedItems}
+        totalAmount={totalAmount}
+      />
     </View>
   );
 };

@@ -15,9 +15,8 @@ const RequestWorkScreen = () => {
   const navigation = useNavigation();
 
   const { services, isLoading } = useServices();
-  // const { matnrList, isMatnrLoading } = useMatnr();
-  const { matnrList: cartridgeList, isLoading: isCartridgeLoading } =
-    useMatnr(1);
+  // const { matnrList, isMatnrLoading } = useMatnr(3);
+  const { matnrList: cartridgeList } = useMatnr(1);
 
   const spareParts: SparePartItem[] = [
     {
@@ -145,8 +144,6 @@ const RequestWorkScreen = () => {
   if (isLoading) {
     return <Loader />;
   }
-
-  console.log("cartridgeList", JSON.stringify(cartridgeList, null, 2));
 
   return (
     <Layout>

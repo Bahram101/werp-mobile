@@ -16,3 +16,18 @@ export const formatCurrency = (value: number, symbol: string = "₸"): string =>
 };
 
 export const tenge = String.fromCharCode(0x20b8);
+
+export const strToLowerCaase = (str: string | undefined): string => {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+export const formatFullName = (str: string): string => {
+  if (!str) return "";
+  return str
+    .trim()
+    .toLowerCase()
+    .split(/\s+/)
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join(" ");
+};

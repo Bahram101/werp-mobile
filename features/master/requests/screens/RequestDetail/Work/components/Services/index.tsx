@@ -41,8 +41,6 @@ const Services = ({ data }: ServicesProps) => {
     updateModalProps({ selectedServiceIds: updatedIds });
   };
 
-  // console.log("selectedServiceIds", selectedServiceIds);
-
   return (
     <View className="work-block bg-white mt-3 rounded-2xl p-4 ">
       <View className="work-block-top pt-2 mb-4 py-3 border-b border-grayLight flex-row justify-between items-center ">

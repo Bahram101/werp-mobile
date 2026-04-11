@@ -7,7 +7,7 @@ import cn from "clsx";
 import * as Haptics from "expo-haptics";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import SparePartActionSheet from "./SparePartActionSheet";
+import SparePartActionSheet from "../SparePartActionSheet";
 
 type Props = {
   item: SparePartItem;
@@ -34,7 +34,7 @@ const SparePartModalListItem = ({
       <SparePartActionSheet
         item={item}
         initialQty={existing?.selectedQty}
-        onAdd={(qty) => onAddPart(item, qty)}
+        onAdd={(qty: any) => onAddPart(item, qty)}
         closeSheet={closeSheet}
       />,
     );
