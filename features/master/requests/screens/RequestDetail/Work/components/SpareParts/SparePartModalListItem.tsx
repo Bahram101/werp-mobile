@@ -1,7 +1,4 @@
-import {
-  SelectedSparePartItem,
-  SparePartItem,
-} from "@/features/master/requests/types";
+import { MatnrItem, SelectedMatnrItem } from "@/features/master/requests/types";
 import { useActionSheet } from "@/providers/ActionSheetProvider";
 import cn from "clsx";
 import * as Haptics from "expo-haptics";
@@ -10,11 +7,11 @@ import { Pressable, Text, View } from "react-native";
 import SparePartActionSheet from "../SparePartActionSheet";
 
 type Props = {
-  item: SparePartItem;
+  item: MatnrItem;
   isSelected: boolean;
   isLast?: boolean;
-  selectedItems: SelectedSparePartItem[];
-  onAddPart: (item: SparePartItem, qty: number) => void;
+  selectedItems: SelectedMatnrItem[];
+  onAddPart: (item: MatnrItem, qty: number) => void;
 };
 
 const SparePartModalListItem = ({
@@ -26,13 +23,14 @@ const SparePartModalListItem = ({
 }: Props) => {
   const { openSheet, closeSheet } = useActionSheet();
 
-  const existing = selectedItems?.find((p) => p.id === item.id);
+  const existing = selectedItems?.find((p) => p.index === item.index);
 
   const handlePress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     openSheet(
       <SparePartActionSheet
         item={item}
+        isSelected={isSelected}
         initialQty={existing?.selectedQty}
         onAdd={(qty: any) => onAddPart(item, qty)}
         closeSheet={closeSheet}
@@ -54,17 +52,17 @@ const SparePartModalListItem = ({
             className="text-base text-gray-900 font-medium"
             numberOfLines={1}
           >
-            {item.name}
+            {item.matnrName}
           </Text>
 
           <Text className="text-xs text-gray-400 mt-1">
-            Арт: {item.serialNumber}
+            Арт: {item.matnrCode}
           </Text>
         </View>
 
         <View className="items-end gap-1">
           <Text className="text-sm font-semibold text-gray-800">
-            {item.quantity} шт
+            {/* {item.quantity} шт */}
           </Text>
         </View>
       </View>

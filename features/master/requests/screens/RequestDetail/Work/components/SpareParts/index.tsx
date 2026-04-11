@@ -1,7 +1,4 @@
-import {
-  SelectedSparePartItem,
-  SparePartItem,
-} from "@/features/master/requests/types";
+import { MatnrItem, SelectedMatnrItem } from "@/features/master/requests/types";
 import { useActionSheet } from "@/providers/ActionSheetProvider";
 import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import * as Haptics from "expo-haptics";
@@ -12,16 +9,14 @@ import SparePartActionSheet from "../SparePartActionSheet";
 import SparePartTable from "./SparePartTable";
 
 type SparePartsProps = {
-  data: SparePartItem[];
+  data: MatnrItem[];
 };
 
 const SparePart = ({ data }: SparePartsProps) => {
   const { showBottomSheet, updateModalProps } = useBottomSheet();
   const { openSheet, closeSheet } = useActionSheet();
-  const [selectedItems, setSelectedItems] = useState<SelectedSparePartItem[]>(
-    [],
-  );
-  const selectedIds = selectedItems.map((i) => String(i.id));
+  const [selectedItems, setSelectedItems] = useState<SelectedMatnrItem[]>([]);
+  const selectedIds = selectedItems.map((i) => String(i.index));
   const totalAmount = selectedItems.reduce(
     (sum, item) => sum + item.totalPrice,
     0,
@@ -48,13 +43,13 @@ const SparePart = ({ data }: SparePartsProps) => {
   };
 
   const handleRemoveSparePart = (id: number) => {
-    const updated = selectedItems.filter((item) => item.id !== id);
-    const updatedIds = updated.map((i) => String(i.id));
+    const updated = selectedItems.filter((item) => item.index !== id);
+    const updatedIds = updated.map((i) => String(i.index));
     setSelectedItems(updated);
     updateModalProps({ selectedSparePartIds: updatedIds });
   };
 
-  const handleAddPart = (item: SparePartItem, qty: number) => {
+  const handleAddPart = (item: MatnrItem, qty: number) => {
     const preparedItem = {
       ...item,
       selectedQty: qty,
@@ -62,22 +57,23 @@ const SparePart = ({ data }: SparePartsProps) => {
     };
 
     setSelectedItems((prev) => {
-      const exists = prev.find((p) => p.id === item.id);
+      const exists = prev.find((p) => p.index === item.index);
 
       const updated = exists
-        ? prev.map((p) => (p.id === item.id ? preparedItem : p))
+        ? prev.map((p) => (p.index === item.index ? preparedItem : p))
         : [...prev, preparedItem];
 
       return updated;
     });
   };
 
-  const handlePress = (item: SelectedSparePartItem) => {
+  const handlePress = (item: SelectedMatnrItem) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    const existing = selectedItems?.find((p) => p.id === item.id);
+    const existing = selectedItems?.find((p) => p.index === item.index);
     openSheet(
       <SparePartActionSheet
         item={item}
+        isSelected={true}
         initialQty={existing?.selectedQty || 1}
         onAdd={(qty) => handleAddPart(item, qty)}
         closeSheet={closeSheet}

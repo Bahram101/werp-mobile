@@ -65,20 +65,20 @@ export type ServiceItem = {
   info: string;
 };
 
-export type SparePartItem = {
-  id: number;
-  name: string;
-  price: number;
-  serialNumber: string;
-  quantity: number;
-};
+// export type SparePartItem = {
+//   id: number;
+//   name: string;
+//   price: number;
+//   serialNumber: string;
+//   quantity: number;
+// };
 
-export type SelectedSparePartItem = SparePartItem & {
-  selectedQty: number;
-  totalPrice: number;
-};
+// export type SelectedSparePartItem = SparePartItem & {
+//   selectedQty: number;
+//   totalPrice: number;
+// };
 
-export type CartridgeItem = {
+export type MatnrItem = {
   index: number;
   matnrId: number;
   matnrCode: string;
@@ -94,7 +94,7 @@ export type CartridgeItem = {
   qinit: number;
 };
 
-export type SelectedCartridgeItem = CartridgeItem & {
+export type SelectedMatnrItem = MatnrItem & {
   selectedQty: number;
   totalPrice: number;
 };

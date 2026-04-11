@@ -36,19 +36,19 @@ const SparePartTable = ({
       <View className="table-body flex-col">
         {selectedItems.map((item) => (
           <TouchableOpacity
-            key={item.id}
+            key={item.index}
             className="flex-row justify-between items-center border-b border-grayLight py-3 active:opacity-70"
             onPress={() => handlePress(item)}
           >
-            <Text className="w-[8%] text-center">{item.id}</Text>
-            <Text className="w-[50%] text-center">{item.name}</Text>
+            <Text className="w-[8%] text-center">{item.index}</Text>
+            <Text className="w-[50%] text-center">{item.matnrName}</Text>
             <Text className="w-[15%] text-center">{item.selectedQty}</Text>
             <Text className="w-[20%] text-center">{item.totalPrice}</Text>
             <View className="w-[7%] p-1 items-center justify-center">
               <Pressable
                 onPress={(e) => {
                   e.stopPropagation();
-                  handleRemoveSparePart(item.id);
+                  handleRemoveSparePart(item.index);
                 }}
               >
                 <Trash2 size={18} color={COLORS.red} />

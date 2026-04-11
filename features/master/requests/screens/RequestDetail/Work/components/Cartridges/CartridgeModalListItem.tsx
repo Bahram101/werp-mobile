@@ -1,7 +1,4 @@
-import {
-  CartridgeItem,
-  SelectedCartridgeItem,
-} from "@/features/master/requests/types";
+import { MatnrItem, SelectedMatnrItem } from "@/features/master/requests/types";
 import { useActionSheet } from "@/providers/ActionSheetProvider";
 import { strToLowerCaase } from "@/utils/helpers";
 import cn from "clsx";
@@ -11,11 +8,11 @@ import { Pressable, Text, View } from "react-native";
 import SparePartActionSheet from "../SparePartActionSheet";
 
 type Props = {
-  item: CartridgeItem;
+  item: MatnrItem;
   isSelected: boolean;
   isLast?: boolean;
-  selectedItems: SelectedCartridgeItem[];
-  onAddPart: (item: CartridgeItem, qty: number) => void;
+  selectedItems: SelectedMatnrItem[];
+  onAddPart: (item: MatnrItem, qty: number) => void;
 };
 
 const SparePartModalListItem = ({
@@ -34,6 +31,7 @@ const SparePartModalListItem = ({
     openSheet(
       <SparePartActionSheet
         item={item}
+        isSelected={isSelected}
         initialQty={existing?.selectedQty}
         onAdd={(qty) => onAddPart(item, qty)}
         closeSheet={closeSheet}

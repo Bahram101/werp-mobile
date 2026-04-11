@@ -1,15 +1,12 @@
-import {
-  SelectedSparePartItem,
-  SparePartItem,
-} from "@/features/master/requests/types";
+import { MatnrItem, SelectedMatnrItem } from "@/features/master/requests/types";
 import React from "react";
 import SparePartModalListItem from "./SparePartModalListItem";
 
 type Props = {
-  data: SparePartItem[];
+  data: MatnrItem[];
   selectedIds: string[];
-  selectedItems: SelectedSparePartItem[];
-  handleAddPart: (item: SparePartItem, qty: number) => void;
+  selectedItems: SelectedMatnrItem[];
+  handleAddPart: (item: MatnrItem, qty: number) => void;
 };
 
 const SparePartModalList = ({
@@ -22,9 +19,9 @@ const SparePartModalList = ({
     <>
       {data.map((item, index) => (
         <SparePartModalListItem
-          key={item.id}
+          key={item.index}
           item={item}
-          isSelected={selectedIds?.includes(String(item.id))}
+          isSelected={selectedIds?.includes(String(item.index))}
           isLast={index === data.length - 1}
           selectedItems={selectedItems}
           onAddPart={handleAddPart}

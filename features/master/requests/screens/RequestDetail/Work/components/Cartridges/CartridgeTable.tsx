@@ -1,14 +1,14 @@
 import { COLORS } from "@/constants/theme";
-import { SelectedCartridgeItem } from "@/features/master/requests/types";
+import { SelectedMatnrItem } from "@/features/master/requests/types";
 import { strToLowerCaase } from "@/utils/helpers";
 import { Trash2 } from "lucide-react-native";
 import React from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
-  selectedItems: SelectedCartridgeItem[];
+  selectedItems: SelectedMatnrItem[];
   totalAmount: number;
-  handlePress: (item: SelectedCartridgeItem) => void;
+  handlePress: (item: SelectedMatnrItem) => void;
   handleRemoveSparePart: (id: number) => void;
 };
 

@@ -1,7 +1,4 @@
-import {
-  CartridgeItem,
-  SelectedCartridgeItem,
-} from "@/features/master/requests/types";
+import { MatnrItem, SelectedMatnrItem } from "@/features/master/requests/types";
 import { useActionSheet } from "@/providers/ActionSheetProvider";
 import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import * as Haptics from "expo-haptics";
@@ -12,16 +9,14 @@ import SparePartActionSheet from "../SparePartActionSheet";
 import CartridgeTable from "./CartridgeTable";
 
 type SparePartsProps = {
-  data: CartridgeItem[];
+  data: MatnrItem[];
 };
 
 const SparePart = ({ data }: SparePartsProps) => {
   const { showBottomSheet, updateModalProps } = useBottomSheet();
   const { openSheet, closeSheet } = useActionSheet();
 
-  const [selectedItems, setSelectedItems] = useState<SelectedCartridgeItem[]>(
-    [],
-  );
+  const [selectedItems, setSelectedItems] = useState<SelectedMatnrItem[]>([]);
 
   const selectedIds = selectedItems.map((i) => String(i.index));
 
@@ -57,7 +52,7 @@ const SparePart = ({ data }: SparePartsProps) => {
     updateModalProps({ selectedSparePartIds: updatedIds });
   };
 
-  const handleAddPart = (item: CartridgeItem, qty: number) => {
+  const handleAddPart = (item: MatnrItem, qty: number) => {
     const preparedItem = {
       ...item,
       selectedQty: qty,
@@ -75,12 +70,13 @@ const SparePart = ({ data }: SparePartsProps) => {
     });
   };
 
-  const handlePress = (item: SelectedCartridgeItem) => {
+  const handlePress = (item: SelectedMatnrItem) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     const existing = selectedItems?.find((p) => p.index === item.index);
     openSheet(
       <SparePartActionSheet
         item={item}
+        isSelected={true}
         initialQty={existing?.selectedQty || 1}
         onAdd={(qty) => handleAddPart(item, qty)}
         closeSheet={closeSheet}

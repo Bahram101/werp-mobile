@@ -1,12 +1,13 @@
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
-import { CartridgeItem, SparePartItem } from "@/features/master/requests/types";
-import { tenge } from "@/utils/helpers";
+import { MatnrItem } from "@/features/master/requests/types";
+import { formatFullName, tenge } from "@/utils/helpers";
 import { Minus, Plus, X } from "lucide-react-native";
 import React, { FC, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
 type Props = {
-  item: SparePartItem | CartridgeItem;
+  item: MatnrItem;
+  isSelected: boolean;
   onAdd: (qty: number) => void;
   initialQty?: number;
   closeSheet: () => void;
@@ -14,6 +15,7 @@ type Props = {
 
 const SparePartActionSheet: FC<Props> = ({
   item,
+  isSelected,
   onAdd,
   closeSheet,
   initialQty,
@@ -46,9 +48,7 @@ const SparePartActionSheet: FC<Props> = ({
 
       <View className="gap-4">
         <View className="flex-row justify-between">
-          <Text className="text-lg">
-            {"name" in item ? item?.name : item?.matnrName}
-          </Text>
+          <Text className="text-lg">{formatFullName(item?.matnrName)}</Text>
         </View>
         <View className="flex-row items-center justify-between">
           <View className="flex-row gap-3 items-center">
@@ -83,7 +83,7 @@ const SparePartActionSheet: FC<Props> = ({
         iconColor="white"
         onPress={handleAdd}
       >
-        <Text>Добавить</Text>
+        <Text>{isSelected ? "Изменить" : "Добавить"}</Text>
       </AnimatedButton>
     </View>
   );
