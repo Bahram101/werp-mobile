@@ -43,8 +43,15 @@ export const RequestService = {
         },
       );
       return data;
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const raw = e.response?.data?.response;
+
+      if (raw) {
+        const { message } = JSON.parse(raw);
+        throw new Error(message);
+      }
+
+      throw new Error(e.response?.data?.message || "Ошибка сервера");
     }
   },
 

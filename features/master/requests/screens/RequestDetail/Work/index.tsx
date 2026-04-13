@@ -144,8 +144,8 @@ const RequestWorkScreen = () => {
     return <Loader />;
   }
 
-  console.log("matnrList", JSON.stringify(matnrList, null, 2));
-  console.log("cartridgeList", JSON.stringify(cartridgeList, null, 2));
+  // console.log("matnrList", JSON.stringify(matnrList, null, 2));
+  // console.log("cartridgeList", JSON.stringify(cartridgeList, null, 2));
 
   return (
     <Layout>

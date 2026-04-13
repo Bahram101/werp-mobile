@@ -48,7 +48,6 @@ export const useUpdateRequestStatus = () => {
       mutationFn: ({ reqId, statusId }: { reqId: number; statusId: number }) =>
         RequestService.updateRequestStatus(reqId, statusId),
       retry: false,
-
       onSuccess: ({ data: { application } }) => {
         queryClient.setQueryData(
           ["get-master-request-details", application.applicationNumber],

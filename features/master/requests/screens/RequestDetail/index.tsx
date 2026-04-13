@@ -6,7 +6,7 @@ import { ROUTES } from "@/constants/routes";
 import { RequestDetailParams } from "@/types/navigation.interface";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import {
   useRequestDetail,
   useUpdateRequestStatus,
@@ -77,6 +77,8 @@ export default function RequestDetailScreen() {
           params: { appNumber },
         });
       }
+    } catch (error) {
+      Alert.alert("Ошибка", (error as Error).message);
     } finally {
       setLoadingType(null);
     }
@@ -125,8 +127,8 @@ export default function RequestDetailScreen() {
   };
 
   // console.log("requestDetail", JSON.stringify(requestDetail, null, 2));
-  console.log("loadingType", loadingType);
-  console.log("isLoading", isLoading);
+  // console.log("loadingType", loadingType);
+  // console.log("isLoading", isLoading);
 
   return (
     <Layout className="gap-3" refreshing={refreshing} onRefresh={onRefresh}>
