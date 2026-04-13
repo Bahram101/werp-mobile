@@ -22,6 +22,9 @@ export default function RequestDetailScreen() {
     useRequestDetail(Number(appNumber));
   const { updateRequestStatus, isLoading } = useUpdateRequestStatus();
   const [refreshing, setRefreshing] = useState(false);
+  const [loadingType, setLoadingType] = useState<"main" | "cancel" | null>(
+    null,
+  );
 
   useEffect(() => {
     if (appNumber) {
@@ -37,40 +40,45 @@ export default function RequestDetailScreen() {
         contractNumber: requestDetail.contractNumber,
       });
     }
-  }, [requestDetail, navigation]);
+  }, [requestDetail?.contractNumber]);
 
   if (isLoadingReqDetail || !requestDetail) {
     return <Loader />;
   }
 
-  const handleMainButton = () => {
-    if (requestDetail.applicationStatusId === 2) {
-      updateRequestStatus({
-        reqId: requestDetail.applicationNumber,
-        statusId: 9,
-      });
-    }
-    if (requestDetail.applicationStatusId === 9) {
-      updateRequestStatus(
-        {
+  const handleMainButton = async () => {
+    setLoadingType("main");
+    try {
+      if (requestDetail.applicationStatusId === 2) {
+        await updateRequestStatus({
           reqId: requestDetail.applicationNumber,
-          statusId: 10,
-        },
-        {
-          onSuccess: () => {
-            router.push({
-              pathname: ROUTES.REQUEST_WORK,
-              params: { appNumber },
-            });
+          statusId: 9,
+        });
+      }
+      if (requestDetail.applicationStatusId === 9) {
+        await updateRequestStatus(
+          {
+            reqId: requestDetail.applicationNumber,
+            statusId: 10,
           },
-        },
-      );
-    }
-    if (requestDetail.applicationStatusId === 10) {
-      router.push({
-        pathname: ROUTES.REQUEST_WORK,
-        params: { appNumber },
-      });
+          {
+            onSuccess: () => {
+              router.push({
+                pathname: ROUTES.REQUEST_WORK,
+                params: { appNumber },
+              });
+            },
+          },
+        );
+      }
+      if (requestDetail.applicationStatusId === 10) {
+        router.push({
+          pathname: ROUTES.REQUEST_WORK,
+          params: { appNumber },
+        });
+      }
+    } finally {
+      setLoadingType(null);
     }
   };
 
@@ -104,7 +112,21 @@ export default function RequestDetailScreen() {
     }
   };
 
-  console.log("requestDetail", JSON.stringify(requestDetail, null, 2));
+  const handleCancel = async () => {
+    setLoadingType("cancel");
+    try {
+      await updateRequestStatus({
+        reqId: requestDetail.applicationNumber,
+        statusId: 2,
+      });
+    } finally {
+      setLoadingType(null);
+    }
+  };
+
+  // console.log("requestDetail", JSON.stringify(requestDetail, null, 2));
+  console.log("loadingType", loadingType);
+  console.log("isLoading", isLoading);
 
   return (
     <Layout className="gap-3" refreshing={refreshing} onRefresh={onRefresh}>
@@ -150,7 +172,7 @@ export default function RequestDetailScreen() {
         icon={requestDetail.applicationStatusId === 2 ? "check" : "map-pin"}
         iconColor="white"
         onPress={handleMainButton}
-        isLoading={isLoading}
+        isLoading={loadingType === "main"}
       >
         {requestDetail.applicationStatusId === 2
           ? "Принять"
@@ -161,7 +183,7 @@ export default function RequestDetailScreen() {
 
       <View className="flex-row gap-3">
         <AnimatedButton
-          className="p-4"
+          className="h-20 p-4"
           bg="yellow"
           bgPressed="yellowDark"
           icon="corner-down-right"
@@ -171,13 +193,14 @@ export default function RequestDetailScreen() {
           <Text>Перенос</Text>
         </AnimatedButton>
         <AnimatedButton
-          className="p-4"
+          className="h-20 p-4"
           bg="red"
           bgPressed="redDark"
           icon="x-circle"
           iconColor="white"
           textColor="white"
-          onPress={handleMainButton}
+          isLoading={loadingType === "cancel"}
+          onPress={handleCancel}
         >
           <Text>Отменить</Text>
         </AnimatedButton>

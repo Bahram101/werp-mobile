@@ -42,25 +42,26 @@ export const useRequestDetail = (id: number) => {
 
 export const useUpdateRequestStatus = () => {
   const queryClient = useQueryClient();
-  const { mutate: updateRequestStatus, isPending: isLoading } = useMutation({
-    mutationKey: ["update-request-status"],
-    mutationFn: ({ reqId, statusId }: { reqId: number; statusId: number }) =>
-      RequestService.updateRequestStatus(reqId, statusId),
-    retry: false,
+  const { mutateAsync: updateRequestStatus, isPending: isLoading } =
+    useMutation({
+      mutationKey: ["update-request-status"],
+      mutationFn: ({ reqId, statusId }: { reqId: number; statusId: number }) =>
+        RequestService.updateRequestStatus(reqId, statusId),
+      retry: false,
 
-    onSuccess: ({ data: { application } }) => {
-      queryClient.setQueryData(
-        ["get-master-request-details", application.applicationNumber],
-        (old: any) => ({
-          ...old,
-          applicationStatusId: application.applicationStatusId,
-        }),
-      );
-      queryClient.invalidateQueries({
-        queryKey: ["get-master-requests"],
-      });
-    },
-  });
+      onSuccess: ({ data: { application } }) => {
+        queryClient.setQueryData(
+          ["get-master-request-details", application.applicationNumber],
+          (old: any) => ({
+            ...old,
+            applicationStatusId: application.applicationStatusId,
+          }),
+        );
+        queryClient.invalidateQueries({
+          queryKey: ["get-master-requests"],
+        });
+      },
+    });
   return { updateRequestStatus, isLoading };
 };
 

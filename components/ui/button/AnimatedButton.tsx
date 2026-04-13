@@ -56,7 +56,7 @@ export default function AnimatedButton({
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onPress={onPress}
-      className={cn("flex-1")}
+      className={cn("flex-1 bg-orange-300")}
       disabled={isLoading}
     >
       {({ pressed }) => (
