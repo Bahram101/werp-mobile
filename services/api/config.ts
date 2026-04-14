@@ -6,5 +6,3 @@ export const API_URL = `${SERVER_URL}/api`;
 // export const SERVICE_URL = `${SERVER_URL}:${process.env.EXPO_PUBLIC_PORT_SERVICE}`;
 // export const CALL_CENTER_URL = `${SERVER_URL}:${process.env.EXPO_PUBLIC_PORT_CALL_CENTER}`;
 // export const CRM_URL = `${SERVER_URL}:${process.env.EXPO_PUBLIC_PORT_CRM}`;
-
-console.log("SERVER", SERVER_URL);

@@ -1,33 +1,38 @@
+import { strToLowerCaase } from "@/utils/helpers";
 import cn from "clsx";
 import React from "react";
 import { Text, View } from "react-native";
-import { IEquipment } from "../types";
+import { EquipmentDtoItem } from "../types";
 
 export default function EquipmentItem({
   item,
-  data,
-  index,
+  isLast,
 }: {
-  item: IEquipment;
-  data: IEquipment[];
-  index: number;
+  item: EquipmentDtoItem;
+  isLast: boolean;
 }) {
   return (
     <View
       className={cn(
         "border-grayLight p-4 flex-row justify-between items-center",
-        data.length - 1 !== index && "border-b"
+        isLast && "border-b",
       )}
     >
-      <View className="flex-col">
-        <Text className="text-lg text-primary mb-1">
-          {item.name.toUpperCase()}
+      <View className="flex-1 mr-2">
+        <Text
+          numberOfLines={2}
+          ellipsizeMode="tail"
+          className="text-lg text-primary mb-1"
+        >
+          {strToLowerCaase(item.matnrName)}
         </Text>
-        <Text className="text-xs text-grayDark">КОД ТОВАРА: ПМ-2531</Text>
+
+        <Text className="text-xs text-grayDark">
+          КОД ТОВАРА: {item.matnrCode}
+        </Text>
       </View>
-      <Text
-        className={cn("text-lg", Number(item.qty) < 5 ? "text-error-500" : "")}
-      >
+
+      <Text className={cn("", Number(item.qty) < 5 ? "text-error-500" : "")}>
         {item.qty} шт.
       </Text>
     </View>

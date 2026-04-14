@@ -45,7 +45,6 @@ export const RequestService = {
       return data;
     } catch (e: any) {
       const raw = e.response?.data?.response;
-
       if (raw) {
         const { message } = JSON.parse(raw);
         throw new Error(message);

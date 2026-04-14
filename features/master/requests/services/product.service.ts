@@ -1,8 +1,8 @@
+import { coreInstance } from "@/services/api/core-instance";
 import { serviceInstance } from "@/services/api/service-instance";
 
 export const MatnrService = {
   async getMatnrList(masterId: number, serviceTypeId: number) {
-    console.log("serviceTypeId", serviceTypeId);
     try {
       const { data } = await serviceInstance.get("/smcs/getMatnrPriceList", {
         params: {
@@ -14,6 +14,23 @@ export const MatnrService = {
         },
       });
       return data.data;
+    } catch (e) {
+      throw e;
+    }
+  },
+
+  async getAccountibilities(masterId: number, werks: number) {
+    try {
+      const { data } = await coreInstance.get(
+        "/logistics/matnr-reports/accountabilities2",
+        {
+          params: {
+            staffId: masterId,
+            werks,
+          },
+        },
+      );
+      return data;
     } catch (e) {
       throw e;
     }
