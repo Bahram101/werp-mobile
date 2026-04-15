@@ -6,15 +6,18 @@ import { EquipmentDto } from "../types";
 
 export default function EquipmentItem({
   item,
+  isFirst,
   isLast,
 }: {
   item: EquipmentDto;
+  isFirst: boolean;
   isLast: boolean;
 }) {
   return (
     <View
       className={cn(
-        "border-grayLight p-4 flex-row justify-between items-center bg-white",
+        "border-grayLight p-4 flex-row justify-between items-center ",
+        // isFirst && "rounded-tl-md rounded-tr-md",
         isLast && "border-b",
       )}
     >

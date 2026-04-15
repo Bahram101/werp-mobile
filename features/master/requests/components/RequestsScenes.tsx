@@ -87,7 +87,7 @@ export default function RequestsScenes({ route }: Props) {
     case "assigned":
       return (
         <>
-          <View className="mx-4 flex-row justify-between items-center mb-3 mt-2">
+          <View className="mx-4 flex-row justify-between items-center mb-3">
             <Text className="text-xl font-semibold">Распределенные заявки</Text>
             <TouchableOpacity>
               <SlidersHorizontal size={21} />
@@ -107,7 +107,7 @@ export default function RequestsScenes({ route }: Props) {
     case "done":
       return (
         <>
-          <View className="mx-4 mt-2">
+          <View className="mx-4">
             <Text className="text-xl font-semibold">Выполненные заявки</Text>
           </View>
           <FlatList
@@ -123,7 +123,7 @@ export default function RequestsScenes({ route }: Props) {
     case "finished":
       return (
         <>
-          <View className="mx-4 mt-2 mb-3">
+          <View className="mx-4 mb-3">
             <Text className="text-xl font-semibold">
               Завершенные заявки с 1 {getCurrentMonthName()}
             </Text>

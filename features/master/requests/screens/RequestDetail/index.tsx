@@ -139,26 +139,30 @@ export default function RequestDetailScreen() {
       </Accordion>
 
       <View className="flex-row gap-3 ">
-        <AnimatedButton
-          className="p-4"
-          bg="white"
-          bgPressed="grayLight"
-          icon="message-circle"
-          iconColor="blue"
-          textColor="blue"
-        >
-          <Text style={{ lineHeight: 18 }}>{"Чат с\n клиентом"}</Text>
-        </AnimatedButton>
-        <AnimatedButton
-          className="p-4"
-          bg="white"
-          bgPressed="grayLight"
-          icon="phone"
-          iconColor="primary"
-          textColor="primary"
-        >
-          <Text style={{ lineHeight: 18 }}>{"Позвонить \n клиенту"}</Text>
-        </AnimatedButton>
+        <View className="flex-1">
+          <AnimatedButton
+            className="p-4"
+            bg="white"
+            bgPressed="grayLight"
+            icon="message-circle"
+            iconColor="blue"
+            textColor="blue"
+          >
+            <Text style={{ lineHeight: 18 }}>{"Чат с\n клиентом"}</Text>
+          </AnimatedButton>
+        </View>
+        <View className="flex-1">
+          <AnimatedButton
+            className="p-4"
+            bg="white"
+            bgPressed="grayLight"
+            icon="phone"
+            iconColor="primary"
+            textColor="primary"
+          >
+            <Text style={{ lineHeight: 18 }}>{"Позвонить \n клиенту"}</Text>
+          </AnimatedButton>
+        </View>
       </View>
 
       <AnimatedButton
@@ -180,28 +184,33 @@ export default function RequestDetailScreen() {
       </AnimatedButton>
 
       <View className="flex-row gap-3">
-        <AnimatedButton
-          className="h-20 p-4"
-          bg="yellow"
-          bgPressed="yellowDark"
-          icon="corner-down-right"
-          iconColor="black"
-          textColor="black"
-        >
-          Перенос
-        </AnimatedButton>
-        <AnimatedButton
-          className="h-20 p-4"
-          bg="red"
-          bgPressed="redDark"
-          icon="x-circle"
-          iconColor="white"
-          textColor="white"
-          isLoading={loadingType === "cancel"}
-          onPress={handleCancel}
-        >
-          Отменить
-        </AnimatedButton>
+        <View className="flex-1">
+          <AnimatedButton
+            className="w-full h-20 p-4"
+            bg="yellow"
+            bgPressed="yellowDark"
+            icon="corner-down-right"
+            iconColor="black"
+            textColor="black"
+          >
+            Перенос
+          </AnimatedButton>
+        </View>
+
+        <View className="flex-1">
+          <AnimatedButton
+            className="w-full h-20 p-4"
+            bg="red"
+            bgPressed="redDark"
+            icon="x-circle"
+            iconColor="white"
+            textColor="white"
+            isLoading={loadingType === "cancel"}
+            onPress={handleCancel}
+          >
+            Отменить
+          </AnimatedButton>
+        </View>
       </View>
     </Layout>
   );
