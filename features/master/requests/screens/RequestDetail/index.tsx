@@ -126,10 +126,6 @@ export default function RequestDetailScreen() {
     }
   };
 
-  // console.log("requestDetail", JSON.stringify(requestDetail, null, 2));
-  // console.log("loadingType", loadingType);
-  // console.log("isLoading", isLoading);
-
   return (
     <Layout className="gap-3" refreshing={refreshing} onRefresh={onRefresh}>
       <Accordion
@@ -192,7 +188,7 @@ export default function RequestDetailScreen() {
           iconColor="black"
           textColor="black"
         >
-          <Text>Перенос</Text>
+          Перенос
         </AnimatedButton>
         <AnimatedButton
           className="h-20 p-4"
@@ -204,7 +200,7 @@ export default function RequestDetailScreen() {
           isLoading={loadingType === "cancel"}
           onPress={handleCancel}
         >
-          <Text>Отменить</Text>
+          Отменить
         </AnimatedButton>
       </View>
     </Layout>

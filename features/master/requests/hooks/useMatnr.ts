@@ -16,11 +16,15 @@ export const useMatnr = (serviceTypeId: number) => {
 export const useGetAccountibilities = <T = unknown>() => {
   const { user } = useAuth();
   const masterId = user?.currentStaff?.staffId;
-  const { data = [], isLoading } = useQuery<T>({
+  const {
+    data = [],
+    isLoading,
+    refetch: refetchAccountibilities,
+  } = useQuery<T>({
     queryKey: ["get-accountibilities", masterId],
     queryFn: () => MatnrService.getAccountibilities(masterId, 3),
     enabled: !!masterId,
     staleTime: 1000 * 60 * 60,
   });
-  return { data, isLoading };
+  return { data, isLoading, refetchAccountibilities };
 };

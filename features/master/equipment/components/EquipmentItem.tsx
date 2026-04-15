@@ -2,19 +2,19 @@ import { strToLowerCaase } from "@/utils/helpers";
 import cn from "clsx";
 import React from "react";
 import { Text, View } from "react-native";
-import { EquipmentDtoItem } from "../types";
+import { EquipmentDto } from "../types";
 
 export default function EquipmentItem({
   item,
   isLast,
 }: {
-  item: EquipmentDtoItem;
+  item: EquipmentDto;
   isLast: boolean;
 }) {
   return (
     <View
       className={cn(
-        "border-grayLight p-4 flex-row justify-between items-center",
+        "border-grayLight p-4 flex-row justify-between items-center bg-white",
         isLast && "border-b",
       )}
     >
@@ -24,16 +24,16 @@ export default function EquipmentItem({
           ellipsizeMode="tail"
           className="text-lg text-primary mb-1"
         >
-          {strToLowerCaase(item.matnrName)}
+          {strToLowerCaase(item.name)}
         </Text>
 
-        <Text className="text-xs text-grayDark">
-          КОД ТОВАРА: {item.matnrCode}
-        </Text>
+        <Text className="text-xs text-grayDark">КОД ТОВАРА: {item.code}</Text>
       </View>
 
-      <Text className={cn("", Number(item.qty) < 5 ? "text-error-500" : "")}>
-        {item.qty} шт.
+      <Text
+        className={cn("", Number(item.quantity) < 5 ? "text-error-500" : "")}
+      >
+        {item.quantity} шт.
       </Text>
     </View>
   );

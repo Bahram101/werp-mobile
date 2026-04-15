@@ -22,13 +22,7 @@ export const MatnrService = {
   async getAccountibilities(masterId: number, werks: number) {
     try {
       const { data } = await coreInstance.get(
-        "/logistics/matnr-reports/accountabilities2",
-        {
-          params: {
-            staffId: masterId,
-            werks,
-          },
-        },
+        `/logistics/accountabilities/staff-matnrs/${masterId}`,
       );
       return data;
     } catch (e) {

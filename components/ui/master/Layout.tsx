@@ -17,8 +17,6 @@ const Layout: FC<ILayout> = ({
   refreshing,
   onRefresh,
 }) => {
-  // const segments = useSegments() as string[];
-
   return (
     <ScrollView
       contentContainerStyle={{

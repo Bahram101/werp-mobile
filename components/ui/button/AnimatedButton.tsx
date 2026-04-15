@@ -56,7 +56,7 @@ export default function AnimatedButton({
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onPress={onPress}
-      className={cn("flex-1 bg-orange-300")}
+      className={cn("flex-1 ")}
       disabled={isLoading}
     >
       {({ pressed }) => (
@@ -78,7 +78,8 @@ export default function AnimatedButton({
                 <Feather name={icon} size={33} color={COLORS[iconColor]} />
               )}
               <Text
-                className={`text-lg font-semibold text-center text-${textColor}`}
+                className="text-lg font-semibold text-center"
+                style={{ color: COLORS[textColor] }}
               >
                 {children}
               </Text>

@@ -1,25 +1,33 @@
-import AnimatedButton from "@/components/ui/button/AnimatedButton";
-import { Loader } from "@/components/ui/Loader";
-import Layout from "@/components/ui/master/Layout";
-import React from "react";
-import { useGetAccountibilities } from "../../requests/hooks/useMatnr";
-import EquipmentList from "../components/EquipmentList";
-import { EquipmentDto } from "../types";
+import React, { useState } from "react";
+import { useWindowDimensions, View } from "react-native";
+import { TabBarProps, TabView } from "react-native-tab-view";
+import RequestsTabBar from "../../requests/components/RequestsTabBar";
+import EquipmentScenes from "../components/EquipmentScenes";
 
 const Equipment = () => {
-  const { data, isLoading } = useGetAccountibilities<EquipmentDto[]>();
+  const layout = useWindowDimensions();
+  const [index, setIndex] = useState(0);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  const [routes] = useState([
+    { key: "report", title: "Отчет" },
+    { key: "new", title: "Новые" },
+    { key: "closed", title: "Закрытые" },
+  ]);
 
   return (
-    <Layout>
-      <EquipmentList data={data[0]?.items || []} />
-      <AnimatedButton bg="primary" bgPressed="primaryDark" className="p-4">
-        Заказать запчасти
-      </AnimatedButton>
-    </Layout>
+    <View className="flex-1 pt-2" style={{ position: "relative" }}>
+      <TabView
+        lazy
+        navigationState={{ index, routes }}
+        renderScene={({ route }) => <EquipmentScenes route={route} />}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        removeClippedSubviews={false}
+        renderTabBar={(props: TabBarProps<any>) => (
+          <RequestsTabBar {...props} />
+        )}
+      />
+    </View>
   );
 };
 
