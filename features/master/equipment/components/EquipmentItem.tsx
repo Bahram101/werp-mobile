@@ -16,7 +16,7 @@ export default function EquipmentItem({
   return (
     <View
       className={cn(
-        "border-grayLight p-4 flex-row justify-between items-center ",
+        "border-grayLight p-4 flex-row justify-between items-center bg-white",
         // isFirst && "rounded-tl-md rounded-tr-md",
         isLast && "border-b",
       )}
@@ -30,14 +30,22 @@ export default function EquipmentItem({
           {strToLowerCaase(item.name)}
         </Text>
 
-        <Text className="text-xs text-grayDark">КОД ТОВАРА: {item.code}</Text>
+        <Text className=" text-grayDark ">КОД ТОВАРА: {item.code}</Text>
       </View>
 
-      <Text
-        className={cn("", Number(item.quantity) < 5 ? "text-error-500" : "")}
-      >
-        {item.quantity} шт.
-      </Text>
+      <View className="ml-3">
+        <Text
+          className={cn(
+            "",
+            Number(item.quantity) < 5
+              ? "text-error-500 font-bold"
+              : "font-bold",
+          )}
+        >
+          {item.quantity} шт.
+        </Text>
+        <Text className="text-grayDark">{item.limit} лм.</Text>
+      </View>
     </View>
   );
 }

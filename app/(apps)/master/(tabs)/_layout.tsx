@@ -48,9 +48,15 @@ export default function TabsLayout() {
                 // borderTopColor: "transparent",
                 // borderRadius: 25,
               },
-              headerShown: ["home", "requests", "messages"].includes(tab.name)
-                ? false
-                : true,
+              // headerShown: [
+              //   "home",
+              //   "requests",
+              //   "equipments",
+              //   "messages",
+              // ].includes(tab.name)
+              //   ? false
+              //   : true,
+              headerShown: tab.name === "profile" ? true : false,
               title: tab.title,
               tabBarIcon: ({ color, size }) => {
                 return (

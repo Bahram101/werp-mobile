@@ -28,3 +28,21 @@ export const useGetAccountibilities = <T = unknown>() => {
   });
   return { data, isLoading, refetchAccountibilities };
 };
+
+export const useGetAccountibilitiesStatuses = <T = unknown>(
+  statusId: number,
+) => {
+  const { user } = useAuth();
+  const masterId = user?.currentStaff?.staffId;
+  const {
+    data: statusesData = [],
+    isLoading: isStatusesLoading,
+    refetch: refetchStatuses,
+  } = useQuery<T>({
+    queryKey: ["get-accountibilities-statuses", statusId],
+    queryFn: () => MatnrService.getAccountibilitiesStatuses(statusId, masterId),
+    enabled: !!statusId,
+    staleTime: 1000 * 60 * 60,
+  });
+  return { statusesData, isStatusesLoading, refetchStatuses };
+};

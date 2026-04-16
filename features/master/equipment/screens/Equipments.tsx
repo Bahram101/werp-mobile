@@ -9,7 +9,7 @@ const Equipment = () => {
   const [index, setIndex] = useState(0);
 
   const [routes] = useState([
-    { key: "report", title: "Отчет" },
+    { key: "report", title: "Подотчет" },
     { key: "new", title: "Новые" },
     { key: "closed", title: "Закрытые" },
   ]);

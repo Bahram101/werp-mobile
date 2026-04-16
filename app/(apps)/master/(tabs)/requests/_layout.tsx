@@ -13,13 +13,16 @@ export default function RequestsLayout() {
         headerTintColor: "#000",
       }}
     >
+      {/* список заявок */}
       <Stack.Screen
         name="index"
         options={{
           title: "Заявки",
-          headerShown: true, // список заявок
+          headerShown: true,
         }}
       />
+
+      {/* детальная заявка */}
       <Stack.Screen
         name="[appNumber]/index"
         options={({ navigation, route }) => {
@@ -49,20 +52,26 @@ export default function RequestsLayout() {
           };
         }}
       />
+
+      {/* список истории */}
       <Stack.Screen
         name="[appNumber]/history/index"
         options={{
           title: "История",
-          headerShown: true, //список истории
+          headerShown: true,
         }}
       />
+
+      {/* детальная история */}
       <Stack.Screen
         name="[appNumber]/history/[historyId]"
         options={{
           title: "Детальная история",
-          headerShown: true, //детальная история
+          headerShown: true,
         }}
       />
+
+      {/* создание сервис карочку */}
       <Stack.Screen
         name="[appNumber]/work/index"
         options={({ navigation, route }) => ({
@@ -73,12 +82,6 @@ export default function RequestsLayout() {
           ),
         })}
       />
-
-      {/* <Stack.Screen name="[appNumber]/work/index" options={({navigation, route}) => {
-        return {
-          headerLeft: 
-        }
-      }} /> */}
     </Stack>
   );
 }

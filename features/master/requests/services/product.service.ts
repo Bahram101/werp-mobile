@@ -29,4 +29,15 @@ export const MatnrService = {
       throw e;
     }
   },
+
+  async getAccountibilitiesStatuses(statusId: number, responsibleId?: number) {
+    try {
+      const { data } = await coreInstance.get("/logistics/accountabilities", {
+        params: { statusId, responsibleId },
+      });
+      return data;
+    } catch (e) {
+      throw e;
+    }
+  },
 };
