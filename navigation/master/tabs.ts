@@ -12,7 +12,7 @@ export const tabItems: ITabItem[] = [
     icon: "file-document-edit-outline",
   },
   {
-    name: "equipments",
+    name: "accountability",
     title: "Инвентарь",
     icon: "folder-open-outline",
   },

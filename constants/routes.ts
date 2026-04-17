@@ -5,4 +5,5 @@ export const ROUTES = {
   REQUEST_HISTORY: "/(apps)/master/(tabs)/requests/[appNumber]/history",
   REQUEST_HISTORY_DETAIL:
     "/(apps)/master/(tabs)/requests/[appNumber]/history/[historyId]",
+  ACCOUNTABILITY_DETAIL: "/(apps)/master/(tabs)/accountability/[id]",
 } as const;

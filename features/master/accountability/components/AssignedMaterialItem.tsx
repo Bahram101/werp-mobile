@@ -1,15 +1,15 @@
-import { strToLowerCaase } from "@/utils/helpers";
+import { strToLowerCase } from "@/utils/helpers";
 import cn from "clsx";
 import React from "react";
 import { Text, View } from "react-native";
-import { EquipmentDto } from "../types";
+import { AssignedMaterialDto } from "../types";
 
-export default function EquipmentItem({
+export default function AssignedMaterialItem({
   item,
   isFirst,
   isLast,
 }: {
-  item: EquipmentDto;
+  item: AssignedMaterialDto;
   isFirst: boolean;
   isLast: boolean;
 }) {
@@ -27,7 +27,7 @@ export default function EquipmentItem({
           ellipsizeMode="tail"
           className="text-lg text-primary mb-1"
         >
-          {strToLowerCaase(item.name)}
+          {strToLowerCase(item.name)}
         </Text>
 
         <Text className=" text-grayDark ">КОД ТОВАРА: {item.code}</Text>

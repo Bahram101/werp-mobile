@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-export default function EquipmentsLayout() {
+export default function AccountabilityLayout() {
   return (
     <Stack
       screenOptions={{
@@ -10,28 +10,20 @@ export default function EquipmentsLayout() {
         headerTintColor: "#000",
       }}
     >
+      {/* список материалов */}
       <Stack.Screen
         name="index"
         options={{
           title: "Инвентарь",
-          headerShown: true, // список заявок
-        }}
-      />
-
-      {/* детальная инвентарь */}
-      <Stack.Screen
-        name="[appNumber]/history/[historyId]"
-        options={{
-          title: "Детальная история",
           headerShown: true,
         }}
       />
 
-      {/* детальная документ */}
+      {/* детали документа */}
       <Stack.Screen
         name="[id]/index"
         options={{
-          title: "Детальная история",
+          title: "Детальный документ",
           headerShown: true,
         }}
       />

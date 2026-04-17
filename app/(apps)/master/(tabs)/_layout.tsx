@@ -51,7 +51,7 @@ export default function TabsLayout() {
               // headerShown: [
               //   "home",
               //   "requests",
-              //   "equipments",
+              //   "accountabilities",
               //   "messages",
               // ].includes(tab.name)
               //   ? false

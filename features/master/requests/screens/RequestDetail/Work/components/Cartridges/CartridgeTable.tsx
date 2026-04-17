@@ -1,6 +1,6 @@
 import { COLORS } from "@/constants/theme";
 import { SelectedMatnrItem } from "@/features/master/requests/types";
-import { strToLowerCaase } from "@/utils/helpers";
+import { strToLowerCase } from "@/utils/helpers";
 import { Trash2 } from "lucide-react-native";
 import React from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
@@ -44,7 +44,7 @@ const CartridgeTable = ({
           >
             <Text className="w-[8%] text-center">{item.fno}</Text>
             <Text className="w-[50%] text-center">
-              {strToLowerCaase(item.matnrName)}
+              {strToLowerCase(item.matnrName)}
             </Text>
             <Text className="w-[15%] text-center">{item.selectedQty}</Text>
             <Text className="w-[20%] text-center">{item.totalPrice}</Text>

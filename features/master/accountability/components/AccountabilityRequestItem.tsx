@@ -1,16 +1,18 @@
+import { ROUTES } from "@/constants/routes";
 import { COLORS } from "@/constants/theme";
 import cn from "clsx";
+import { router } from "expo-router";
 import { CalendarDays, ChevronRight } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 export default function AccountabilityItem({ item }: { item: any }) {
-  // const handlePress = () => {
-  //   router.push({
-  //     pathname: ROUTES.REQUEST_HISTORY_DETAIL,
-  //     params: { appNumber: item.applicationNumber },
-  //   });
-  // };
+  const handlePress = () => {
+    router.push({
+      pathname: ROUTES.ACCOUNTABILITY_DETAIL,
+      params: { id: item.id, regNumber: item.regNumber },
+    });
+  };
 
   return (
     <View
@@ -20,7 +22,7 @@ export default function AccountabilityItem({ item }: { item: any }) {
     >
       <TouchableOpacity
         className="flex-1 flex-row items-center gap-5"
-        // onPress={handlePress}
+        onPress={handlePress}
       >
         <View className="flex-row items-center gap-1">
           <Text className="text-xl text-grayDark">№</Text>

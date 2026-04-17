@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { TabBarProps, TabView } from "react-native-tab-view";
 import RequestsTabBar from "../../requests/components/RequestsTabBar";
-import EquipmentScenes from "../components/EquipmentScenes";
+import AccountabilityScenes from "../components/AccountabilityScenes";
 
-const Equipment = () => {
+const AccountabilityScreen = () => {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
 
   const [routes] = useState([
-    { key: "report", title: "Подотчет" },
+    { key: "assigned", title: "Подотчет" },
     { key: "new", title: "Новые" },
     { key: "closed", title: "Закрытые" },
   ]);
@@ -19,7 +19,7 @@ const Equipment = () => {
       <TabView
         lazy
         navigationState={{ index, routes }}
-        renderScene={({ route }) => <EquipmentScenes route={route} />}
+        renderScene={({ route }) => <AccountabilityScenes route={route} />}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
         removeClippedSubviews={false}
@@ -31,4 +31,4 @@ const Equipment = () => {
   );
 };
 
-export default Equipment;
+export default AccountabilityScreen;

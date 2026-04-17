@@ -1,6 +1,6 @@
 import { MatnrItem, SelectedMatnrItem } from "@/features/master/requests/types";
 import { useActionSheet } from "@/providers/ActionSheetProvider";
-import { strToLowerCaase } from "@/utils/helpers";
+import { strToLowerCase } from "@/utils/helpers";
 import cn from "clsx";
 import * as Haptics from "expo-haptics";
 import React from "react";
@@ -54,7 +54,7 @@ const SparePartModalListItem = ({
               className="text-base text-gray-900 font-medium"
               numberOfLines={1}
             >
-              {strToLowerCaase(item.matnrName)}
+              {strToLowerCase(item.matnrName)}
             </Text>
             <Text className="text-xs text-gray-400 mt-1">
               Арт: {item.matnrCode}

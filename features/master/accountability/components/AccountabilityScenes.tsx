@@ -3,20 +3,20 @@ import { Loader } from "@/components/ui/Loader";
 import { useState } from "react";
 import { FlatList } from "react-native";
 import {
-  useGetAccountibilities,
-  useGetAccountibilitiesStatuses,
-} from "../../requests/hooks/useMatnr";
-import { EquipmentDto } from "../types";
-import AccountabilityItem from "./AccountabilityItem";
-import EquipmentItem from "./EquipmentItem";
+  useAccountabilityRequests,
+  useAssignedMaterials,
+} from "../../accountability/hooks/useAccountability";
+import { AssignedMaterialDto } from "../types";
+import AccountabilityRequestItem from "./AccountabilityRequestItem";
+import AssignedMaterialItem from "./AssignedMaterialItem";
 
 type Props = {
   route: { key: string };
 };
 
-export default function EquipmentScenes({ route }: Props) {
+export default function AccountabilitiesScenes({ route }: Props) {
   const { data, isLoading, refetchAccountibilities } =
-    useGetAccountibilities<EquipmentDto[]>();
+    useAssignedMaterials<AssignedMaterialDto[]>();
   let status = null;
 
   switch (route.key) {
@@ -31,8 +31,9 @@ export default function EquipmentScenes({ route }: Props) {
     default:
       break;
   }
-  const { statusesData, isStatusesLoading, refetchStatuses } =
-    useGetAccountibilitiesStatuses<any>(status!);
+  const { statusesData, isStatusesLoading } = useAccountabilityRequests<any>(
+    status!,
+  );
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -55,15 +56,14 @@ export default function EquipmentScenes({ route }: Props) {
   };
 
   console.log("status", status);
-  // console.log("statusesData", statusesData);
 
   switch (route.key) {
-    case "report":
+    case "assigned":
       return (
         <FlatList
           data={data}
           renderItem={({ item, index }) => (
-            <EquipmentItem
+            <AssignedMaterialItem
               item={item}
               isFirst={index === 0}
               isLast={data.length - 1 !== index}
@@ -86,7 +86,7 @@ export default function EquipmentScenes({ route }: Props) {
         <FlatList
           data={statusesData.content}
           renderItem={({ item, index }) => {
-            return <AccountabilityItem item={item} />;
+            return <AccountabilityRequestItem item={item} />;
           }}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={style}
@@ -100,7 +100,7 @@ export default function EquipmentScenes({ route }: Props) {
         <FlatList
           data={statusesData.content}
           renderItem={({ item, index }) => {
-            return <AccountabilityItem item={item} />;
+            return <AccountabilityRequestItem item={item} />;
           }}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={style}

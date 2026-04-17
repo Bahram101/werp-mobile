@@ -29,7 +29,7 @@ export default function RequestDetailScreen() {
   useEffect(() => {
     if (appNumber) {
       navigation.setOptions({
-        headerTitle: `Заявка №${String(appNumber)}`,
+        headerTitle: `Заявка №${appNumber}`,
       });
     }
   }, [navigation, appNumber]);

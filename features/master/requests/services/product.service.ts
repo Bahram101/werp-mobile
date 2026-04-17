@@ -1,4 +1,3 @@
-import { coreInstance } from "@/services/api/core-instance";
 import { serviceInstance } from "@/services/api/service-instance";
 
 export const MatnrService = {
@@ -14,28 +13,6 @@ export const MatnrService = {
         },
       });
       return data.data;
-    } catch (e) {
-      throw e;
-    }
-  },
-
-  async getAccountibilities(masterId: number, werks: number) {
-    try {
-      const { data } = await coreInstance.get(
-        `/logistics/accountabilities/staff-matnrs/${masterId}`,
-      );
-      return data;
-    } catch (e) {
-      throw e;
-    }
-  },
-
-  async getAccountibilitiesStatuses(statusId: number, responsibleId?: number) {
-    try {
-      const { data } = await coreInstance.get("/logistics/accountabilities", {
-        params: { statusId, responsibleId },
-      });
-      return data;
     } catch (e) {
       throw e;
     }
