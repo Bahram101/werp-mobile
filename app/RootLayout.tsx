@@ -24,10 +24,11 @@ export default function RootLayout() {
       return;
     }
 
-    if (!user?.extraLoaded || !user.currentStaff?.roles?.length) return;
+    if (!user?.extraLoaded || !user.userInfo.currentStaff?.roles?.length)
+      return;
 
     const roles =
-      user?.currentStaff?.roles?.map((role: any) => role.name) ?? [];
+      user?.userInfo.currentStaff?.roles?.map((role: any) => role.name) ?? [];
     const hasMobileAccess = roles.includes("mobile");
 
     if (!hasMobileAccess) {

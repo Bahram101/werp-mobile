@@ -5,7 +5,7 @@ import { AssignedMaterialsService } from "../services/assignedMaterials.service"
 
 export const useAssignedMaterials = <T = unknown>() => {
   const { user } = useAuth();
-  const masterId = user?.currentStaff?.staffId;
+  const masterId = user?.userInfo.currentStaff?.staffId;
   const {
     data = [],
     isLoading,
@@ -21,7 +21,7 @@ export const useAssignedMaterials = <T = unknown>() => {
 
 export const useAccountabilityRequests = <T = unknown>(statusId: number) => {
   const { user } = useAuth();
-  const masterId = user?.currentStaff?.staffId;
+  const masterId = user?.userInfo.currentStaff?.staffId;
   const {
     data: statusesData = [],
     isLoading: isStatusesLoading,

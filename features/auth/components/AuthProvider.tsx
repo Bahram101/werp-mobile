@@ -40,17 +40,16 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
         }
 
         // загружаем roles
-        const currentStaff = await AuthService.getUserInfo();
+        const userInfo = await AuthService.getUserInfo();
 
         if (isMounted) {
           setUser({
             ...storedUser,
-            currentStaff,
+            userInfo,
             extraLoaded: true,
           });
         }
       } catch (e) {
-        // console.log("Auth init error:", e);
         setUser(null);
       } finally {
         setIsInitialized(true);
@@ -73,7 +72,7 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
     AuthService.logout().then(() => setUser(null));
   };
 
-  // console.log("user", JSON.stringify(user, null, 2));
+  // console.log("user1", JSON.stringify(user, null, 2));
 
   return (
     <AuthContext.Provider value={{ isInitialized, user, setUser, logout }}>

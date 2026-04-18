@@ -30,10 +30,8 @@ const Table = ({ data }: TableProps) => {
               index !== data.items.length - 1 && "border-b",
             )}
           >
-            <Text className="w-[30%] text-center">{item.matnrCode}</Text>
-            <Text className="w-[55%] text-center">
-              {strToLowerCase(item.matnrName)}
-            </Text>
+            <Text className="w-[30%]">{item.matnrCode}</Text>
+            <Text className="w-[55%]">{strToLowerCase(item.matnrName)}</Text>
             <Text className="w-[15%] text-center">{item.quantity}</Text>
           </View>
         ))}

@@ -74,7 +74,10 @@ export default function RequestDetailScreen() {
       if (requestDetail.applicationStatusId === 10) {
         router.push({
           pathname: ROUTES.REQUEST_WORK,
-          params: { appNumber },
+          params: {
+            appNumber: String(appNumber),
+            matnrId: String(requestDetail.matnrId),
+          },
         });
       }
     } catch (error) {
@@ -125,6 +128,8 @@ export default function RequestDetailScreen() {
       setLoadingType(null);
     }
   };
+
+  console.log("requestDetail", requestDetail);
 
   return (
     <Layout className="gap-3" refreshing={refreshing} onRefresh={onRefresh}>

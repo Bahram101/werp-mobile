@@ -5,7 +5,8 @@ import { RequestService } from "../services/request.service";
 
 export const useRequests = (status: string, from?: string, to?: string) => {
   const { user } = useAuth();
-  const masterId = user?.currentStaff?.staffId;
+  const masterId = user?.userInfo.currentStaff.staffId;
+  const bukrs = user?.userInfo.bukrs[0].id;
 
   const {
     data: requests = [],
@@ -14,9 +15,9 @@ export const useRequests = (status: string, from?: string, to?: string) => {
     refetch,
   } = useQuery({
     queryKey: ["get-master-requests", masterId, status, from, to],
-    queryFn: () => RequestService.getMasterRequests(masterId!, status),
+    queryFn: () => RequestService.getMasterRequests(masterId!, status, bukrs),
     enabled: !!masterId,
-    retry: 1,
+    retry: false,
     staleTime: 1000 * 30,
   });
   return { requests, isLoadingRequests, refetch };
@@ -66,8 +67,9 @@ export const useUpdateRequestStatus = () => {
 
 export const useFinishedSummary = ({ enabled }: { enabled: boolean }) => {
   const { user } = useAuth();
-  const masterId = user?.currentStaff.staffId;
   const from = getCurrentMonthStart();
+  const masterId = user?.userInfo.currentStaff.staffId;
+  const bukrs = user?.userInfo.bukrs[0].id;
 
   const {
     data = [],
@@ -75,7 +77,9 @@ export const useFinishedSummary = ({ enabled }: { enabled: boolean }) => {
     isLoading,
   } = useQuery({
     queryKey: ["finished-summary", masterId],
-    queryFn: () => RequestService.getRquestPremiumSum(masterId!, "4", from),
+    queryFn: () =>
+      RequestService.getRquestPremiumSum("4", from, masterId!, bukrs),
+    retry: false,
     enabled,
   });
 

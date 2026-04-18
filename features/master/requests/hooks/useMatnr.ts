@@ -4,11 +4,16 @@ import { MatnrService } from "../services/product.service";
 
 export const useMatnr = (serviceTypeId: number) => {
   const { user } = useAuth();
-  const masterId = user?.currentStaff?.staffId;
+  const masterId = user?.userInfo.currentStaff?.staffId;
+  const bukrs = user?.userInfo?.bukrs?.[0]?.id;
+  const branchId = user?.userInfo?.service?.[bukrs ?? ""]?.[0]?.value;
   const { data = [], isLoading } = useQuery({
     queryKey: ["get-matnr-list", masterId, serviceTypeId],
-    queryFn: () => MatnrService.getMatnrList(masterId, serviceTypeId),
+    queryFn: () =>
+      MatnrService.getMatnrList(masterId!, bukrs!, branchId!, serviceTypeId),
+    enabled: !!masterId && !!bukrs && !!branchId && !!serviceTypeId,
     staleTime: 1000 * 60 * 60,
+    retry: false,
   });
   return { data, isLoading };
 };

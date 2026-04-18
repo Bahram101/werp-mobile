@@ -1,7 +1,9 @@
 import { Accordion } from "@/components/ui/accordion";
 import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
+import { COLORS } from "@/constants/theme";
 import { useLocalSearchParams, useNavigation } from "expo-router";
+import { ShoppingCart } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { useAccountabilityRequestDetail } from "../../hooks/useAccountability";
@@ -24,12 +26,12 @@ const AccountabilityDetail = () => {
   } = useAccountabilityRequestDetail(Number(id));
 
   useEffect(() => {
-    if (id) {
+    if (regNumber) {
       navigation.setOptions({
         headerTitle: `Заказ №${String(regNumber)}`,
       });
     }
-  }, [navigation, regNumber, id]);
+  }, [regNumber, navigation]);
 
   if (isLoadingAccReqDetail) {
     return <Loader />;
@@ -51,19 +53,19 @@ const AccountabilityDetail = () => {
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
         <Accordion
           type="multiple"
-          defaultValue={["info"]}
+          // defaultValue={["info"]}
           className="rounded-2xl gap-3 bg-transparent"
         >
           <DocInfo data={accountabilityReqDetail} />
         </Accordion>
 
         <View className="work-block bg-white mt-3 rounded-2xl p-3 px-4">
-          <View className="work-block-top py-3 pt-2 border-b mb-4 border-grayLight flex-row justify-between items-center">
-            <Text className="font-bold text-primary uppercase">
-              Продажа запчастей
+          <View className="work-block-top py-3 pt-2 border-b mb-4 border-grayLight flex-row items-center">
+            <ShoppingCart size={"22"} color={COLORS.primary} />
+            <Text className="font-bold text-primary uppercase ml-4">
+              Список материалов
             </Text>
           </View>
-
           <Table data={accountabilityReqDetail} />
         </View>
       </ScrollView>

@@ -2,11 +2,11 @@ import { serviceInstance } from "@/services/api/service-instance";
 import { getCurrentMonthStart, getToday } from "@/utils/date";
 
 export const RequestService = {
-  async getMasterRequests(masterId: number, status: string) {
+  async getMasterRequests(masterId: number, status: string, bukrs?: number) {
     try {
       const { data } = await serviceInstance.get("/smappl/appList", {
         params: {
-          bukrs: 1000,
+          bukrs,
           appStatusIds: status,
           masterId,
           ...((status === "5" || status === "8") && {
@@ -54,14 +54,19 @@ export const RequestService = {
     }
   },
 
-  async getRquestPremiumSum(masterId: number, status: string, from?: string) {
+  async getRquestPremiumSum(
+    status: string,
+    from: string,
+    masterId: number,
+    bukrs: number,
+  ) {
     try {
       const { data } = await serviceInstance.get("/report/srlsm", {
         params: {
-          bukrs: 1000,
           serviceStatusId: status,
-          masterId: masterId,
           dateAt: from,
+          masterId,
+          bukrs,
         },
       });
       return data.data;

@@ -4,9 +4,8 @@ import {
   getCurrentMonthStart,
   getToday,
 } from "@/utils/date";
-import { SlidersHorizontal } from "lucide-react-native";
 import { useState } from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { useFinishedSummary, useRequests } from "../hooks/useRequest";
 import AssignedRequestCard from "./RequestCards/AssignedRequestCard";
 import DoneRequestCard from "./RequestCards/DoneRequestCard";
@@ -87,13 +86,6 @@ export default function RequestsScenes({ route }: Props) {
     case "assigned":
       return (
         <>
-          <View className="mx-4 flex-row justify-between items-center mb-3">
-            <Text className="text-xl font-semibold">Распределенные заявки</Text>
-            <TouchableOpacity>
-              <SlidersHorizontal size={21} />
-            </TouchableOpacity>
-          </View>
-
           <FlatList
             data={assignedReqList}
             renderItem={({ item }) => <AssignedRequestCard item={item} />}
@@ -107,9 +99,6 @@ export default function RequestsScenes({ route }: Props) {
     case "done":
       return (
         <>
-          <View className="mx-4">
-            <Text className="text-xl font-semibold">Выполненные заявки</Text>
-          </View>
           <FlatList
             data={requests}
             renderItem={({ item }) => <DoneRequestCard item={item} />}

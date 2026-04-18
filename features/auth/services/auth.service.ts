@@ -41,6 +41,6 @@ export const AuthService = {
 
   async getUserInfo() {
     const { data } = await authInstance.get("/userInfo");
-    return data.currentStaff;
+    return data;
   },
 };

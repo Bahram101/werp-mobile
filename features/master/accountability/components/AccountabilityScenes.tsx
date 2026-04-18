@@ -1,5 +1,6 @@
-import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import { Loader } from "@/components/ui/Loader";
+import { ROUTES } from "@/constants/routes";
+import { router } from "expo-router";
 import { useState } from "react";
 import { FlatList } from "react-native";
 import {
@@ -50,6 +51,12 @@ export default function AccountabilitiesScenes({ route }: Props) {
     }
   };
 
+  const onPressOrderBtn = () => {
+    router.push({
+      pathname: ROUTES.ACCOUNTABILITY_CREATE,
+    });
+  };
+
   const style = {
     paddingBottom: 10,
     paddingHorizontal: 14,
@@ -73,11 +80,14 @@ export default function AccountabilitiesScenes({ route }: Props) {
           contentContainerStyle={style}
           onRefresh={onRefresh}
           refreshing={refreshing}
-          ListFooterComponent={
-            <AnimatedButton className="rounded-full w-full py-4 mt-2">
-              Заказать запчасти
-            </AnimatedButton>
-          }
+          // ListFooterComponent={
+          //   <AnimatedButton
+          //     className="rounded-full w-full py-4 mt-2"
+          //     onPress={onPressOrderBtn}
+          //   >
+          //     Заказать запчасти
+          //   </AnimatedButton>
+          // }
         />
       );
     case "new":

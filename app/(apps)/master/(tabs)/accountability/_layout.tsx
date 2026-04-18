@@ -1,30 +1,40 @@
-import { Stack } from "expo-router";
+import { ROUTES } from "@/constants/routes";
+import { Feather } from "@expo/vector-icons";
+import { router, Stack } from "expo-router";
+import { Pressable, Text } from "react-native";
 
 export default function AccountabilityLayout() {
   return (
     <Stack
       screenOptions={{
-        // headerShown: true,
-        headerTitleAlign: "center",
         headerBackButtonDisplayMode: "minimal",
-        headerTintColor: "#000",
       }}
     >
       {/* список материалов */}
       <Stack.Screen
         name="index"
-        options={{
-          title: "Инвентарь",
-          headerShown: true,
-        }}
-      />
-
-      {/* детали документа */}
-      <Stack.Screen
-        name="[id]/index"
-        options={{
-          title: "Детальный документ",
-          headerShown: true,
+        options={({ navigation, route }) => {
+          return {
+            title: "Инвентарь",
+            headerRight: () => (
+              <Pressable
+                onPress={() => {
+                  router.push({
+                    pathname: ROUTES.ACCOUNTABILITY_CREATE,
+                  });
+                }}
+                style={{
+                  marginRight: 12,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 4,
+                }}
+              >
+                <Feather name="plus" size={18} color="#000" />
+                <Text className="text-sm">Заказать</Text>
+              </Pressable>
+            ),
+          };
         }}
       />
     </Stack>

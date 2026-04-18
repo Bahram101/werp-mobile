@@ -18,11 +18,11 @@ export const useAuthMutations = (reset: UseFormReset<AuthFormData>) => {
     },
     onSuccess: async (data) => {
       reset();
-      const currentStaff = await AuthService.getUserInfo();
+      const userInfo = await AuthService.getUserInfo();
       setUser({
         user_full_name: data.user_full_name,
         user_id: data.user_id,
-        currentStaff,
+        userInfo,
         extraLoaded: true,
       });
     },
