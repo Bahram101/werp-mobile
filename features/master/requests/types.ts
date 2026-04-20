@@ -66,7 +66,7 @@ export type ServiceItem = {
 };
 
 export type MatnrItem = {
-  index: number;
+  index?: number;
   matnrId: number;
   matnrCode: string;
   matnrName: string;

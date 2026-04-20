@@ -1,4 +1,5 @@
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
+import { MaterialDto } from "@/features/master/accountability/types";
 import { MatnrItem } from "@/features/master/requests/types";
 import { formatFullName, tenge } from "@/utils/helpers";
 import { Minus, Plus, X } from "lucide-react-native";
@@ -6,7 +7,7 @@ import React, { FC, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
 type Props = {
-  item: MatnrItem;
+  item: MatnrItem | MaterialDto;
   isSelected: boolean;
   onAdd: (qty: number) => void;
   initialQty?: number;
@@ -30,7 +31,7 @@ const SparePartActionSheet: FC<Props> = ({
     setQty(qty + 1);
   };
 
-  const totalAmount = item.price * qty;
+  const totalAmount = "price" in item ? item.price * qty : null;
 
   const handleAdd = () => {
     onAdd(qty);

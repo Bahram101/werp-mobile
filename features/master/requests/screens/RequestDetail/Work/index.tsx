@@ -2,7 +2,6 @@ import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
-import { ScrollView, View } from "react-native";
 import { useMatnr } from "../../../hooks/useMatnr";
 import { useServices } from "../../../hooks/useService";
 import Cartridges from "./components/Cartridges";
@@ -31,13 +30,9 @@ const RequestWorkScreen = () => {
 
   return (
     <Layout>
-      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-        <View className="request-work flex-1">
-          <Services data={services} />
-          <SpareParts data={matnrList} />
-          <Cartridges data={cartridgeList} />
-        </View>
-      </ScrollView>
+      <Services data={services} />
+      <SpareParts data={matnrList} />
+      <Cartridges data={cartridgeList} />
     </Layout>
   );
 };

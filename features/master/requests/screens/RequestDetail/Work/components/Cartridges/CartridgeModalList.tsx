@@ -1,15 +1,11 @@
-import {
-  CartridgeItem,
-  SelectedCartridgeItem,
-} from "@/features/master/requests/types";
 import React from "react";
 import SparePartModalListItem from "./CartridgeModalListItem";
 
 type Props = {
-  data: CartridgeItem[];
+  data: any[];
   selectedIds: string[];
-  selectedItems: SelectedCartridgeItem[];
-  handleAddPart: (item: CartridgeItem, qty: number) => void;
+  selectedItems: any[];
+  handleAddPart: (item: any, qty: number) => void;
 };
 
 const SparePartModalList = ({

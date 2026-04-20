@@ -4,7 +4,7 @@ import cn from "clsx";
 import * as Haptics from "expo-haptics";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import SparePartActionSheet from "../SparePartActionSheet";
+import SparePartActionSheet from "../../../../../../../../components/ui/actionsheet/SparePartActionSheet";
 
 type Props = {
   item: MatnrItem;

@@ -1,30 +1,30 @@
-import { MatnrItem, SelectedMatnrItem } from "@/features/master/requests/types";
+import SparePartActionSheet from "@/components/ui/actionsheet/SparePartActionSheet";
 import { useActionSheet } from "@/providers/ActionSheetProvider";
 import { strToLowerCase } from "@/utils/helpers";
 import cn from "clsx";
 import * as Haptics from "expo-haptics";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import SparePartActionSheet from "../../../../../../../../components/ui/actionsheet/SparePartActionSheet";
+import { MaterialDto, SelectedMaterialItem } from "../../../types";
 
 type Props = {
-  item: MatnrItem;
+  item: MaterialDto;
   isSelected: boolean;
   isLast?: boolean;
-  selectedItems: SelectedMatnrItem[];
-  onAddPart: (item: MatnrItem, qty: number) => void;
+  selectedItems?: SelectedMaterialItem[];
+  onAddMaterial: (item: MaterialDto, qty: number) => void;
 };
 
-const SparePartModalListItem = ({
+const MaterialModalListItem = ({
   item,
   isSelected,
   isLast,
   selectedItems,
-  onAddPart,
+  onAddMaterial,
 }: Props) => {
   const { openSheet, closeSheet } = useActionSheet();
 
-  const existing = selectedItems?.find((p) => p.index === item.index);
+  const existing = selectedItems?.find((p) => p.matnr === item.matnr);
 
   const handlePress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -32,8 +32,8 @@ const SparePartModalListItem = ({
       <SparePartActionSheet
         item={item}
         isSelected={isSelected}
+        onAdd={(qty) => onAddMaterial(item, qty)}
         initialQty={existing?.selectedQty}
-        onAdd={(qty) => onAddPart(item, qty)}
         closeSheet={closeSheet}
       />,
     );
@@ -56,9 +56,7 @@ const SparePartModalListItem = ({
             >
               {strToLowerCase(item.matnrName)}
             </Text>
-            <Text className="text-xs text-gray-400 mt-1">
-              Арт: {item.matnrCode}
-            </Text>
+            <Text className="text-xs text-gray-400 mt-1">Арт: {item.code}</Text>
           </View>
         </View>
       </View>
@@ -66,4 +64,4 @@ const SparePartModalListItem = ({
   );
 };
 
-export default SparePartModalListItem;
+export default MaterialModalListItem;

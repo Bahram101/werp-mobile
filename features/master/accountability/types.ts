@@ -7,3 +7,13 @@ export type AssignedMaterialDto = {
   stateId: number;
   limit: number;
 };
+
+export type MaterialDto = {
+  code: string;
+  matnr: number;
+  matnrName: string;
+  quantity: number;
+};
+export type SelectedMaterialItem = MaterialDto & {
+  selectedQty: number;
+};

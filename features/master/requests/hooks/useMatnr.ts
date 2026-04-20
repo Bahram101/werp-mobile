@@ -7,6 +7,7 @@ export const useMatnr = (serviceTypeId: number) => {
   const masterId = user?.userInfo.currentStaff?.staffId;
   const bukrs = user?.userInfo?.bukrs?.[0]?.id;
   const branchId = user?.userInfo?.service?.[bukrs ?? ""]?.[0]?.value;
+
   const { data = [], isLoading } = useQuery({
     queryKey: ["get-matnr-list", masterId, serviceTypeId],
     queryFn: () =>

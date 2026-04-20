@@ -78,14 +78,6 @@ export default function AccountabilitiesScenes({ route }: Props) {
           contentContainerStyle={style}
           onRefresh={onRefresh}
           refreshing={refreshing}
-          // ListFooterComponent={
-          //   <AnimatedButton
-          //     className="rounded-full w-full py-4 mt-2"
-          //     onPress={onPressOrderBtn}
-          //   >
-          //     Заказать запчасти
-          //   </AnimatedButton>
-          // }
         />
       );
     case "new":

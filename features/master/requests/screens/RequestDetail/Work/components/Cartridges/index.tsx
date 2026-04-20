@@ -5,7 +5,7 @@ import * as Haptics from "expo-haptics";
 import { CirclePlus } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
-import SparePartActionSheet from "../SparePartActionSheet";
+import SparePartActionSheet from "../../../../../../../../components/ui/actionsheet/SparePartActionSheet";
 import CartridgeTable from "./CartridgeTable";
 
 type SparePartsProps = {
