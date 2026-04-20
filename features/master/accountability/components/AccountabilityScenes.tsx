@@ -62,8 +62,6 @@ export default function AccountabilitiesScenes({ route }: Props) {
     paddingHorizontal: 14,
   };
 
-  console.log("status", status);
-
   switch (route.key) {
     case "assigned":
       return (

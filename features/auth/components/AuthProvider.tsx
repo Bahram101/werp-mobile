@@ -72,8 +72,6 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
     AuthService.logout().then(() => setUser(null));
   };
 
-  // console.log("user1", JSON.stringify(user, null, 2));
-
   return (
     <AuthContext.Provider value={{ isInitialized, user, setUser, logout }}>
       {children}

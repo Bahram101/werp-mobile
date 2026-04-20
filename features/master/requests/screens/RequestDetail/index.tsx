@@ -129,8 +129,6 @@ export default function RequestDetailScreen() {
     }
   };
 
-  console.log("requestDetail", requestDetail);
-
   return (
     <Layout className="gap-3" refreshing={refreshing} onRefresh={onRefresh}>
       <Accordion

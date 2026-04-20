@@ -20,7 +20,6 @@ export const getNewTokens = async () => {
 
     return data;
   } catch (e) {
-    // console.log("Error new token", e);
     throw e;
   }
 };

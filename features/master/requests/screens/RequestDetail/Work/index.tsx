@@ -29,8 +29,6 @@ const RequestWorkScreen = () => {
     return <Loader />;
   }
 
-  console.log("matnrID", matnrId);
-
   return (
     <Layout>
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>

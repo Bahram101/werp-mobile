@@ -65,7 +65,6 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
         >
           <TouchableWithoutFeedback
             onPress={() => {
-              console.log("backdrop pressed (TouchableWithoutFeedback)");
               bottomSheetRef.current?.close();
             }}
           >
