@@ -71,7 +71,7 @@ const SparePartActionSheet: FC<Props> = ({
           </View>
           <View className="totalSum">
             <Text className="text-xl">
-              {totalAmount} {tenge}
+              {totalAmount} {"price" in item && tenge}
             </Text>
           </View>
         </View>

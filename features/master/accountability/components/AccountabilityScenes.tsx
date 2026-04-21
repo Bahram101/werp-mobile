@@ -1,6 +1,4 @@
 import { Loader } from "@/components/ui/Loader";
-import { ROUTES } from "@/constants/routes";
-import { router } from "expo-router";
 import { useState } from "react";
 import { FlatList } from "react-native";
 import {
@@ -32,9 +30,8 @@ export default function AccountabilitiesScenes({ route }: Props) {
     default:
       break;
   }
-  const { statusesData, isStatusesLoading } = useAccountabilityRequests<any>(
-    status!,
-  );
+  const { statusesData, isStatusesLoading, refetchStatuses } =
+    useAccountabilityRequests<any>(status!);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -45,16 +42,10 @@ export default function AccountabilitiesScenes({ route }: Props) {
   const onRefresh = async () => {
     setRefreshing(true);
     try {
-      await refetchAccountibilities();
+      Promise.all([refetchAccountibilities(), refetchStatuses()]);
     } finally {
       setRefreshing(false);
     }
-  };
-
-  const onPressOrderBtn = () => {
-    router.push({
-      pathname: ROUTES.ACCOUNTABILITY_CREATE,
-    });
   };
 
   const style = {

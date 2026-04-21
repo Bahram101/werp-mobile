@@ -5,21 +5,21 @@ import cn from "clsx";
 import * as Haptics from "expo-haptics";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import { MaterialDto, SelectedMaterialItem } from "../../../types";
+import { MaterialDto } from "../../../types";
 
 type Props = {
   item: MaterialDto;
+  selectedItems?: MaterialDto[];
   isSelected: boolean;
   isLast?: boolean;
-  selectedItems?: SelectedMaterialItem[];
   onAddMaterial: (item: MaterialDto, qty: number) => void;
 };
 
 const MaterialModalListItem = ({
   item,
+  selectedItems,
   isSelected,
   isLast,
-  selectedItems,
   onAddMaterial,
 }: Props) => {
   const { openSheet, closeSheet } = useActionSheet();
@@ -33,7 +33,7 @@ const MaterialModalListItem = ({
         item={item}
         isSelected={isSelected}
         onAdd={(qty) => onAddMaterial(item, qty)}
-        initialQty={existing?.selectedQty}
+        initialQty={existing?.quantity}
         closeSheet={closeSheet}
       />,
     );
@@ -48,7 +48,7 @@ const MaterialModalListItem = ({
           isSelected && "bg-green-100",
         )}
       >
-        <View className="flex-row items-center gap-2">
+        <View className="flex-1 flex-row items-center justify-between gap-2">
           <View>
             <Text
               className="text-base text-gray-900 font-medium"
@@ -56,7 +56,11 @@ const MaterialModalListItem = ({
             >
               {strToLowerCase(item.matnrName)}
             </Text>
-            <Text className="text-xs text-gray-400 mt-1">Арт: {item.code}</Text>
+            <Text className="text-xs text-gray-400 mt-1">{item.code}</Text>
+          </View>
+          <View className="flex-row gap-1">
+            <Text className="font-bold">{item.availableQty}</Text>
+            <Text>шт</Text>
           </View>
         </View>
       </View>

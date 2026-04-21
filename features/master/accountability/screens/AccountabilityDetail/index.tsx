@@ -18,7 +18,7 @@ type AccountabilityDetailParams = {
 const AccountabilityDetail = () => {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
-  const { id, regNumber } = useLocalSearchParams<AccountabilityDetailParams>();
+  const { id } = useLocalSearchParams<AccountabilityDetailParams>();
   const {
     accountabilityReqDetail,
     isLoadingAccReqDetail,
@@ -26,12 +26,12 @@ const AccountabilityDetail = () => {
   } = useAccountabilityRequestDetail(Number(id));
 
   useEffect(() => {
-    if (regNumber) {
+    if (accountabilityReqDetail?.regNumber) {
       navigation.setOptions({
-        headerTitle: `Заказ №${String(regNumber)}`,
+        title: `Заказ №${accountabilityReqDetail.regNumber}`,
       });
     }
-  }, [regNumber, navigation]);
+  }, [navigation, accountabilityReqDetail]);
 
   if (isLoadingAccReqDetail) {
     return <Loader />;
@@ -46,14 +46,12 @@ const AccountabilityDetail = () => {
     }
   };
 
-  // console.log("accountabilityReqDetail", accountabilityReqDetail);
-
   return (
     <Layout refreshing={refreshing} onRefresh={onRefresh}>
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
         <Accordion
           type="multiple"
-          // defaultValue={["info"]}
+          defaultValue={["info"]}
           className="rounded-2xl gap-3 bg-transparent"
         >
           <DocInfo data={accountabilityReqDetail} />

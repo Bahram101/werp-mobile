@@ -1,7 +1,8 @@
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AccountabilityService } from "../services/accountabilityRequests.service";
 import { AssignedMaterialsService } from "../services/assignedMaterials.service";
+import { CreateAccountabilityPayload } from "../types";
 
 export const useAssignedMaterials = <T = unknown>() => {
   const { user } = useAuth();
@@ -55,4 +56,21 @@ export const useAccountabilityRequestDetail = (id: number) => {
     isLoadingAccReqDetail,
     refetchAccReqDetail,
   };
+};
+
+export const useCreateAccountability = () => {
+  const queryClient = useQueryClient();
+  const { mutateAsync: createAccountability, isPending: isCreating } =
+    useMutation({
+      mutationKey: ["create-accountability"],
+      mutationFn: (payload: CreateAccountabilityPayload) =>
+        AccountabilityService.createAccountability(payload),
+      retry: false,
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["get-accountability-requests"],
+        });
+      },
+    });
+  return { createAccountability, isCreating };
 };

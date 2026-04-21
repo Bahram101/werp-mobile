@@ -3,13 +3,12 @@ import { strToLowerCase } from "@/utils/helpers";
 import { Trash2 } from "lucide-react-native";
 import React from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
-import { MaterialDto, SelectedMaterialItem } from "../../../types";
+import { MaterialDto } from "../../../types";
 
 type Props = {
-  data: MaterialDto[];
-  selectedItems?: SelectedMaterialItem[];
+  selectedItems?: MaterialDto[];
   totalAmount?: number;
-  handlePressOnRow?: (item: SelectedMaterialItem) => void;
+  handlePressOnRow?: (item: MaterialDto) => void;
   handleRemoveMaterial?: (id: number) => void | undefined;
 };
 
@@ -44,7 +43,7 @@ const MaterialsTable = ({
             <Text className="w-[50%] text-center">
               {strToLowerCase(item.matnrName)}
             </Text>
-            <Text className="w-[15%] text-center">{item.selectedQty}</Text>
+            <Text className="w-[15%] text-center">{item.quantity}</Text>
             <View className="w-[10%] p-1 items-center justify-center">
               <Pressable
                 onPress={(e) => {

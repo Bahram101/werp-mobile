@@ -1,28 +1,28 @@
 import React from "react";
-import { MaterialDto, SelectedMaterialItem } from "../../../types";
+import { MaterialDto } from "../../../types";
 import MaterialModalListItem from "./MaterialModalListItem";
 
 type Props = {
-  data: MaterialDto[];
+  items: any[];
   selectedIds: string[];
-  selectedItems: SelectedMaterialItem[];
+  selectedItems: MaterialDto[];
   handleAddMaterial: (item: MaterialDto, qty: number) => void;
 };
 
 const MaterialModalList = ({
-  data,
+  items,
   selectedIds = [],
   selectedItems,
   handleAddMaterial,
 }: Props) => {
   return (
     <>
-      {data?.map((item, index) => (
+      {items?.map((item, index) => (
         <MaterialModalListItem
           key={item.matnr}
           item={item}
           isSelected={selectedIds?.includes(String(item.matnr))}
-          isLast={index === data.length - 1}
+          isLast={index === items.length - 1}
           selectedItems={selectedItems}
           onAddMaterial={handleAddMaterial}
         />

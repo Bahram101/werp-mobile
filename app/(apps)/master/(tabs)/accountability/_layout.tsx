@@ -37,6 +37,7 @@ export default function AccountabilityLayout() {
           };
         }}
       />
+      <Stack.Screen name="[id]/index" options={{ headerShown: true }} />
     </Stack>
   );
 }

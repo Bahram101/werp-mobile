@@ -13,7 +13,25 @@ export type MaterialDto = {
   matnr: number;
   matnrName: string;
   quantity: number;
+  availableQty: number;
 };
-export type SelectedMaterialItem = MaterialDto & {
-  selectedQty: number;
+// export type SelectedMaterialItem = MaterialDto & {
+//   quantity: number;
+// };
+
+export type AccountabilityFormData = {
+  branchId: number;
+  bukrs: string;
+  customerId?: number | null;
+  departmentId: number;
+  invoiceDate: string;
+  note?: string;
+  responsibleId: number | null;
+  fromWerks: number;
+  toWerks: number | null;
+  typeId?: number | null;
+};
+
+export type CreateAccountabilityPayload = AccountabilityFormData & {
+  items: MaterialDto[];
 };
