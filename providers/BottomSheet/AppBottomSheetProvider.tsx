@@ -36,6 +36,7 @@ export const BottomSheetContext = createContext<BottomSheetContextType | null>(
 const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
   const modalRef = useRef<AppBottomSheetRef>(null);
 
+  const [search, setSearch] = useState("");
   const [title, setTitle] = useState("");
   const [snapPoints, setSnapPoints] = useState(["75%"]);
   const [modalType, setModalType] = useState<BottomSheetType>(null);
@@ -64,7 +65,7 @@ const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
     if (!modalType) return null;
     const Component = bottomSheetRegistry[modalType];
 
-    return Component ? <Component {...modalProps} /> : null;
+    return Component ? <Component {...modalProps} search={search} /> : null;
   };
 
   return (
@@ -77,7 +78,13 @@ const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
       }}
     >
       {children}
-      <AppBottomSheet ref={modalRef} title={title} snapPoints={snapPoints}>
+      <AppBottomSheet
+        ref={modalRef}
+        title={title}
+        snapPoints={snapPoints}
+        search={search}
+        setSearch={setSearch}
+      >
         {renderContent()}
       </AppBottomSheet>
     </BottomSheetContext.Provider>

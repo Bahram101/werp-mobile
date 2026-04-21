@@ -1,13 +1,13 @@
 import BottomSheet, {
   BottomSheetBackdropProps,
   BottomSheetScrollView,
-  BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import cn from "clsx";
 import { BlurView } from "expo-blur";
 import { X } from "lucide-react-native";
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import {
+  Dimensions,
+  Pressable,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -17,6 +17,7 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
+import { Input, InputField } from "../input";
 
 export type AppBottomSheetRef = {
   open: () => void;
@@ -27,11 +28,16 @@ type Props = {
   title?: string;
   children?: React.ReactNode;
   snapPoints?: string[];
+  search: string;
+  setSearch: (value: string) => void;
 };
 
 const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
-  ({ title, snapPoints = ["75%"], children }, ref) => {
+  ({ title, snapPoints = ["75%"], children, search, setSearch }, ref) => {
     const bottomSheetRef = useRef<BottomSheet>(null);
+    // const memoSnapPoints = useMemo(() => snapPoints, [snapPoints]);
+    const SCREEN_HEIGHT = Dimensions.get("window").height;
+    const SHEET_HEIGHT = SCREEN_HEIGHT * 1;
 
     useImperativeHandle(ref, () => ({
       open: () => bottomSheetRef.current?.expand(),
@@ -83,38 +89,56 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
       );
     };
 
+    console.log("search", search);
+    console.log("snapPoints", snapPoints);
+
     return (
       <BottomSheet
         ref={bottomSheetRef}
         index={-1}
         snapPoints={snapPoints}
         backdropComponent={CustomBackdrop}
-        enablePanDownToClose={true}
-        handleStyle={{ display: "none" }}
+        enablePanDownToClose
+        animateOnMount={false}
         enableDynamicSizing={false}
       >
-        <BottomSheetView className="">
-          {title && (
-            <View
-              className={cn(
-                "flex-row justify-between items-center mb-3 p-4",
-                // snapPoints[0] === "80%" && "mt-12",
-              )}
-            >
-              <Text className="text-lg font-semibold">{title}</Text>
-              <TouchableOpacity onPress={() => bottomSheetRef.current?.close()}>
-                <X />
-              </TouchableOpacity>
-            </View>
-          )}
+        <View style={{ height: SHEET_HEIGHT }}>
+          {/* fixed header */}
+          <View className="flex-row justify-between items-center px-4 pt-8 pb-4 border-b border-gray-200">
+            <Text className="text-lg font-semibold">{title}</Text>
+            <TouchableOpacity onPress={() => bottomSheetRef.current?.close()}>
+              <X />
+            </TouchableOpacity>
+          </View>
+
+          {/* Search */}
+          <View className="px-4 pt-3 pb-1">
+            <Input>
+              <InputField
+                placeholder="Поиск"
+                value={search}
+                onChangeText={setSearch}
+              />
+            </Input>
+            {search.length > 0 && (
+              <Pressable
+                onPress={() => setSearch("")}
+                className="absolute right-7 top-6"
+              >
+                <X size={18} color="#999" />
+              </Pressable>
+            )}
+          </View>
+
+          {/* scroll only body */}
           <BottomSheetScrollView
-            showsVerticalScrollIndicator={true}
-            contentContainerStyle={{ paddingBottom: 100 }}
+            style={{ flex: 1 }}
             keyboardShouldPersistTaps="handled"
+            contentContainerStyle={{ paddingBottom: 40 }}
           >
-            <View className=" ">{children}</View>
+            {children}
           </BottomSheetScrollView>
-        </BottomSheetView>
+        </View>
       </BottomSheet>
     );
   },

@@ -81,7 +81,7 @@ const CreateAccountabilityRequest = () => {
         selectedItems,
         handleAddMaterial,
       },
-      { title: "Выбрать материалы", snapPoints: ["80%"] },
+      { title: "Выбрать материалы", snapPoints: ["100%"] },
     );
   };
 
@@ -142,8 +142,6 @@ const CreateAccountabilityRequest = () => {
       typeId: formData.typeId ?? null,
     };
 
-    console.log("payload", JSON.stringify(payload, null, 2));
-
     const created = await createAccountability(payload);
 
     router.push({
@@ -151,8 +149,6 @@ const CreateAccountabilityRequest = () => {
       params: { id: String(created.id), regNumber: created.regNumber },
     });
   };
-
-  console.log("formData", formData);
 
   return (
     <KeyboardAvoidingView

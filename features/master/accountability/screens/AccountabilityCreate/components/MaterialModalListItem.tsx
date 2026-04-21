@@ -43,25 +43,24 @@ const MaterialModalListItem = ({
     <Pressable onPress={handlePress}>
       <View
         className={cn(
-          "py-3 flex-row items-center justify-between px-4",
+          "py-3 px-4 flex-row items-center",
           !isLast && "border-b border-grayLight",
           isSelected && "bg-green-100",
         )}
       >
-        <View className="flex-1 flex-row items-center justify-between gap-2">
-          <View>
-            <Text
-              className="text-base text-gray-900 font-medium"
-              numberOfLines={1}
-            >
-              {strToLowerCase(item.matnrName)}
-            </Text>
-            <Text className="text-xs text-gray-400 mt-1">{item.code}</Text>
-          </View>
-          <View className="flex-row gap-1">
-            <Text className="font-bold">{item.availableQty}</Text>
-            <Text>шт</Text>
-          </View>
+        <View className="flex-1 pr-3">
+          <Text
+            className="text-base text-gray-900 font-medium"
+            numberOfLines={2}
+          >
+            {strToLowerCase(item.matnrName.trim())}
+          </Text>
+
+          <Text className="text-xs text-gray-400 mt-1">{item.code}</Text>
+        </View>
+
+        <View className="w-16 shrink-0 flex-row justify-end gap-1">
+          <Text className="font-bold">{item.availableQty} шт</Text>
         </View>
       </View>
     </Pressable>
