@@ -68,6 +68,7 @@ const CreateAccountabilityRequest = () => {
     useCallback(() => {
       return () => {
         setSelectedItems([]);
+        setFormData({});
       };
     }, []),
   );
@@ -194,11 +195,12 @@ const CreateAccountabilityRequest = () => {
               numberOfLines={4}
               textAlignVertical="top"
               className="text-base"
+              value={formData.note}
               onChangeText={(value) =>
                 setFormData((prev) => {
                   return {
                     ...prev,
-                    note: value.trim(),
+                    note: value,
                   };
                 })
               }
