@@ -57,8 +57,8 @@ const AccountabilityDetail = () => {
           <DocInfo data={accountabilityReqDetail} />
         </Accordion>
 
-        <View className="work-block bg-white mt-3 rounded-2xl p-3 px-4">
-          <View className="work-block-top py-3 pt-2 border-b mb-4 border-grayLight flex-row items-center">
+        <View className="bg-white mt-3 rounded-2xl p-3 px-4">
+          <View className=" py-3 pt-2 border-b mb-4 border-grayLight flex-row items-center">
             <ShoppingCart size={"22"} color={COLORS.primary} />
             <Text className="font-bold text-primary uppercase ml-4">
               Список материалов

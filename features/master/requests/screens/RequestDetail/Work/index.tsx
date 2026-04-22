@@ -9,7 +9,7 @@ import Services from "./components/Services";
 import SpareParts from "./components/SpareParts";
 
 const RequestWorkScreen = () => {
-  const { appNumber, matnrId } = useLocalSearchParams();
+  const { appNumber } = useLocalSearchParams();
   const navigation = useNavigation();
 
   const { services, isLoading } = useServices();

@@ -125,10 +125,7 @@ export default function RequestsScenes({ route }: Props) {
             onRefresh={onRefresh}
             refreshing={refreshing}
             ListFooterComponent={
-              <FinishedSummary
-                data={requests}
-                finishedSummaryData={finishedSummaryData}
-              />
+              <FinishedSummary finishedSummaryData={finishedSummaryData} />
             }
           />
         </>

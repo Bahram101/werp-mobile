@@ -1,13 +1,17 @@
+import { BottomSheetType } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import BottomSheet, {
-  BottomSheetBackdropProps,
-  BottomSheetScrollView,
+  BottomSheetBackdropProps
 } from "@gorhom/bottom-sheet";
 import { BlurView } from "expo-blur";
 import { X } from "lucide-react-native";
-import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import React, {
+  forwardRef,
+  startTransition,
+  useImperativeHandle,
+  useRef,
+} from "react";
 import {
   Dimensions,
-  Pressable,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -29,13 +33,16 @@ type Props = {
   children?: React.ReactNode;
   snapPoints?: string[];
   search: string;
+  modalType: BottomSheetType;
   setSearch: (value: string) => void;
 };
 
 const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
-  ({ title, snapPoints = ["75%"], children, search, setSearch }, ref) => {
+  (
+    { title, snapPoints = ["75%"], children, search, modalType, setSearch },
+    ref,
+  ) => {
     const bottomSheetRef = useRef<BottomSheet>(null);
-    // const memoSnapPoints = useMemo(() => snapPoints, [snapPoints]);
     const SCREEN_HEIGHT = Dimensions.get("window").height;
     const SHEET_HEIGHT = SCREEN_HEIGHT * 1;
 
@@ -89,9 +96,6 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
       );
     };
 
-    console.log("search", search);
-    console.log("snapPoints", snapPoints);
-
     return (
       <BottomSheet
         ref={bottomSheetRef}
@@ -112,32 +116,37 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
           </View>
 
           {/* Search */}
-          <View className="px-4 pt-3 pb-1">
-            <Input>
-              <InputField
-                placeholder="Поиск"
-                value={search}
-                onChangeText={setSearch}
-              />
-            </Input>
-            {search.length > 0 && (
-              <Pressable
-                onPress={() => setSearch("")}
-                className="absolute right-7 top-6"
-              >
-                <X size={18} color="#999" />
-              </Pressable>
-            )}
-          </View>
-
+          {modalType === "materials" && (
+            <View className="px-4 pt-3 pb-1">
+              <Input>
+                <InputField
+                  placeholder="Поиск"
+                  value={search}
+                  onChangeText={setSearch}
+                />
+              </Input>
+              {search.length > 0 && (
+                <TouchableOpacity
+                  onPress={() =>
+                    startTransition(() => {
+                      setSearch("");
+                    })
+                  }
+                  className="absolute right-7 top-6"
+                >
+                  <X size={18} color="#999" />
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
           {/* scroll only body */}
-          <BottomSheetScrollView
+          {/* <BottomSheetScrollView
             style={{ flex: 1 }}
             keyboardShouldPersistTaps="handled"
             contentContainerStyle={{ paddingBottom: 40 }}
-          >
-            {children}
-          </BottomSheetScrollView>
+          > */}
+          {children}
+          {/* </BottomSheetScrollView> */}
         </View>
       </BottomSheet>
     );

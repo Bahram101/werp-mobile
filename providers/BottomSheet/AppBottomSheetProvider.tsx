@@ -11,7 +11,7 @@ import React, {
 } from "react";
 import { bottomSheetRegistry } from "./bottomSheetRegistry";
 
-type BottomSheetType =
+export type BottomSheetType =
   | "services"
   | "spareParts"
   | "cartridges"
@@ -83,6 +83,7 @@ const AppBottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
         title={title}
         snapPoints={snapPoints}
         search={search}
+        modalType={modalType}
         setSearch={setSearch}
       >
         {renderContent()}

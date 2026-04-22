@@ -24,7 +24,8 @@ export default function AccountabilityLayout() {
                   });
                 }}
                 style={{
-                  marginRight: 12,
+                  paddingLeft: 5,
+                  paddingRight: 5,
                   flexDirection: "row",
                   alignItems: "center",
                   gap: 4,

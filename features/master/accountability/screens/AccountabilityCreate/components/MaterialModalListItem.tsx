@@ -48,19 +48,15 @@ const MaterialModalListItem = ({
           isSelected && "bg-green-100",
         )}
       >
-        <View className="flex-1 pr-3">
-          <Text
-            className="text-base text-gray-900 font-medium"
-            numberOfLines={2}
-          >
+        <View className="flex-1 pr-3 gap-1">
+          <Text className="" numberOfLines={2}>
             {strToLowerCase(item.matnrName.trim())}
           </Text>
-
-          <Text className="text-xs text-gray-400 mt-1">{item.code}</Text>
+          <Text className="text-grayDark ">{item.code}</Text>
         </View>
 
         <View className="w-16 shrink-0 flex-row justify-end gap-1">
-          <Text className="font-bold">{item.availableQty} шт</Text>
+          <Text className="font-medium">{item.availableQty} шт.</Text>
         </View>
       </View>
     </Pressable>

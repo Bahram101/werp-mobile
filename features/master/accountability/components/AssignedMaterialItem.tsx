@@ -21,25 +21,20 @@ export default function AssignedMaterialItem({
         isLast && "border-b",
       )}
     >
-      <View className="flex-1 mr-2">
-        <Text
-          numberOfLines={2}
-          ellipsizeMode="tail"
-          className="text-lg text-primary mb-1"
-        >
+      <View className="flex-1 mr-2 gap-1">
+        <Text numberOfLines={2} ellipsizeMode="tail" className="">
           {strToLowerCase(item.name)}
         </Text>
-
-        <Text className=" text-grayDark ">КОД ТОВАРА: {item.code}</Text>
+        <Text className="text-grayDark">{item.code}</Text>
       </View>
 
       <View className="ml-3">
         <Text
           className={cn(
-            "",
+            "text-right",
             Number(item.quantity) < 5
-              ? "text-error-500 font-bold"
-              : "font-bold",
+              ? "text-error-500 font-medium"
+              : "font-medium",
           )}
         >
           {item.quantity} шт.

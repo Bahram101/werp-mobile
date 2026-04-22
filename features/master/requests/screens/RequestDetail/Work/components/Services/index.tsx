@@ -42,8 +42,8 @@ const Services = ({ data }: ServicesProps) => {
   };
 
   return (
-    <View className="work-block bg-white mt-3 rounded-2xl p-4 ">
-      <View className="work-block-top pt-2 mb-4 py-3 border-b border-grayLight flex-row justify-between items-center ">
+    <View className="bg-white rounded-2xl p-4 ">
+      <View className="pt-2 mb-4 py-3 border-b border-grayLight flex-row justify-between items-center ">
         <Text className="font-bold text-primary uppercase">Услуги</Text>
         <View>
           <Pressable

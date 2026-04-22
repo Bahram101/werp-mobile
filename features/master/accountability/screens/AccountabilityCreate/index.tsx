@@ -77,13 +77,20 @@ const CreateAccountabilityRequest = () => {
     showBottomSheet(
       "materials",
       {
+        loading: true,
+        items: [],
+      },
+      { title: "Выбрать материалы", snapPoints: ["100%"] },
+    );
+    requestAnimationFrame(() => {
+      updateModalProps({
+        loading: false,
         items,
         selectedIds,
         selectedItems,
         handleAddMaterial,
-      },
-      { title: "Выбрать материалы", snapPoints: ["100%"] },
-    );
+      });
+    });
   };
 
   const handleAddMaterial = (item: MaterialDto, qty: number) => {
@@ -165,8 +172,8 @@ const CreateAccountabilityRequest = () => {
             flexGrow: 1,
           }}
         >
-          <View className="work-block bg-white rounded-2xl p-4">
-            <View className="work-block-top pt-2 mb-4 py-3 border-b border-grayLight flex-row justify-between items-center ">
+          <View className="bg-white rounded-2xl p-4">
+            <View className="pt-2 mb-4 py-3 border-b border-grayLight flex-row justify-between items-center ">
               <Text className="font-bold text-primary uppercase">
                 Материалы
               </Text>
