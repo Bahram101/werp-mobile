@@ -59,10 +59,11 @@ export type RequestType = {
 };
 
 export type ServiceItem = {
-  id: number;
+  id: string;
   name: string;
   code: number;
   info: string;
+  price?: number;
 };
 
 export type MatnrItem = {

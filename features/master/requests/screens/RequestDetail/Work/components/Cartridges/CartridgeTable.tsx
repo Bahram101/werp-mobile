@@ -1,6 +1,6 @@
 import { COLORS } from "@/constants/theme";
 import { SelectedMatnrItem } from "@/features/master/requests/types";
-import { strToLowerCase } from "@/utils/helpers";
+import { strToLowerCase, tenge } from "@/utils/helpers";
 import { Trash2 } from "lucide-react-native";
 import React from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
@@ -36,7 +36,7 @@ const CartridgeTable = ({
         <View className="table-head-col w-[7%]"></View>
       </View>
       <View className="table-body flex-col">
-        {selectedItems.map((item) => (
+        {selectedItems.map((item: any) => (
           <TouchableOpacity
             key={item.index}
             className="flex-row justify-between items-center border-b border-grayLight py-3 active:opacity-70"
@@ -63,7 +63,9 @@ const CartridgeTable = ({
       </View>
 
       <View className="flex-row justify-end pt-3">
-        <Text>{`Итог: ${totalAmount}`}</Text>
+        <Text className="font-semibold">
+          {`Итог: ${totalAmount}`} {tenge}
+        </Text>
       </View>
     </View>
   );

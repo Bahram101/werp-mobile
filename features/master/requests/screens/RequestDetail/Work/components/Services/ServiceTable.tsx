@@ -1,15 +1,16 @@
 import { COLORS } from "@/constants/theme";
+import { tenge } from "@/utils/helpers";
 import { Trash2 } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
   data: any[];
-  totalAmount: any;
   handleRemoveService: (id: number) => void;
 };
 
-const Table = ({ data, totalAmount, handleRemoveService }: Props) => {
+const Table = ({ data, handleRemoveService }: Props) => {
+  const totalAmount = data.reduce((acc, item) => acc + item.price, 0);
   return (
     <View className="table">
       <View className="table-header flex-row justify-between border-b border-grayLight pb-3">
@@ -31,10 +32,10 @@ const Table = ({ data, totalAmount, handleRemoveService }: Props) => {
             key={item.id}
             className="flex-row justify-between items-center border-b border-grayLight py-3"
           >
-            <Text className="w-[10%] text-center">{item.id}</Text>
-            <Text className="w-[60%] text-center">{item.name}</Text>
-            <Text className="w-[23%] text-center"> </Text>
-            <View className="w-[7%] p-1 items-center justify-center">
+            <Text className="w-[10%] px-2 text-center">{item.id}</Text>
+            <Text className="w-[60%] px-2 text-center">{item.name}</Text>
+            <Text className="w-[23%] px-2 text-center">{item.price}</Text>
+            <View className="w-[7%] px-2 p-1 items-center justify-center">
               <TouchableOpacity onPress={() => handleRemoveService(item.id)}>
                 <Trash2 size={18} color={COLORS.red} />
               </TouchableOpacity>
@@ -44,7 +45,10 @@ const Table = ({ data, totalAmount, handleRemoveService }: Props) => {
       </View>
 
       <View className="flex-row justify-end pt-3">
-        <Text>{`Итог: ${totalAmount}`}</Text>
+        <Text className="font-semibold">
+          {`Итог: ${totalAmount}`}
+          {tenge}
+        </Text>
       </View>
     </View>
   );

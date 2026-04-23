@@ -1,4 +1,5 @@
 import { COLORS } from "@/constants/theme";
+import { tenge } from "@/utils/helpers";
 import { Trash2 } from "lucide-react-native";
 import React from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
@@ -59,7 +60,9 @@ const SparePartTable = ({
       </View>
 
       <View className="flex-row justify-end pt-3">
-        <Text>{`Итог: ${totalAmount}`}</Text>
+        <Text className="font-semibold">
+          {`Итог: ${totalAmount}`} {tenge}
+        </Text>
       </View>
     </View>
   );

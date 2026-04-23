@@ -1,7 +1,8 @@
+import { usePositioniSum } from "@/features/master/requests/hooks/useService";
 import { ServiceItem } from "@/features/master/requests/types";
 import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import { CirclePlus } from "lucide-react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import ServiceTable from "./ServiceTable";
 
@@ -13,12 +14,27 @@ const Services = ({ data }: ServicesProps) => {
   const { showBottomSheet, updateModalProps } = useBottomSheet();
   const [selectedServices, setSelectedServices] = useState<ServiceItem[]>([]);
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
+  const lastId = Number(selectedServiceIds[selectedServiceIds.length - 1]);
+
+  const { positionSum, isLoading } = usePositioniSum(lastId);
+
+  useEffect(() => {
+    if (!positionSum) return;
+    setSelectedServices((prev) =>
+      prev.map((item) =>
+        Number(item.id) === positionSum.serviceTypeId
+          ? { ...item, price: positionSum.sum }
+          : item,
+      ),
+    );
+  }, [positionSum, setSelectedServices]);
 
   const handleOpenSelectModal = () => {
     showBottomSheet(
       "services",
       {
         data,
+        isLoading,
         selectedServiceIds,
         handleSelectService,
       },
@@ -28,13 +44,26 @@ const Services = ({ data }: ServicesProps) => {
 
   const handleSelectService = (ids: string[]) => {
     setSelectedServiceIds(ids);
-    const newSelected = data.filter((item) => ids.includes(String(item.id)));
-    setSelectedServices(newSelected);
-    updateModalProps({ selectedServiceIds: ids });
+
+    setSelectedServices((prev) => {
+      return data
+        .filter((item) => ids.includes(String(item.id)))
+        .map((item) => {
+          const oldItem = prev.find((s) => s.id === item.id);
+
+          return oldItem ? oldItem : item;
+        });
+    });
+
+    updateModalProps({
+      selectedServiceIds: ids,
+    });
   };
 
   const handleRemoveService = (id: number) => {
-    const updated = selectedServices.filter((item) => item.id !== id);
+    const updated = selectedServices.filter(
+      (item) => Number(item.id) !== Number(id),
+    );
     const updatedIds = updated.map((i) => String(i.id));
     setSelectedServices(updated);
     setSelectedServiceIds(updatedIds);
@@ -56,7 +85,6 @@ const Services = ({ data }: ServicesProps) => {
       </View>
       <ServiceTable
         data={selectedServices}
-        totalAmount={null}
         handleRemoveService={handleRemoveService}
       />
     </View>

@@ -28,7 +28,9 @@ const ServiceModalListItem = ({ value, label, isLast }: Props) => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       }}
     >
-      <CheckboxLabel className="text-base text-textDark">{label}</CheckboxLabel>
+      <CheckboxLabel className="text-base text-textDark">
+        {label.trim()}
+      </CheckboxLabel>
       <CheckboxIndicator
         className={cn(
           "w-6 h-6 border border-gray-300 rounded-md items-center justify-center mr-[2px]",
