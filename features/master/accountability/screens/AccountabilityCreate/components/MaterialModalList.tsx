@@ -47,11 +47,11 @@ const MaterialModalList = ({
       keyExtractor={(item: any) => item.matnr.toString()}
       keyboardShouldPersistTaps="handled"
       contentContainerStyle={{ paddingBottom: 40 }}
-      renderItem={({ itm, index }: { itm: MaterialDto; index: number }) => (
+      renderItem={({ item, index }: { item: MaterialDto; index: number }) => (
         <MaterialModalListItem
-          item={itm}
+          item={item}
           isLast={index === filteredItems.length - 1}
-          isSelected={selectedIds.includes(String(itm.matnr))}
+          isSelected={selectedIds.includes(String(item.matnr))}
           selectedItems={selectedItems}
           onAddMaterial={handleAddMaterial}
         />
