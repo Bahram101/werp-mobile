@@ -1,6 +1,5 @@
 import { CheckboxGroup } from "@/components/ui/checkbox";
 import { ServiceItem } from "@/features/master/requests/types";
-import { Loader } from "lucide-react-native";
 import React from "react";
 import ServiceModalListItem from "./ServiceModalListItem";
 
@@ -14,23 +13,18 @@ type Props = {
 const ServiceModalList = ({
   data,
   selectedServiceIds,
-  isLoading,
   handleSelectService,
 }: Props) => {
   return (
     <CheckboxGroup value={selectedServiceIds} onChange={handleSelectService}>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        data.map((item, index) => (
-          <ServiceModalListItem
-            key={item.id}
-            value={String(item.id)}
-            label={item.name}
-            isLast={index === data.length - 1}
-          />
-        ))
-      )}
+      {data.map((item, index) => (
+        <ServiceModalListItem
+          key={item.id}
+          value={String(item.id)}
+          label={item.name}
+          isLast={index === data.length - 1}
+        />
+      ))}
     </CheckboxGroup>
   );
 };

@@ -23,7 +23,7 @@ export default function RequestsTabBar(props: TabBarProps<any>) {
       indicatorStyle={{
         backgroundColor: "white",
         height: "88%",
-        width: "32%",
+        width: "100%",
         borderRadius: 20,
         marginVertical: 2,
         marginLeft: 3,

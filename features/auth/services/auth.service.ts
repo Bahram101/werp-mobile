@@ -25,11 +25,14 @@ export const AuthService = {
 
       return data;
     } catch (error) {
+      console.log(error);
+      console.log(JSON.stringify(error, null, 2));
       Toast.show({
         type: "error",
         text1: "Request error",
         text2: errorCatch(error),
       });
+
       throw error;
     }
   },

@@ -39,7 +39,7 @@ const RequestWorkScreen = () => {
     return <Loader />;
   }
 
-  console.log("selectedItemss", JSON.stringify(selectedItems, null, 2));
+  // console.log("selectedItemss", JSON.stringify(selectedItems, null, 2));
 
   return (
     <Layout>

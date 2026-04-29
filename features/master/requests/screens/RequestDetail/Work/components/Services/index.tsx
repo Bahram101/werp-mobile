@@ -14,7 +14,10 @@ const Services = ({ data }: ServicesProps) => {
   const { showBottomSheet, updateModalProps } = useBottomSheet();
   const [selectedServices, setSelectedServices] = useState<ServiceItem[]>([]);
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
-  const lastId = Number(selectedServiceIds[selectedServiceIds.length - 1]);
+  const lastId =
+    selectedServiceIds.length > 0
+      ? Number(selectedServiceIds[selectedServiceIds.length - 1])
+      : undefined;
 
   const { positionSum, isLoading } = usePositioniSum(lastId);
 
@@ -27,14 +30,13 @@ const Services = ({ data }: ServicesProps) => {
           : item,
       ),
     );
-  }, [positionSum, setSelectedServices]);
+  }, [positionSum]);
 
   const handleOpenSelectModal = () => {
     showBottomSheet(
       "services",
       {
         data,
-        isLoading,
         selectedServiceIds,
         handleSelectService,
       },
@@ -50,8 +52,7 @@ const Services = ({ data }: ServicesProps) => {
         .filter((item) => ids.includes(String(item.id)))
         .map((item) => {
           const oldItem = prev.find((s) => s.id === item.id);
-
-          return oldItem ? oldItem : item;
+          return oldItem || item;
         });
     });
 
@@ -61,14 +62,21 @@ const Services = ({ data }: ServicesProps) => {
   };
 
   const handleRemoveService = (id: number) => {
-    const updated = selectedServices.filter(
+    const updatedServices = selectedServices.filter(
       (item) => Number(item.id) !== Number(id),
     );
-    const updatedIds = updated.map((i) => String(i.id));
-    setSelectedServices(updated);
+    setSelectedServices(updatedServices);
+
+    const updatedIds = updatedServices.map((i) => String(i.id));
     setSelectedServiceIds(updatedIds);
-    updateModalProps({ selectedServiceIds: updatedIds });
+    // updateModalProps({ selectedServiceIds: updatedIds });
   };
+
+  console.log("selectedServices", JSON.stringify(selectedServices, null, 2));
+  console.log(
+    "selectedServiceIds",
+    JSON.stringify(selectedServiceIds, null, 2),
+  );
 
   return (
     <View className="bg-white rounded-2xl p-4 ">

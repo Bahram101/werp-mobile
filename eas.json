@@ -12,10 +12,9 @@
     },
     "production": {
       "channel": "production",
-      "releaseChannel": "production",
       "autoIncrement": true,
       "android": {
-        "buildType": "apk"
+        "buildType": "app-bundle"
       },
       "ios": {
         "simulator": false
