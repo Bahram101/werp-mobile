@@ -2,7 +2,7 @@
   "expo": {
     "name": "merp",
     "slug": "merp",
-    "version": "0.9.0",
+    "version": "0.9.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "merp",
@@ -53,6 +53,7 @@
       "reactCompiler": true
     },
     "extra": {
+      "SERVER_URL": "https://api-test.aura-it.kz:9443",
       "router": {},
       "eas": {
         "projectId": "2513b7bb-a3d7-4c2f-bd2f-4f4200486ee2"

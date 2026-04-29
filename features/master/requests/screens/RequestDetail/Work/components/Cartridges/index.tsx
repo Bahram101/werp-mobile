@@ -50,6 +50,7 @@ const SparePart = ({
   };
 
   const handleRemoveSparePart = (id: number) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     const updated = selectedItems.filter((item) => item.index !== id);
     const updatedIds = updated.map((i) => String(i.index));
     setSelectedItems(updated);

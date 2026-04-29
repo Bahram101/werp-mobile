@@ -14,8 +14,8 @@
       "channel": "production",
       "autoIncrement": true,
       "android": {
-        // "buildType": "app-bundle"
-        "buildType": "apk"
+        "buildType": "app-bundle"
+        // "buildType": "apk"
       },
       "ios": {
         "simulator": false

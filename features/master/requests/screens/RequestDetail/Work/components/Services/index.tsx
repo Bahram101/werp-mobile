@@ -1,6 +1,7 @@
 import { usePositioniSum } from "@/features/master/requests/hooks/useService";
 import { ServiceItem } from "@/features/master/requests/types";
 import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
+import * as Haptics from "expo-haptics";
 import { CirclePlus } from "lucide-react-native";
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { Pressable, Text, View } from "react-native";
@@ -43,26 +44,8 @@ const Services = ({ data, selectedItems, setSelectedItems }: ServicesProps) => {
     );
   }, [positionSum, setSelectedItems]);
 
-  // const handleAddPart = (item: ServiceItem) => {
-  //   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-  //   console.log("item", JSON.stringify(item, null, 2));
-  //   const preparedItem = {
-  //     ...item,
-  //     // selectedQty: qty,
-  //     // totalPrice: item.price * qty,
-  //   };
-
-  //   setSelectedItems((prev) => {
-  //     const exists = prev.find((p) => p.id === item.id);
-  //     const updated = exists
-  //       ? prev.map((p) => (p.id === item.id ? preparedItem : p))
-  //       : [...prev, preparedItem];
-
-  //     return updated;
-  //   });
-  // };
-
-  const handleAddPart = (item: ServiceItem) => {
+  const handleAdd = (item: ServiceItem) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setSelectedItems((prev) => {
       const exists = prev.find((p) => p.id === item.id);
 
@@ -77,8 +60,8 @@ const Services = ({ data, selectedItems, setSelectedItems }: ServicesProps) => {
       "services",
       {
         data,
-        selectedIds: [...selectedIds], // важно
-        handleAddPart,
+        selectedIds,
+        handleAdd,
       },
       {
         title: "Выбрать услуги",
@@ -88,6 +71,7 @@ const Services = ({ data, selectedItems, setSelectedItems }: ServicesProps) => {
   };
 
   const handleRemoveService = (id: string) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setSelectedItems((prev) => prev.filter((item) => item.id !== id));
   };
 

@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { authInstance } from "@/services/api/auth-instance";
-import { errorCatch } from "@/services/api/error";
 import { AuthResponse, EnumAsyncStorage } from "@/types/auth.interface";
 import Toast from "react-native-toast-message";
 import { deleteTokensFromStorage, saveToStorage } from "./auth.storage";
@@ -31,7 +30,7 @@ export const AuthService = {
       Toast.show({
         type: "error",
         text1: "Request error",
-        text2: errorCatch(error),
+        text2: authInstance.defaults.baseURL || "EMPTY",
       });
 
       throw error;

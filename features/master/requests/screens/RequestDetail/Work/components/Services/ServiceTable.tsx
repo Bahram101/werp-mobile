@@ -1,6 +1,6 @@
 import { COLORS } from "@/constants/theme";
 import { tenge } from "@/utils/helpers";
-import { Loader, Trash2 } from "lucide-react-native";
+import { Trash2 } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
@@ -35,9 +35,7 @@ const Table = ({ data, isLoading, handleRemoveService }: Props) => {
           >
             <Text className="w-[10%] px-2 text-center">{item.id}</Text>
             <Text className="w-[60%] px-2 text-center">{item.name}</Text>
-            <Text className="w-[23%] px-2 text-center">
-              {isLoading ? <Loader /> : item.price}
-            </Text>
+            <Text className="w-[23%] px-2 text-center">{item.price}</Text>
             <View className="w-[7%] px-2 p-1 items-center justify-center">
               <TouchableOpacity onPress={() => handleRemoveService(item.id)}>
                 <Trash2 size={18} color={COLORS.red} />
