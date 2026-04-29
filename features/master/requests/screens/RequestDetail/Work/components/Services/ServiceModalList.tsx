@@ -1,32 +1,30 @@
-import { CheckboxGroup } from "@/components/ui/checkbox";
 import { ServiceItem } from "@/features/master/requests/types";
 import React from "react";
 import ServiceModalListItem from "./ServiceModalListItem";
 
 type Props = {
   data: ServiceItem[];
-  selectedServiceIds: string[];
-  isLoading: boolean;
-  handleSelectService: (values: string[]) => void;
+  selectedIds: string[];
+  selectedItems: any[];
+  handleAddPart: () => void;
 };
 
 const ServiceModalList = ({
   data,
-  selectedServiceIds,
-  handleSelectService,
+  selectedIds = [],
+  selectedItems,
+  handleAddPart,
 }: Props) => {
-  return (
-    <CheckboxGroup value={selectedServiceIds} onChange={handleSelectService}>
-      {data.map((item, index) => (
-        <ServiceModalListItem
-          key={item.id}
-          value={String(item.id)}
-          label={item.name}
-          isLast={index === data.length - 1}
-        />
-      ))}
-    </CheckboxGroup>
-  );
+  return data.map((item, index) => (
+    <ServiceModalListItem
+      key={item.id}
+      item={item}
+      isSelected={selectedIds?.includes(String(item.id))}
+      isLast={index === data.length - 1}
+      selectedItems={selectedItems}
+      onAddPart={handleAddPart}
+    />
+  ));
 };
 
 export default ServiceModalList;

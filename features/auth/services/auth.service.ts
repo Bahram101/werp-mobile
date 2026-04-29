@@ -18,13 +18,14 @@ export const AuthService = {
         "/token",
         bodyFormData,
       );
+      console.log("data", data);
 
       if (data.access_token) {
         await saveToStorage(data);
       }
 
       return data;
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       console.log(JSON.stringify(error, null, 2));
       Toast.show({

@@ -5,6 +5,10 @@ import { SERVER_URL } from "./config";
 
 export const authInstance = axios.create({
   baseURL: SERVER_URL,
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization: "Basic V0VSUDpwYXNzd29yZA==",
+  },
 });
 
 authInstance.interceptors.request.use(async (config) => {

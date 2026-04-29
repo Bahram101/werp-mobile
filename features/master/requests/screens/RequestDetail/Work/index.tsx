@@ -13,8 +13,11 @@ const RequestWorkScreen = () => {
   const { appNumber } = useLocalSearchParams();
   const navigation = useNavigation();
 
-  const [selectedItems, setSelectedItems] = useState<SelectedMatnrItem[]>([]);
   const { services, isLoading } = useServices();
+  const [selectedServiceItems, setSelectedServiceItems] = useState<
+    ServiceItem[]
+  >([]);
+  const [selectedItems, setSelectedItems] = useState<SelectedMatnrItem[]>([]);
   const [filteredServList, setFilteredServList] = useState<ServiceItem[]>([]);
   const { data: matnrList } = useMatnr(3);
   const { data: cartridgeList } = useMatnr(1);
@@ -43,7 +46,11 @@ const RequestWorkScreen = () => {
 
   return (
     <Layout>
-      <Services data={filteredServList} />
+      <Services
+        data={filteredServList}
+        selectedItems={selectedServiceItems}
+        setSelectedItems={setSelectedServiceItems}
+      />
       <SpareParts data={matnrList} />
       <Cartridges
         data={cartridgeList}

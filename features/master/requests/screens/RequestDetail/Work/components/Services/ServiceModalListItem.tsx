@@ -1,44 +1,48 @@
 import {
-  Checkbox,
-  CheckboxIcon,
-  CheckboxIndicator,
-  CheckboxLabel,
-} from "@/components/ui/checkbox";
-import BoldCheck from "@/components/ui/checkbox/BoldCheck";
+  SelectedMatnrItem,
+  ServiceItem,
+} from "@/features/master/requests/types";
+import { strToLowerCase } from "@/utils/helpers";
 import cn from "clsx";
-import * as Haptics from "expo-haptics";
 import React from "react";
+import { Pressable, Text, View } from "react-native";
 
 type Props = {
-  value: string;
-  label: string;
+  item: ServiceItem;
+  isSelected: boolean;
   isLast?: boolean;
+  selectedItems: SelectedMatnrItem[];
+  onAddPart: (item: any) => void;
 };
 
-const ServiceModalListItem = ({ value, label, isLast }: Props) => {
+const ServiceModalListItem = ({
+  item,
+  isSelected,
+  isLast,
+  selectedItems,
+  onAddPart,
+}: Props) => {
   return (
-    <Checkbox
-      value={value}
-      size="md"
-      className={cn(
-        "flex-row justify-between items-center py-3 border-grayLight  px-4",
-        !isLast && "border-b",
-      )}
-      onChange={() => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-      }}
-    >
-      <CheckboxLabel className="text-base text-textDark">
-        {label.trim()}
-      </CheckboxLabel>
-      <CheckboxIndicator
+    <Pressable onPress={() => onAddPart(item)}>
+      <View
         className={cn(
-          "w-6 h-6 border border-gray-300 rounded-md items-center justify-center mr-[2px]",
+          "py-3 flex-row items-center justify-between px-4",
+          !isLast && "border-b border-grayLight",
+          isSelected && "bg-green-100",
         )}
       >
-        <CheckboxIcon as={BoldCheck} className={cn("text-green-600")} />
-      </CheckboxIndicator>
-    </Checkbox>
+        <View className="flex-row items-center gap-2">
+          <View>
+            <Text
+              className="text-base text-gray-900 font-medium"
+              numberOfLines={1}
+            >
+              {strToLowerCase(item.name)}
+            </Text>
+          </View>
+        </View>
+      </View>
+    </Pressable>
   );
 };
 
