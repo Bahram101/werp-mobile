@@ -33,9 +33,9 @@ export const getStatusMeta = (item: any) => {
 
 export const getPaymentLabel = (payment: string) => {
   switch (payment) {
-    case "1":
+    case "CASH":
       return "Наличный";
-    case "2":
+    case "CASHLESS":
       return "Безналичный";
     default:
       return "";

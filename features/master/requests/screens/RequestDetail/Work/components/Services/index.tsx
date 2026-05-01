@@ -48,9 +48,7 @@ const Services = ({ data, selectedItems, setSelectedItems }: ServicesProps) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setSelectedItems((prev) => {
       const exists = prev.find((p) => p.id === item.id);
-
       if (exists) return prev;
-
       return [...prev, item];
     });
   };
@@ -75,10 +73,8 @@ const Services = ({ data, selectedItems, setSelectedItems }: ServicesProps) => {
     setSelectedItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  console.log("selectedItems", JSON.stringify(selectedItems, null, 2));
-
   return (
-    <View className="work-block bg-white mt-3 rounded-2xl p-4 ">
+    <View className="work-block bg-white rounded-2xl p-4 ">
       <View className="work-block-top pt-2 mb-4 py-3 border-b border-grayLight flex-row justify-between items-center ">
         <Text className="font-bold text-primary uppercase">Услуги</Text>
         <View>

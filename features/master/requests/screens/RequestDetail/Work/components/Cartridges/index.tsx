@@ -90,7 +90,7 @@ const SparePart = ({
   };
 
   return (
-    <View className="bg-white mt-3 rounded-2xl p-4">
+    <View className="bg-white rounded-2xl p-4">
       <View className="py-4 pt-2 border-b mb-4 border-grayLight flex-row justify-between items-center">
         <Text className="font-bold text-primary uppercase">
           Продажа картриджей

@@ -65,6 +65,37 @@ export const useUpdateRequestStatus = () => {
   return { updateRequestStatus, isLoading };
 };
 
+export const useDoneRequests = ({ enabled }: { enabled: boolean }) => {
+  const { user } = useAuth();
+  const masterId = user?.userInfo.currentStaff.staffId;
+
+  const { data: doneRequests = [], isLoading: isLoadingDoneRequests } =
+    useQuery({
+      queryKey: ["get-master-done-requests", masterId],
+      queryFn: () => RequestService.getMastersDoneRequests(masterId!),
+      enabled,
+      retry: false,
+      staleTime: 1000 * 30,
+    });
+  return { doneRequests, isLoadingDoneRequests };
+};
+
+export const useDoneRequestDetail = (id: number) => {
+  const { data: doneRequestDetail, isLoading: isLoadingDoneReqDetail } =
+    useQuery({
+      queryKey: ["get-done-request-detail", id],
+      queryFn: () => RequestService.getMasterDoneRequestDetail(id),
+      staleTime: 1000 * 60 * 5,
+      enabled: !!id,
+      retry: false,
+    });
+
+  return {
+    doneRequestDetail,
+    isLoadingDoneReqDetail,
+  };
+};
+
 export const useFinishedSummary = ({ enabled }: { enabled: boolean }) => {
   const { user } = useAuth();
   const from = getCurrentMonthStart();

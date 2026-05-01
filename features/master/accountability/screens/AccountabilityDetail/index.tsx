@@ -17,8 +17,8 @@ type AccountabilityDetailParams = {
 
 const AccountabilityDetail = () => {
   const navigation = useNavigation();
-  const [refreshing, setRefreshing] = useState(false);
   const { id } = useLocalSearchParams<AccountabilityDetailParams>();
+  const [refreshing, setRefreshing] = useState(false);
   const {
     accountabilityReqDetail,
     isLoadingAccReqDetail,

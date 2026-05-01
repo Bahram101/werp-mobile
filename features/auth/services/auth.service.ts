@@ -17,7 +17,6 @@ export const AuthService = {
         "/token",
         bodyFormData,
       );
-      console.log("data", data);
 
       if (data.access_token) {
         await saveToStorage(data);
@@ -25,8 +24,6 @@ export const AuthService = {
 
       return data;
     } catch (error: any) {
-      console.log(error);
-      console.log(JSON.stringify(error, null, 2));
       Toast.show({
         type: "error",
         text1: "Request error",

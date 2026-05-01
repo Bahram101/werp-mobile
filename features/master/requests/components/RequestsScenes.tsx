@@ -4,9 +4,13 @@ import {
   getCurrentMonthStart,
   getToday,
 } from "@/utils/date";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { FlatList, Text, View } from "react-native";
-import { useFinishedSummary, useRequests } from "../hooks/useRequest";
+import {
+  useDoneRequests,
+  useFinishedSummary,
+  useRequests,
+} from "../hooks/useRequest";
 import AssignedRequestCard from "./RequestCards/AssignedRequestCard";
 import DoneRequestCard from "./RequestCards/DoneRequestCard";
 import FinishedRequestCard from "./RequestCards/FinishedRequestCard";
@@ -20,6 +24,7 @@ export default function RequestsScenes({ route }: Props) {
   let status = "";
   let from: string | undefined;
   let to: string | undefined;
+  let isDone = false;
   let isFinished = false;
 
   const monthFrom = getCurrentMonthStart();
@@ -33,6 +38,7 @@ export default function RequestsScenes({ route }: Props) {
       status = "8";
       from = todayStr;
       to = todayStr;
+      isDone = true;
       break;
     case "finished":
       status = "5";
@@ -53,6 +59,9 @@ export default function RequestsScenes({ route }: Props) {
       enabled: isFinished,
     },
   );
+  const { doneRequests, isLoadingDoneRequests } = useDoneRequests({
+    enabled: isDone,
+  });
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -85,33 +94,29 @@ export default function RequestsScenes({ route }: Props) {
   switch (route.key) {
     case "assigned":
       return (
-        <>
-          <FlatList
-            data={assignedReqList}
-            renderItem={({ item }) => <AssignedRequestCard item={item} />}
-            keyExtractor={(item) => item?.applicationNumber?.toString()}
-            contentContainerStyle={style}
-            onRefresh={onRefresh}
-            refreshing={refreshing}
-          />
-        </>
+        <FlatList
+          data={assignedReqList}
+          renderItem={({ item }) => <AssignedRequestCard item={item} />}
+          keyExtractor={(item) => item?.applicationNumber?.toString()}
+          contentContainerStyle={style}
+          onRefresh={onRefresh}
+          refreshing={refreshing}
+        />
       );
     case "done":
       return (
-        <>
-          <FlatList
-            data={requests}
-            renderItem={({ item }) => <DoneRequestCard item={item} />}
-            keyExtractor={(item) => item.applicationId?.toString()}
-            contentContainerStyle={style}
-            onRefresh={onRefresh}
-            refreshing={refreshing}
-          />
-        </>
+        <FlatList
+          data={doneRequests}
+          renderItem={({ item }) => <DoneRequestCard item={item} />}
+          keyExtractor={(item) => item.id?.toString()}
+          contentContainerStyle={style}
+          onRefresh={onRefresh}
+          refreshing={refreshing}
+        />
       );
     case "finished":
       return (
-        <>
+        <Fragment>
           <View className="mx-4 mb-3">
             <Text className="text-xl font-semibold">
               Завершенные заявки с 1 {getCurrentMonthName()}
@@ -128,7 +133,7 @@ export default function RequestsScenes({ route }: Props) {
               <FinishedSummary finishedSummaryData={finishedSummaryData} />
             }
           />
-        </>
+        </Fragment>
       );
     default:
       return null;

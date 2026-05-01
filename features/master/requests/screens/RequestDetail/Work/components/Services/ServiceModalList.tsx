@@ -6,14 +6,14 @@ type Props = {
   data: ServiceItem[];
   selectedIds: string[];
   selectedItems: any[];
-  handleAddPart: () => void;
+  handleAdd: () => void;
 };
 
 const ServiceModalList = ({
   data,
   selectedIds = [],
   selectedItems,
-  handleAddPart,
+  handleAdd,
 }: Props) => {
   return data.map((item, index) => (
     <ServiceModalListItem
@@ -22,7 +22,7 @@ const ServiceModalList = ({
       isSelected={selectedIds?.includes(String(item.id))}
       isLast={index === data.length - 1}
       selectedItems={selectedItems}
-      onAddPart={handleAddPart}
+      onAddPart={handleAdd}
     />
   ));
 };

@@ -21,7 +21,6 @@ authInstance.interceptors.request.use(async (config) => {
   const query = qs.stringify(config.params, { arrayFormat: "repeat" });
   const fullUrl = `${config.baseURL}${config.url}?${query}`;
 
-  console.log("REQUEST_AUTH:", fullUrl);
-  console.log("BASE URL:", authInstance.defaults.baseURL);
+  // console.log("REQUEST_AUTH:", fullUrl);
   return config;
 });

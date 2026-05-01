@@ -1,6 +1,6 @@
 import { serviceInstance } from "@/services/api/service-instance";
 
-export const ServiceCatalog = {
+export const Services = {
   async getServices() {
     try {
       const { data } = await serviceInstance.get("/smcs/getServiceList");
@@ -25,6 +25,15 @@ export const ServiceCatalog = {
           },
         },
       );
+      return data.data;
+    } catch (e) {
+      throw e;
+    }
+  },
+
+  async checkService(body: any) {
+    try {
+      const { data } = await serviceInstance.post("/smcs/check", body);
       return data.data;
     } catch (e) {
       throw e;

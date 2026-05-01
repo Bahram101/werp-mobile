@@ -30,6 +30,28 @@ export const RequestService = {
     }
   },
 
+  async getMastersDoneRequests(masterId: number) {
+    try {
+      const { data } = await serviceInstance.get("/smcs/master/draft/my-list", {
+        params: {
+          masterId,
+        },
+      });
+      return data.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async getMasterDoneRequestDetail(id: number) {
+    try {
+      const { data } = await serviceInstance.get(`/smcs/master/draft/${id}`);
+      return data.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   async updateRequestStatus(reqId: number, statusId: number) {
     try {
       const { data } = await serviceInstance.put(
