@@ -27,11 +27,8 @@ const RequestWorkScreen = () => {
   const [selectedServiceItems, setSelectedServiceItems] = useState<
     ServiceItem[]
   >([]);
-  const {
-    checkServiceAsync,
-    resCheckServices,
-    // isLoading: isLoadingCheckService,
-  } = useCheckServices();
+  const { checkServiceAsync, isLoading: isLoadingCheckService } =
+    useCheckServices();
   const [selectedItems, setSelectedItems] = useState<SelectedMatnrItem[]>([]);
   const [filteredServList, setFilteredServList] = useState<ServiceItem[]>([]);
   const { data: matnrList } = useMatnr(3);
@@ -66,18 +63,6 @@ const RequestWorkScreen = () => {
         sum: item.price || 0,
         currencyId: 3,
         currencyName: "KZT",
-        fno: null,
-        id: null,
-        matnrId: null,
-        matnrName: null,
-        matnrPrice: null,
-        operationId: null,
-        operationName: null,
-        quantity: null,
-        serviceId: null,
-        servicePackageId: null,
-        servicePackageName: null,
-        serviceTypeName: null,
         warranty: false,
       })),
     };
@@ -85,7 +70,7 @@ const RequestWorkScreen = () => {
     try {
       await checkServiceAsync(payload);
     } catch (e: any) {
-      Alert.alert("Ошибка", e.message);
+      Alert.alert("Предупреждение", e.message);
     }
   };
 
@@ -104,10 +89,10 @@ const RequestWorkScreen = () => {
       />
       <View className="flex-1">
         <AnimatedButton
-          className="w-full h-20 p-4"
           bg="primary"
           bgPressed="primaryDark"
           textColor="white"
+          isLoading={isLoadingCheckService}
           onPress={handlePay}
         >
           Оплатить

@@ -66,7 +66,8 @@ export default function AnimatedButton({
             backgroundColor: pressed ? COLORS[bgPressed] : COLORS[bg],
           }}
           className={cn(
-            "rounded-2xl flex-row gap-3 justify-center items-center",
+            // "rounded-2xl flex-row gap-3 justify-center items-center",
+            "rounded-2xl flex-row gap-3 justify-center items-center min-h-[48px]",
             className,
           )}
         >
