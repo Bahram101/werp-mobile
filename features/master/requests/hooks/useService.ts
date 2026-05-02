@@ -24,12 +24,27 @@ export const usePositioniSum = (id?: number) => {
 
 export const useCheckServices = () => {
   const {
-    mutate: checkService,
+    mutateAsync: checkServiceAsync,
     data: resCheckServices,
     isPending: isLoading,
   } = useMutation({
+    mutationKey: ["check-service"],
     mutationFn: (body: any) => Services.checkService(body),
+    onSuccess: (data) => {
+      console.log("data onSuccess", data);
+    },
   });
 
-  return { checkService, resCheckServices, isLoading };
+  return { checkServiceAsync, resCheckServices, isLoading };
+};
+
+export const useServiceApplication = (id?: number) => {
+  const { data: serviceApplication = {}, isFetching: isLoadingServiceApp } =
+    useQuery({
+      queryKey: ["get-service-application", id],
+      queryFn: () => Services.getServiceApp(id!),
+      enabled: !!id,
+      retry: false,
+    });
+  return { serviceApplication, isLoadingServiceApp };
 };

@@ -4,10 +4,13 @@ import Layout from "@/components/ui/master/Layout";
 import { request } from "@/services/api/request";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { useMatnr } from "../../../hooks/useMatnr";
-import { useRequestDetail } from "../../../hooks/useRequest";
-import { useCheckServices, useServices } from "../../../hooks/useService";
+import {
+  useCheckServices,
+  useServiceApplication,
+  useServices,
+} from "../../../hooks/useService";
 import { SelectedMatnrItem, ServiceItem } from "../../../types";
 import Cartridges from "./components/Cartridges";
 import Services from "./components/Services";
@@ -16,17 +19,16 @@ import SpareParts from "./components/SpareParts";
 const RequestWorkScreen = () => {
   const { appNumber } = useLocalSearchParams();
   const navigation = useNavigation();
-  const {
-    requestDetail,
-    // isLoadingReqDetail
-  } = useRequestDetail(Number(appNumber));
+  const { serviceApplication, isLoadingServiceApp } = useServiceApplication(
+    Number(appNumber),
+  );
 
   const { services, isLoading } = useServices();
   const [selectedServiceItems, setSelectedServiceItems] = useState<
     ServiceItem[]
   >([]);
   const {
-    checkService,
+    checkServiceAsync,
     resCheckServices,
     // isLoading: isLoadingCheckService,
   } = useCheckServices();
@@ -55,10 +57,10 @@ const RequestWorkScreen = () => {
     return <Loader />;
   }
 
-  const handlePay = () => {
+  const handlePay = async () => {
     if (!request) return;
     const payload = {
-      ...requestDetail,
+      ...serviceApplication,
       positions: selectedServiceItems.map((item) => ({
         serviceTypeId: Number(item.id),
         sum: item.price || 0,
@@ -80,13 +82,12 @@ const RequestWorkScreen = () => {
       })),
     };
 
-    checkService(payload);
+    try {
+      await checkServiceAsync(payload);
+    } catch (e: any) {
+      Alert.alert("Ошибка", e.message);
+    }
   };
-  // console.log(
-  //   "selectedServiceItems",
-  //   JSON.stringify(selectedServiceItems, null, 2),
-  // );
-  // console.log("resCheckServices", resCheckServices);
 
   return (
     <Layout className="flex-columns gap-4">

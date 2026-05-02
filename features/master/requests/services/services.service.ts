@@ -33,10 +33,35 @@ export const Services = {
 
   async checkService(body: any) {
     try {
-      const { data } = await serviceInstance.post("/smcs/check", body);
+      const { data } = await serviceInstance.post(
+        "/smcs/master/draft/check-and-save",
+        body,
+      );
       return data.data;
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      const raw = e.response?.data?.response;
+      if (raw) {
+        const { message } = JSON.parse(raw);
+        throw new Error(message);
+      }
+
+      throw new Error(e.response?.data?.message || "Ошибка сервера");
+    }
+  },
+
+  async getServiceApp(appNumber: number) {
+    try {
+      const { data } = await serviceInstance.get(
+        "/smcs/getServiceApplication",
+        {
+          params: {
+            applicationNumber: Number(appNumber),
+          },
+        },
+      );
+      return data.data;
+    } catch (error) {
+      throw error;
     }
   },
 };
