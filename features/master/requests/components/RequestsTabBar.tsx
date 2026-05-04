@@ -22,11 +22,12 @@ export default function RequestsTabBar(props: TabBarProps<any>) {
       }}
       indicatorStyle={{
         backgroundColor: "white",
-        height: "88%",
-        width: "100%",
+        height: "85%",
+        // width: "100%",
         borderRadius: 20,
-        marginVertical: 2,
-        marginLeft: 3,
+        marginVertical: 3,
+        // marginLeft: 3,
+        marginHorizontal: 3,
       }}
       tabStyle={{
         flex: 1,
