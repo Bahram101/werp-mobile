@@ -3,19 +3,24 @@ import { useActionSheet } from "@/providers/ActionSheetProvider";
 import { useBottomSheet } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import * as Haptics from "expo-haptics";
 import { CirclePlus } from "lucide-react-native";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { Pressable, Text, View } from "react-native";
 import SparePartActionSheet from "../../../../../../../../components/ui/actionsheet/SparePartActionSheet";
 import SparePartTable from "./SparePartTable";
 
 type SparePartsProps = {
   data: MatnrItem[];
+  selectedItems: SelectedMatnrItem[];
+  setSelectedItems: Dispatch<SetStateAction<SelectedMatnrItem[]>>;
 };
 
-const SparePart = ({ data }: SparePartsProps) => {
+const SparePart = ({
+  data,
+  selectedItems,
+  setSelectedItems,
+}: SparePartsProps) => {
   const { showBottomSheet, updateModalProps } = useBottomSheet();
   const { openSheet, closeSheet } = useActionSheet();
-  const [selectedItems, setSelectedItems] = useState<SelectedMatnrItem[]>([]);
   const selectedIds = selectedItems.map((i) => String(i.index));
   const totalAmount = selectedItems.reduce(
     (sum, item) => sum + item.totalPrice,

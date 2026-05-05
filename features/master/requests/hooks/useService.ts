@@ -30,9 +30,6 @@ export const useCheckServices = () => {
   } = useMutation({
     mutationKey: ["check-service"],
     mutationFn: (body: any) => Services.checkService(body),
-    onSuccess: (data) => {
-      console.log("data onSuccess", data);
-    },
   });
 
   return { checkServiceAsync, resCheckServices, isLoading };

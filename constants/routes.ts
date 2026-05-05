@@ -3,6 +3,8 @@ export const ROUTES = {
   REQUEST: "/(apps)/master/(tabs)/requests/[appNumber]",
   REQUEST_DONE: "/(apps)/master/(tabs)/requests/done-requests/[id]",
   REQUEST_WORK: "/(apps)/master/(tabs)/requests/[appNumber]/work",
+  REQUEST_WORK_PAYMENT:
+    "/(apps)/master/(tabs)/requests/[appNumber]/work/payment",
   REQUEST_HISTORY: "/(apps)/master/(tabs)/requests/[appNumber]/history",
   REQUEST_HISTORY_DETAIL:
     "/(apps)/master/(tabs)/requests/[appNumber]/history/[historyId]",

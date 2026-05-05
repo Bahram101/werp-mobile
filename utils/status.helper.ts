@@ -11,7 +11,10 @@ export const getStatusColor = (status: StatusText): string => {
 };
 /****************************************************************** */
 export const getStatusMeta = (item: any) => {
-  if (item.applicationStatusId === 9 || item.applicationStatusId === 10) {
+  if (
+    item.applicationStatusId === 9 || //Принята
+    item.applicationStatusId === 10 // Прибыл
+  ) {
     return {
       label: "Активная",
       text: "text-primary",

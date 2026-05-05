@@ -1,8 +1,10 @@
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
+import { ROUTES } from "@/constants/routes";
 import { request } from "@/services/api/request";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert, View } from "react-native";
 import { useMatnr } from "../../../hooks/useMatnr";
@@ -17,6 +19,7 @@ import Services from "./components/Services";
 import SpareParts from "./components/SpareParts";
 
 const RequestWorkScreen = () => {
+  const queryClient = useQueryClient();
   const { appNumber } = useLocalSearchParams();
   const navigation = useNavigation();
   const { serviceApplication, isLoadingServiceApp } = useServiceApplication(
@@ -27,9 +30,15 @@ const RequestWorkScreen = () => {
   const [selectedServiceItems, setSelectedServiceItems] = useState<
     ServiceItem[]
   >([]);
+  const [selectedSpareItems, setSelectedSpareItems] = useState<
+    SelectedMatnrItem[]
+  >([]);
+  const [selectedCartridgeItems, setSelectedCartridgeItems] = useState<
+    SelectedMatnrItem[]
+  >([]);
+
   const { checkServiceAsync, isLoading: isLoadingCheckService } =
     useCheckServices();
-  const [selectedItems, setSelectedItems] = useState<SelectedMatnrItem[]>([]);
   const [filteredServList, setFilteredServList] = useState<ServiceItem[]>([]);
   const { data: matnrList } = useMatnr(3);
   const { data: cartridgeList } = useMatnr(1);
@@ -56,23 +65,81 @@ const RequestWorkScreen = () => {
 
   const handlePay = async () => {
     if (!request) return;
+    const mapServiceItem = (item: any) => ({
+      serviceTypeId: Number(item.id),
+      sum: item.price || 0,
+      currencyId: 3,
+      currencyName: "KZT",
+      warranty: false,
+      fno: null,
+      id: null,
+      matnrId: null,
+      matnrName: null,
+      matnrPrice: item.price,
+      operationId: null,
+      operationName: null,
+      quantity: null,
+      serviceId: null,
+      servicePackageId: null,
+      servicePackageName: null,
+      serviceTypeName: null,
+    });
+
+    const mapSpareItem = (item: any) => ({
+      currencyId: 3,
+      currencyName: "KZT",
+      fno: null,
+      id: null,
+      matnrId: item.matnrId,
+      matnrName: item.matnrName,
+      matnrPrice: item.price,
+      operationId: null,
+      operationName: null,
+      quantity: item.selectedQty,
+      serviceId: null,
+      servicePackageId: null,
+      servicePackageName: null,
+      serviceTypeId: Number(item.index),
+      serviceTypeName: null,
+      sum: item.totalPrice,
+      warranty: false,
+    });
+
+    const spareItems = [...selectedSpareItems, ...selectedCartridgeItems];
+
     const payload = {
       ...serviceApplication,
-      positions: selectedServiceItems.map((item) => ({
-        serviceTypeId: Number(item.id),
-        sum: item.price || 0,
-        currencyId: 3,
-        currencyName: "KZT",
-        warranty: false,
-      })),
+      positions: [
+        ...selectedServiceItems.map(mapServiceItem),
+        ...spareItems.map(mapSpareItem),
+      ],
     };
 
     try {
-      await checkServiceAsync(payload);
+      console.log("payload", JSON.stringify(payload, null, 2));
+      const res = await checkServiceAsync(payload);
+      // console.log("res", JSON.stringify(res, null, 2));
+      queryClient.setQueryData(["check-service-result"], res);
+      router.push({
+        pathname: ROUTES.REQUEST_WORK_PAYMENT,
+      });
     } catch (e: any) {
       Alert.alert("Предупреждение", e.message);
     }
   };
+
+  console.log(
+    "selectedServiceItems",
+    JSON.stringify(selectedServiceItems, null, 2),
+  );
+  console.log(
+    "selectedSpareItems",
+    JSON.stringify(selectedSpareItems, null, 2),
+  );
+  console.log(
+    "selectedCartridgeItems",
+    JSON.stringify(selectedCartridgeItems, null, 2),
+  );
 
   return (
     <Layout className="flex-columns gap-4">
@@ -81,11 +148,15 @@ const RequestWorkScreen = () => {
         selectedItems={selectedServiceItems}
         setSelectedItems={setSelectedServiceItems}
       />
-      <SpareParts data={matnrList} />
+      <SpareParts
+        data={matnrList}
+        selectedItems={selectedSpareItems}
+        setSelectedItems={setSelectedSpareItems}
+      />
       <Cartridges
         data={cartridgeList}
-        selectedItems={selectedItems}
-        setSelectedItems={setSelectedItems}
+        selectedItems={selectedCartridgeItems}
+        setSelectedItems={setSelectedCartridgeItems}
       />
       <View className="flex-1">
         <AnimatedButton
@@ -95,7 +166,7 @@ const RequestWorkScreen = () => {
           isLoading={isLoadingCheckService}
           onPress={handlePay}
         >
-          Оплатить
+          Проверить
         </AnimatedButton>
       </View>
     </Layout>
