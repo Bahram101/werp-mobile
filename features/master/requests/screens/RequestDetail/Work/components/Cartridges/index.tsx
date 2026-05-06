@@ -58,7 +58,6 @@ const SparePart = ({
   };
 
   const handleAddPart = (item: MatnrItem, qty: number) => {
-    console.log("ITEM", JSON.stringify(item));
     const preparedItem = {
       ...item,
       fno: item.fno,

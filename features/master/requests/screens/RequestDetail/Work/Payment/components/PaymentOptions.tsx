@@ -8,6 +8,7 @@ type PaymentOptionProps = {
   label: string;
   icon: TypeMaterialIconNames;
   isActive: boolean;
+  method?: "cash" | "card";
   onPress: () => void;
 };
 
@@ -15,6 +16,7 @@ export function PaymentOption({
   label,
   icon,
   isActive,
+  method,
   onPress,
 }: PaymentOptionProps) {
   return (
@@ -27,7 +29,7 @@ export function PaymentOption({
     >
       <MaterialCommunityIcons
         name={icon}
-        size={20}
+        size={method === "cash" ? 25 : 19}
         color={isActive ? COLORS.primary : COLORS.grayDark}
       />
 

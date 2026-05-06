@@ -43,7 +43,7 @@ const PaymentScreen = () => {
           });
         } else if (item.serviceTypeId === 1) {
           acc.cartridges.push({
-            title: item.serviceTypeName,
+            title: item.matnrName,
             price: item.sum,
           });
         }
@@ -72,8 +72,8 @@ const PaymentScreen = () => {
     }
   }, [navigation, data]);
 
-  console.log("paymentScreen", JSON.stringify(data, null, 2));
-  console.log("serviceList", JSON.stringify(serviceAllList, null, 2));
+  // console.log("paymentScreen", JSON.stringify(data, null, 2));
+  // console.log("serviceList", JSON.stringify(serviceAllList, null, 2));
 
   return (
     <Layout>

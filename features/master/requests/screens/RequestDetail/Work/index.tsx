@@ -115,18 +115,17 @@ const RequestWorkScreen = () => {
       ],
     };
 
-    console.log("payload", JSON.stringify(payload, null, 2));
+    console.log("PAYLOAD", JSON.stringify(payload, null, 2));
 
     try {
       const res = await checkServiceAsync(payload);
       queryClient.setQueryData(["check-service-result"], res);
-      console.log("res", res);
+      console.log("RES_RES", JSON.stringify(res, null, 2));
       router.push({
         pathname: ROUTES.REQUEST_WORK_PAYMENT,
         params: { appNumber: String(appNumber) },
       });
     } catch (e: any) {
-      console.log("e", e.message);
       Alert.alert("Ошбика", e.message);
     }
   };

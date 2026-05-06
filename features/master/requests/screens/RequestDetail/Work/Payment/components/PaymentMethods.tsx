@@ -1,10 +1,8 @@
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
-import { COLORS } from "@/constants/theme";
 import { formatCurrency } from "@/utils/helpers";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import cn from "clsx";
 import { useState } from "react";
-import { Pressable, Switch, Text, View } from "react-native";
+import { Switch, Text, View } from "react-native";
+import { PaymentOption } from "./PaymentOptions";
 
 export default function PaymentMethods({ total }: { total: number }) {
   const [isSplit, setIsSplit] = useState(false);
@@ -25,58 +23,21 @@ export default function PaymentMethods({ total }: { total: number }) {
 
       <View className="flex-col gap-3">
         <View className="flex-row gap-2">
-          {/* Cash */}
-          <Pressable
+          <PaymentOption
+            label="Наличные"
+            icon="cash"
+            isActive={method === "cash"}
+            method="cash"
             onPress={() => setMethod("cash")}
-            className={cn(
-              "flex-1 flex-row items-center justify-center rounded-xl border p-3",
-              method === "cash"
-                ? "border-primary bg-green-100"
-                : "border-grayMedium",
-            )}
-          >
-            <MaterialCommunityIcons
-              name="cash"
-              size={23}
-              color={method === "cash" ? COLORS.primary : COLORS.grayDark}
-            />
-            <Text
-              className={cn(
-                "ml-2",
-                method === "cash" ? "text-primary" : "text-grayDark",
-              )}
-            >
-              Наличные
-            </Text>
-          </Pressable>
-
-          {/* Card */}
-          <Pressable
+          />
+          <PaymentOption
+            label="Безналичные"
+            icon="credit-card-outline"
+            isActive={method === "card"}
             onPress={() => setMethod("card")}
-            className={cn(
-              "flex-1 flex-row items-center justify-center rounded-xl border p-3",
-              method === "card"
-                ? "border-primary bg-green-100"
-                : "border-grayMedium",
-            )}
-          >
-            <MaterialCommunityIcons
-              name="credit-card-outline"
-              size={18}
-              color={method === "card" ? COLORS.primary : COLORS.grayDark}
-            />
-            <Text
-              className={cn(
-                "ml-2",
-                method === "card" ? "text-primary" : "text-grayDark",
-              )}
-            >
-              Безналичные
-            </Text>
-          </Pressable>
+          />
         </View>
 
-        {/* Pay Button */}
         <View className="flex-1">
           <AnimatedButton
             bg="primary"
@@ -86,18 +47,6 @@ export default function PaymentMethods({ total }: { total: number }) {
             // onPress={handlePay}
           >
             Оплатить {formatCurrency(total)}
-          </AnimatedButton>
-        </View>
-
-        {/* Secondary */}
-        <View className="flex-1">
-          <AnimatedButton
-            bg="grayMedium"
-            bgPressed="grayDark"
-            textColor="white"
-            // onPress={handlePay}
-          >
-            Изменить
           </AnimatedButton>
         </View>
       </View>
