@@ -58,8 +58,11 @@ const SparePart = ({
   };
 
   const handleAddPart = (item: MatnrItem, qty: number) => {
+    console.log("ITEM", JSON.stringify(item));
     const preparedItem = {
       ...item,
+      fno: item.fno,
+      serviceTypeId: 1,
       selectedQty: qty,
       totalPrice: item.price * qty,
     };

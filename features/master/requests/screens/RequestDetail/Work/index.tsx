@@ -66,11 +66,8 @@ const RequestWorkScreen = () => {
   const handlePay = async () => {
     if (!request) return;
     const mapServiceItem = (item: any) => ({
-      serviceTypeId: Number(item.id),
-      sum: item.price || 0,
       currencyId: 3,
       currencyName: "KZT",
-      warranty: false,
       fno: null,
       id: null,
       matnrId: null,
@@ -82,27 +79,30 @@ const RequestWorkScreen = () => {
       serviceId: null,
       servicePackageId: null,
       servicePackageName: null,
+      serviceTypeId: Number(item.id),
       serviceTypeName: null,
+      sum: item.price || 0,
+      warranty: item.warranty,
     });
 
     const mapSpareItem = (item: any) => ({
       currencyId: 3,
       currencyName: "KZT",
-      fno: null,
+      fno: item.fno,
       id: null,
       matnrId: item.matnrId,
       matnrName: item.matnrName,
       matnrPrice: item.price,
-      operationId: null,
-      operationName: null,
+      operationId: item.operationId,
+      operationName: item.operationName,
       quantity: item.selectedQty,
       serviceId: null,
       servicePackageId: null,
       servicePackageName: null,
-      serviceTypeId: Number(item.index),
-      serviceTypeName: null,
+      serviceTypeId: Number(item.serviceTypeId),
+      serviceTypeName: item.name,
       sum: item.totalPrice,
-      warranty: false,
+      warranty: item.warranty,
     });
 
     const spareItems = [...selectedSpareItems, ...selectedCartridgeItems];
@@ -115,16 +115,19 @@ const RequestWorkScreen = () => {
       ],
     };
 
+    console.log("payload", JSON.stringify(payload, null, 2));
+
     try {
-      console.log("payload", JSON.stringify(payload, null, 2));
       const res = await checkServiceAsync(payload);
-      // console.log("res", JSON.stringify(res, null, 2));
       queryClient.setQueryData(["check-service-result"], res);
+      console.log("res", res);
       router.push({
         pathname: ROUTES.REQUEST_WORK_PAYMENT,
+        params: { appNumber: String(appNumber) },
       });
     } catch (e: any) {
-      Alert.alert("Предупреждение", e.message);
+      console.log("e", e.message);
+      Alert.alert("Ошбика", e.message);
     }
   };
 

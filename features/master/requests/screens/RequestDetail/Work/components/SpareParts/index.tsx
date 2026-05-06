@@ -58,6 +58,7 @@ const SparePart = ({
   const handleAddPart = (item: MatnrItem, qty: number) => {
     const preparedItem = {
       ...item,
+      serviceTypeId: 3,
       selectedQty: qty,
       totalPrice: item.price * qty,
     };

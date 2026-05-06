@@ -83,6 +83,7 @@ export type MatnrItem = {
 };
 
 export type SelectedMatnrItem = MatnrItem & {
+  serviceTypeId: number;
   selectedQty: number;
   totalPrice: number;
 };
