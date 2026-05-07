@@ -72,7 +72,7 @@ const RequestWorkScreen = () => {
       id: null,
       matnrId: null,
       matnrName: null,
-      matnrPrice: item.price,
+      matnrPrice: null,
       operationId: null,
       operationName: null,
       quantity: null,
@@ -82,7 +82,7 @@ const RequestWorkScreen = () => {
       serviceTypeId: Number(item.id),
       serviceTypeName: null,
       sum: item.price || 0,
-      warranty: item.warranty,
+      warranty: item.warranty || false,
     });
 
     const mapSpareItem = (item: any) => ({
@@ -115,33 +115,33 @@ const RequestWorkScreen = () => {
       ],
     };
 
-    console.log("PAYLOAD", JSON.stringify(payload, null, 2));
+    // console.log("PAYLOAD", JSON.stringify(payload, null, 2));
+    // console.log("services", JSON.stringify(services, null, 2));
 
     try {
       const res = await checkServiceAsync(payload);
       queryClient.setQueryData(["check-service-result"], res);
-      console.log("RES_RES", JSON.stringify(res, null, 2));
       router.push({
         pathname: ROUTES.REQUEST_WORK_PAYMENT,
         params: { appNumber: String(appNumber) },
       });
     } catch (e: any) {
-      Alert.alert("Ошбика", e.message);
+      Alert.alert("Ошибка", e.message);
     }
   };
 
-  console.log(
-    "selectedServiceItems",
-    JSON.stringify(selectedServiceItems, null, 2),
-  );
-  console.log(
-    "selectedSpareItems",
-    JSON.stringify(selectedSpareItems, null, 2),
-  );
-  console.log(
-    "selectedCartridgeItems",
-    JSON.stringify(selectedCartridgeItems, null, 2),
-  );
+  // console.log(
+  //   "selectedServiceItems",
+  //   JSON.stringify(selectedServiceItems, null, 2),
+  // );
+  // console.log(
+  //   "selectedSpareItems",
+  //   JSON.stringify(selectedSpareItems, null, 2),
+  // );
+  // console.log(
+  //   "selectedCartridgeItems",
+  //   JSON.stringify(selectedCartridgeItems, null, 2),
+  // );
 
   return (
     <Layout className="flex-columns gap-4">

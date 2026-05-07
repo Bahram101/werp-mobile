@@ -80,7 +80,7 @@ export const RequestService = {
     status: string,
     from: string,
     masterId: number,
-    bukrs: number,
+    bukrs: string,
   ) {
     try {
       const { data } = await serviceInstance.get("/report/srlsm", {

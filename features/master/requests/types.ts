@@ -100,3 +100,11 @@ export const iconMap: Record<
   6: "package",
   7: "shield-half-full",
 };
+
+export type CashBankResponse = {
+  key: number;
+  text: string;
+  value: number;
+  dynvalue: number;
+  description: string | null;
+};

@@ -1,4 +1,6 @@
 import Layout from "@/components/ui/master/Layout";
+import { useCashBankHkonts } from "@/features/master/requests/hooks/useFinance";
+import { useCreatePayment } from "@/features/master/requests/hooks/useService";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigation } from "expo-router";
 import React, { useEffect, useMemo } from "react";
@@ -7,10 +9,9 @@ import PaymentSummary from "./components/PaymentSummary";
 import { PaymentItem } from "./type";
 
 type CheckServiceResponse = {
-  checkedPayload: {
-    applicationNumber: string;
-    positions: any[];
-  };
+  applicationNumber: string;
+  sumForPay: number;
+  positions: any[];
 };
 
 type GroupedPayment = {
@@ -22,11 +23,15 @@ type GroupedPayment = {
 const PaymentScreen = () => {
   const navigation = useNavigation();
   const queryClient = useQueryClient();
+  const { cashBankHkonts, isLoadingCashBankHkonts } = useCashBankHkonts();
+  const { createPaymentAsync, isLoading } = useCreatePayment();
 
   const data = queryClient.getQueryData<CheckServiceResponse>([
     "check-service-result",
   ]);
-  const serviceAllList = data?.checkedPayload?.positions;
+
+  const sumForPay = data?.sumForPay || 0;
+  const serviceAllList = data?.positions;
 
   const { services, spareParts, cartridges } = useMemo(() => {
     return serviceAllList?.reduce(
@@ -45,6 +50,7 @@ const PaymentScreen = () => {
           acc.cartridges.push({
             title: item.matnrName,
             price: item.sum,
+            fno: item.fno,
           });
         }
 
@@ -58,13 +64,8 @@ const PaymentScreen = () => {
     );
   }, [serviceAllList]);
 
-  const total = [...services, ...spareParts, ...cartridges]?.reduce(
-    (acc, item) => acc + item.price,
-    0,
-  );
-
   useEffect(() => {
-    const appNumber = data?.checkedPayload?.applicationNumber;
+    const appNumber = data?.applicationNumber;
     if (appNumber) {
       navigation.setOptions({
         title: `Заявка №${appNumber}`,
@@ -72,8 +73,30 @@ const PaymentScreen = () => {
     }
   }, [navigation, data]);
 
-  // console.log("paymentScreen", JSON.stringify(data, null, 2));
-  // console.log("serviceList", JSON.stringify(serviceAllList, null, 2));
+  const handlePay = async () => {
+    const appNumber = data?.applicationNumber;
+    if (!appNumber) return;
+
+    const payload = {
+      ...data,
+      paymentParts: [
+        {
+          amount: sumForPay,
+          hkont: 10100403,
+          paymentType: "CASH",
+          paymentNumber: "",
+          date: "2026-05-07",
+        },
+      ],
+    };
+
+    createPaymentAsync(payload);
+
+    console.log("payload", JSON.stringify(payload, null, 2));
+  };
+
+  console.log("paymentScreen", JSON.stringify(data, null, 2));
+  console.log("cashBankHkonts", JSON.stringify(cashBankHkonts, null, 2));
 
   return (
     <Layout>
@@ -81,9 +104,13 @@ const PaymentScreen = () => {
         services={services || []}
         spareParts={spareParts || []}
         cartridges={cartridges || []}
-        total={total}
+        total={sumForPay}
       />
-      <PaymentMethods total={total} />
+      <PaymentMethods
+        total={sumForPay}
+        handlePay={handlePay}
+        cashBankHkonts={cashBankHkonts}
+      />
     </Layout>
   );
 };

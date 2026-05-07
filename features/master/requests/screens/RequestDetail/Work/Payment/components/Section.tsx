@@ -1,5 +1,5 @@
 import { TypeMaterialIconNames } from "@/types/types";
-import { formatCurrency } from "@/utils/helpers";
+import { formatCurrency, strToLowerCase } from "@/utils/helpers";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, useWindowDimensions, View } from "react-native";
 import { PaymentItem } from "../type";
@@ -9,15 +9,21 @@ export function Section({
   icon,
   items,
   size,
+  type,
 }: {
   title: string;
   icon: TypeMaterialIconNames;
   items: PaymentItem[];
   size?: number;
+  type?: "services" | "spareParts" | "cartridges";
 }) {
   const { width } = useWindowDimensions();
 
   if (!items?.length) return null;
+
+  const isCartridges = type === "cartridges";
+  const list = isCartridges ? items.slice(0, -1) : items;
+  const cartridgesTotal = isCartridges ? items[items.length - 1] : null;
 
   return (
     <View className="">
@@ -26,30 +32,44 @@ export function Section({
         <Text className="ml-2 text-green-700 font-semibold">{title}</Text>
       </View>
 
-      {items.map((item: PaymentItem, index) => (
+      {list.map((item: PaymentItem, index) => (
         <View key={index} className="flex-row items-center py-1.5">
+          <Text className="font-bold">
+            {isCartridges && item.fno ? `F${item.fno}: ` : ""}
+          </Text>
           <Text
-            numberOfLines={1}
+            numberOfLines={!isCartridges ? 1 : undefined}
             className="textDark"
-            style={{ maxWidth: width * 0.45 }}
+            style={!isCartridges ? { maxWidth: width * 0.45 } : undefined}
           >
-            {item.title}
+            {strToLowerCase(item.title)}
           </Text>
 
-          <View className="flex-1 flex-row mx-2 overflow-hidden">
-            {Array.from({ length: width }).map((_, i) => (
-              <Text key={i} className="text-grayMedium text-xs">
-                .
-              </Text>
-            ))}
-          </View>
+          {!isCartridges && (
+            <>
+              <View className="flex-1 flex-row mx-2 overflow-hidden">
+                {Array.from({ length: width }).map((_, i) => (
+                  <Text key={i} className="text-grayMedium text-xs">
+                    .
+                  </Text>
+                ))}
+              </View>
 
-          <Text className="text-gray-800">{formatCurrency(item.price)}</Text>
+              <Text className="text-gray-800">
+                {formatCurrency(item.price)}
+              </Text>
+            </>
+          )}
         </View>
       ))}
+      {/* <View className="border-t border-dashed border-gray-300 mt-3" /> */}
 
-      {/* Divider */}
-      {/* <View className="border-t border-dashed border-gray-300 mt-4 mb-2" /> */}
+      {isCartridges && cartridgesTotal && (
+        <View className="flex-row justify-between mt-2">
+          <Text className="font-semibold">Сумма картриджей</Text>
+          <Text>{formatCurrency(cartridgesTotal.price)}</Text>
+        </View>
+      )}
     </View>
   );
 }

@@ -29,7 +29,11 @@ export default function PaymentSummary({
         title="ПРОДАЖА КАРТРИДЖЕЙ"
         icon="package-variant"
         items={cartridges}
+        type="cartridges"
       />
+
+      {/* Divider */}
+      <View className="border-t border-dashed border-gray-300" />
 
       <View className="flex-row justify-between">
         <Text className="font-bold">ИТОГО</Text>

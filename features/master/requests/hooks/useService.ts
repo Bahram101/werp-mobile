@@ -45,3 +45,15 @@ export const useServiceApplication = (id?: number) => {
     });
   return { serviceApplication, isLoadingServiceApp };
 };
+
+export const useCreatePayment = () => {
+  const { mutateAsync: createPaymentAsync, isPending: isLoading } = useMutation(
+    {
+      mutationKey: ["create-payment"],
+      mutationFn: (body: any) => Services.createPayment(body),
+      retry: false,
+    },
+  );
+
+  return { createPaymentAsync, isLoading };
+};

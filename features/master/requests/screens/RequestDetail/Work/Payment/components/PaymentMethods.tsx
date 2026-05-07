@@ -1,10 +1,19 @@
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
+import { CashBankResponse } from "@/features/master/requests/types";
 import { formatCurrency } from "@/utils/helpers";
 import { useState } from "react";
 import { Switch, Text, View } from "react-native";
 import { PaymentOption } from "./PaymentOptions";
 
-export default function PaymentMethods({ total }: { total: number }) {
+export default function PaymentMethods({
+  total,
+  handlePay,
+  cashBankHkonts,
+}: {
+  total: number;
+  handlePay: () => void;
+  cashBankHkonts: CashBankResponse[];
+}) {
   const [isSplit, setIsSplit] = useState(false);
   const [method, setMethod] = useState<"cash" | "card">("cash");
 
@@ -40,11 +49,12 @@ export default function PaymentMethods({ total }: { total: number }) {
 
         <View className="flex-1">
           <AnimatedButton
+            className="h-14"
             bg="primary"
             bgPressed="primaryDark"
             textColor="white"
             // isLoading={isLoadingCheckService}
-            // onPress={handlePay}
+            onPress={handlePay}
           >
             Оплатить {formatCurrency(total)}
           </AnimatedButton>

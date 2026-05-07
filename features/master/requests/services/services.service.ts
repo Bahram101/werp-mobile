@@ -33,10 +33,7 @@ export const Services = {
 
   async checkService(body: any) {
     try {
-      const { data } = await serviceInstance.post(
-        "/smcs/master/draft/check-and-save",
-        body,
-      );
+      const { data } = await serviceInstance.post("/smcs/check", body);
       return data.data;
     } catch (e: any) {
       const raw = e.response?.data?.response;
@@ -62,6 +59,24 @@ export const Services = {
       return data.data;
     } catch (error) {
       throw error;
+    }
+  },
+
+  async createPayment(body: any) {
+    try {
+      const { data } = await serviceInstance.post(
+        "/smcs/master/draft/create-payment",
+        body,
+      );
+      return data;
+    } catch (e: any) {
+      const raw = e.response?.data?.response;
+      if (raw) {
+        const { message } = JSON.parse(raw);
+        throw new Error(message);
+      }
+
+      throw new Error(e.response?.data?.message || "Ошибка сервера");
     }
   },
 };
