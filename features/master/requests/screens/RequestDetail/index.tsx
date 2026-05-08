@@ -64,7 +64,7 @@ export default function RequestDetailScreen() {
           {
             onSuccess: () => {
               router.push({
-                pathname: ROUTES.REQUEST_WORK,
+                pathname: ROUTES.WORK,
                 params: { appNumber },
               });
             },
@@ -73,7 +73,7 @@ export default function RequestDetailScreen() {
       }
       if (requestDetail.applicationStatusId === 10) {
         router.push({
-          pathname: ROUTES.REQUEST_WORK,
+          pathname: ROUTES.WORK,
           params: {
             appNumber: String(appNumber),
             matnrId: String(requestDetail.matnrId),

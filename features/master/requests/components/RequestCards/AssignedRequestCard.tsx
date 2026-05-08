@@ -20,7 +20,9 @@ const AssignedRequestCard: FC<AssignedRequestCardProps> = ({ item }) => {
   const handlePress = () => {
     router.push({
       pathname:
-        item.applicationStatusId === 10 ? ROUTES.REQUEST_WORK : ROUTES.REQUEST,
+        item.applicationStatusId === 10
+          ? ROUTES.WORK
+          : ROUTES.REQUEST_DISTRIBUTED,
       params: { appNumber: item.applicationNumber },
     });
   };

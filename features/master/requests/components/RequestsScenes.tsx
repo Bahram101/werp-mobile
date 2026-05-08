@@ -54,19 +54,27 @@ export default function RequestsScenes({ route }: Props) {
     from,
     to,
   );
-  const { finishedSummaryData, refetchSummary, isLoading } = useFinishedSummary(
-    {
-      enabled: isFinished,
-    },
-  );
-  const { doneRequests, isLoadingDoneRequests } = useDoneRequests({
+  const { doneRequests, refetchDoneRequests } = useDoneRequests({
     enabled: isDone,
+  });
+  const { finishedSummaryData, refetchSummary } = useFinishedSummary({
+    enabled: isFinished,
   });
 
   const onRefresh = async () => {
     setRefreshing(true);
     try {
-      await Promise.all([refetch(), refetchSummary()]);
+      switch (route.key) {
+        case "assigned":
+          await refetch();
+          break;
+        case "done":
+          await refetchDoneRequests();
+          break;
+        case "finished":
+          await refetchSummary();
+          break;
+      }
     } finally {
       setRefreshing(false);
     }

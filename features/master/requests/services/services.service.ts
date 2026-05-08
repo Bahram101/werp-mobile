@@ -65,15 +65,20 @@ export const Services = {
   async createPayment(body: any) {
     try {
       const { data } = await serviceInstance.post(
-        "/smcs/master/draft/create-payment",
+        "/smcs/master/draft/create-and-payment",
         body,
       );
       return data;
     } catch (e: any) {
       const raw = e.response?.data?.response;
+
       if (raw) {
-        const { message } = JSON.parse(raw);
-        throw new Error(message);
+        try {
+          const parsed = JSON.parse(raw);
+          throw new Error(parsed.message);
+        } catch {
+          throw new Error("Ошибка сервера");
+        }
       }
 
       throw new Error(e.response?.data?.message || "Ошибка сервера");

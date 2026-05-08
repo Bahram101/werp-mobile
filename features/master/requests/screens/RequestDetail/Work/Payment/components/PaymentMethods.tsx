@@ -7,15 +7,20 @@ import { PaymentOption } from "./PaymentOptions";
 
 export default function PaymentMethods({
   total,
-  handlePay,
   cashBankHkonts,
+  isPaymentLoading,
+  method,
+  setMethod,
+  handlePay,
 }: {
   total: number;
-  handlePay: () => void;
+  method: "cash" | "card";
+  isPaymentLoading: boolean;
+  setMethod: React.Dispatch<React.SetStateAction<"cash" | "card">>;
   cashBankHkonts: CashBankResponse[];
+  handlePay: () => void;
 }) {
   const [isSplit, setIsSplit] = useState(false);
-  const [method, setMethod] = useState<"cash" | "card">("cash");
 
   return (
     <View className="bg-white rounded-2xl p-4 mt-4">
@@ -53,7 +58,7 @@ export default function PaymentMethods({
             bg="primary"
             bgPressed="primaryDark"
             textColor="white"
-            // isLoading={isLoadingCheckService}
+            isLoading={isPaymentLoading}
             onPress={handlePay}
           >
             Оплатить {formatCurrency(total)}

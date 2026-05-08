@@ -47,13 +47,12 @@ export const useServiceApplication = (id?: number) => {
 };
 
 export const useCreatePayment = () => {
-  const { mutateAsync: createPaymentAsync, isPending: isLoading } = useMutation(
-    {
+  const { mutateAsync: createPaymentAsync, isPending: isPaymentLoading } =
+    useMutation({
       mutationKey: ["create-payment"],
       mutationFn: (body: any) => Services.createPayment(body),
       retry: false,
-    },
-  );
+    });
 
-  return { createPaymentAsync, isLoading };
+  return { createPaymentAsync, isPaymentLoading };
 };

@@ -63,7 +63,7 @@ const RequestWorkScreen = () => {
     return <Loader />;
   }
 
-  const handlePay = async () => {
+  const handleCheck = async () => {
     if (!request) return;
     const mapServiceItem = (item: any) => ({
       currencyId: 3,
@@ -115,33 +115,17 @@ const RequestWorkScreen = () => {
       ],
     };
 
-    // console.log("PAYLOAD", JSON.stringify(payload, null, 2));
-    // console.log("services", JSON.stringify(services, null, 2));
-
     try {
       const res = await checkServiceAsync(payload);
       queryClient.setQueryData(["check-service-result"], res);
       router.push({
-        pathname: ROUTES.REQUEST_WORK_PAYMENT,
+        pathname: ROUTES.WORK_PAYMENT,
         params: { appNumber: String(appNumber) },
       });
     } catch (e: any) {
       Alert.alert("Ошибка", e.message);
     }
   };
-
-  // console.log(
-  //   "selectedServiceItems",
-  //   JSON.stringify(selectedServiceItems, null, 2),
-  // );
-  // console.log(
-  //   "selectedSpareItems",
-  //   JSON.stringify(selectedSpareItems, null, 2),
-  // );
-  // console.log(
-  //   "selectedCartridgeItems",
-  //   JSON.stringify(selectedCartridgeItems, null, 2),
-  // );
 
   return (
     <Layout className="flex-columns gap-4">
@@ -166,7 +150,7 @@ const RequestWorkScreen = () => {
           bgPressed="primaryDark"
           textColor="white"
           isLoading={isLoadingCheckService}
-          onPress={handlePay}
+          onPress={handleCheck}
         >
           Проверить
         </AnimatedButton>

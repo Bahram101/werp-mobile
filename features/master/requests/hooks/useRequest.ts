@@ -69,15 +69,18 @@ export const useDoneRequests = ({ enabled }: { enabled: boolean }) => {
   const { user } = useAuth();
   const masterId = user?.userInfo.currentStaff.staffId;
 
-  const { data: doneRequests = [], isLoading: isLoadingDoneRequests } =
-    useQuery({
-      queryKey: ["get-master-done-requests", masterId],
-      queryFn: () => RequestService.getMastersDoneRequests(masterId!),
-      enabled,
-      retry: false,
-      staleTime: 1000 * 30,
-    });
-  return { doneRequests, isLoadingDoneRequests };
+  const {
+    data: doneRequests = [],
+    isLoading: isLoadingDoneRequests,
+    refetch: refetchDoneRequests,
+  } = useQuery({
+    queryKey: ["get-master-done-requests", masterId],
+    queryFn: () => RequestService.getMastersDoneRequests(masterId!),
+    enabled,
+    retry: false,
+    staleTime: 1000 * 30,
+  });
+  return { doneRequests, isLoadingDoneRequests, refetchDoneRequests };
 };
 
 export const useDoneRequestDetail = (id: number) => {

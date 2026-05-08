@@ -19,7 +19,7 @@ export default function AccountabilitiesScenes({ route }: Props) {
   let status = null;
 
   switch (route.key) {
-    case "report":
+    case "assigned":
       break;
     case "new":
       status = 1;
@@ -42,7 +42,19 @@ export default function AccountabilitiesScenes({ route }: Props) {
   const onRefresh = async () => {
     setRefreshing(true);
     try {
-      Promise.all([refetchAccountibilities(), refetchStatuses()]);
+      switch (route.key) {
+        case "assigned":
+          refetchAccountibilities();
+          break;
+        case "new":
+          refetchStatuses();
+          break;
+        case "closed":
+          refetchStatuses();
+          break;
+        default:
+          break;
+      }
     } finally {
       setRefreshing(false);
     }

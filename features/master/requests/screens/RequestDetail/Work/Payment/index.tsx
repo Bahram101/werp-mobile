@@ -1,9 +1,11 @@
 import Layout from "@/components/ui/master/Layout";
+import { ROUTES } from "@/constants/routes";
 import { useCashBankHkonts } from "@/features/master/requests/hooks/useFinance";
 import { useCreatePayment } from "@/features/master/requests/hooks/useService";
+import { getToday } from "@/utils/date";
 import { useQueryClient } from "@tanstack/react-query";
-import { useNavigation } from "expo-router";
-import React, { useEffect, useMemo } from "react";
+import { router, useNavigation } from "expo-router";
+import React, { useEffect, useMemo, useState } from "react";
 import PaymentMethods from "./components/PaymentMethods";
 import PaymentSummary from "./components/PaymentSummary";
 import { PaymentItem } from "./type";
@@ -23,8 +25,9 @@ type GroupedPayment = {
 const PaymentScreen = () => {
   const navigation = useNavigation();
   const queryClient = useQueryClient();
+  const [method, setMethod] = useState<"cash" | "card">("cash");
   const { cashBankHkonts, isLoadingCashBankHkonts } = useCashBankHkonts();
-  const { createPaymentAsync, isLoading } = useCreatePayment();
+  const { createPaymentAsync, isPaymentLoading } = useCreatePayment();
 
   const data = queryClient.getQueryData<CheckServiceResponse>([
     "check-service-result",
@@ -82,21 +85,25 @@ const PaymentScreen = () => {
       paymentParts: [
         {
           amount: sumForPay,
-          hkont: 10100403,
-          paymentType: "CASH",
+          hkont: method === "cash" ? 10100403 : 10300220,
+          paymentType: method === "cash" ? "CASH" : "CASHLESS",
           paymentNumber: "",
-          date: "2026-05-07",
+          date: getToday(),
         },
       ],
     };
-
-    createPaymentAsync(payload);
-
     console.log("payload", JSON.stringify(payload, null, 2));
+
+    await createPaymentAsync(payload, {
+      onSuccess: () => {
+        router.push({
+          pathname: ROUTES.PAYMENT_SUCCESS,
+        });
+      },
+    });
   };
 
   console.log("paymentScreen", JSON.stringify(data, null, 2));
-  console.log("cashBankHkonts", JSON.stringify(cashBankHkonts, null, 2));
 
   return (
     <Layout>
@@ -108,8 +115,11 @@ const PaymentScreen = () => {
       />
       <PaymentMethods
         total={sumForPay}
-        handlePay={handlePay}
         cashBankHkonts={cashBankHkonts}
+        isPaymentLoading={isPaymentLoading}
+        method={method}
+        setMethod={setMethod}
+        handlePay={handlePay}
       />
     </Layout>
   );
