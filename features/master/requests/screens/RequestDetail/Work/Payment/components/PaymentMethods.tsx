@@ -14,9 +14,9 @@ export default function PaymentMethods({
   handlePay,
 }: {
   total: number;
-  method: "cash" | "card";
+  method: "cash" | "cashless";
   isPaymentLoading: boolean;
-  setMethod: React.Dispatch<React.SetStateAction<"cash" | "card">>;
+  setMethod: React.Dispatch<React.SetStateAction<"cash" | "cashless">>;
   cashBankHkonts: CashBankResponse[];
   handlePay: () => void;
 }) {
@@ -47,8 +47,8 @@ export default function PaymentMethods({
           <PaymentOption
             label="Безналичные"
             icon="credit-card-outline"
-            isActive={method === "card"}
-            onPress={() => setMethod("card")}
+            isActive={method === "cashless"}
+            onPress={() => setMethod("cashless")}
           />
         </View>
 

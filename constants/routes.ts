@@ -3,7 +3,8 @@ export const ROUTES = {
   REQUEST_DISTRIBUTED: "/(apps)/master/(tabs)/requests/[appNumber]",
   REQUEST_DONE: "/(apps)/master/(tabs)/requests/done-requests/[id]",
   WORK: "/(apps)/master/(tabs)/requests/[appNumber]/work",
-  WORK_PAYMENT: "/(apps)/master/(tabs)/requests/[appNumber]/work/payment",
+  PAYMENT: "/(apps)/master/(tabs)/requests/[appNumber]/work/payment",
+  QR_PAYMENT: "/(apps)/master/(tabs)/requests/[appNumber]/work/qr-payment",
   PAYMENT_SUCCESS: "/(apps)/master/payment-success",
   REQUEST_HISTORY: "/(apps)/master/(tabs)/requests/[appNumber]/history",
   REQUEST_HISTORY_DETAIL:

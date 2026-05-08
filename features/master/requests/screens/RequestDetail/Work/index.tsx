@@ -119,7 +119,7 @@ const RequestWorkScreen = () => {
       const res = await checkServiceAsync(payload);
       queryClient.setQueryData(["check-service-result"], res);
       router.push({
-        pathname: ROUTES.WORK_PAYMENT,
+        pathname: ROUTES.PAYMENT,
         params: { appNumber: String(appNumber) },
       });
     } catch (e: any) {

@@ -25,7 +25,7 @@ type GroupedPayment = {
 const PaymentScreen = () => {
   const navigation = useNavigation();
   const queryClient = useQueryClient();
-  const [method, setMethod] = useState<"cash" | "card">("cash");
+  const [method, setMethod] = useState<"cash" | "cashless">("cash");
   const { cashBankHkonts, isLoadingCashBankHkonts } = useCashBankHkonts();
   const { createPaymentAsync, isPaymentLoading } = useCreatePayment();
 
@@ -92,18 +92,32 @@ const PaymentScreen = () => {
         },
       ],
     };
-    console.log("payload", JSON.stringify(payload, null, 2));
 
-    await createPaymentAsync(payload, {
-      onSuccess: () => {
-        router.push({
-          pathname: ROUTES.PAYMENT_SUCCESS,
-        });
-      },
-    });
+    if (method === "cash") {
+      console.log("CASH CASH CASH");
+      // await createPaymentAsync(payload, {
+      //   onSuccess: () => {
+      //     router.push({
+      //       pathname: ROUTES.PAYMENT_SUCCESS,
+      //     });
+      //   },
+      // });
+      return;
+    } else if (method === "cashless") {
+      console.log("CASHLESS CASHLESS CASHLESS");
+      router.push({
+        pathname: ROUTES.QR_PAYMENT,
+        params: {
+          sumForPay: payload.sumForPay,
+        },
+      });
+    }
+
+    console.log("payload", JSON.stringify(payload, null, 2));
   };
 
   console.log("paymentScreen", JSON.stringify(data, null, 2));
+  console.log("method", JSON.stringify(method, null, 2));
 
   return (
     <Layout>
