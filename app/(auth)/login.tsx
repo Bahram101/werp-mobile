@@ -40,6 +40,7 @@ const Auth = () => {
                 <Text className="text-2xl text-center mb-4">Sign in</Text>
 
                 <Field<AuthFormData>
+                  className="rounded-3xl"
                   placeholder="Введите логин"
                   keyboardType="email-address"
                   control={control}
@@ -54,6 +55,7 @@ const Auth = () => {
                 />
 
                 <Field<AuthFormData>
+                  className="rounded-3xl"
                   placeholder="Введите пароль"
                   control={control}
                   name="password"

@@ -94,7 +94,6 @@ const PaymentScreen = () => {
     };
 
     if (method === "cash") {
-      console.log("CASH CASH CASH");
       // await createPaymentAsync(payload, {
       //   onSuccess: () => {
       //     router.push({
@@ -104,7 +103,7 @@ const PaymentScreen = () => {
       // });
       return;
     } else if (method === "cashless") {
-      console.log("CASHLESS CASHLESS CASHLESS");
+      queryClient.setQueryData(["qr-payment"], payload);
       router.push({
         pathname: ROUTES.QR_PAYMENT,
         params: {
@@ -113,11 +112,11 @@ const PaymentScreen = () => {
       });
     }
 
-    console.log("payload", JSON.stringify(payload, null, 2));
+    // console.log("payload", JSON.stringify(payload, null, 2));
   };
 
-  console.log("paymentScreen", JSON.stringify(data, null, 2));
-  console.log("method", JSON.stringify(method, null, 2));
+  // console.log("paymentScreen", JSON.stringify(data, null, 2));
+  // console.log("method", JSON.stringify(method, null, 2));
 
   return (
     <Layout>
