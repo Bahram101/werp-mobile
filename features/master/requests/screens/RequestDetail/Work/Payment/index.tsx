@@ -6,6 +6,7 @@ import { getToday } from "@/utils/date";
 import { useQueryClient } from "@tanstack/react-query";
 import { router, useNavigation } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
+import { Alert } from "react-native";
 import PaymentMethods from "./components/PaymentMethods";
 import PaymentSummary from "./components/PaymentSummary";
 import { PaymentItem } from "./type";
@@ -94,29 +95,30 @@ const PaymentScreen = () => {
     };
 
     if (method === "cash") {
-      // await createPaymentAsync(payload, {
-      //   onSuccess: () => {
-      //     router.push({
-      //       pathname: ROUTES.PAYMENT_SUCCESS,
-      //     });
-      //   },
-      // });
+      try {
+        await createPaymentAsync(payload);
+
+        router.push({
+          pathname: ROUTES.PAYMENT_SUCCESS,
+        });
+      } catch (e: any) {
+        Alert.alert("Ошибка", e.message);
+      }
+
       return;
-    } else if (method === "cashless") {
+    }
+
+    if (method === "cashless") {
       queryClient.setQueryData(["qr-payment"], payload);
       router.push({
         pathname: ROUTES.QR_PAYMENT,
         params: {
-          sumForPay: payload.sumForPay,
+          appNumber: String(payload.applicationNumber),
+          method,
         },
       });
     }
-
-    // console.log("payload", JSON.stringify(payload, null, 2));
   };
-
-  // console.log("paymentScreen", JSON.stringify(data, null, 2));
-  // console.log("method", JSON.stringify(method, null, 2));
 
   return (
     <Layout>

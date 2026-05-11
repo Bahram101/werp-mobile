@@ -1,22 +1,39 @@
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import { Field } from "@/components/ui/input/Field";
 import Layout from "@/components/ui/master/Layout";
+import { ROUTES } from "@/constants/routes";
+import { useCreatePayment } from "@/features/master/requests/hooks/useService";
 import { useQueryClient } from "@tanstack/react-query";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Image, View } from "react-native";
+import { Alert, Image, View } from "react-native";
+
+type QrPaymentParams = {
+  sumForPay: string;
+  method: "cash" | "cashless";
+};
+
+type CheckServiceResponse = {
+  paymentParts: {
+    amount: number;
+    hkont: number;
+    paymentType: string;
+    paymentNumber: string;
+    date: string;
+  }[];
+};
 
 const QrPaymentScreen = () => {
   const navigation = useNavigation();
   const queryClient = useQueryClient();
-  const { sumForPay } = useLocalSearchParams();
-  const data = queryClient.getQueryData(["qr-payment"]);
+  const { method } = useLocalSearchParams<QrPaymentParams>();
+  const data = queryClient.getQueryData<CheckServiceResponse>(["qr-payment"]);
+  const { createPaymentAsync, isPaymentLoading } = useCreatePayment();
   const { control, reset, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues: {
-      username: "bolat.ab",
-      password: "",
+      paymentNumber: "",
     },
   });
 
@@ -38,7 +55,33 @@ const QrPaymentScreen = () => {
     };
   }, [navigation]);
 
+  const onSubmit = async (values: { paymentNumber: string }) => {
+    if (!data) return;
+
+    const payload = {
+      ...data,
+      paymentParts: data.paymentParts.map((item) => ({
+        ...item,
+        paymentNumber:
+          method === "cashless" ? String(values.paymentNumber) : "",
+      })),
+    };
+
+    try {
+      await createPaymentAsync(payload);
+
+      router.push({
+        pathname: ROUTES.PAYMENT_SUCCESS,
+      });
+
+      reset();
+    } catch (e: any) {
+      Alert.alert("Ошибка", e.message);
+    }
+  };
+
   console.log("qr-payment data", JSON.stringify(data, null, 2));
+  console.log("method", JSON.stringify(method, null, 2));
 
   return (
     <Layout className="bg-white justify-center items-center rounded-lg py-10">
@@ -53,16 +96,12 @@ const QrPaymentScreen = () => {
 
         <View className="">
           <Field
-            placeholder="Введите логин"
+            placeholder="Номер оплаты"
             keyboardType="email-address"
             control={control}
-            name="username"
+            name="paymentNumber"
             rules={{
-              required: "Login is required!",
-              minLength: {
-                value: 3,
-                message: "Please enter at least 3 characters",
-              },
+              required: "Payment number is required",
             }}
           />
         </View>
@@ -73,8 +112,8 @@ const QrPaymentScreen = () => {
             bg="primary"
             bgPressed="primaryDark"
             textColor="white"
-            // isLoading={isPaymentLoading}
-            // onPress={handlePay}
+            isLoading={isPaymentLoading}
+            onPress={handleSubmit(onSubmit)}
           >
             Подтвердить
           </AnimatedButton>

@@ -8,6 +8,7 @@ export const useServices = () => {
   >({
     queryKey: ["get-services"],
     queryFn: () => Services.getServices(),
+    retry: 1,
   });
   return { services, isLoading };
 };
@@ -16,8 +17,8 @@ export const usePositioniSum = (id?: number) => {
   const { data: positionSum = {}, isFetching: isLoading } = useQuery({
     queryKey: ["get-position-sum", id],
     queryFn: () => Services.getPositionSum(id!),
+    retry: 1,
     enabled: !!id,
-    retry: false,
   });
   return { positionSum, isLoading };
 };
@@ -30,6 +31,7 @@ export const useCheckServices = () => {
   } = useMutation({
     mutationKey: ["check-service"],
     mutationFn: (body: any) => Services.checkService(body),
+    retry: false,
   });
 
   return { checkServiceAsync, resCheckServices, isLoading };
@@ -40,8 +42,8 @@ export const useServiceApplication = (id?: number) => {
     useQuery({
       queryKey: ["get-service-application", id],
       queryFn: () => Services.getServiceApp(id!),
+      retry: 1,
       enabled: !!id,
-      retry: false,
     });
   return { serviceApplication, isLoadingServiceApp };
 };

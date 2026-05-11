@@ -12,9 +12,8 @@ export const useMatnr = (serviceTypeId: number) => {
     queryKey: ["get-matnr-list", masterId, serviceTypeId],
     queryFn: () =>
       MatnrService.getMatnrList(masterId!, bukrs!, branchId!, serviceTypeId),
+    retry: 1,
     enabled: !!masterId && !!bukrs && !!branchId && !!serviceTypeId,
-    staleTime: 1000 * 60 * 60,
-    retry: false,
   });
   return { data, isLoading };
 };

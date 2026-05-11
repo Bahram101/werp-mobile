@@ -17,8 +17,8 @@ export const useRequests = (status: string, from?: string, to?: string) => {
     queryKey: ["get-master-requests", masterId, status, from, to],
     queryFn: () => RequestService.getMasterRequests(masterId!, status, bukrs),
     enabled: !!masterId,
-    retry: false,
-    staleTime: 1000 * 30,
+    staleTime: 0,
+    retry: 1,
   });
   return { requests, isLoadingRequests, refetch };
 };
@@ -31,7 +31,7 @@ export const useRequestDetail = (id: number) => {
   } = useQuery({
     queryKey: ["get-master-request-details", id],
     queryFn: () => RequestService.getMasterRequestDetail(id),
-    staleTime: 1000 * 60 * 5,
+    retry: 1,
   });
 
   return {
@@ -76,9 +76,8 @@ export const useDoneRequests = ({ enabled }: { enabled: boolean }) => {
   } = useQuery({
     queryKey: ["get-master-done-requests", masterId],
     queryFn: () => RequestService.getMastersDoneRequests(masterId!),
-    enabled,
     retry: false,
-    staleTime: 1000 * 30,
+    enabled,
   });
   return { doneRequests, isLoadingDoneRequests, refetchDoneRequests };
 };
@@ -88,9 +87,8 @@ export const useDoneRequestDetail = (id: number) => {
     useQuery({
       queryKey: ["get-done-request-detail", id],
       queryFn: () => RequestService.getMasterDoneRequestDetail(id),
-      staleTime: 1000 * 60 * 5,
-      enabled: !!id,
       retry: false,
+      enabled: !!id,
     });
 
   return {

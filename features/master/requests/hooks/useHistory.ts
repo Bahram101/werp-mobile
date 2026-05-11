@@ -5,7 +5,7 @@ export const useHistories = (contractNumber: number) => {
   const { data: historyList = [], isFetching: isLoading } = useQuery({
     queryKey: ["get-request-history", contractNumber],
     queryFn: () => HistoryService.getHistoryList(contractNumber),
-    staleTime: 1000 * 60 * 5,
+    retry: 1,
   });
   return { historyList, isLoading };
 };

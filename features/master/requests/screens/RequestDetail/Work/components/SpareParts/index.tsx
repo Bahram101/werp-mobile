@@ -43,7 +43,7 @@ const SparePart = ({
         selectedItems,
         handleAddPart,
       },
-      { title: "Продажа запчастей", snapPoints: ["80%"] },
+      { title: "Продажа запчастей", snapPoints: ["100%"] },
     );
   };
 

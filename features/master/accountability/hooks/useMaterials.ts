@@ -10,7 +10,6 @@ export const useMaterials = () => {
     queryKey: ["get-materials", werksId],
     queryFn: () => MaterialsService.getMaterials(werksId),
     enabled: !!werksId,
-    staleTime: 1000 * 60 * 60,
     retry: false,
   });
   return { data, isLoading };

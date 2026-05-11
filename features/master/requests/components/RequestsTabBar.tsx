@@ -26,12 +26,14 @@ export default function RequestsTabBar(props: TabBarProps<any>) {
         // width: "100%",
         borderRadius: 20,
         marginVertical: 3,
-        // marginLeft: 3,
-        marginHorizontal: 3,
+        marginLeft: 3,
+        marginRight: 3,
+        // marginHorizontal: 3,
       }}
       tabStyle={{
         flex: 1,
         // width: 'auto',
+        // paddingHorizontal: 3,
       }}
       renderTabBarItem={(itemProps) => {
         const { key, ...rest } = itemProps;

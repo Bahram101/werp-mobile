@@ -139,14 +139,16 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
               )}
             </View>
           )}
+          {children}
+
           {/* scroll only body */}
           {/* <BottomSheetScrollView
             style={{ flex: 1 }}
             keyboardShouldPersistTaps="handled"
             contentContainerStyle={{ paddingBottom: 40 }}
-          > */}
-          {children}
-          {/* </BottomSheetScrollView> */}
+          >
+            {children}
+          </BottomSheetScrollView> */}
         </View>
       </BottomSheet>
     );

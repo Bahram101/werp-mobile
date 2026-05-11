@@ -24,6 +24,8 @@ const DoneRequestCard: FC<DoneRequestCardProps> = ({ item }) => {
     });
   };
 
+  console.log("item in DoneRequestCard", JSON.stringify(item, null, 2));
+
   return (
     <AnimatedBlock onPress={handlePress}>
       <View className="flex-row items-center pb-3 border-b mb-3 border-grayLight gap-2">

@@ -12,6 +12,7 @@ export const useCashBankHkonts = () => {
     useQuery<CashBankResponse[]>({
       queryKey: ["get-finance-data", bukrs, branchId],
       queryFn: () => FinanceService.getCashBankHkonts(bukrs, branchId),
+      retry: 1,
       enabled: !!bukrs && !!branchId,
     });
 

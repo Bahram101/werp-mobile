@@ -1,4 +1,5 @@
 import { MatnrItem, SelectedMatnrItem } from "@/features/master/requests/types";
+import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import React from "react";
 import SparePartModalListItem from "./SparePartModalListItem";
 
@@ -15,19 +16,23 @@ const SparePartModalList = ({
   selectedItems,
   handleAddPart,
 }: Props) => {
+  console.log("SPARE PARTS DATA", JSON.stringify(data, null, 2));
   return (
-    <>
-      {data.map((item, index) => (
+    <BottomSheetFlatList
+      data={data}
+      keyExtractor={(item: any) => item.matnrId.toString()}
+      keyboardShouldPersistTaps="handled"
+      contentContainerStyle={{ paddingBottom: 40 }}
+      renderItem={({ item, index }: { item: MatnrItem; index: number }) => (
         <SparePartModalListItem
-          key={item.index}
           item={item}
-          isSelected={selectedIds?.includes(String(item.index))}
           isLast={index === data.length - 1}
+          isSelected={selectedIds.includes(String(item.matnrId))}
           selectedItems={selectedItems}
           onAddPart={handleAddPart}
         />
-      ))}
-    </>
+      )}
+    />
   );
 };
 

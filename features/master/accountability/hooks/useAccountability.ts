@@ -14,8 +14,8 @@ export const useAssignedMaterials = <T = unknown>() => {
   } = useQuery<T>({
     queryKey: ["get-assigned-materials", masterId],
     queryFn: () => AssignedMaterialsService.getAssignedMaterials(masterId, 3),
+    retry: 1,
     enabled: !!masterId,
-    staleTime: 1000 * 60 * 60,
   });
   return { data, isLoading, refetchAccountibilities };
 };
@@ -34,8 +34,8 @@ export const useAccountabilityRequests = <T = unknown>(statusId: number) => {
         statusId,
         masterId,
       ),
+    retry: 1,
     enabled: !!statusId,
-    staleTime: 1000 * 60 * 60,
   });
   return { statusesData, isStatusesLoading, refetchStatuses };
 };
@@ -48,8 +48,8 @@ export const useAccountabilityRequestDetail = (id: number) => {
   } = useQuery({
     queryKey: ["get-accountability-request-detail", id],
     queryFn: () => AccountabilityService.getAccountibilityRequestById(id),
+    retry: 1,
     enabled: !!id,
-    staleTime: 1000 * 60 * 5,
   });
   return {
     accountabilityReqDetail,
