@@ -4,7 +4,7 @@ import Layout from "@/components/ui/master/Layout";
 import { ROUTES } from "@/constants/routes";
 import { useCreatePayment } from "@/features/master/requests/hooks/useService";
 import { useQueryClient } from "@tanstack/react-query";
-import { router, useLocalSearchParams, useNavigation } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Alert, Image, View } from "react-native";
@@ -27,8 +27,10 @@ type CheckServiceResponse = {
 const QrPaymentScreen = () => {
   const navigation = useNavigation();
   const queryClient = useQueryClient();
-  const { method } = useLocalSearchParams<QrPaymentParams>();
   const data = queryClient.getQueryData<CheckServiceResponse>(["qr-payment"]);
+  const dataSplit = queryClient.getQueryData<CheckServiceResponse>([
+    "qr-payment-split",
+  ]);
   const { createPaymentAsync, isPaymentLoading } = useCreatePayment();
   const { control, reset, handleSubmit } = useForm({
     mode: "onChange",
@@ -56,32 +58,33 @@ const QrPaymentScreen = () => {
   }, [navigation]);
 
   const onSubmit = async (values: { paymentNumber: string }) => {
-    if (!data) return;
+    console.log("values", values);
+    console.log("QR_Data_Split", JSON.stringify(dataSplit, null, 2));
+    if (!dataSplit) return;
 
     const payload = {
-      ...data,
-      paymentParts: data.paymentParts.map((item) => ({
-        ...item,
-        paymentNumber:
-          method === "cashless" ? String(values.paymentNumber) : "",
-      })),
+      ...dataSplit,
+      paymentParts: dataSplit.paymentParts.map((item) =>
+        item.paymentType === "CASHLESS"
+          ? {
+              ...item,
+              paymentNumber: values.paymentNumber,
+            }
+          : item,
+      ),
     };
+    console.log("QR_PAYLOAD", JSON.stringify(payload, null, 2));
 
     try {
       await createPaymentAsync(payload);
-
       router.push({
         pathname: ROUTES.PAYMENT_SUCCESS,
       });
-
       reset();
     } catch (e: any) {
       Alert.alert("Ошибка", e.message);
     }
   };
-
-  console.log("qr-payment data", JSON.stringify(data, null, 2));
-  console.log("method", JSON.stringify(method, null, 2));
 
   return (
     <Layout className="bg-white justify-center items-center rounded-lg py-10">
@@ -101,7 +104,7 @@ const QrPaymentScreen = () => {
             control={control}
             name="paymentNumber"
             rules={{
-              required: "Payment number is required",
+              required: "Поле обязательно",
             }}
           />
         </View>

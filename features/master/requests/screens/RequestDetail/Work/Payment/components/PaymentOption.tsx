@@ -9,6 +9,7 @@ type PaymentOptionProps = {
   icon: TypeMaterialIconNames;
   isActive: boolean;
   method?: "cash" | "card";
+  isSplit?: boolean;
   onPress: () => void;
 };
 
@@ -17,6 +18,7 @@ export function PaymentOption({
   icon,
   isActive,
   method,
+  isSplit,
   onPress,
 }: PaymentOptionProps) {
   return (
@@ -24,16 +26,23 @@ export function PaymentOption({
       onPress={onPress}
       className={cn(
         "flex-1 flex-row items-center justify-center rounded-xl border p-3",
-        isActive ? "border-primary bg-green-100" : "border-grayMedium",
+        isActive || isSplit
+          ? "border-primary bg-green-100"
+          : "border-grayMedium",
       )}
     >
       <MaterialCommunityIcons
         name={icon}
         size={method === "cash" ? 25 : 19}
-        color={isActive ? COLORS.primary : COLORS.grayDark}
+        color={isActive || isSplit ? COLORS.primary : COLORS.grayDark}
       />
 
-      <Text className={cn("ml-2", isActive ? "text-primary" : "text-grayDark")}>
+      <Text
+        className={cn(
+          "ml-2",
+          isActive || isSplit ? "text-primary" : "text-grayDark",
+        )}
+      >
         {label}
       </Text>
     </Pressable>

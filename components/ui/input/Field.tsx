@@ -27,7 +27,7 @@ export const Field = <T extends Record<string, any>>({
           <>
             <Input
               className={cn(
-                "mt-4 h-[45px] px-1",
+                "h-[45px] px-1",
                 error ? "border-red" : "border-[#D6D1D2]",
                 className,
               )}
