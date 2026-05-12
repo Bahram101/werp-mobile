@@ -10,8 +10,14 @@ export const Services = {
     }
   },
 
-  async getPositionSum(serviceTypeId: number) {
+  async getPositionSum(
+    serviceTypeId: number,
+    bukrs: number,
+    branchId: number,
+    productId: number,
+  ) {
     try {
+      console.log("serviveTypeId", serviceTypeId);
       const { data } = await serviceInstance.post(
         "/smcs/getPositionSum",
         {
@@ -19,9 +25,9 @@ export const Services = {
         },
         {
           params: {
-            bukrs: 1000,
-            branchId: 61,
-            productId: 812,
+            bukrs: bukrs,
+            branchId: branchId,
+            productId: productId,
           },
         },
       );

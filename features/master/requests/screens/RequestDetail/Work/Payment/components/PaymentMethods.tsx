@@ -22,6 +22,7 @@ export default function PaymentMethods({
   handleSubmit,
   setMethod,
   handlePay,
+  setLastChanged,
 }: {
   currencyName: string;
   total: number;
@@ -33,6 +34,7 @@ export default function PaymentMethods({
   control: Control<FormValues>;
   handleSubmit: UseFormHandleSubmit<FormValues>;
   handlePay: (values: FormValues) => void;
+  setLastChanged: Dispatch<SetStateAction<"cashVal" | "cashlessVal" | null>>;
 }) {
   return (
     <View className="bg-white rounded-2xl p-4 mt-4">
@@ -80,6 +82,7 @@ export default function PaymentMethods({
                 name="cashVal"
                 isCurrency={true}
                 currencyName={currencyName}
+                onValueChange={() => setLastChanged("cashVal")}
                 rules={{
                   required: "Поле обязательно",
                 }}
@@ -94,6 +97,7 @@ export default function PaymentMethods({
                 name="cashlessVal"
                 isCurrency={true}
                 currencyName={currencyName}
+                onValueChange={() => setLastChanged("cashlessVal")}
                 rules={{
                   required: "Поле обязательно",
                 }}

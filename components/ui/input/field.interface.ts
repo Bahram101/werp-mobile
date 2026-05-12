@@ -18,4 +18,5 @@ export interface IField<T extends FieldValues> extends Omit<
   >;
   isCurrency?: boolean;
   currencyName?: string;
+  onValueChange?: (value: string) => void;
 }

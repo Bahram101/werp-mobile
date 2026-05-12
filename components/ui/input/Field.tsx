@@ -15,6 +15,7 @@ export const Field = <T extends Record<string, any>>({
   className,
   isCurrency,
   currencyName,
+  onValueChange,
   ...rest
 }: IField<T>): JSX.Element => {
   return (
@@ -46,10 +47,12 @@ export const Field = <T extends Record<string, any>>({
                 }
                 onChangeText={(text) => {
                   if (isCurrency) {
-                    const cleaned = text.replace(/[^0-9]/g, "");
+                    const cleaned = (text || "").replace(/[^0-9]/g, "");
                     onChange(cleaned);
+                    onValueChange?.(cleaned);
                   } else {
-                    onChange(text);
+                    onChange(text || "");
+                    onValueChange?.(text || "");
                   }
                 }}
                 {...rest}

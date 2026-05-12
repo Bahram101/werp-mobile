@@ -8,12 +8,18 @@ import { Pressable, Text, View } from "react-native";
 import ServiceTable from "./ServiceTable";
 
 type ServicesProps = {
+  matnrId?: number;
   data: ServiceItem[];
   selectedItems: ServiceItem[];
   setSelectedItems: Dispatch<SetStateAction<ServiceItem[]>>;
 };
 
-const Services = ({ data, selectedItems, setSelectedItems }: ServicesProps) => {
+const Services = ({
+  matnrId,
+  data,
+  selectedItems,
+  setSelectedItems,
+}: ServicesProps) => {
   const { showBottomSheet, updateModalProps } = useBottomSheet();
 
   const selectedIds = selectedItems.map((i) => String(i.id));
@@ -23,7 +29,7 @@ const Services = ({ data, selectedItems, setSelectedItems }: ServicesProps) => {
       ? Number(selectedIds[selectedIds.length - 1])
       : undefined;
 
-  const { positionSum, isLoading } = usePositioniSum(lastId);
+  const { positionSum, isLoading } = usePositioniSum(lastId, matnrId);
 
   useEffect(() => {
     updateModalProps({

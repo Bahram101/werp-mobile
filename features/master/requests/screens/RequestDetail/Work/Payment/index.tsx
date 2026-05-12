@@ -30,9 +30,9 @@ const PaymentScreen = () => {
   const [method, setMethod] = useState<"cash" | "cashless">("cash");
   const [isSplit, setIsSplit] = useState(false);
   const { createPaymentAsync, isPaymentLoading } = useCreatePayment();
-  const [lastChanged, setLastChanged] = useState<"cash" | "cashless" | null>(
-    null,
-  );
+  const [lastChanged, setLastChanged] = useState<
+    "cashVal" | "cashlessVal" | null
+  >(null);
   const { control, handleSubmit, setValue, watch } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -41,22 +41,70 @@ const PaymentScreen = () => {
     },
   });
 
+  const cashVal = watch("cashVal");
+  const cashlessVal = watch("cashlessVal");
+
   useEffect(() => {
-    if (!isSplit || !lastChanged) return;
+    if (!isSplit || lastChanged !== "cashVal") return;
 
-    if (lastChanged === "cash") {
-      const rest = sumForPay - (Number(cash) || 0);
-      setValue("cashlessVal", rest >= 0 ? String(rest) : "0");
+    if (!cashVal) {
+      setValue("cashlessVal", "");
+      return;
     }
 
-    if (lastChanged === "cashless") {
-      const rest = sumForPay - (Number(cashless) || 0);
-      setValue("cashVal", rest >= 0 ? String(rest) : "0");
-    }
-  }, [cash, cashless, lastChanged]);
+    const rest = sumForPay - Number(cashVal);
+    setValue("cashlessVal", rest >= 0 ? String(rest) : "0");
+  }, [cashVal, lastChanged]);
 
-  const cash = watch("cashVal");
-  const cashless = watch("cashlessVal");
+  useEffect(() => {
+    if (!isSplit || lastChanged !== "cashlessVal") return;
+
+    if (!cashlessVal) {
+      setValue("cashVal", "");
+      return;
+    }
+
+    const rest = sumForPay - Number(cashlessVal);
+    setValue("cashVal", rest >= 0 ? String(rest) : "0");
+  }, [cashlessVal, lastChanged]);
+
+  // useEffect(() => {
+  //   if (!isSplit || !lastChanged) return;
+
+  //   if (lastChanged === "cash") {
+  //     if (!cashVal) {
+  //       setValue("cashlessVal", "");
+  //       return;
+  //     }
+
+  //     const rest = sumForPay - Number(cashVal);
+  //     setValue("cashlessVal", rest >= 0 ? String(rest) : "0");
+  //   }
+
+  //   if (lastChanged === "cashless") {
+  //     if (!cashlessVal) {
+  //       setValue("cashVal", "");
+  //       return;
+  //     }
+
+  //     const rest = sumForPay - Number(cashlessVal);
+  //     setValue("cashVal", rest >= 0 ? String(rest) : "0");
+  //   }
+  // }, [cashVal, cashlessVal, lastChanged]);
+
+  // useEffect(() => {
+  //   if (!isSplit || !lastChanged) return;
+
+  //   if (lastChanged === "cash") {
+  //     const rest = sumForPay - (Number(cashVal) || 0);
+  //     setValue("cashlessVal", rest >= 0 ? String(rest) : "0");
+  //   }
+
+  //   if (lastChanged === "cashless") {
+  //     const rest = sumForPay - (Number(cashlessVal) || 0);
+  //     setValue("cashVal", rest >= 0 ? String(rest) : "0");
+  //   }
+  // }, [cashVal, cashlessVal, lastChanged]);
 
   const data = queryClient.getQueryData<CheckServiceResponse>([
     "check-service-result",
@@ -190,7 +238,8 @@ const PaymentScreen = () => {
     }
   };
 
-  console.log("data", JSON.stringify(data, null, 2));
+  console.log("cash", cashVal);
+  console.log("cashless", cashlessVal);
 
   return (
     <Layout>
@@ -211,6 +260,7 @@ const PaymentScreen = () => {
         handleSubmit={handleSubmit}
         setMethod={setMethod}
         handlePay={handlePay}
+        setLastChanged={setLastChanged}
       />
     </Layout>
   );

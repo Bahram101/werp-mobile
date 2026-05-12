@@ -11,14 +11,14 @@ type Props = {
 };
 
 export default function PaymentSummary({
-  services,
+  services = [],
   spareParts,
   cartridges,
   total,
 }: Props) {
   return (
     <View className="flex-column bg-white rounded-2xl p-5 gap-5">
-      <Section title="УСЛУГИ" icon="tools" items={services} />
+      {/* <Section title="УСЛУГИ" icon="tools" items={services} /> */}
 
       <Section
         title="ПРОДАЖА ЗАПЧАСТЕЙ"

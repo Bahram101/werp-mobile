@@ -65,25 +65,29 @@ const RequestWorkScreen = () => {
 
   const handleCheck = async () => {
     if (!request) return;
-    const mapServiceItem = (item: any) => ({
-      currencyId: 3,
-      currencyName: "KZT",
-      fno: null,
-      id: null,
-      matnrId: null,
-      matnrName: null,
-      matnrPrice: null,
-      operationId: null,
-      operationName: null,
-      quantity: null,
-      serviceId: null,
-      servicePackageId: null,
-      servicePackageName: null,
-      serviceTypeId: Number(item.id),
-      serviceTypeName: null,
-      sum: item.price || 0,
-      warranty: item.warranty || false,
-    });
+
+    const mapServiceItem = (item: any) => {
+      console.log("Mapping service item:", item);
+      return {
+        currencyId: 3,
+        currencyName: "KZT",
+        fno: null,
+        id: null,
+        matnrId: null,
+        matnrName: null,
+        matnrPrice: null,
+        operationId: null,
+        operationName: null,
+        quantity: null,
+        serviceId: null,
+        servicePackageId: null,
+        servicePackageName: null,
+        serviceTypeId: Number(item.id),
+        serviceTypeName: null,
+        sum: item.price || 0,
+        warranty: item.warranty || false,
+      };
+    };
 
     const mapSpareItem = (item: any) => ({
       currencyId: 3,
@@ -127,9 +131,15 @@ const RequestWorkScreen = () => {
     }
   };
 
+  console.log(
+    "selectedServiceItems",
+    JSON.stringify(selectedServiceItems, null, 2),
+  );
+
   return (
     <Layout className="flex-columns gap-4">
       <Services
+        matnrId={serviceApplication.tovarId}
         data={filteredServList}
         selectedItems={selectedServiceItems}
         setSelectedItems={setSelectedServiceItems}
