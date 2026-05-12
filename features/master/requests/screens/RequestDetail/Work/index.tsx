@@ -131,11 +131,6 @@ const RequestWorkScreen = () => {
     }
   };
 
-  console.log(
-    "selectedServiceItems",
-    JSON.stringify(selectedServiceItems, null, 2),
-  );
-
   return (
     <Layout className="flex-columns gap-4">
       <Services

@@ -238,9 +238,6 @@ const PaymentScreen = () => {
     }
   };
 
-  console.log("cash", cashVal);
-  console.log("cashless", cashlessVal);
-
   return (
     <Layout>
       <PaymentSummary

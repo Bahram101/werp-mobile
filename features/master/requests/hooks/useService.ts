@@ -16,7 +16,6 @@ export const useServices = () => {
 
 export const usePositioniSum = (id?: number, matnrId?: number) => {
   const { user } = useAuth();
-  // const masterId = user?.userInfo.currentStaff?.staffId;
   const bukrs = user?.userInfo?.bukrs?.[0]?.id;
   const branchId = user?.userInfo?.service?.[bukrs ?? ""]?.[0]?.value;
 
