@@ -30,14 +30,33 @@ const PaymentScreen = () => {
   const [method, setMethod] = useState<"cash" | "cashless">("cash");
   const [isSplit, setIsSplit] = useState(false);
   const { createPaymentAsync, isPaymentLoading } = useCreatePayment();
-
-  const { control, handleSubmit } = useForm({
+  const [lastChanged, setLastChanged] = useState<"cash" | "cashless" | null>(
+    null,
+  );
+  const { control, handleSubmit, setValue, watch } = useForm({
     mode: "onChange",
     defaultValues: {
       cashVal: "",
       cashlessVal: "",
     },
   });
+
+  useEffect(() => {
+    if (!isSplit || !lastChanged) return;
+
+    if (lastChanged === "cash") {
+      const rest = sumForPay - (Number(cash) || 0);
+      setValue("cashlessVal", rest >= 0 ? String(rest) : "0");
+    }
+
+    if (lastChanged === "cashless") {
+      const rest = sumForPay - (Number(cashless) || 0);
+      setValue("cashVal", rest >= 0 ? String(rest) : "0");
+    }
+  }, [cash, cashless, lastChanged]);
+
+  const cash = watch("cashVal");
+  const cashless = watch("cashlessVal");
 
   const data = queryClient.getQueryData<CheckServiceResponse>([
     "check-service-result",

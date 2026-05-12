@@ -75,9 +75,11 @@ export default function PaymentMethods({
             <View className="flex-1">
               <Field
                 className="rounded-xl mt-4"
-                keyboardType="numeric"
+                keyboardType="number-pad"
                 control={control}
                 name="cashVal"
+                isCurrency={true}
+                currencyName={currencyName}
                 rules={{
                   required: "Поле обязательно",
                 }}
@@ -87,9 +89,11 @@ export default function PaymentMethods({
             <View className="flex-1 mt-4">
               <Field
                 className="rounded-xl"
-                keyboardType="numeric"
+                keyboardType="number-pad"
                 control={control}
                 name="cashlessVal"
+                isCurrency={true}
+                currencyName={currencyName}
                 rules={{
                   required: "Поле обязательно",
                 }}

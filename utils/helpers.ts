@@ -15,6 +15,11 @@ export const formatCurrency = (value: number, symbol: string = "₸"): string =>
   return value.toLocaleString("ru-RU") + ` ${symbol}`;
 };
 
+export const formatNumber = (value: string) => {
+  if (!value) return "";
+  return value.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+};
+
 export const tenge = String.fromCharCode(0x20b8);
 
 export const strToLowerCase = (str: string | undefined): string => {
