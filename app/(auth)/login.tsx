@@ -36,8 +36,8 @@ const Auth = () => {
             {isLoading ? (
               <Loader />
             ) : (
-              <>
-                <Text className="text-2xl text-center mb-4">Sign in</Text>
+              <View className="flex-col gap-3">
+                <Text className="text-2xl text-center">Sign in</Text>
 
                 <Field<AuthFormData>
                   className="rounded-3xl"
@@ -61,7 +61,7 @@ const Auth = () => {
                   name="password"
                   secureTextEntry
                   rules={{
-                    required: "Password is required!",
+                    required: "Пароль обязателен!",
                     minLength: {
                       value: 6,
                       message: "Please enter at least 6 characters",
@@ -71,13 +71,13 @@ const Auth = () => {
 
                 <View className="items-center">
                   <AppButton
-                    className="text-white rounded-3xl mt-4 h-[45px] w-[150px]"
+                    className="text-white rounded-3xl h-[45px] w-[150px]"
                     onPress={handleSubmit(onSubmit)}
                   >
                     Войти
                   </AppButton>
                 </View>
-              </>
+              </View>
             )}
           </View>
         </View>

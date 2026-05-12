@@ -41,7 +41,7 @@ export const Field = <T extends Record<string, any>>({
                 {...rest}
               />
             </Input>
-            {error && <Text className="text-red pl-4">{error.message}</Text>}
+            {error && <Text className="text-red">{error.message}</Text>}
           </>
         );
       }}

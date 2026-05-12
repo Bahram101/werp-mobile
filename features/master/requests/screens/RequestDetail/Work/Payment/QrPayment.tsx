@@ -4,7 +4,7 @@ import Layout from "@/components/ui/master/Layout";
 import { ROUTES } from "@/constants/routes";
 import { useCreatePayment } from "@/features/master/requests/hooks/useService";
 import { useQueryClient } from "@tanstack/react-query";
-import { router, useNavigation } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Alert, Image, View } from "react-native";
@@ -12,6 +12,7 @@ import { Alert, Image, View } from "react-native";
 type QrPaymentParams = {
   sumForPay: string;
   method: "cash" | "cashless";
+  isSplit: string;
 };
 
 type CheckServiceResponse = {
@@ -27,6 +28,8 @@ type CheckServiceResponse = {
 const QrPaymentScreen = () => {
   const navigation = useNavigation();
   const queryClient = useQueryClient();
+  const { isSplit } = useLocalSearchParams<QrPaymentParams>();
+
   const data = queryClient.getQueryData<CheckServiceResponse>(["qr-payment"]);
   const dataSplit = queryClient.getQueryData<CheckServiceResponse>([
     "qr-payment-split",
@@ -58,13 +61,12 @@ const QrPaymentScreen = () => {
   }, [navigation]);
 
   const onSubmit = async (values: { paymentNumber: string }) => {
-    console.log("values", values);
-    console.log("QR_Data_Split", JSON.stringify(dataSplit, null, 2));
-    if (!dataSplit) return;
+    const dataForPayment = isSplit ? dataSplit : data;
+    if (!dataForPayment) return;
 
     const payload = {
-      ...dataSplit,
-      paymentParts: dataSplit.paymentParts.map((item) =>
+      ...dataForPayment,
+      paymentParts: dataForPayment.paymentParts.map((item) =>
         item.paymentType === "CASHLESS"
           ? {
               ...item,
@@ -73,7 +75,6 @@ const QrPaymentScreen = () => {
           : item,
       ),
     };
-    console.log("QR_PAYLOAD", JSON.stringify(payload, null, 2));
 
     try {
       await createPaymentAsync(payload);
@@ -97,17 +98,15 @@ const QrPaymentScreen = () => {
           />
         </View>
 
-        <View className="">
-          <Field
-            placeholder="Номер оплаты"
-            keyboardType="email-address"
-            control={control}
-            name="paymentNumber"
-            rules={{
-              required: "Поле обязательно",
-            }}
-          />
-        </View>
+        <Field
+          placeholder="Номер оплаты"
+          keyboardType="numeric"
+          control={control}
+          name="paymentNumber"
+          rules={{
+            required: "Поле обязательно",
+          }}
+        />
 
         <View className="flex-1">
           <AnimatedButton

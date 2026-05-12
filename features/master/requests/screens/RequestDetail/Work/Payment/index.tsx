@@ -14,6 +14,7 @@ import { PaymentItem } from "./type";
 type CheckServiceResponse = {
   applicationNumber: string;
   sumForPay: number;
+  currencyName: string;
   positions: any[];
 };
 
@@ -30,7 +31,7 @@ const PaymentScreen = () => {
   const [isSplit, setIsSplit] = useState(false);
   const { createPaymentAsync, isPaymentLoading } = useCreatePayment();
 
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues: {
       cashVal: "",
@@ -44,6 +45,7 @@ const PaymentScreen = () => {
 
   const sumForPay = data?.sumForPay || 0;
   const serviceAllList = data?.positions;
+  const currencyName = data?.currencyName || "";
 
   const { services, spareParts, cartridges } = useMemo(() => {
     return serviceAllList?.reduce(
@@ -89,7 +91,6 @@ const PaymentScreen = () => {
     cashVal: string;
     cashlessVal: string;
   }) => {
-    console.log("values", JSON.stringify(values, null, 2));
     const appNumber = data?.applicationNumber;
     if (!appNumber) return;
 
@@ -106,8 +107,6 @@ const PaymentScreen = () => {
           },
         ],
       };
-
-      console.log("single payload", JSON.stringify(payload, null, 2));
 
       if (method === "cash") {
         try {
@@ -152,8 +151,6 @@ const PaymentScreen = () => {
         ],
       };
 
-      console.log("split payload", JSON.stringify(payload, null, 2));
-
       if (Number(values.cashVal) + Number(values.cashlessVal) !== sumForPay) {
         Alert.alert("Ошибка", `Сумма должна равняться ${sumForPay}`);
         return;
@@ -165,16 +162,16 @@ const PaymentScreen = () => {
           pathname: ROUTES.QR_PAYMENT,
           params: {
             appNumber: String(payload.applicationNumber),
+            isSplit: String(isSplit),
           },
         });
-        // reset();
       } catch (e: any) {
         Alert.alert("Ошибка", e.message);
       }
     }
   };
 
-  console.log("isSplit", isSplit);
+  console.log("data", JSON.stringify(data, null, 2));
 
   return (
     <Layout>
@@ -185,6 +182,7 @@ const PaymentScreen = () => {
         total={sumForPay}
       />
       <PaymentMethods
+        currencyName={currencyName}
         total={sumForPay}
         isPaymentLoading={isPaymentLoading}
         method={method}

@@ -12,6 +12,7 @@ type FormValues = {
 };
 
 export default function PaymentMethods({
+  currencyName,
   total,
   isPaymentLoading,
   method,
@@ -22,6 +23,7 @@ export default function PaymentMethods({
   setMethod,
   handlePay,
 }: {
+  currencyName: string;
   total: number;
   method: "cash" | "cashless";
   isPaymentLoading: boolean;
@@ -73,6 +75,7 @@ export default function PaymentMethods({
             <View className="flex-1">
               <Field
                 className="rounded-xl mt-4"
+                keyboardType="numeric"
                 control={control}
                 name="cashVal"
                 rules={{
@@ -84,6 +87,7 @@ export default function PaymentMethods({
             <View className="flex-1 mt-4">
               <Field
                 className="rounded-xl"
+                keyboardType="numeric"
                 control={control}
                 name="cashlessVal"
                 rules={{
