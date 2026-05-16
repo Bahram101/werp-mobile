@@ -16,7 +16,6 @@ const SparePartModalList = ({
   selectedItems,
   handleAddPart,
 }: Props) => {
-  console.log("SPARE PARTS DATA", JSON.stringify(data, null, 2));
   return (
     <BottomSheetFlatList
       data={data}

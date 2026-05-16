@@ -28,9 +28,6 @@ const RequestDetailScreen = () => {
     return <Loader />;
   }
 
-  // console.log("id", id);
-  // console.log("doneRequestDetail", doneRequestDetail);
-
   return (
     <View>
       <Text>RequestDetailScreen</Text>

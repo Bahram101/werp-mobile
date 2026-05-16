@@ -1,6 +1,7 @@
 // export const SERVER_URL = process.env.EXPO_PUBLIC_SERVER;
 import Constants from "expo-constants";
 export const SERVER_URL = Constants.expoConfig?.extra?.SERVER_URL;
+export const TEST_SERVER_URL = Constants.expoConfig?.extra?.TEST_SERVER_URL;
 export const API_URL = `${SERVER_URL}/api`;
 
 // export const AUTH_URL = `${SERVER_URL}:${process.env.EXPO_PUBLIC_PORT_AUTH}`;
@@ -8,3 +9,7 @@ export const API_URL = `${SERVER_URL}/api`;
 // export const SERVICE_URL = `${SERVER_URL}:${process.env.EXPO_PUBLIC_PORT_SERVICE}`;
 // export const CALL_CENTER_URL = `${SERVER_URL}:${process.env.EXPO_PUBLIC_PORT_CALL_CENTER}`;
 // export const CRM_URL = `${SERVER_URL}:${process.env.EXPO_PUBLIC_PORT_CRM}`;
+
+console.log("API_URL", API_URL);
+console.log("SERVER_URL", SERVER_URL);
+console.log("TEST_SERVER_URL", TEST_SERVER_URL);

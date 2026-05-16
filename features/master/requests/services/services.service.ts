@@ -17,7 +17,6 @@ export const Services = {
     productId: number,
   ) {
     try {
-      console.log("serviveTypeId", serviceTypeId);
       const { data } = await serviceInstance.post(
         "/smcs/getPositionSum",
         {

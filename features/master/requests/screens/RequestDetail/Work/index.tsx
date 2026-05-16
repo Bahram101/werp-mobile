@@ -67,7 +67,6 @@ const RequestWorkScreen = () => {
     if (!request) return;
 
     const mapServiceItem = (item: any) => {
-      console.log("Mapping service item:", item);
       return {
         currencyId: 3,
         currencyName: "KZT",
