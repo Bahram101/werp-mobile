@@ -54,10 +54,7 @@ export const AuthService = {
   },
 
   async getUserInfo() {
-    console.log("getUserInfo");
-    console.log("authInstance", authInstance.defaults.baseURL);
     const { data } = await authInstance.get("/userInfo");
-    console.log("data", data);
     return data;
   },
 };

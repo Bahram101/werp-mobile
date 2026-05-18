@@ -1,5 +1,8 @@
+import { logoutWithContext } from "@/features/auth/helpers/auth.helper-context";
+import { AuthService } from "@/features/auth/services/auth.service";
 import { getAccessToken } from "@/features/auth/services/auth.storage";
-import axios from "axios";
+import { getNewTokens } from "@/features/auth/services/token.helper";
+import axios, { AxiosError } from "axios";
 import qs from "qs";
 import { API_URL } from "./config";
 
@@ -31,5 +34,27 @@ serviceInstance.interceptors.response.use(
   },
   (error) => {
     return Promise.reject(error);
+  },
+);
+
+serviceInstance.interceptors.response.use(
+  (config) => config,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.status === 401 && error.config && !error.config._isRetry) {
+      originalRequest._isRetry = true;
+      try {
+        await getNewTokens();
+        return serviceInstance.request(originalRequest);
+      } catch (err) {
+        const refreshError = err as AxiosError<{ error: string }>;
+        const errorMessage = refreshError.response?.data?.error;
+        if (errorMessage === "invalid_token") {
+          await logoutWithContext(AuthService.logout);
+        }
+      }
+    }
+
+    throw error;
   },
 );
