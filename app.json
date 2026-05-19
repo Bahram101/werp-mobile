@@ -53,8 +53,6 @@
       "reactCompiler": true
     },
     "extra": {
-      "SERVER_URL": "https://api-test.aura-it.kz:9443",
-      "TEST_SERVER_URL": "http://192.168.0.25:32004",
       "router": {},
       "eas": {
         "projectId": "2513b7bb-a3d7-4c2f-bd2f-4f4200486ee2"

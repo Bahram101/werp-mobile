@@ -29,15 +29,6 @@ serviceInstance.interceptors.request.use(async (config) => {
 });
 
 serviceInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
-
-serviceInstance.interceptors.response.use(
   (config) => config,
   async (error) => {
     const originalRequest = error.config;

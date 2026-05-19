@@ -3,6 +3,9 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
+      "env": {
+        "SERVER_URL": "https://api-test.aura-it.kz:9443"
+      },
       "android": {
         "buildType": "apk"
       },
@@ -10,12 +13,15 @@
         "simulator": false
       }
     },
+
     "production": {
       "channel": "production",
       "autoIncrement": true,
+      "env": {
+        "SERVER_URL": "https://api.aura-it.kz"
+      },
       "android": {
         "buildType": "app-bundle"
-        // "buildType": "apk"
       },
       "ios": {
         "simulator": false

@@ -1,8 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { authInstance, testAuthInstance } from "@/services/api/auth-instance";
-import { EnumAsyncStorage } from "@/types/auth.interface";
-import qs from "qs";
+import { authInstance } from "@/services/api/auth-instance";
+import { AuthResponse, EnumAsyncStorage } from "@/types/auth.interface";
 import Toast from "react-native-toast-message";
 import { deleteTokensFromStorage, saveToStorage } from "./auth.storage";
 
@@ -10,27 +9,15 @@ export const AuthService = {
   async login(username: string, password: string) {
     console.log("AuthService.login", username, password);
     try {
-      // const bodyFormData = new URLSearchParams({
-      //   username,
-      //   password,
-      // });
-
-      // const { data } = await authInstance.post<AuthResponse>(
-      //   "/token",
-      //   bodyFormData,
-      // );
-
-      //////////////////////////////////////////////////////////////////////////////////////
-
-      const body = qs.stringify({
+      const bodyFormData = new URLSearchParams({
         username,
         password,
-        grant_type: "password",
       });
 
-      const { data } = await testAuthInstance.post("/oauth/token", body);
-
-      console.log("RES_DATA", JSON.stringify(data, null, 2));
+      const { data } = await authInstance.post<AuthResponse>(
+        "/token",
+        bodyFormData,
+      );
 
       if (data.access_token) {
         await saveToStorage(data);
@@ -41,7 +28,7 @@ export const AuthService = {
       Toast.show({
         type: "error",
         text1: "Request error",
-        text2: testAuthInstance.defaults.baseURL || "EMPTY",
+        text2: authInstance.defaults.baseURL || "EMPTY",
       });
 
       throw error;
