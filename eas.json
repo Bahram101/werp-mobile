@@ -25,6 +25,11 @@
       },
       "ios": {
         "simulator": false
+      },
+      "cache": {
+        "disabled": false,
+        "key": "prod-cache-v1",
+        "paths": ["node_modules", ".gradle", ".pnpm-store", "yarn.lock"]
       }
     }
   },
