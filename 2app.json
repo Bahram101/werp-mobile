@@ -53,6 +53,7 @@
     },
     "extra": {
       "router": {},
+      "SERVER_URL": "https://api-test.aura-it.kz:9443",
       "eas": {
         "projectId": "2513b7bb-a3d7-4c2f-bd2f-4f4200486ee2"
       }

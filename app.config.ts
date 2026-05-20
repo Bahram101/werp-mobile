@@ -1,13 +1,70 @@
 import "dotenv/config";
-import appJson from "./app.json";
 
 export default {
-  ...appJson,
   expo: {
-    ...appJson.expo,
-    extra: {
-      ...appJson.expo.extra,
-      SERVER_URL: process.env.EXPO_PUBLIC_SERVER,
+    name: "merp",
+    slug: "merp",
+    version: "0.9.4",
+    orientation: "portrait",
+    icon: "./assets/images/icon.png",
+    scheme: "merp",
+    userInterfaceStyle: "automatic",
+    newArchEnabled: true,
+    ios: {
+      supportsTablet: true,
+      bundleIdentifier: "aura.merp.app",
+      infoPlist: {
+        ITSAppUsesNonExemptEncryption: false,
+      },
     },
+    android: {
+      package: "merp.app",
+      predictiveBackGestureEnabled: false,
+      adaptiveIcon: {
+        backgroundColor: "#E6F4FE",
+        foregroundImage: "./assets/images/logo.png",
+        backgroundImage: "./assets/images/bg.png",
+        monochromeImage: "./assets/images/logo-alpha.png",
+      },
+    },
+    web: {
+      output: "static",
+      favicon: "./assets/images/favicon.png",
+    },
+    plugins: [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          image: "./assets/images/splash-icon.png",
+          imageWidth: 200,
+          resizeMode: "contain",
+          backgroundColor: "#ffffff",
+          dark: {
+            backgroundColor: "#000000",
+          },
+        },
+      ],
+      "expo-secure-store",
+      "expo-font",
+      "expo-web-browser",
+    ],
+    experiments: {
+      typedRoutes: true,
+    },
+    extra: {
+      SERVER_URL: process.env.EXPO_PUBLIC_SERVER,
+      router: {},
+      eas: {
+        projectId: "2513b7bb-a3d7-4c2f-bd2f-4f4200486ee2",
+      },
+    },
+    runtimeVersion: {
+      policy: "appVersion",
+    },
+    updates: {
+      url: "https://u.expo.dev/413b84a6-b908-4df9-8d27-2a2fa0e3a284",
+    },
+    owner: "bahram101",
   },
 };
