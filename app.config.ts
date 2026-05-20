@@ -53,7 +53,7 @@ export default {
       typedRoutes: true,
     },
     extra: {
-      SERVER_URL: process.env.EXPO_PUBLIC_SERVER,
+      SERVER_URL: process.env.SERVER_URL,
       router: {},
       eas: {
         projectId: "2513b7bb-a3d7-4c2f-bd2f-4f4200486ee2",

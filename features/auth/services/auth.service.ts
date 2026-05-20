@@ -41,7 +41,11 @@ export const AuthService = {
   },
 
   async getUserInfo() {
-    const { data } = await authInstance.get("/userInfo");
-    return data;
+    try {
+      const { data } = await authInstance.get("/userInfo");
+      return data;
+    } catch (error) {
+      console.log("error", error);
+    }
   },
 };
