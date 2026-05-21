@@ -18,6 +18,7 @@ export default {
       },
     },
     android: {
+      versionCode: 14,
       package: "merp.app",
       predictiveBackGestureEnabled: false,
       adaptiveIcon: {
