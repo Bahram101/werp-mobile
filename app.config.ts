@@ -52,6 +52,7 @@ export default {
     ],
     experiments: {
       typedRoutes: true,
+      reactCompiler: true,
     },
     extra: {
       SERVER_URL: process.env.SERVER_URL,

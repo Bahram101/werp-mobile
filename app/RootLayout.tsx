@@ -41,6 +41,7 @@ export default function RootLayout() {
 
     if (roles.includes("mobile-master")) {
       router.replace("/(apps)/master");
+      return;
     }
 
     if (roles.includes("mobile-marketing")) {
