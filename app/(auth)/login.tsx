@@ -74,7 +74,7 @@ const Auth = () => {
                     className="text-white rounded-3xl h-[45px] w-[150px]"
                     onPress={handleSubmit(onSubmit)}
                   >
-                    Войти
+                    Войтии
                   </AppButton>
                 </View>
               </View>
