@@ -4,7 +4,7 @@ export default {
   expo: {
     name: "merp",
     slug: "merp",
-    version: "0.9.4",
+    version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "merp",
@@ -18,8 +18,8 @@ export default {
       },
     },
     android: {
-      versionCode: 14,
-      package: "merp.app",
+      versionCode: 1,
+      package: "aura.merp.app",
       predictiveBackGestureEnabled: false,
       adaptiveIcon: {
         backgroundColor: "#E6F4FE",

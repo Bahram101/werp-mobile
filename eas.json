@@ -18,18 +18,13 @@
       "channel": "production",
       "autoIncrement": true,
       "env": {
-        "SERVER_URL": "https://api.aura-it.kz"
+        "SERVER_URL": "https://api-test.aura-it.kz:9443"
       },
       "android": {
         "buildType": "app-bundle"
       },
       "ios": {
         "simulator": false
-      },
-      "cache": {
-        "disabled": false,
-        "key": "prod-cache-v1",
-        "paths": ["node_modules", ".gradle", ".pnpm-store", "yarn.lock"]
       }
     }
   },
