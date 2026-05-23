@@ -4,7 +4,7 @@ export default {
   expo: {
     name: "merp",
     slug: "merp",
-    version: "1.0.0",
+    version: "1.0.1",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "merp",
@@ -12,14 +12,14 @@ export default {
     newArchEnabled: true,
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "aura.merp.app",
+      bundleIdentifier: "merp.app",
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
       },
     },
     android: {
       versionCode: 1,
-      package: "aura.merp.app",
+      package: "merp.app",
       predictiveBackGestureEnabled: false,
       adaptiveIcon: {
         backgroundColor: "#E6F4FE",

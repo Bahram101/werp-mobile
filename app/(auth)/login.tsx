@@ -37,7 +37,7 @@ const Auth = () => {
               <Loader />
             ) : (
               <View className="flex-col gap-3">
-                <Text className="text-2xl text-center">Sign in</Text>
+                <Text className="text-2xl text-center">Войти</Text>
 
                 <Field<AuthFormData>
                   className="rounded-3xl"
@@ -74,7 +74,7 @@ const Auth = () => {
                     className="text-white rounded-3xl h-[45px] w-[150px]"
                     onPress={handleSubmit(onSubmit)}
                   >
-                    Войтии
+                    Войти
                   </AppButton>
                 </View>
               </View>
