@@ -4,7 +4,7 @@ export default {
   expo: {
     name: "merp",
     slug: "merp",
-    version: "1.0.1",
+    version: "1.0.3",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "merp",
