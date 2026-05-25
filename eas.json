@@ -13,7 +13,18 @@
         "simulator": false
       }
     },
-
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "SERVER_URL": "https://api-test.aura-it.kz:9443"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": false
+      }
+    },
     "production": {
       "channel": "production",
       "autoIncrement": true,
