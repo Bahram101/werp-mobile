@@ -6,11 +6,10 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
   data: any[];
-  isLoading: boolean;
   handleRemoveService: (id: string) => void;
 };
 
-const Table = ({ data, isLoading, handleRemoveService }: Props) => {
+const Table = ({ data, handleRemoveService }: Props) => {
   const totalAmount = data.reduce((acc, item) => acc + item.price, 0);
   return (
     <View className="table">
@@ -47,8 +46,7 @@ const Table = ({ data, isLoading, handleRemoveService }: Props) => {
 
       <View className="flex-row justify-end pt-3">
         <Text className="font-semibold">
-          {`Итог: ${totalAmount || 0}`}
-          {tenge}
+          {`Итог: ${totalAmount || 0}`} {tenge}
         </Text>
       </View>
     </View>

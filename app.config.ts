@@ -4,7 +4,7 @@ export default {
   expo: {
     name: "merp",
     slug: "merp",
-    version: "1.0.4",
+    version: "1.0.5",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "merp",
@@ -39,10 +39,10 @@ export default {
           image: "./assets/images/logo.png",
           imageWidth: 160,
           resizeMode: "contain",
-          backgroundColor: "#ffffff",
-          dark: {
-            backgroundColor: "#000000",
-          },
+          backgroundColor: "#000000",
+          // dark: {
+          //   backgroundColor: "#000000",
+          // },
         },
       ],
       "expo-secure-store",

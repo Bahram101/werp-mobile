@@ -1,5 +1,7 @@
 export type PaymentItem = {
   title: string;
-  price: number;
+  sum: number;
   fno?: string;
+  price?: number;
+  quantity?: number;
 };

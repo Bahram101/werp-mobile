@@ -72,7 +72,8 @@ export default function RequestDetailScreen() {
         );
       }
       if (requestDetail.applicationStatusId === 10) {
-        router.push({
+        router.dismissAll();
+        router.replace({
           pathname: ROUTES.WORK,
           params: {
             appNumber: String(appNumber),

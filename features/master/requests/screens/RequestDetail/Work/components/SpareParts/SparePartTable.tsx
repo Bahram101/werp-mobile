@@ -1,5 +1,5 @@
 import { COLORS } from "@/constants/theme";
-import { tenge } from "@/utils/helpers";
+import { strToLowerCase, tenge } from "@/utils/helpers";
 import { Trash2 } from "lucide-react-native";
 import React from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
@@ -42,7 +42,9 @@ const SparePartTable = ({
             onPress={() => handlePress(item)}
           >
             <Text className="w-[8%] text-center">{item.index}</Text>
-            <Text className="w-[50%] text-center">{item.matnrName}</Text>
+            <Text className="w-[50%] text-center">
+              {strToLowerCase(item.matnrName)}
+            </Text>
             <Text className="w-[15%] text-center">{item.selectedQty}</Text>
             <Text className="w-[20%] text-center">{item.totalPrice}</Text>
             <View className="w-[7%] p-1 items-center justify-center">

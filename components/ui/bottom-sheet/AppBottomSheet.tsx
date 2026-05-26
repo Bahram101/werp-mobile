@@ -1,7 +1,5 @@
 import { BottomSheetType } from "@/providers/BottomSheet/AppBottomSheetProvider";
-import BottomSheet, {
-  BottomSheetBackdropProps
-} from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
 import { BlurView } from "expo-blur";
 import { X } from "lucide-react-native";
 import React, {
@@ -140,15 +138,6 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
             </View>
           )}
           {children}
-
-          {/* scroll only body */}
-          {/* <BottomSheetScrollView
-            style={{ flex: 1 }}
-            keyboardShouldPersistTaps="handled"
-            contentContainerStyle={{ paddingBottom: 40 }}
-          >
-            {children}
-          </BottomSheetScrollView> */}
         </View>
       </BottomSheet>
     );

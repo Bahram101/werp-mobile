@@ -68,44 +68,6 @@ const PaymentScreen = () => {
     setValue("cashVal", rest >= 0 ? String(rest) : "0");
   }, [cashlessVal, lastChanged]);
 
-  // useEffect(() => {
-  //   if (!isSplit || !lastChanged) return;
-
-  //   if (lastChanged === "cash") {
-  //     if (!cashVal) {
-  //       setValue("cashlessVal", "");
-  //       return;
-  //     }
-
-  //     const rest = sumForPay - Number(cashVal);
-  //     setValue("cashlessVal", rest >= 0 ? String(rest) : "0");
-  //   }
-
-  //   if (lastChanged === "cashless") {
-  //     if (!cashlessVal) {
-  //       setValue("cashVal", "");
-  //       return;
-  //     }
-
-  //     const rest = sumForPay - Number(cashlessVal);
-  //     setValue("cashVal", rest >= 0 ? String(rest) : "0");
-  //   }
-  // }, [cashVal, cashlessVal, lastChanged]);
-
-  // useEffect(() => {
-  //   if (!isSplit || !lastChanged) return;
-
-  //   if (lastChanged === "cash") {
-  //     const rest = sumForPay - (Number(cashVal) || 0);
-  //     setValue("cashlessVal", rest >= 0 ? String(rest) : "0");
-  //   }
-
-  //   if (lastChanged === "cashless") {
-  //     const rest = sumForPay - (Number(cashlessVal) || 0);
-  //     setValue("cashVal", rest >= 0 ? String(rest) : "0");
-  //   }
-  // }, [cashVal, cashlessVal, lastChanged]);
-
   const data = queryClient.getQueryData<CheckServiceResponse>([
     "check-service-result",
   ]);
@@ -120,17 +82,19 @@ const PaymentScreen = () => {
         if (![1, 3, 4].includes(item.serviceTypeId)) {
           acc.services.push({
             title: item.serviceTypeName,
-            price: item.sum,
+            sum: item.sum,
           });
         } else if (item.serviceTypeId === 3) {
           acc.spareParts.push({
             title: item.matnrName,
-            price: item.sum,
+            sum: item.sum,
+            quantity: item.quantity,
+            price: item.matnrPrice,
           });
         } else if (item.serviceTypeId === 1) {
           acc.cartridges.push({
             title: item.matnrName,
-            price: item.sum,
+            sum: item.sum,
             fno: item.fno,
           });
         }

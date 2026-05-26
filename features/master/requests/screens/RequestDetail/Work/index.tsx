@@ -6,7 +6,7 @@ import { request } from "@/services/api/request";
 import { useQueryClient } from "@tanstack/react-query";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert, BackHandler, View } from "react-native";
 import { useMatnr } from "../../../hooks/useMatnr";
 import {
   useCheckServices,
@@ -58,6 +58,26 @@ const RequestWorkScreen = () => {
       });
     }
   }, [navigation, appNumber]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      gestureEnabled: false,
+    });
+  }, [navigation]);
+
+  useEffect(() => {
+    const backAction = () => {
+      router.replace(ROUTES.REQUESTS);
+      return true;
+    };
+
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction,
+    );
+
+    return () => subscription.remove();
+  }, []);
 
   if (isLoading) {
     return <Loader />;

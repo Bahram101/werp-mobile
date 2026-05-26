@@ -19,6 +19,8 @@ export function Section({
 }) {
   const { width } = useWindowDimensions();
 
+  console.log("items", items);
+
   if (!items?.length) return null;
 
   const isCartridges = type === "cartridges";
@@ -33,7 +35,7 @@ export function Section({
       </View>
 
       {list.map((item: PaymentItem, index) => (
-        <View key={index} className="flex-row items-center py-1.5">
+        <View key={index} className="flex-row py-1.5">
           <Text className="font-bold">
             {isCartridges && item.fno ? `F${item.fno}: ` : ""}
           </Text>
@@ -54,10 +56,16 @@ export function Section({
                   </Text>
                 ))}
               </View>
-
-              <Text className="text-gray-800">
-                {formatCurrency(item.price)}
-              </Text>
+              <View>
+                <Text className="text-gray-800 font-medium text-right">
+                  {formatCurrency(item.sum)}
+                </Text>
+                {!!item.quantity && !!item.price && (
+                  <Text className="text-xs text-gray-500">
+                    {formatCurrency(item.price)} × {item.quantity}
+                  </Text>
+                )}
+              </View>
             </>
           )}
         </View>
@@ -67,7 +75,7 @@ export function Section({
       {isCartridges && cartridgesTotal && (
         <View className="flex-row justify-between mt-2">
           <Text className="font-semibold">Сумма картриджей</Text>
-          <Text>{formatCurrency(cartridgesTotal.price)}</Text>
+          <Text>{formatCurrency(cartridgesTotal.sum)}</Text>
         </View>
       )}
     </View>

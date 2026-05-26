@@ -94,7 +94,6 @@ const Services = ({
       </View>
       <ServiceTable
         data={selectedItems}
-        isLoading={isLoading}
         handleRemoveService={handleRemoveService}
       />
     </View>

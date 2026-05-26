@@ -1,5 +1,6 @@
 import { MatnrItem, SelectedMatnrItem } from "@/features/master/requests/types";
 import { useActionSheet } from "@/providers/ActionSheetProvider";
+import { strToLowerCase } from "@/utils/helpers";
 import cn from "clsx";
 import * as Haptics from "expo-haptics";
 import React from "react";
@@ -49,10 +50,10 @@ const SparePartModalListItem = ({
       >
         <View className="flex-1">
           <Text
-            className="text-base text-gray-900 font-medium"
+            className="text-base text-gray-900 font-medium mr-5"
             numberOfLines={1}
           >
-            {item.matnrName}
+            {strToLowerCase(item.matnrName)}
           </Text>
 
           <Text className="text-xs text-gray-400 mt-1">
@@ -62,7 +63,7 @@ const SparePartModalListItem = ({
 
         <View className="items-end gap-1">
           <Text className="text-sm font-semibold text-gray-800">
-            {/* {item.quantity} шт */}
+            {item.menge} шт
           </Text>
         </View>
       </View>

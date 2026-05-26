@@ -18,12 +18,13 @@ export default function PaymentSummary({
 }: Props) {
   return (
     <View className="flex-column bg-white rounded-2xl p-5 gap-5">
-      <Section title="УСЛУГИ" icon="tools" items={services} />
+      <Section title="УСЛУГИ" icon="tools" items={services} type="services" />
 
       <Section
         title="ПРОДАЖА ЗАПЧАСТЕЙ"
         icon="package-variant"
         items={spareParts}
+        type="spareParts"
       />
       <Section
         title="ПРОДАЖА КАРТРИДЖЕЙ"
