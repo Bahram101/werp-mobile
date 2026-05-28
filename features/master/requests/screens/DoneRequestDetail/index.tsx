@@ -16,6 +16,8 @@ const RequestDetailScreen = () => {
     Number(id),
   );
 
+  console.log("doneRequestDetail", JSON.stringify(doneRequestDetail, null, 2));
+
   useEffect(() => {
     if (doneRequestDetail?.applicationNumber) {
       navigation.setOptions({

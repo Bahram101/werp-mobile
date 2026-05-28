@@ -2,11 +2,12 @@ import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
 import { ROUTES } from "@/constants/routes";
+import { usePreventBack } from "@/hooks/usePreventBack";
 import { request } from "@/services/api/request";
 import { useQueryClient } from "@tanstack/react-query";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Alert, BackHandler, View } from "react-native";
+import { Alert, View } from "react-native";
 import { useMatnr } from "../../../hooks/useMatnr";
 import {
   useCheckServices,
@@ -22,9 +23,7 @@ const RequestWorkScreen = () => {
   const queryClient = useQueryClient();
   const { appNumber } = useLocalSearchParams();
   const navigation = useNavigation();
-  const { serviceApplication, isLoadingServiceApp } = useServiceApplication(
-    Number(appNumber),
-  );
+  const { serviceApplication } = useServiceApplication(Number(appNumber));
 
   const { services, isLoading } = useServices();
   const [selectedServiceItems, setSelectedServiceItems] = useState<
@@ -65,19 +64,7 @@ const RequestWorkScreen = () => {
     });
   }, [navigation]);
 
-  useEffect(() => {
-    const backAction = () => {
-      router.replace(ROUTES.REQUESTS);
-      return true;
-    };
-
-    const subscription = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction,
-    );
-
-    return () => subscription.remove();
-  }, []);
+  usePreventBack(ROUTES.REQUESTS);
 
   if (isLoading) {
     return <Loader />;

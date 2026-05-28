@@ -1,10 +1,22 @@
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import { ROUTES } from "@/constants/routes";
+import { usePreventBack } from "@/hooks/usePreventBack";
 import { Ionicons } from "@expo/vector-icons";
-import { router, Stack } from "expo-router";
+import { router, Stack, useNavigation } from "expo-router";
+import { useEffect } from "react";
 import { Text, View } from "react-native";
 
 export default function PaymentSuccessScreen() {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      gestureEnabled: false,
+    });
+  }, [navigation]);
+
+  usePreventBack(ROUTES.REQUESTS);
+
   return (
     <>
       <Stack.Screen

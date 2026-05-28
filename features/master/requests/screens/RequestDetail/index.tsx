@@ -20,7 +20,7 @@ export default function RequestDetailScreen() {
   const { appNumber } = useLocalSearchParams<RequestDetailParams>();
   const { requestDetail, isLoadingReqDetail, refetchRequestDetail } =
     useRequestDetail(Number(appNumber));
-  const { updateRequestStatus, isLoading } = useUpdateRequestStatus();
+  const { updateRequestStatus } = useUpdateRequestStatus();
   const [refreshing, setRefreshing] = useState(false);
   const [loadingType, setLoadingType] = useState<"main" | "cancel" | null>(
     null,
@@ -72,7 +72,6 @@ export default function RequestDetailScreen() {
         );
       }
       if (requestDetail.applicationStatusId === 10) {
-        router.dismissAll();
         router.replace({
           pathname: ROUTES.WORK,
           params: {
