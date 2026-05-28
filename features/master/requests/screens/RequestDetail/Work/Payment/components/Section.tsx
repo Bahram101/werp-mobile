@@ -19,8 +19,6 @@ export function Section({
 }) {
   const { width } = useWindowDimensions();
 
-  console.log("items", items);
-
   if (!items?.length) return null;
 
   const isCartridges = type === "cartridges";

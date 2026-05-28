@@ -1,6 +1,7 @@
 import Layout from "@/components/ui/master/Layout";
 import { ROUTES } from "@/constants/routes";
 import { useCreatePayment } from "@/features/master/requests/hooks/useService";
+import { groupPaymentItems } from "@/features/master/utils/payment.helpers";
 import { getToday } from "@/utils/date";
 import { useQueryClient } from "@tanstack/react-query";
 import { router, useNavigation } from "expo-router";
@@ -9,19 +10,12 @@ import { useForm } from "react-hook-form";
 import { Alert } from "react-native";
 import PaymentMethods from "./components/PaymentMethods";
 import PaymentSummary from "./components/PaymentSummary";
-import { PaymentItem } from "./type";
 
 type CheckServiceResponse = {
   applicationNumber: string;
   sumForPay: number;
   currencyName: string;
   positions: any[];
-};
-
-type GroupedPayment = {
-  services: PaymentItem[];
-  spareParts: PaymentItem[];
-  cartridges: PaymentItem[];
 };
 
 const PaymentScreen = () => {
@@ -76,38 +70,10 @@ const PaymentScreen = () => {
   const serviceAllList = data?.positions;
   const currencyName = data?.currencyName || "";
 
-  const { services, spareParts, cartridges } = useMemo(() => {
-    return serviceAllList?.reduce(
-      (acc, item) => {
-        if (![1, 3, 4].includes(item.serviceTypeId)) {
-          acc.services.push({
-            title: item.serviceTypeName,
-            sum: item.sum,
-          });
-        } else if (item.serviceTypeId === 3) {
-          acc.spareParts.push({
-            title: item.matnrName,
-            sum: item.sum,
-            quantity: item.quantity,
-            price: item.matnrPrice,
-          });
-        } else if (item.serviceTypeId === 1) {
-          acc.cartridges.push({
-            title: item.matnrName,
-            sum: item.sum,
-            fno: item.fno,
-          });
-        }
-
-        return acc;
-      },
-      {
-        services: [],
-        spareParts: [],
-        cartridges: [],
-      } as GroupedPayment,
-    );
-  }, [serviceAllList]);
+  const { services, spareParts, cartridges } = useMemo(
+    () => groupPaymentItems(serviceAllList),
+    [serviceAllList],
+  );
 
   useEffect(() => {
     const appNumber = data?.applicationNumber;

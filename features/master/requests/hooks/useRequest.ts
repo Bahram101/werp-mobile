@@ -83,17 +83,21 @@ export const useDoneRequests = ({ enabled }: { enabled: boolean }) => {
 };
 
 export const useDoneRequestDetail = (id: number) => {
-  const { data: doneRequestDetail, isLoading: isLoadingDoneReqDetail } =
-    useQuery({
-      queryKey: ["get-done-request-detail", id],
-      queryFn: () => RequestService.getMasterDoneRequestDetail(id),
-      retry: false,
-      enabled: !!id,
-    });
+  const {
+    data: doneRequestDetail,
+    isLoading: isLoadingDoneReqDetail,
+    refetch: refetchDoneReqDetail,
+  } = useQuery({
+    queryKey: ["get-done-request-detail", id],
+    queryFn: () => RequestService.getMasterDoneRequestDetail(id),
+    retry: false,
+    enabled: !!id,
+  });
 
   return {
     doneRequestDetail,
     isLoadingDoneReqDetail,
+    refetchDoneReqDetail,
   };
 };
 
