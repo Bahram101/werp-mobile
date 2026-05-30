@@ -1,4 +1,4 @@
-import { testAuthInstance } from "@/services/api/auth-instance";
+import { authInstance } from "@/services/api/auth-instance";
 import { AuthResponse } from "@/types/auth.interface";
 import { getRefreshToken, saveAccessToken } from "./auth.storage";
 
@@ -11,12 +11,10 @@ export const getNewTokens = async () => {
     body.set("grant_type", "refresh_token");
     body.set("refresh_token", refreshToken);
 
-    // const { data } = await authInstance.post<AuthResponse>(
-    //   "/token",
-    //   body.toString(),
-    // );
-    const { data } = await testAuthInstance.post<AuthResponse>(
-      "/oauth/token",
+    console.log("body to string", body.toString());
+
+    const { data } = await authInstance.post<AuthResponse>(
+      "/token",
       body.toString(),
     );
 
@@ -24,6 +22,7 @@ export const getNewTokens = async () => {
 
     return data;
   } catch (e) {
+    console.log("EEEEEE", e);
     throw e;
   }
 };

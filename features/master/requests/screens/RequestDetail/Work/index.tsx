@@ -3,7 +3,7 @@ import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
 import { ROUTES } from "@/constants/routes";
 import { usePreventBack } from "@/hooks/usePreventBack";
-import { request } from "@/services/api/request";
+// import { request } from "@/services/api/request";
 import { useQueryClient } from "@tanstack/react-query";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -71,7 +71,7 @@ const RequestWorkScreen = () => {
   }
 
   const handleCheck = async () => {
-    if (!request) return;
+    // if (!request) return;
 
     const mapServiceItem = (item: any) => {
       return {

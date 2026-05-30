@@ -1,4 +1,4 @@
-import coreInstance from "@/services/api/interceptors";
+import { coreInstance } from "@/services/api/core-instance";
 import { CreateAccountabilityPayload } from "../types";
 
 export const AccountabilityService = {

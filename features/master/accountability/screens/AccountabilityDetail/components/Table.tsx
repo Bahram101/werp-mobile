@@ -22,7 +22,7 @@ const Table = ({ data }: TableProps) => {
         </View>
       </View>
       <View className="table-body flex-col">
-        {data.items.map((item: any, index: number) => (
+        {data?.items?.map((item: any, index: number) => (
           <View
             key={item.matnr}
             className={cn(

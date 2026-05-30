@@ -1,9 +1,8 @@
 import { AxiosError } from "axios";
 
-import { getAccessToken } from "@/features/auth/services/auth.storage";
-
 import { logoutWithContext } from "@/features/auth/helpers/auth.helper-context";
 import { AuthService } from "@/features/auth/services/auth.service";
+import { getAccessToken } from "@/features/auth/services/auth.storage";
 import { getNewTokens } from "@/features/auth/services/token.helper";
 import { coreInstance } from "./core-instance";
 
@@ -20,7 +19,11 @@ coreInstance.interceptors.response.use(
   (config) => config,
   async (error) => {
     const originalRequest = error.config;
-    if (error.status === 401 && error.config && !error.config._isRetry) {
+    if (
+      error.response.status === 401 &&
+      error.config &&
+      !error.config._isRetry
+    ) {
       originalRequest._isRetry = true;
       try {
         await getNewTokens();

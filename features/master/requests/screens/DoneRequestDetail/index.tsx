@@ -18,8 +18,6 @@ const RequestDetailScreen = () => {
   const { doneRequestDetail, isLoadingDoneReqDetail, refetchDoneReqDetail } =
     useDoneRequestDetail(Number(id));
 
-  console.log("doneRequestDetail", JSON.stringify(doneRequestDetail, null, 2));
-
   useEffect(() => {
     if (doneRequestDetail?.applicationNumber) {
       navigation.setOptions({
@@ -47,8 +45,6 @@ const RequestDetailScreen = () => {
       setRefreshing(false);
     }
   };
-
-  console.log("services", services);
 
   return (
     <Layout refreshing={refreshing} onRefresh={onRefresh}>

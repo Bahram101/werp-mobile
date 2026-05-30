@@ -1,10 +1,8 @@
-import { logoutWithContext } from "@/features/auth/helpers/auth.helper-context";
-import { AuthService } from "@/features/auth/services/auth.service";
 import { getAccessToken } from "@/features/auth/services/auth.storage";
-import { getNewTokens } from "@/features/auth/services/token.helper";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import qs from "qs";
 import { API_URL } from "./config";
+import { setupAuthInterceptor } from "./setupAuthInterceptor";
 
 export const serviceInstance = axios.create({
   baseURL: `${API_URL}/service`,
@@ -28,24 +26,4 @@ serviceInstance.interceptors.request.use(async (config) => {
   return config;
 });
 
-serviceInstance.interceptors.response.use(
-  (config) => config,
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.status === 401 && error.config && !error.config._isRetry) {
-      originalRequest._isRetry = true;
-      try {
-        await getNewTokens();
-        return serviceInstance.request(originalRequest);
-      } catch (err) {
-        const refreshError = err as AxiosError<{ error: string }>;
-        const errorMessage = refreshError.response?.data?.error;
-        if (errorMessage === "invalid_token") {
-          await logoutWithContext(AuthService.logout);
-        }
-      }
-    }
-
-    throw error;
-  },
-);
+setupAuthInterceptor(serviceInstance);

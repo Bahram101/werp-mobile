@@ -17,6 +17,9 @@ export default function RootLayout() {
   const { user, isInitialized } = useAuth();
 
   useEffect(() => {
+    // console.log("user", user);
+    // console.log("extraLoaded", user?.extraLoaded);
+    console.log("roles", user?.userInfo?.currentStaff?.roles);
     if (!isInitialized || !navigationState?.key) return;
 
     if (!user) {

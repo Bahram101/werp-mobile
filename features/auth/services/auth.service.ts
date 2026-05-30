@@ -7,11 +7,11 @@ import { deleteTokensFromStorage, saveToStorage } from "./auth.storage";
 
 export const AuthService = {
   async login(username: string, password: string) {
-    console.log("AuthService.login", username, password);
     try {
       const bodyFormData = new URLSearchParams({
         username,
         password,
+        grant_type: "password",
       });
 
       const { data } = await authInstance.post<AuthResponse>(

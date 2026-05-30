@@ -2,10 +2,15 @@ import { getAccessToken } from "@/features/auth/services/auth.storage";
 import axios from "axios";
 import Constants from "expo-constants";
 import qs from "qs";
+import { setupAuthInterceptor } from "./setupAuthInterceptor";
 export const SERVER_URL = Constants.expoConfig?.extra?.SERVER_URL;
 
 export const authInstance = axios.create({
   baseURL: SERVER_URL,
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization: "Basic V0VSUDpwYXNzd29yZA==",
+  },
 });
 
 authInstance.interceptors.request.use(async (config) => {
@@ -20,3 +25,5 @@ authInstance.interceptors.request.use(async (config) => {
   console.log("REQUEST_AUTH:", fullUrl);
   return config;
 });
+
+setupAuthInterceptor(authInstance);
