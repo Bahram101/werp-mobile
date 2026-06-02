@@ -4,19 +4,24 @@ import { getCurrentMonthStart, getToday } from "@/utils/date";
 export const RequestService = {
   async getMasterRequests(masterId: number, status: string, bukrs?: number) {
     try {
-      const { data } = await serviceInstance.get("/smappl/appList", {
-        params: {
-          bukrs,
-          appStatusIds: status,
-          masterId,
-          ...((status === "5" || status === "8") && {
-            dateOpenAt: status === "5" ? getCurrentMonthStart() : getToday(),
-            dateOpenTo: status === "5" ? getToday() : getToday(),
-          }),
+      const { data } = await serviceInstance.get(
+        "/api/service/smappl/appList",
+        {
+          params: {
+            bukrs,
+            appStatusIds: status,
+            masterId,
+            ...((status === "5" || status === "8") && {
+              dateOpenAt: status === "5" ? getCurrentMonthStart() : getToday(),
+              dateOpenTo: status === "5" ? getToday() : getToday(),
+            }),
+          },
         },
-      });
+      );
+      console.log("Master Requests", data.data.length);
       return data.data;
     } catch (error) {
+      console.log("Error fetching master requests:", error);
       throw error;
     }
   },

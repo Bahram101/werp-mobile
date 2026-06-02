@@ -19,7 +19,7 @@ export default function RootLayout() {
   useEffect(() => {
     // console.log("user", user);
     // console.log("extraLoaded", user?.extraLoaded);
-    console.log("roles", user?.userInfo?.currentStaff?.roles);
+    // console.log("roles", user?.userInfo?.currentStaff?.roles);
     if (!isInitialized || !navigationState?.key) return;
 
     if (!user) {

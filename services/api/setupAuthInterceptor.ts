@@ -16,7 +16,9 @@ export const setupAuthInterceptor = (instance: AxiosInstance) => {
         originalRequest._isRetry = true;
 
         try {
+          console.log("INTERCEPTOR 2 before refresh");
           await getNewTokens();
+          console.log("INTERCEPTOR 3 after refresh");
           return instance.request(originalRequest);
         } catch (err) {
           console.log("catch err", err);

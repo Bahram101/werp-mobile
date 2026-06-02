@@ -1,11 +1,11 @@
 import { getAccessToken } from "@/features/auth/services/auth.storage";
 import axios from "axios";
 import qs from "qs";
-import { API_URL } from "./config";
+import { CORE_URL } from "./config";
 import { setupAuthInterceptor } from "./setupAuthInterceptor";
 
 export const coreInstance = axios.create({
-  baseURL: `${API_URL}/core`,
+  baseURL: `${CORE_URL}`,
   paramsSerializer: {
     serialize: (params) => qs.stringify(params, { arrayFormat: "repeat" }),
   },
