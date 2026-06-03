@@ -1,4 +1,4 @@
-import { serviceInstance } from "@/services/api/service-instance";
+import { apiInstance } from "@/services/api/auth-instance";
 
 export const MatnrService = {
   async getMatnrList(
@@ -8,15 +8,18 @@ export const MatnrService = {
     serviceTypeId: number,
   ) {
     try {
-      const { data } = await serviceInstance.get("/smcs/getMatnrPriceList", {
-        params: {
-          bukrs,
-          branchId,
-          tovarId: 256,
-          masterId,
-          serviceTypeId,
+      const { data } = await apiInstance.get(
+        "/api/service/smcs/getMatnrPriceList",
+        {
+          params: {
+            bukrs,
+            branchId,
+            tovarId: 256,
+            masterId,
+            serviceTypeId,
+          },
         },
-      });
+      );
       return data.data;
     } catch (e) {
       throw e;

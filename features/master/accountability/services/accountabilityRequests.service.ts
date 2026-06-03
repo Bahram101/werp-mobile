@@ -1,4 +1,4 @@
-import { coreInstance } from "@/services/api/core-instance";
+import { apiInstance } from "@/services/api/auth-instance";
 import { CreateAccountabilityPayload } from "../types";
 
 export const AccountabilityService = {
@@ -7,9 +7,12 @@ export const AccountabilityService = {
     responsibleId?: number,
   ) {
     try {
-      const { data } = await coreInstance.get("/logistics/accountabilities", {
-        params: { statusId, responsibleId },
-      });
+      const { data } = await apiInstance.get(
+        "/api/core/logistics/accountabilities",
+        {
+          params: { statusId, responsibleId },
+        },
+      );
       return data;
     } catch (e) {
       throw e;
@@ -18,8 +21,8 @@ export const AccountabilityService = {
 
   async getAccountibilityRequestById(id: number) {
     try {
-      const { data } = await coreInstance.get(
-        `/logistics/accountabilities/${id}`,
+      const { data } = await apiInstance.get(
+        `/api/core/logistics/accountabilities/${id}`,
       );
       return data;
     } catch (e) {
@@ -29,8 +32,8 @@ export const AccountabilityService = {
 
   async createAccountability(formData: CreateAccountabilityPayload) {
     try {
-      const { data } = await coreInstance.post(
-        `/logistics/accountabilities`,
+      const { data } = await apiInstance.post(
+        `/api/core/logistics/accountabilities`,
         formData,
       );
       return data;

@@ -15,7 +15,7 @@ export const getNewTokens = async () => {
     body.set("refresh_token", refreshToken);
 
     const { data } = await refreshInstance.post<AuthResponse>(
-      "/oauth/token",
+      "/token",
       body.toString(),
     );
 

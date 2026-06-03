@@ -1,10 +1,10 @@
-import { coreInstance } from "@/services/api/core-instance";
+import { apiInstance } from "@/services/api/auth-instance";
 
 export const MaterialsService = {
   async getMaterials(werksId: number) {
     try {
-      const { data } = await coreInstance.get(
-        `/logistics/matnrs-in-werks/${werksId}/active-matnrs`,
+      const { data } = await apiInstance.get(
+        `/api/core/logistics/matnrs-in-werks/${werksId}/active-matnrs`,
       );
       return data;
     } catch (e) {

@@ -21,15 +21,15 @@ export const setupAuthInterceptor = (instance: AxiosInstance) => {
           console.log("INTERCEPTOR 3 after refresh");
           return instance.request(originalRequest);
         } catch (err) {
-          console.log("catch err", err);
+          console.log("INTERCEPTOR 4 refresh error", err);
           const refreshError = err as AxiosError<{ error: string }>;
           const errorMessage = refreshError.response?.data?.error;
+
           if (errorMessage === "invalid_token") {
             await logoutWithContext(AuthService.logout);
           }
+          console.log("INTERCEPTOR 5 after handling refresh error");
         }
-      } else {
-        console.log("else error", error);
       }
 
       throw error;

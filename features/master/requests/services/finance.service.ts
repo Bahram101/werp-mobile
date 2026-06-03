@@ -1,12 +1,12 @@
-import { coreInstance } from "@/services/api/core-instance";
+import { apiInstance } from "@/services/api/auth-instance";
 import { CashBankResponse } from "../types";
 
 export const FinanceService = {
   async getCashBankHkonts(bukrs: number, branchId: number) {
     try {
-      const { data } = await coreInstance.get<{
+      const { data } = await apiInstance.get<{
         hkontOptions: CashBankResponse[];
-      }>(`/finance/mainoperation/fetchCashBankHkontsByBranch`, {
+      }>(`/api/core/finance/mainoperation/fetchCashBankHkontsByBranch`, {
         params: { brnch: branchId, bukrs },
       });
       return data.hkontOptions;

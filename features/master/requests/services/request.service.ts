@@ -1,45 +1,18 @@
-import { serviceInstance } from "@/services/api/service-instance";
+import { apiInstance } from "@/services/api/auth-instance";
 import { getCurrentMonthStart, getToday } from "@/utils/date";
 
 export const RequestService = {
   async getMasterRequests(masterId: number, status: string, bukrs?: number) {
     try {
-      const { data } = await serviceInstance.get(
-        "/api/service/smappl/appList",
-        {
-          params: {
-            bukrs,
-            appStatusIds: status,
-            masterId,
-            ...((status === "5" || status === "8") && {
-              dateOpenAt: status === "5" ? getCurrentMonthStart() : getToday(),
-              dateOpenTo: status === "5" ? getToday() : getToday(),
-            }),
-          },
-        },
-      );
-      console.log("Master Requests", data.data.length);
-      return data.data;
-    } catch (error) {
-      console.log("Error fetching master requests:", error);
-      throw error;
-    }
-  },
-
-  async getMasterRequestDetail(reqId: number) {
-    try {
-      const { data } = await serviceInstance.get(`/smecam-ma/${reqId}`);
-      return data.data.application;
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  async getMastersDoneRequests(masterId: number) {
-    try {
-      const { data } = await serviceInstance.get("/smcs/master/draft/my-list", {
+      const { data } = await apiInstance.get("/api/service/smappl/appList", {
         params: {
+          bukrs,
+          appStatusIds: status,
           masterId,
+          ...((status === "5" || status === "8") && {
+            dateOpenAt: status === "5" ? getCurrentMonthStart() : getToday(),
+            dateOpenTo: status === "5" ? getToday() : getToday(),
+          }),
         },
       });
       return data.data;
@@ -48,9 +21,36 @@ export const RequestService = {
     }
   },
 
+  async getMasterRequestDetail(reqId: number) {
+    try {
+      const { data } = await apiInstance.get(`/api/service/smecam-ma/${reqId}`);
+      return data.data.application;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async getMastersDoneRequests(masterId: number) {
+    try {
+      const { data } = await apiInstance.get(
+        "/api/service/smcs/master/draft/my-list",
+        {
+          params: {
+            masterId,
+          },
+        },
+      );
+      return data.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   async getMasterDoneRequestDetail(id: number) {
     try {
-      const { data } = await serviceInstance.get(`/smcs/master/draft/${id}`);
+      const { data } = await apiInstance.get(
+        `/api/service/smcs/master/draft/${id}`,
+      );
       return data.data;
     } catch (error) {
       throw error;
@@ -59,8 +59,8 @@ export const RequestService = {
 
   async updateRequestStatus(reqId: number, statusId: number) {
     try {
-      const { data } = await serviceInstance.put(
-        "/smecam-ma-status-update",
+      const { data } = await apiInstance.put(
+        "/api/service/smecam-ma-status-update",
         {},
         {
           params: {
@@ -88,7 +88,7 @@ export const RequestService = {
     bukrs: string,
   ) {
     try {
-      const { data } = await serviceInstance.get("/report/srlsm", {
+      const { data } = await apiInstance.get("/api/service/report/srlsm", {
         params: {
           serviceStatusId: status,
           dateAt: from,

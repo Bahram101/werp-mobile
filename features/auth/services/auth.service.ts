@@ -1,8 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { authInstance } from "@/services/api/auth-instance";
-// import coreInstance from "@/services/api/interceptors22";
-import { coreInstance } from "@/services/api/core-instance";
+import { apiInstance } from "@/services/api/auth-instance";
 import { AuthResponse, EnumAsyncStorage } from "@/types/auth.interface";
 import Toast from "react-native-toast-message";
 import { deleteTokensFromStorage, saveToStorage } from "./auth.storage";
@@ -16,14 +14,15 @@ export const AuthService = {
         grant_type: "password",
       });
 
-      // const { data } = await authInstance.post<AuthResponse>(
-      //   "/token",
-      //   bodyFormData,
-      // );
-
-      const { data } = await authInstance.post<AuthResponse>(
-        "/oauth/token",
+      const { data } = await apiInstance.post<AuthResponse>(
+        "/token",
         bodyFormData.toString(),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: "Basic V0VSUDpwYXNzd29yZA==",
+          },
+        },
       );
 
       if (data.access_token) {
@@ -35,7 +34,7 @@ export const AuthService = {
       Toast.show({
         type: "error",
         text1: "Request error",
-        text2: authInstance.defaults.baseURL || "EMPTY",
+        text2: apiInstance.defaults.baseURL || "EMPTY",
       });
       throw error;
     }
@@ -48,7 +47,7 @@ export const AuthService = {
 
   async getUserInfo() {
     try {
-      const { data } = await coreInstance.get("/api/core/reference/userInfo");
+      const { data } = await apiInstance.get("/userInfo");
       return data;
     } catch (error) {
       console.log("Error fetching user info:", error);

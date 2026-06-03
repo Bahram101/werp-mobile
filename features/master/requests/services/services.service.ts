@@ -1,9 +1,11 @@
-import { serviceInstance } from "@/services/api/service-instance";
+import { apiInstance } from "@/services/api/auth-instance";
 
 export const Services = {
   async getServices() {
     try {
-      const { data } = await serviceInstance.get("/smcs/getServiceList");
+      const { data } = await apiInstance.get(
+        "/api/service/smcs/getServiceList",
+      );
       return data.data;
     } catch (e) {
       throw e;
@@ -17,8 +19,8 @@ export const Services = {
     productId: number,
   ) {
     try {
-      const { data } = await serviceInstance.post(
-        "/smcs/getPositionSum",
+      const { data } = await apiInstance.post(
+        "/api/service/smcs/getPositionSum",
         {
           serviceTypeId,
         },
@@ -38,7 +40,7 @@ export const Services = {
 
   async checkService(body: any) {
     try {
-      const { data } = await serviceInstance.post("/smcs/check", body);
+      const { data } = await apiInstance.post("/api/service/smcs/check", body);
       return data.data;
     } catch (e: any) {
       const raw = e.response?.data?.response;
@@ -53,8 +55,8 @@ export const Services = {
 
   async getServiceApp(appNumber: number) {
     try {
-      const { data } = await serviceInstance.get(
-        "/smcs/getServiceApplication",
+      const { data } = await apiInstance.get(
+        "/api/service/smcs/getServiceApplication",
         {
           params: {
             applicationNumber: Number(appNumber),
@@ -69,8 +71,8 @@ export const Services = {
 
   async createPayment(body: any) {
     try {
-      const { data } = await serviceInstance.post(
-        "/smcs/master/draft/create-and-payment",
+      const { data } = await apiInstance.post(
+        "/api/service/smcs/master/draft/create-and-payment",
         body,
       );
       return data;
