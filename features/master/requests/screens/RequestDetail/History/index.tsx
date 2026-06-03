@@ -38,7 +38,7 @@ export default function HistoryListScreen() {
               pathname: ROUTES.REQUEST_HISTORY_DETAIL,
               params: {
                 appNumber: Number(appNumber),
-                historyId: item.id,
+                serviceId: item.serviceId,
               },
             });
           }}

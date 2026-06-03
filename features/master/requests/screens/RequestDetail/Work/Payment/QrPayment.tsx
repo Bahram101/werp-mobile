@@ -2,6 +2,7 @@ import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import { Field } from "@/components/ui/input/Field";
 import Layout from "@/components/ui/master/Layout";
 import { ROUTES } from "@/constants/routes";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useCreatePayment } from "@/features/master/requests/hooks/useService";
 import { useQueryClient } from "@tanstack/react-query";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
@@ -28,7 +29,14 @@ type CheckServiceResponse = {
 const QrPaymentScreen = () => {
   const navigation = useNavigation();
   const queryClient = useQueryClient();
+  const { user } = useAuth();
   const { isSplit } = useLocalSearchParams<QrPaymentParams>();
+  const masterId = user?.userInfo.currentStaff.staffId;
+
+  const images: Record<number, any> = {
+    806: require(`@/assets/images/806.jpeg`),
+    5108: require(`@/assets/images/5108.jpeg`),
+  };
 
   const data = queryClient.getQueryData<CheckServiceResponse>(["qr-payment"]);
   const dataSplit = queryClient.getQueryData<CheckServiceResponse>([
@@ -92,7 +100,7 @@ const QrPaymentScreen = () => {
       <View className="flex-col gap-6 w-full p-4">
         <View className="flex-row justify-center items-center">
           <Image
-            source={require("@/assets/images/qr-code.png")}
+            source={images[masterId]}
             resizeMode="contain"
             style={{ width: 250, height: 250 }}
           />

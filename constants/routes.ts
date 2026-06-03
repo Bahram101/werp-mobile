@@ -8,7 +8,7 @@ export const ROUTES = {
   PAYMENT_SUCCESS: "/(apps)/master/payment-success",
   REQUEST_HISTORY: "/(apps)/master/(tabs)/requests/[appNumber]/history",
   REQUEST_HISTORY_DETAIL:
-    "/(apps)/master/(tabs)/requests/[appNumber]/history/[historyId]",
+    "/(apps)/master/(tabs)/requests/[appNumber]/history/[serviceId]",
   ACCOUNTABILITY_DETAIL: "/(apps)/master/(tabs)/accountability/[id]",
   ACCOUNTABILITY_CREATE: "/(apps)/master/(tabs)/accountability/create-request",
 } as const;

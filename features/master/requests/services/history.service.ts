@@ -12,5 +12,12 @@ export const HistoryService = {
     }
   },
 
-  async getHistory() {},
+  async getHistory(serviceId: number) {
+    try {
+      const { data } = await apiInstance.get(`/api/service/smvs/${serviceId}`);
+      return data.data;
+    } catch (e) {
+      throw e;
+    }
+  },
 };

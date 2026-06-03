@@ -28,7 +28,6 @@ export const setupAuthInterceptor = (instance: AxiosInstance) => {
           if (errorMessage === "invalid_token") {
             await logoutWithContext(AuthService.logout);
           }
-          console.log("INTERCEPTOR 5 after handling refresh error");
         }
       }
 
