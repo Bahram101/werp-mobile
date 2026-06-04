@@ -1,12 +1,12 @@
 import { Accordion } from "@/components/ui/accordion";
 import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/main/Layout";
-import { COLORS } from "@/constants/theme";
+import { groupPaymentItems } from "@/features/master/utils/payment.helpers";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { ShoppingCart } from "lucide-react-native";
-import React, { useEffect } from "react";
-import { ScrollView, Text, View } from "react-native";
+import React, { useEffect, useMemo } from "react";
+import { ScrollView } from "react-native";
 import { useHistory } from "../../../hooks/useHistory";
+import PaymentSummary from "../Work/Payment/components/PaymentSummary";
 import HistoryDocInfo from "./components/HistoryDocInfo";
 
 const HistoryDetailScreen = () => {
@@ -20,6 +20,13 @@ const HistoryDetailScreen = () => {
     });
   }, [navigation]);
 
+  const serviceAllList = history.positions;
+
+  const { services, spareParts, cartridges } = useMemo(
+    () => groupPaymentItems(serviceAllList),
+    [serviceAllList],
+  );
+
   if (isLoading) {
     return <Loader />;
   }
@@ -28,7 +35,7 @@ const HistoryDetailScreen = () => {
 
   return (
     <Layout>
-      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 20, gap: 20 }}>
         <Accordion
           type="multiple"
           defaultValue={["info"]}
@@ -37,14 +44,12 @@ const HistoryDetailScreen = () => {
           <HistoryDocInfo data={history} />
         </Accordion>
 
-        <View className="bg-white mt-3 rounded-2xl p-3 px-4">
-          <View className=" py-3 pt-2 border-b mb-4 border-grayLight flex-row items-center">
-            <ShoppingCart size={"22"} color={COLORS.primary} />
-            <Text className="font-bold text-primary uppercase ml-4">
-              Список материалов
-            </Text>
-          </View>
-        </View>
+        <PaymentSummary
+          services={services || []}
+          spareParts={spareParts || []}
+          cartridges={cartridges || []}
+          total={history.sumForPay}
+        />
       </ScrollView>
     </Layout>
   );

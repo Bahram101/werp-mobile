@@ -13,9 +13,7 @@ type Params = {
 export default function HistoryListScreen() {
   const navigation = useNavigation();
   const { contractNumber, appNumber } = useLocalSearchParams<Params>();
-
   const contractNum = contractNumber ? Number(contractNumber) : undefined;
-
   const { historyList, isLoading } = useHistories(contractNum!);
 
   useEffect(() => {
@@ -28,11 +26,25 @@ export default function HistoryListScreen() {
     return <Loader />;
   }
 
+  const groupedByServiceId = historyList.data.reduce((acc: any, item: any) => {
+    const key = item.serviceId;
+    if (!acc[key]) {
+      acc[key] = item;
+    }
+    return acc;
+  }, {});
+
+  const sortByDate = Object.values(groupedByServiceId).sort(
+    (a: any, b: any) =>
+      new Date(b.crmHistoryDate).getTime() -
+      new Date(a.crmHistoryDate).getTime(),
+  );
+
   return (
     <Layout>
       <View className="bg-white rounded-2xl p-4">
         <HistoryList
-          data={historyList.data}
+          data={sortByDate || []}
           onPressItem={(item) => {
             router.push({
               pathname: ROUTES.REQUEST_HISTORY_DETAIL,
