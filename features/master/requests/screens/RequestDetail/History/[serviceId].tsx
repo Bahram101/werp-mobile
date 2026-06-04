@@ -31,8 +31,6 @@ const HistoryDetailScreen = () => {
     return <Loader />;
   }
 
-  console.log("history", JSON.stringify(history, null, 2));
-
   return (
     <Layout>
       <ScrollView contentContainerStyle={{ paddingBottom: 20, gap: 20 }}>

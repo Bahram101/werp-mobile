@@ -57,3 +57,8 @@ export const saveToStorage = async (data: AuthResponse) => {
     );
   } catch (error) {}
 };
+
+export const clearAuthStorage = async () => {
+  await deleteTokensFromStorage();
+  await AsyncStorage.removeItem(EnumAsyncStorage.USER);
+};

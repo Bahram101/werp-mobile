@@ -12,13 +12,13 @@ export default {
     newArchEnabled: true,
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "merp.app",
+      bundleIdentifier: "aura.merp.app",
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
       },
     },
     android: {
-      package: "merp.app",
+      package: "aura.merp.app",
       predictiveBackGestureEnabled: false,
       adaptiveIcon: {
         backgroundColor: "#E6F4FE",

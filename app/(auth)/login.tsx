@@ -13,8 +13,8 @@ const Auth = () => {
   const { control, reset, handleSubmit } = useForm<AuthFormData>({
     mode: "onChange",
     defaultValues: {
-      username: "bolat.ab",
-      password: "Almaty0220",
+      username: "",
+      password: "",
     },
   });
   const { loginSync, isLoading } = useAuthMutations(reset);
@@ -46,10 +46,10 @@ const Auth = () => {
                   control={control}
                   name="username"
                   rules={{
-                    required: "Login is required!",
+                    required: "Логин обязателен!",
                     minLength: {
                       value: 3,
-                      message: "Please enter at least 3 characters",
+                      message: "Пожалуйста, введите не менее 3 символов",
                     },
                   }}
                 />
@@ -64,7 +64,7 @@ const Auth = () => {
                     required: "Пароль обязателен!",
                     minLength: {
                       value: 6,
-                      message: "Please enter at least 6 characters",
+                      message: "Пожалуйста, введите не менее 6 символов",
                     },
                   }}
                 />

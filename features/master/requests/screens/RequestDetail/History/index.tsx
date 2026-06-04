@@ -26,13 +26,16 @@ export default function HistoryListScreen() {
     return <Loader />;
   }
 
-  const groupedByServiceId = historyList.data.reduce((acc: any, item: any) => {
-    const key = item.serviceId;
-    if (!acc[key]) {
-      acc[key] = item;
-    }
-    return acc;
-  }, {});
+  const groupedByServiceId = historyList.data.reduce(
+    (acc: Record<number, any>, item: any) => {
+      const key = item.serviceId;
+      if (!acc[key]) {
+        acc[key] = item;
+      }
+      return acc;
+    },
+    {},
+  );
 
   const sortByDate = Object.values(groupedByServiceId).sort(
     (a: any, b: any) =>

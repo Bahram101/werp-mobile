@@ -29,7 +29,7 @@
       "channel": "production",
       "autoIncrement": true,
       "env": {
-        "SERVER_URL": "https://api-test.aura-it.kz:9443"
+        "SERVER_URL": "https://api-prod.aura-it.kz:9443"
       },
       "android": {
         "buildType": "app-bundle"
