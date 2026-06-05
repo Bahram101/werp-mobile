@@ -32,7 +32,6 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
           setUser(null);
           return;
         }
-        // await AuthService.logout();
 
         const storedUser = await getUserFromStorage();
         if (!storedUser) {

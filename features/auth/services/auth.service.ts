@@ -51,6 +51,7 @@ export const AuthService = {
       return data;
     } catch (error) {
       console.log("Error fetching user info:", error);
+      throw error;
     }
   },
 };
