@@ -1,5 +1,6 @@
 import { getAccessToken } from "@/features/auth/services/auth.storage";
 import axios from "axios";
+import qs from "qs";
 import { SERVER_URL } from "./config";
 import { setupAuthInterceptor } from "./setupAuthInterceptor";
 
@@ -13,8 +14,8 @@ apiInstance.interceptors.request.use(async (config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  // const query = qs.stringify(config.params, { arrayFormat: "repeat" });
-  // const fullUrl = `${config.baseURL}${config.url}?${query}`;
+  const query = qs.stringify(config.params, { arrayFormat: "repeat" });
+  const fullUrl = `${config.baseURL}${config.url}?${query}`;
 
   // console.log("REQUEST_API:", fullUrl);
   return config;
