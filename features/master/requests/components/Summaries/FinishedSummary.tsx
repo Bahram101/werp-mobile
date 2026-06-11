@@ -11,7 +11,7 @@ const FinishedSummary = ({ finishedSummaryData }: Props) => {
       <View className="flex-row justify-center border-grayLight font-bold">
         <Text className="font-bold text-grayDark"> ЗАВЕРЩЕНО: </Text>
         <Text className="font-bold text-primary">
-          {finishedSummaryData.listData?.length} ЗАЯВОК
+          {finishedSummaryData.length} ЗАЯВОК
         </Text>
       </View>
     </View>

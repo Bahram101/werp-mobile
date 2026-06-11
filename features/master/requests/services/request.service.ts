@@ -11,7 +11,7 @@ export const RequestService = {
           masterId,
           ...((status === "5" || status === "8") && {
             dateOpenAt: status === "5" ? getCurrentMonthStart() : getToday(),
-            dateOpenTo: status === "5" ? getToday() : getToday(),
+            dateOpenTo: getToday(),
           }),
         },
       });
@@ -81,19 +81,19 @@ export const RequestService = {
     }
   },
 
-  async getRquestPremiumSum(
-    status: string,
-    from: string,
-    masterId: number,
+  async getFinishedRequests(
     bukrs: string,
+    status: string,
+    masterId: number,
+    from: string,
   ) {
     try {
-      const { data } = await apiInstance.get("/api/service/report/srlsm", {
+      const { data } = await apiInstance.get("/api/service/smappl/appList", {
         params: {
-          serviceStatusId: status,
-          dateAt: from,
-          masterId,
           bukrs,
+          appStatusIds: status,
+          masterId,
+          dateOpenAt: "2026-05-01",
         },
       });
       return data.data;

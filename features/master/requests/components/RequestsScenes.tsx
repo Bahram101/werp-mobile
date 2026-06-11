@@ -13,7 +13,6 @@ import {
 } from "../hooks/useRequest";
 import AssignedRequestCard from "./RequestCards/AssignedRequestCard";
 import DoneRequestCard from "./RequestCards/DoneRequestCard";
-import FinishedRequestCard from "./RequestCards/FinishedRequestCard";
 import FinishedSummary from "./Summaries/FinishedSummary";
 
 type Props = {
@@ -57,7 +56,7 @@ export default function RequestsScenes({ route }: Props) {
   const { doneRequests, refetchDoneRequests } = useDoneRequests({
     enabled: isDone,
   });
-  const { finishedSummaryData, refetchSummary } = useFinishedSummary({
+  const { finishedRequests, refetchFinishedRequests } = useFinishedSummary({
     enabled: isFinished,
   });
 
@@ -72,7 +71,7 @@ export default function RequestsScenes({ route }: Props) {
           await refetchDoneRequests();
           break;
         case "finished":
-          await refetchSummary();
+          await refetchFinishedRequests();
           break;
       }
     } finally {
@@ -130,17 +129,18 @@ export default function RequestsScenes({ route }: Props) {
               Завершенные заявки с 1 {getCurrentMonthName()}
             </Text>
           </View>
-          <FlatList
-            data={finishedSummaryData?.premiumSum}
+          {/* <FlatList
+            data={finishedRequests || []}
             renderItem={({ item }) => <FinishedRequestCard item={item} />}
             keyExtractor={(item, index) => index.toString()}
             contentContainerStyle={style}
             onRefresh={onRefresh}
             refreshing={refreshing}
             ListFooterComponent={
-              <FinishedSummary finishedSummaryData={finishedSummaryData} />
+              <FinishedSummary finishedSummaryData={finishedRequests} />
             }
-          />
+          /> */}
+          <FinishedSummary finishedSummaryData={finishedRequests} />
         </Fragment>
       );
     default:

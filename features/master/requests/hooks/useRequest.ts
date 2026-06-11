@@ -109,15 +109,15 @@ export const useFinishedSummary = ({ enabled }: { enabled: boolean }) => {
 
   const {
     data = [],
-    refetch: refetchSummary,
+    refetch: refetchFinishedRequests,
     isLoading,
   } = useQuery({
-    queryKey: ["finished-summary", masterId],
+    queryKey: ["get-finished-requests", masterId],
     queryFn: () =>
-      RequestService.getRquestPremiumSum("5", from, masterId!, bukrs),
+      RequestService.getFinishedRequests(bukrs, "5", masterId!, from),
     retry: false,
     enabled,
   });
 
-  return { finishedSummaryData: data, refetchSummary, isLoading };
+  return { finishedRequests: data, refetchFinishedRequests, isLoading };
 };
