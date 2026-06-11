@@ -93,7 +93,7 @@ export const RequestService = {
           bukrs,
           appStatusIds: status,
           masterId,
-          dateOpenAt: "2026-05-01",
+          dateOpenAt: from,
         },
       });
       return data.data;
