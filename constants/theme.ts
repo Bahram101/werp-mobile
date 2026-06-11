@@ -21,6 +21,7 @@ export const filterColors = {
   f3: "#F8E42E",
   f4: "#36D400",
   f5: "#4A93FF",
+  f6: "#FF6B6B",
 };
 
 export type ColorKeys = keyof typeof COLORS;

@@ -104,6 +104,7 @@ export default function RequestDetailScreen() {
         f3: requestDetail.f3MtLeft,
         f4: requestDetail.f4MtLeft,
         f5: requestDetail.f5MtLeft,
+        f6: requestDetail.f6MtLeft,
       },
     },
   };

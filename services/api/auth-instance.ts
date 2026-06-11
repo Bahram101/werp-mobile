@@ -17,7 +17,7 @@ apiInstance.interceptors.request.use(async (config) => {
   const query = qs.stringify(config.params, { arrayFormat: "repeat" });
   const fullUrl = `${config.baseURL}${config.url}?${query}`;
 
-  // console.log("REQUEST_API:", fullUrl);
+  console.log("REQUEST_API:", fullUrl);
   return config;
 });
 

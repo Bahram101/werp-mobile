@@ -114,7 +114,7 @@ export const useFinishedSummary = ({ enabled }: { enabled: boolean }) => {
   } = useQuery({
     queryKey: ["finished-summary", masterId],
     queryFn: () =>
-      RequestService.getRquestPremiumSum("4", from, masterId!, bukrs),
+      RequestService.getRquestPremiumSum("5", from, masterId!, bukrs),
     retry: false,
     enabled,
   });

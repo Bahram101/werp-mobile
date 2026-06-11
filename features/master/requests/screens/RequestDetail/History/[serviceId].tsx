@@ -46,7 +46,7 @@ const HistoryDetailScreen = () => {
           services={services || []}
           spareParts={spareParts || []}
           cartridges={cartridges || []}
-          total={history.sumForPay}
+          total={history.sumTotal}
         />
       </ScrollView>
     </Layout>
