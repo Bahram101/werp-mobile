@@ -17,6 +17,7 @@ type AnimatedButtonProps = {
   textColor?: ColorKeys;
   icon?: TypeFeatherIconNames;
   isLoading?: boolean;
+  disabled?: boolean;
 };
 
 export default function AnimatedButton({
@@ -29,6 +30,7 @@ export default function AnimatedButton({
   textColor = "white",
   icon,
   isLoading,
+  disabled,
 }: AnimatedButtonProps) {
   const scale = useRef(new Animated.Value(1)).current;
   const pressed = useRef(false);
@@ -57,16 +59,16 @@ export default function AnimatedButton({
       onPressOut={onPressOut}
       onPress={onPress}
       className="w-full"
-      disabled={isLoading}
+      disabled={isLoading || disabled}
     >
       {({ pressed }) => (
         <Animated.View
           style={{
             transform: [{ scale }],
             backgroundColor: pressed ? COLORS[bgPressed] : COLORS[bg],
+            opacity: disabled ? 0.5 : 1,
           }}
           className={cn(
-            // "rounded-2xl flex-row gap-3 justify-center items-center",
             "rounded-2xl flex-row gap-3 justify-center items-center min-h-[48px]",
             className,
           )}

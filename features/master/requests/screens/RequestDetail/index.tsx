@@ -1,8 +1,10 @@
 import { Accordion } from "@/components/ui/accordion";
+import PhoneActionSheet from "@/components/ui/actionsheet/PhoneActionSheet";
 import AnimatedButton from "@/components/ui/button/AnimatedButton";
 import { Loader } from "@/components/ui/Loader";
 import Layout from "@/components/ui/master/Layout";
 import { ROUTES } from "@/constants/routes";
+import { useActionSheet } from "@/providers/ActionSheetProvider";
 import { RequestDetailParams } from "@/types/navigation.interface";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -17,6 +19,7 @@ import { Service } from "./components/Service";
 
 export default function RequestDetailScreen() {
   const navigation = useNavigation();
+  const { openSheet } = useActionSheet();
   const { appNumber } = useLocalSearchParams<RequestDetailParams>();
   const { requestDetail, isLoadingReqDetail, refetchRequestDetail } =
     useRequestDetail(Number(appNumber));
@@ -25,6 +28,12 @@ export default function RequestDetailScreen() {
   const [loadingType, setLoadingType] = useState<"main" | "cancel" | null>(
     null,
   );
+
+  const phones =
+    requestDetail?.fullPhone
+      ?.split(/[;,]/)
+      .map((phone: string) => phone.trim())
+      .filter(Boolean) ?? [];
 
   useEffect(() => {
     if (appNumber) {
@@ -130,6 +139,10 @@ export default function RequestDetailScreen() {
     }
   };
 
+  const onPressCall = () => {
+    openSheet(<PhoneActionSheet phones={phones} />);
+  };
+
   return (
     <Layout className="gap-3" refreshing={refreshing} onRefresh={onRefresh}>
       <Accordion
@@ -151,6 +164,7 @@ export default function RequestDetailScreen() {
             icon="message-circle"
             iconColor="blue"
             textColor="blue"
+            disabled={true}
           >
             <Text style={{ lineHeight: 18 }}>{"Чат с\n клиентом"}</Text>
           </AnimatedButton>
@@ -163,6 +177,7 @@ export default function RequestDetailScreen() {
             icon="phone"
             iconColor="primary"
             textColor="primary"
+            onPress={onPressCall}
           >
             <Text style={{ lineHeight: 18 }}>{"Позвонить \n клиенту"}</Text>
           </AnimatedButton>
@@ -196,6 +211,7 @@ export default function RequestDetailScreen() {
             icon="corner-down-right"
             iconColor="black"
             textColor="black"
+            disabled={true}
           >
             Перенос
           </AnimatedButton>
@@ -211,8 +227,13 @@ export default function RequestDetailScreen() {
             textColor="white"
             isLoading={loadingType === "cancel"}
             onPress={handleCancel}
+            disabled={requestDetail.applicationStatusId === 2}
           >
-            Отменить
+            <Text style={{ lineHeight: 18 }}>
+              {requestDetail.applicationStatusId === 9
+                ? "Отменить \n принятое"
+                : "Отменить \n заявку"}
+            </Text>
           </AnimatedButton>
         </View>
       </View>
