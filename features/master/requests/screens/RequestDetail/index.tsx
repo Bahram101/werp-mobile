@@ -232,11 +232,7 @@ export default function RequestDetailScreen() {
             onPress={handleCancel}
             disabled={requestDetail.applicationStatusId === 2}
           >
-            <Text style={{ lineHeight: 18 }}>
-              {requestDetail.applicationStatusId === 9
-                ? "Отменить \n принятое"
-                : "Отменить \n заявку"}
-            </Text>
+            <Text style={{ lineHeight: 18 }}>{"Отменить \n принятое"}</Text>
           </AnimatedButton>
         </View>
       </View>

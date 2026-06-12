@@ -36,6 +36,7 @@ const QrPaymentScreen = () => {
   const images: Record<number, any> = {
     806: require(`@/assets/images/806.jpeg`),
     5108: require(`@/assets/images/5108.jpeg`),
+    25710: require(`@/assets/images/25710.jpeg`),
   };
 
   const data = queryClient.getQueryData<CheckServiceResponse>(["qr-payment"]);
