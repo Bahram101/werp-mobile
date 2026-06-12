@@ -1,3 +1,4 @@
+import { FontAwesome } from "@expo/vector-icons";
 import { Linking, Pressable, Text, View } from "react-native";
 
 type Props = {
@@ -19,7 +20,10 @@ export default function PhoneActionSheet({ phones }: Props) {
           onPress={() => callPhone(phone)}
           className="rounded-md active:bg-gray-100"
         >
-          <Text className="px-2 py-4 pl-0">{phone}</Text>
+          <View className="flex-row items-center gap-2">
+            <FontAwesome name="phone" size={22} color="green" />
+            <Text className="px-2 py-4 pl-0">{phone}</Text>
+          </View>
         </Pressable>
       ))}
     </View>

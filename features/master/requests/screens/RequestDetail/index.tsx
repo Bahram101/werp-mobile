@@ -101,7 +101,10 @@ export default function RequestDetailScreen() {
       name: requestDetail.customerFIO,
       address: requestDetail.addressName,
     },
-    service: { type: requestDetail.applicationTypeName },
+    service: {
+      type: requestDetail.applicationTypeName,
+      info: requestDetail.info,
+    },
     device: {
       id: requestDetail.tovarSn,
       productName: requestDetail.matnrName,

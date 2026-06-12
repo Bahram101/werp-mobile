@@ -30,6 +30,7 @@ export interface ClientType {
 
 export type ServiceType = {
   type: string;
+  info: string;
 };
 
 export interface DeviceType {

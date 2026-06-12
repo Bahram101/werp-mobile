@@ -9,6 +9,10 @@ export function Service({ data }: { data: ServiceType }) {
         <Text className="text-gray-500">Тип:</Text>
         <Text className="font-semibold">{data.type}</Text>
       </View>
+      <View className="flex-row gap-2">
+        <Text className="text-gray-500">Примечание:</Text>
+        <Text className="font-semibold">{data.info || "-"}</Text>
+      </View>
     </BaseAccordion>
   );
 }
