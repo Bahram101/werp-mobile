@@ -1,45 +1,16 @@
 # MERP Mobile
 
-Mobile application for service engineers and company employees.
+## English
+Mobile application developed for Aura Kazakhstan.  
+Built with React Native, Expo and TypeScript to manage service requests, materials, accountability and payments.  
+Includes role-based access, API integrations and offline-friendly workflows.
 
-## Overview
-
-MERP is a React Native application developed for Aura Kazakhstan. The application helps employees manage service requests, materials, accountability, payments, and customer-related operations from mobile devices.
-
-## Features
-
-- Authentication and authorization
-- Service requests management
-- Materials and accountability tracking
-- QR payment integration
-- Client and service package management
-- Role-based access
-- Offline-friendly workflows
-
-## Tech Stack
-
-- React Native
-- Expo
-- TypeScript
-- Expo Router
-- React Query
-- NativeWind (Tailwind CSS)
-- React Hook Form
-- Axios
-- EAS Build
-
-## My Responsibilities
-
-- Developed new features and maintained existing modules
-- Integrated REST APIs
-- Implemented authentication and authorization
-- Optimized application performance
-- Participated in architecture decisions
-- Published Android builds using EAS
+## Русский
+Мобильное приложение, разработанное для Aura Kazakhstan.
+Создано на React Native, Expo и TypeScript для управления сервисными заявками, материалами, отчетностью и платежами.
+Включает ролевую модель доступа, интеграцию с API и поддержку офлайн-сценариев работы.
 
 ## Screenshots
-
-
 <img width="200" alt="Login" src="https://github.com/user-attachments/assets/8536fb74-3e3c-4dd3-8f52-a40cad4b5d32" />
 <img width="200" alt="Home" src="https://github.com/user-attachments/assets/3f5b29d1-39b7-446a-80f6-8b5e8df973f1" />
 <img width="200" alt="Requests" src="https://github.com/user-attachments/assets/440437d7-3dc8-4d51-8c33-5b7779707f47" />
@@ -48,7 +19,5 @@ MERP is a React Native application developed for Aura Kazakhstan. The applicatio
 <img width="200" alt="Payment" src="https://github.com/user-attachments/assets/4f21f510-3a4e-453d-9583-6d1f56775c57" />
 <img width="200" alt="Success" src="https://github.com/user-attachments/assets/018ea42c-c6f7-44be-bd17-7f52040c80a4" />
 
-
 ## Repository
-
 Private commercial project developed for Aura Kazakhstan.
