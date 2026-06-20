@@ -40,7 +40,7 @@ MERP is a React Native application developed for Aura Kazakhstan. The applicatio
 ## Screenshots
 
 
-<img width="50" height="1280" alt="Login" src="https://github.com/user-attachments/assets/8536fb74-3e3c-4dd3-8f52-a40cad4b5d32" />
+<img width="100" alt="Login" src="https://github.com/user-attachments/assets/8536fb74-3e3c-4dd3-8f52-a40cad4b5d32" />
 <img width="510" height="1110" alt="Home" src="https://github.com/user-attachments/assets/3f5b29d1-39b7-446a-80f6-8b5e8df973f1" />
 <img width="590" height="1280" alt="Requests" src="https://github.com/user-attachments/assets/440437d7-3dc8-4d51-8c33-5b7779707f47" />
 <img width="511" height="1110" alt="Request detail" src="https://github.com/user-attachments/assets/52391ca7-698c-4804-a37d-69da970f3e19" />
