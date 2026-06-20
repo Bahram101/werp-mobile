@@ -10,6 +10,8 @@ Includes role-based access, API integrations and offline-friendly workflows.
 Создано на React Native, Expo и TypeScript для управления сервисными заявками, материалами, отчетностью и платежами.
 Включает ролевую модель доступа, интеграцию с API и поддержку офлайн-сценариев работы.
 
+**Tech stacks**: React Native, Expo, TypeScript, React Query, NativeWind, React Hook Form, Axios
+
 ## Screenshots
 <img width="200" alt="Login" src="https://github.com/user-attachments/assets/8536fb74-3e3c-4dd3-8f52-a40cad4b5d32" />
 <img width="200" alt="Home" src="https://github.com/user-attachments/assets/3f5b29d1-39b7-446a-80f6-8b5e8df973f1" />
