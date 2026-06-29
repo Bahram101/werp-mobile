@@ -11,7 +11,7 @@ const DocInfo = ({ data }: DocInfoProps) => {
   const bukrs = data.userInfo.bukrs[0].id;
   const bukrsName = data.userInfo.bukrs[0].name;
   const branchName = data.userInfo.service[bukrs ?? ""][0]?.text;
-  const position = data.userInfo.currentStaff.positions[0].name;
+  const positionName = data.userInfo.currentStaff.positions[0].name;
 
   return (
     <BaseAccordion title="Информация о пользователя" icon="info" value="info">
@@ -29,7 +29,7 @@ const DocInfo = ({ data }: DocInfoProps) => {
       </View>
       <View className="flex-row gap-2">
         <Text className="text-gray-500">Должность:</Text>
-        <Text className="font-semibold">{position}</Text>
+        <Text className="font-semibold">{positionName}</Text>
       </View>
     </BaseAccordion>
   );
