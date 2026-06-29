@@ -1,50 +1,25 @@
-# Welcome to your Expo app 👋
+# MERP Mobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## English
+Mobile application developed for Aura Kazakhstan.  
+Built with React Native, Expo and TypeScript to manage service requests, materials, accountability and payments.  
+Includes role-based access, API integrations and offline-friendly workflows.
 
-## Get started
+## Русский
+Мобильное приложение, разработанное для Aura Kazakhstan.
+Создано на React Native, Expo и TypeScript для управления сервисными заявками, материалами, отчетностью и платежами.
+Включает ролевую модель доступа, интеграцию с API и поддержку офлайн-сценариев работы.
 
-1. Install dependencies
+**Tech stacks**: React Native, Expo, TypeScript, React Query, NativeWind, React Hook Form, Axios
 
-   ```bash
-   npm install
-   ```
+## Screenshots
+<img width="200" alt="Login" src="https://github.com/user-attachments/assets/8536fb74-3e3c-4dd3-8f52-a40cad4b5d32" />
+<img width="200" alt="Home" src="https://github.com/user-attachments/assets/3f5b29d1-39b7-446a-80f6-8b5e8df973f1" />
+<img width="200" alt="Requests" src="https://github.com/user-attachments/assets/440437d7-3dc8-4d51-8c33-5b7779707f47" />
+<img width="200" alt="Request detail" src="https://github.com/user-attachments/assets/52391ca7-698c-4804-a37d-69da970f3e19" />
+<img width="200" alt="Service" src="https://github.com/user-attachments/assets/b9467111-2654-4798-a7a2-39413b89e8f6" />
+<img width="200" alt="Payment" src="https://github.com/user-attachments/assets/4f21f510-3a4e-453d-9583-6d1f56775c57" />
+<img width="200" alt="Success" src="https://github.com/user-attachments/assets/018ea42c-c6f7-44be-bd17-7f52040c80a4" />
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Repository
+Private commercial project developed for Aura Kazakhstan.
