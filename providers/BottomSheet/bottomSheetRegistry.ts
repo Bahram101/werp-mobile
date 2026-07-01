@@ -1,3 +1,4 @@
+import PolicyModalList from "@/features/auth/components/PolicyModalList";
 import MaterialModalList from "@/features/master/accountability/screens/AccountabilityCreate/components/MaterialModalList";
 import CartridgeModalList from "@/features/master/requests/screens/RequestDetail/Work/components/Cartridges/CartridgeModalList";
 import ServiceModalList from "@/features/master/requests/screens/RequestDetail/Work/components/Services/ServiceModalList";
@@ -8,4 +9,5 @@ export const bottomSheetRegistry = {
   spareParts: SparePartModalList,
   cartridges: CartridgeModalList,
   materials: MaterialModalList,
+  policy: PolicyModalList,
 };

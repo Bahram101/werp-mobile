@@ -1,5 +1,6 @@
 import { BottomSheetType } from "@/providers/BottomSheet/AppBottomSheetProvider";
 import BottomSheet, { BottomSheetBackdropProps } from "@gorhom/bottom-sheet";
+import cn from "clsx";
 import { BlurView } from "expo-blur";
 import { X } from "lucide-react-native";
 import React, {
@@ -106,7 +107,12 @@ const AppBottomSheet = forwardRef<AppBottomSheetRef, Props>(
       >
         <View style={{ height: SHEET_HEIGHT }}>
           {/* fixed header */}
-          <View className="flex-row justify-between items-center px-4 pt-8 pb-4 border-b border-gray-200">
+          <View
+            className={cn(
+              "flex-row justify-between items-center px-4 pb-4 border-b border-gray-200",
+              modalType === "policy" ? "pt-2" : "pt-8",
+            )}
+          >
             <Text className="text-lg font-semibold">{title}</Text>
             <TouchableOpacity onPress={() => bottomSheetRef.current?.close()}>
               <X />

@@ -80,8 +80,8 @@ const checkboxIndicatorStyle = tva({
   parentVariants: {
     size: {
       lg: "w-6 h-6 border-[3px]",
-      md: "w-5 h-5 border-2",
-      sm: "w-4 h-4 border-2",
+      md: "w-5 h-5 border",
+      sm: "w-4 h-4 border",
     },
   },
 });
@@ -235,7 +235,10 @@ CheckboxLabel.displayName = "CheckboxLabel";
 CheckboxIcon.displayName = "CheckboxIcon";
 
 export {
-  Checkbox, CheckboxGroup, CheckboxIcon, CheckboxIndicator,
+  Checkbox,
+  CheckboxGroup,
+  CheckboxIcon,
+  CheckboxIndicator,
   CheckboxLabel
 };
 

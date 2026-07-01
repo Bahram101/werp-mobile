@@ -16,6 +16,7 @@ export type BottomSheetType =
   | "spareParts"
   | "cartridges"
   | "materials"
+  | "policy"
   | null;
 
 type BottomSheetContextType = {
