@@ -167,7 +167,9 @@ export default function RequestDetailScreen() {
             icon="message-circle"
             iconColor="blue"
             textColor="blue"
-            disabled={true}
+            onPress={() => {
+              Alert.alert("Функция пока не реализована");
+            }}
           >
             <Text style={{ lineHeight: 18 }}>{"Чат с\n клиентом"}</Text>
           </AnimatedButton>
@@ -214,7 +216,9 @@ export default function RequestDetailScreen() {
             icon="corner-down-right"
             iconColor="black"
             textColor="black"
-            disabled={true}
+            onPress={() => {
+              Alert.alert("Функция пока не реализована");
+            }}
           >
             Перенос
           </AnimatedButton>

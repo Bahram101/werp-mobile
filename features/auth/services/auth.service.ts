@@ -46,12 +46,7 @@ export const AuthService = {
   },
 
   async getUserInfo() {
-    try {
-      const { data } = await apiInstance.get("/userInfo");
-      return data;
-    } catch (error) {
-      console.log("Error fetching user info:", error);
-      throw error;
-    }
+    const { data } = await apiInstance.get("/userInfo");
+    return data;
   },
 };

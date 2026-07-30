@@ -36,17 +36,16 @@ export default function RootLayout() {
         type: "error",
         text1: "У вас нет доступа к мобильному приложению",
       });
+      router.replace("/(auth)/no-access");
       return;
     }
 
-    if (roles.includes("mobile-master")) {
-      router.replace("/(apps)/master");
+    if (!roles.includes("mobile-master")) {
+      router.replace("/(auth)/no-access");
       return;
     }
 
-    if (roles.includes("mobile-marketing")) {
-      router.replace("/(hub)");
-    }
+    router.replace("/(apps)/master");
   }, [isInitialized, navigationState?.key, user]);
 
   if (!isInitialized || !navigationState?.key) {

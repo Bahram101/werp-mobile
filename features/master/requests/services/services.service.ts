@@ -1,3 +1,4 @@
+import { parseServiceError } from "@/services/api/error";
 import { apiInstance } from "@/services/api/auth-instance";
 
 export const Services = {
@@ -43,13 +44,7 @@ export const Services = {
       const { data } = await apiInstance.post("/api/service/smcs/check", body);
       return data.data;
     } catch (e: any) {
-      const raw = e.response?.data?.response;
-      if (raw) {
-        const { message } = JSON.parse(raw);
-        throw new Error(message);
-      }
-
-      throw new Error(e.response?.data?.message || "Ошибка сервера");
+      throw new Error(parseServiceError(e));
     }
   },
 
@@ -77,18 +72,7 @@ export const Services = {
       );
       return data;
     } catch (e: any) {
-      const raw = e.response?.data?.response;
-
-      if (raw) {
-        try {
-          const parsed = JSON.parse(raw);
-          throw new Error(parsed.message);
-        } catch {
-          throw new Error("Ошибка сервера");
-        }
-      }
-
-      throw new Error(e.response?.data?.message || "Ошибка сервера");
+      throw new Error(parseServiceError(e));
     }
   },
 };

@@ -3,6 +3,17 @@ import { clearAuthStorage } from "@/features/auth/services/auth.storage";
 import { getNewTokens } from "@/features/auth/services/token.helper";
 import { AxiosError, AxiosInstance } from "axios";
 
+let refreshPromise: ReturnType<typeof getNewTokens> | null = null;
+
+const refreshTokens = () => {
+  if (!refreshPromise) {
+    refreshPromise = getNewTokens().finally(() => {
+      refreshPromise = null;
+    });
+  }
+  return refreshPromise;
+};
+
 export const setupAuthInterceptor = (instance: AxiosInstance) => {
   instance.interceptors.response.use(
     (response) => response,
@@ -16,7 +27,7 @@ export const setupAuthInterceptor = (instance: AxiosInstance) => {
         originalRequest._isRetry = true;
 
         try {
-          await getNewTokens();
+          await refreshTokens();
           return instance.request(originalRequest);
         } catch (err) {
           const refreshError = err as AxiosError<{ error: string }>;

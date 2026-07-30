@@ -1,3 +1,4 @@
+import { parseServiceError } from "@/services/api/error";
 import { apiInstance } from "@/services/api/auth-instance";
 import { getCurrentMonthStart, getToday } from "@/utils/date";
 
@@ -71,13 +72,7 @@ export const RequestService = {
       );
       return data;
     } catch (e: any) {
-      const raw = e.response?.data?.response;
-      if (raw) {
-        const { message } = JSON.parse(raw);
-        throw new Error(message);
-      }
-
-      throw new Error(e.response?.data?.message || "Ошибка сервера");
+      throw new Error(parseServiceError(e));
     }
   },
 

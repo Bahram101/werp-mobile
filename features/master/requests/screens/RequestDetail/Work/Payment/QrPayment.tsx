@@ -26,18 +26,21 @@ type CheckServiceResponse = {
   }[];
 };
 
+const MASTER_QR_IMAGES: Record<number, any> = {
+  806: require("@/assets/images/806.jpeg"),
+  5108: require("@/assets/images/5108.jpeg"),
+  25710: require("@/assets/images/25710.jpeg"),
+};
+
+const DEFAULT_QR_IMAGE = require("@/assets/images/qr-code.png");
+
 const QrPaymentScreen = () => {
   const navigation = useNavigation();
   const queryClient = useQueryClient();
   const { user } = useAuth();
   const { isSplit } = useLocalSearchParams<QrPaymentParams>();
   const masterId = user?.userInfo.currentStaff.staffId;
-
-  const images: Record<number, any> = {
-    806: require(`@/assets/images/806.jpeg`),
-    5108: require(`@/assets/images/5108.jpeg`),
-    25710: require(`@/assets/images/25710.jpeg`),
-  };
+  const qrImage = (masterId && MASTER_QR_IMAGES[masterId]) || DEFAULT_QR_IMAGE;
 
   const data = queryClient.getQueryData<CheckServiceResponse>(["qr-payment"]);
   const dataSplit = queryClient.getQueryData<CheckServiceResponse>([
@@ -101,7 +104,7 @@ const QrPaymentScreen = () => {
       <View className="flex-col gap-6 w-full p-4">
         <View className="flex-row justify-center items-center">
           <Image
-            source={images[masterId]}
+            source={qrImage}
             resizeMode="contain"
             style={{ width: 250, height: 250 }}
           />
