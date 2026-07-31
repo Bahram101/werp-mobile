@@ -16,11 +16,11 @@ export const tabItems: ITabItem[] = [
     title: "Инвентарь",
     icon: "folder-open-outline",
   },
-  {
-    name: "messages",
-    title: "Сообщения",
-    icon: "message-text-outline",
-  },
+  // {
+  //   name: "messages",
+  //   title: "Сообщения",
+  //   icon: "message-text-outline",
+  // },
   {
     name: "profile",
     title: "Профиль",

@@ -79,16 +79,17 @@ export default function TabsLayout() {
               tabBarButton: (props) => (
                 <TouchableOpacity
                   {...(props as any)}
-                  disabled={tab.name === "messages"}
+                  // disabled={tab.name === "messages"}
                   onPress={(e) => {
+                    console.log("tab.name", tab.name);
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     props.onPress?.(e);
                   }}
                   activeOpacity={0.8}
-                  style={[
-                    props.style,
-                    tab.name === "messages" && { opacity: 0.3 },
-                  ]}
+                  // style={[
+                  //   props.style,
+                  //   tab.name === "messages" && { opacity: 0.3 },
+                  // ]}
                 />
               ),
               ...(tab.name === "profile" && {
