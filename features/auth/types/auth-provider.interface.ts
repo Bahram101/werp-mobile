@@ -9,4 +9,6 @@ export interface IContext {
   setUser: Dispatch<SetStateAction<TypeUserState>>;
   isInitialized: boolean;
   logout: () => void;
+  isPinVerified: boolean;
+  setPinVerified: Dispatch<SetStateAction<boolean>>;
 }

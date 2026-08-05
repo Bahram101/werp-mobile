@@ -1,5 +1,6 @@
 import { Loader } from "@/components/ui/Loader";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { getPinCode } from "@/features/auth/utils/pinStore";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import {
   DarkTheme,
@@ -14,39 +15,55 @@ import Toast from "react-native-toast-message";
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const navigationState = useRootNavigationState();
-  const { user, isInitialized } = useAuth();
+  const { user, isInitialized, isPinVerified } = useAuth();
 
   useEffect(() => {
     if (!isInitialized || !navigationState?.key) return;
 
-    if (!user) {
-      router.replace("/(auth)/login");
-      return;
-    }
+    const resolveRoute = async () => {
+      if (!user) {
+        router.replace("/(auth)/login");
+        return;
+      }
 
-    if (!user?.extraLoaded || !user.userInfo?.currentStaff?.roles?.length)
-      return;
+      if (!user?.extraLoaded || !user.userInfo?.currentStaff?.roles?.length)
+        return;
 
-    const roles =
-      user?.userInfo?.currentStaff?.roles?.map((role: any) => role.name) ?? [];
-    const hasMobileAccess = roles.includes("mobile");
+      const roles =
+        user?.userInfo?.currentStaff?.roles?.map((role: any) => role.name) ??
+        [];
+      const hasMobileAccess = roles.includes("mobile");
 
-    if (!hasMobileAccess) {
-      Toast.show({
-        type: "error",
-        text1: "У вас нет доступа к мобильному приложению",
-      });
-      router.replace("/(auth)/no-access");
-      return;
-    }
+      if (!hasMobileAccess) {
+        Toast.show({
+          type: "error",
+          text1: "У вас нет доступа к мобильному приложению",
+        });
+        router.replace("/(auth)/no-access");
+        return;
+      }
 
-    if (!roles.includes("mobile-master")) {
-      router.replace("/(auth)/no-access");
-      return;
-    }
+      if (!roles.includes("mobile-master")) {
+        router.replace("/(auth)/no-access");
+        return;
+      }
 
-    router.replace("/(apps)/master");
-  }, [isInitialized, navigationState?.key, user]);
+      const pinCode = await getPinCode();
+      if (!pinCode) {
+        router.replace("/(auth)/pin-setup");
+        return;
+      }
+
+      if (!isPinVerified) {
+        router.replace("/(auth)/pin-unlock");
+        return;
+      }
+
+      router.replace("/(apps)/master");
+    };
+
+    resolveRoute();
+  }, [isInitialized, navigationState?.key, user, isPinVerified]);
 
   if (!isInitialized || !navigationState?.key) {
     return <Loader />;

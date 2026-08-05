@@ -20,6 +20,7 @@ SplashScreen.preventAutoHideAsync();
 const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
   const [user, setUser] = useState<TypeUserState>(null);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isPinVerified, setPinVerified] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -68,11 +69,23 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
   }, []);
 
   const logout = () => {
-    AuthService.logout().then(() => setUser(null));
+    AuthService.logout().then(() => {
+      setUser(null);
+      setPinVerified(false);
+    });
   };
 
   return (
-    <AuthContext.Provider value={{ isInitialized, user, setUser, logout }}>
+    <AuthContext.Provider
+      value={{
+        isInitialized,
+        user,
+        setUser,
+        logout,
+        isPinVerified,
+        setPinVerified,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

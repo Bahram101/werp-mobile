@@ -4,6 +4,7 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import React from "react";
 import { ScrollView } from "react-native";
 import DocInfo from "./components/DocInfo";
+import SecuritySettings from "./components/SecuritySettings";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -21,6 +22,7 @@ const Profile = () => {
           className="rounded-2xl gap-3 bg-transparent"
         >
           <DocInfo data={user} />
+          <SecuritySettings />
         </Accordion>
       </ScrollView>
     </Layout>
