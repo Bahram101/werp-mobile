@@ -1,5 +1,5 @@
-import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
+import React, { useCallback, useState } from "react";
 import { Pressable, Text } from "react-native";
 
 import BaseAccordion from "@/components/ui/accordion/BaseAccordion";
@@ -8,9 +8,11 @@ import { getPinCode } from "@/features/auth/utils/pinStore";
 const SecuritySettings = () => {
   const [hasPin, setHasPin] = useState(false);
 
-  useEffect(() => {
-    getPinCode().then((pin) => setHasPin(!!pin));
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getPinCode().then((pin) => setHasPin(!!pin));
+    }, []),
+  );
 
   return (
     <BaseAccordion title="Безопасность" icon="lock" value="security">
