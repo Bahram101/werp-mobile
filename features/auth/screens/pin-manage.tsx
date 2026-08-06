@@ -12,7 +12,7 @@ const MISMATCH_RESET_DELAY = 800;
 
 type Step = "verify" | "create" | "confirm";
 
-const PinChange = () => {
+const PinManage = () => {
   const [step, setStep] = useState<Step | null>(null);
   const [hadExistingPin, setHadExistingPin] = useState(false);
   const [newPin, setNewPin] = useState("");
@@ -118,4 +118,4 @@ const PinChange = () => {
   );
 };
 
-export default PinChange;
+export default PinManage;

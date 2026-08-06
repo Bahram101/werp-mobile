@@ -15,7 +15,7 @@ const SecuritySettings = () => {
   return (
     <BaseAccordion title="Безопасность" icon="lock" value="security">
       <Pressable
-        onPress={() => router.push("/(apps)/master/pin-change")}
+        onPress={() => router.push("/(apps)/master/pin-manage")}
         className="w-full flex-row items-center justify-between"
       >
         <Text className="font-semibold">
