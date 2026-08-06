@@ -2,6 +2,7 @@ import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
+import { Loader } from "@/components/ui/Loader";
 import { PinScreenLayout } from "@/features/auth/components/PinScreenLayout";
 import { usePinDigitInput } from "@/features/auth/hooks/usePinDigitInput";
 import { getPinCode, savePinCode } from "@/features/auth/utils/pinStore";
@@ -11,20 +12,9 @@ const MISMATCH_RESET_DELAY = 800;
 
 type Step = "verify" | "create" | "confirm";
 
-const TITLES: Record<Step, string> = {
-  verify: "Введите текущий PIN-код",
-  create: "Придумайте новый PIN-код",
-  confirm: "Повторите новый PIN-код",
-};
-
-const SUBTITLES: Record<Step, string> = {
-  verify: "Подтвердите личность, чтобы изменить PIN-код",
-  create: "Он понадобится для быстрого входа в приложение",
-  confirm: "Введите новый PIN-код ещё раз",
-};
-
 const PinChange = () => {
-  const [step, setStep] = useState<Step>("verify");
+  const [step, setStep] = useState<Step | null>(null);
+  const [hadExistingPin, setHadExistingPin] = useState(false);
   const [newPin, setNewPin] = useState("");
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -32,7 +22,17 @@ const PinChange = () => {
     usePinDigitInput(PIN_LENGTH);
 
   useEffect(() => {
-    if (input.length !== PIN_LENGTH || hasError) return;
+    const init = async () => {
+      const savedPin = await getPinCode();
+      setHadExistingPin(!!savedPin);
+      setStep(savedPin ? "verify" : "create");
+    };
+
+    init();
+  }, []);
+
+  useEffect(() => {
+    if (!step || input.length !== PIN_LENGTH || hasError) return;
 
     const handleComplete = async () => {
       if (step === "verify") {
@@ -73,17 +73,42 @@ const PinChange = () => {
       }
 
       await savePinCode(input);
-      Toast.show({ type: "success", text1: "PIN-код изменён" });
+      Toast.show({
+        type: "success",
+        text1: hadExistingPin ? "PIN-код изменён" : "PIN-код установлен",
+      });
       router.back();
     };
 
     handleComplete();
-  }, [input, step, newPin, hasError, reset]);
+  }, [input, step, newPin, hasError, reset, hadExistingPin]);
+
+  if (!step) {
+    return <Loader />;
+  }
+
+  const title =
+    step === "verify"
+      ? "Введите текущий PIN-код"
+      : step === "create"
+        ? hadExistingPin
+          ? "Придумайте новый PIN-код"
+          : "Придумайте PIN-код"
+        : hadExistingPin
+          ? "Повторите новый PIN-код"
+          : "Повторите PIN-код";
+
+  const defaultSubtitle =
+    step === "verify"
+      ? "Подтвердите личность, чтобы изменить PIN-код"
+      : step === "create"
+        ? "Он понадобится для быстрого входа в приложение"
+        : "Введите PIN-код ещё раз";
 
   return (
     <PinScreenLayout
-      title={TITLES[step]}
-      subtitle={hasError ? errorMessage : SUBTITLES[step]}
+      title={title}
+      subtitle={hasError ? errorMessage : defaultSubtitle}
       hasError={hasError}
       pinLength={PIN_LENGTH}
       filled={input.length}

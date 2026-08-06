@@ -17,6 +17,8 @@ export default function RootLayout() {
   const navigationState = useRootNavigationState();
   const { user, isInitialized, isPinVerified } = useAuth();
 
+  // removePinCode();
+
   useEffect(() => {
     if (!isInitialized || !navigationState?.key) return;
 
