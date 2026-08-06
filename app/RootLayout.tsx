@@ -63,7 +63,7 @@ export default function RootLayout() {
     };
 
     resolveRoute();
-  }, [isInitialized, navigationState?.key, user, isPinVerified]);
+  }, [isInitialized, navigationState?.key, user]);
 
   if (!isInitialized || !navigationState?.key) {
     return <Loader />;

@@ -5,7 +5,6 @@ import { View } from "react-native";
 
 import {
   AccordionContent,
-  AccordionContentText,
   AccordionHeader,
   AccordionIcon,
   AccordionItem,
@@ -61,10 +60,8 @@ const BaseAccordion: FC<BaseAccordionProps> = ({
           );
         }}
       </AccordionTrigger>
-      <AccordionContent className="p-1 py-3">
-        <AccordionContentText className="">
-          <View className="gap-3 ">{children}</View>
-        </AccordionContentText>
+      <AccordionContent className="w-full p-1 py-3">
+        <View className="w-full gap-3">{children}</View>
       </AccordionContent>
     </AccordionItem>
   );

@@ -18,6 +18,8 @@ const PinUnlock = () => {
   useEffect(() => {
     if (input.length !== PIN_LENGTH || hasError) return;
 
+    console.log("input", input);
+
     const verify = async () => {
       const savedPin = await getPinCode();
 
