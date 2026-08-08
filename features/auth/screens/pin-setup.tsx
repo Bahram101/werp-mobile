@@ -2,13 +2,14 @@ import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Pressable, Text } from "react-native";
 
-import { PinScreenLayout } from "@/features/auth/components/PinScreenLayout";
+import { PinScreenLayout } from "@/features/auth/components/PinCode/PinScreenLayout";
+import {
+  MISMATCH_RESET_DELAY,
+  PIN_LENGTH,
+} from "@/features/auth/constants/pin";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { usePinDigitInput } from "@/features/auth/hooks/usePinDigitInput";
 import { savePinCode } from "@/features/auth/utils/pinStore";
-
-const PIN_LENGTH = 4;
-const MISMATCH_RESET_DELAY = 800;
 
 type Step = "create" | "confirm";
 

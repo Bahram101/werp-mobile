@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
 import { Loader } from "@/components/ui/Loader";
-import { PinScreenLayout } from "@/features/auth/components/PinScreenLayout";
+import { PinScreenLayout } from "@/features/auth/components/PinCode/PinScreenLayout";
+import {
+  MISMATCH_RESET_DELAY,
+  PIN_LENGTH,
+} from "@/features/auth/constants/pin";
 import { usePinDigitInput } from "@/features/auth/hooks/usePinDigitInput";
 import { getPinCode, savePinCode } from "@/features/auth/utils/pinStore";
-
-const PIN_LENGTH = 4;
-const MISMATCH_RESET_DELAY = 800;
 
 type Step = "verify" | "create" | "confirm";
 

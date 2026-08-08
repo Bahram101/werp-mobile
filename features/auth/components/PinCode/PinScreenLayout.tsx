@@ -2,8 +2,8 @@ import cn from "clsx";
 import React, { ReactNode } from "react";
 import { Text, View } from "react-native";
 
-import { PinDots } from "@/features/auth/components/PinDots";
-import { PinKeypad } from "@/features/auth/components/PinKeypad";
+import { PinDots } from "@/features/auth/components/PinCode/PinDots";
+import { PinKeypad } from "@/features/auth/components/PinCode/PinKeypad";
 
 interface PinScreenLayoutProps {
   title: string;
@@ -40,7 +40,7 @@ export const PinScreenLayout: React.FC<PinScreenLayoutProps> = ({
             {subtitle}
           </Text>
 
-          <View className="my-6">
+          <View className="mt-6 mb-8">
             <PinDots length={pinLength} filled={filled} hasError={hasError} />
           </View>
         </View>
