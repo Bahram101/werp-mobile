@@ -81,7 +81,6 @@ export default function TabsLayout() {
                   {...(props as any)}
                   // disabled={tab.name === "messages"}
                   onPress={(e) => {
-                    console.log("tab.name", tab.name);
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     props.onPress?.(e);
                   }}

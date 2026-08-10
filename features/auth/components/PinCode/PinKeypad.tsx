@@ -2,18 +2,18 @@ import { Delete } from "lucide-react-native";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 
+interface PinKeypadProps {
+  onPressDigit: (digit: string) => void;
+  onBackspace: () => void;
+  disabled?: boolean;
+}
+
 const ROWS = [
   ["1", "2", "3"],
   ["4", "5", "6"],
   ["7", "8", "9"],
   ["", "0", "backspace"],
 ];
-
-interface PinKeypadProps {
-  onPressDigit: (digit: string) => void;
-  onBackspace: () => void;
-  disabled?: boolean;
-}
 
 export const PinKeypad: React.FC<PinKeypadProps> = ({
   onPressDigit,

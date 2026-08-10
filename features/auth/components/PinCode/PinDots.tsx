@@ -8,17 +8,37 @@ interface PinDotsProps {
   hasError?: boolean;
 }
 
-export const PinDots: React.FC<PinDotsProps> = ({ length, filled, hasError }) => {
+export const PinDots: React.FC<PinDotsProps> = ({
+  length,
+  filled,
+  hasError,
+}) => {
   const shake = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (!hasError) return;
 
     Animated.sequence([
-      Animated.timing(shake, { toValue: 1, duration: 50, useNativeDriver: true }),
-      Animated.timing(shake, { toValue: -1, duration: 50, useNativeDriver: true }),
-      Animated.timing(shake, { toValue: 1, duration: 50, useNativeDriver: true }),
-      Animated.timing(shake, { toValue: 0, duration: 50, useNativeDriver: true }),
+      Animated.timing(shake, {
+        toValue: 1,
+        duration: 50,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shake, {
+        toValue: -1,
+        duration: 50,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shake, {
+        toValue: 1,
+        duration: 50,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shake, {
+        toValue: 0,
+        duration: 50,
+        useNativeDriver: true,
+      }),
     ]).start();
   }, [hasError, shake]);
 
