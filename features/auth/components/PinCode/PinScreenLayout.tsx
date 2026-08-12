@@ -1,6 +1,7 @@
 import cn from "clsx";
+import { X } from "lucide-react-native";
 import React, { ReactNode } from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 import { PinDots } from "@/features/auth/components/PinCode/PinDots";
 import { PinKeypad } from "@/features/auth/components/PinCode/PinKeypad";
@@ -13,6 +14,7 @@ interface PinScreenLayoutProps {
   filled: number;
   onPressDigit: (digit: string) => void;
   onBackspace: () => void;
+  onClose?: () => void;
   footer?: ReactNode;
 }
 
@@ -24,36 +26,46 @@ export const PinScreenLayout: React.FC<PinScreenLayoutProps> = ({
   filled,
   onPressDigit,
   onBackspace,
+  onClose,
   footer,
 }) => {
   return (
-    <View className="flex-1 bg-white px-16 py-10">
-      <View className="flex-1 items-center justify-center">
-        <View className="mt-10 w-full items-center gap-3">
-          <Text className="text-center text-2xl font-medium">{title}</Text>
-          <Text
-            className={cn(
-              "text-center text-sm",
-              hasError ? "text-red" : "text-grayDark",
-            )}
-          >
-            {subtitle}
-          </Text>
-
-          <View className="mt-6 mb-8">
-            <PinDots length={pinLength} filled={filled} hasError={hasError} />
+    <View className="flex-1 bg-white px-16 py-16 items-center justify-center">
+      {onClose && (
+        <Pressable
+          onPress={onClose}
+          className="absolute right-6 top-16 p-2 active:opacity-60"
+        >
+          <View className="rounded-full bg-grayLight p-1">
+            <X size={24} />
           </View>
-        </View>
+        </Pressable>
+      )}
 
-        <View className="w-full items-center">
-          <PinKeypad
-            onPressDigit={onPressDigit}
-            onBackspace={onBackspace}
-            disabled={hasError}
-          />
+      <View className="mt-10 w-full items-center gap-3">
+        <Text className="text-center text-2xl font-medium">{title}</Text>
+        <Text
+          className={cn(
+            "text-center text-sm",
+            hasError ? "text-red" : "text-grayDark",
+          )}
+        >
+          {subtitle}
+        </Text>
 
-          {footer}
+        <View className="mt-6 mb-8">
+          <PinDots length={pinLength} filled={filled} hasError={hasError} />
         </View>
+      </View>
+
+      <View className="w-full items-center">
+        <PinKeypad
+          onPressDigit={onPressDigit}
+          onBackspace={onBackspace}
+          disabled={hasError}
+        />
+
+        {footer}
       </View>
     </View>
   );

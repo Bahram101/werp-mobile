@@ -8,6 +8,7 @@ import {
   ITokens,
 } from "@/types/auth.interface";
 
+import { setBiometricEnabled } from "../utils/biometricStore";
 import { removePinCode } from "../utils/pinStore";
 
 export const getAccessToken = async () => {
@@ -43,6 +44,7 @@ export const deleteTokensFromStorage = async () => {
   await deleteItemAsync(EnumSecureStore.ACCESS_TOKEN);
   await deleteItemAsync(EnumSecureStore.REFRESH_TOKEN);
   await removePinCode();
+  await setBiometricEnabled(false);
 };
 
 export const saveToStorage = async (data: AuthResponse) => {

@@ -115,6 +115,7 @@ const PinManage = () => {
       filled={input.length}
       onPressDigit={handlePressDigit}
       onBackspace={handleBackspace}
+      onClose={() => router.back()}
     />
   );
 };

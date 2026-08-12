@@ -13,6 +13,7 @@ export enum EnumSecureStore {
 
 export enum EnumAsyncStorage {
   USER = "user",
+  BIOMETRIC_ENABLED = "biometric_enabled",
 }
 
 export interface ITokens {

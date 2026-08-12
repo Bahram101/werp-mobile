@@ -48,6 +48,13 @@ export default {
       "expo-secure-store",
       "expo-font",
       "expo-web-browser",
+      [
+        "expo-local-authentication",
+        {
+          faceIDPermission:
+            "Приложению нужен доступ к Face ID для быстрого входа",
+        },
+      ],
     ],
     experiments: {
       typedRoutes: true,
