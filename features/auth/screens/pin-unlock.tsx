@@ -72,9 +72,6 @@ const PinUnlock = () => {
     verify();
   }, [input, hasError, reset, setPinVerified]);
 
-  console.log("enabled", enabled);
-  console.log("biometricLabel", biometricLabel);
-
   return (
     <PinScreenLayout
       title="Введите PIN-код"

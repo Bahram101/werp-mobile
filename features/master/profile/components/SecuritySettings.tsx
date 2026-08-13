@@ -1,8 +1,9 @@
 import { router, useFocusEffect } from "expo-router";
+import { ChevronRight, Lock } from "lucide-react-native";
 import React, { useCallback, useState } from "react";
-import { Pressable, Switch, Text, View } from "react-native";
+import { Switch, Text, TouchableOpacity, View } from "react-native";
 
-import BaseAccordion from "@/components/ui/accordion/BaseAccordion";
+import SectionCard from "@/components/common/card/SectionCard";
 import { COLORS } from "@/constants/theme";
 import {
   isBiometricEnabled,
@@ -55,27 +56,27 @@ const SecuritySettings = () => {
   };
 
   return (
-    <BaseAccordion title="Безопасность" icon="lock" value="security">
-      <Pressable
+    <SectionCard title="Безопасность" icon={Lock}>
+      <TouchableOpacity
+        className="flex-row justify-between items-center pt-1 pb-4 -mr-1.5"
         onPress={() => router.push("/(apps)/master/pin-manage")}
-        className="w-full flex-row items-center justify-between"
       >
-        <Text className="font-semibold">
-          {hasPin ? "Изменить PIN-код" : "Установить PIN-код"}
-        </Text>
-      </Pressable>
+        <Text>{hasPin ? "Изменить PIN-код" : "Установить PIN-код"}</Text>
+        <ChevronRight size={20} className="" />
+      </TouchableOpacity>
 
       {biometricLabel && (
-        <View className="w-full flex-row items-center justify-between">
-          <Text className="font-semibold">Вход по {biometricLabel}</Text>
+        <View className="flex-row items-center justify-between">
+          <Text>Вход по {biometricLabel}</Text>
           <Switch
+            className=""
             value={biometricEnabled}
             onValueChange={handleToggleBiometric}
             trackColor={{ true: COLORS.primary }}
           />
         </View>
       )}
-    </BaseAccordion>
+    </SectionCard>
   );
 };
 
