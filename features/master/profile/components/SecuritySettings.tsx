@@ -21,9 +21,6 @@ const SecuritySettings = () => {
   );
   const [biometricEnabled, setBiometricEnabledState] = useState(false);
 
-  console.log("biometricLabel", biometricLabel);
-  console.log("biometricEnabled", biometricEnabled);
-
   useFocusEffect(
     useCallback(() => {
       const init = async () => {
@@ -31,8 +28,6 @@ const SecuritySettings = () => {
           getPinCode(),
           isBiometricSupported(),
         ]);
-        console.log("pin", pin);
-        console.log("supported", supported);
 
         setHasPin(!!pin);
 
@@ -45,8 +40,6 @@ const SecuritySettings = () => {
           getBiometricLabel(),
           isBiometricEnabled(),
         ]);
-        console.log("label", label);
-        console.log("enabled", enabled);
 
         setBiometricLabelState(label);
         setBiometricEnabledState(enabled);
@@ -72,7 +65,7 @@ const SecuritySettings = () => {
         </Text>
       </Pressable>
 
-      {biometricLabel && biometricEnabled && (
+      {biometricLabel && (
         <View className="w-full flex-row items-center justify-between">
           <Text className="font-semibold">Вход по {biometricLabel}</Text>
           <Switch

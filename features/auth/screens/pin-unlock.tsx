@@ -72,6 +72,9 @@ const PinUnlock = () => {
     verify();
   }, [input, hasError, reset, setPinVerified]);
 
+  console.log("enabled", enabled);
+  console.log("biometricLabel", biometricLabel);
+
   return (
     <PinScreenLayout
       title="Введите PIN-код"
@@ -82,11 +85,14 @@ const PinUnlock = () => {
       onPressDigit={handlePressDigit}
       onBackspace={handleBackspace}
       footer={
-        <Pressable onPress={unlockWithBiometrics} className="mt-6 py-2">
-          <Text className="text-base text-primary underline">
-            Войти по {biometricLabel}
-          </Text>
-        </Pressable>
+        enabled &&
+        biometricLabel && (
+          <Pressable onPress={unlockWithBiometrics} className="mt-6 py-2">
+            <Text className="text-base text-primary underline">
+              Войти по {biometricLabel}
+            </Text>
+          </Pressable>
+        )
       }
     />
   );

@@ -2,30 +2,20 @@ import * as LocalAuthentication from "expo-local-authentication";
 
 export const isBiometricSupported = async () => {
   const hasHardware = await LocalAuthentication.hasHardwareAsync();
-  console.log("hasHardware", hasHardware);
   if (!hasHardware) return false;
-  console.log(
-    "enrolledLevel",
-    await LocalAuthentication.getEnrolledLevelAsync(),
-  );
 
   return LocalAuthentication.isEnrolledAsync();
 };
 
 export const getBiometricLabel = async () => {
   const types = await LocalAuthentication.supportedAuthenticationTypesAsync();
-  console.log("types", types);
-  console.log(
-    "LocalAuthentication",
-    JSON.stringify(LocalAuthentication, null, 2),
-  );
-  if (
-    types.includes(LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION)
-  ) {
+  const authTypes = LocalAuthentication.AuthenticationType;
+
+  if (types.includes(authTypes.FACIAL_RECOGNITION)) {
     return "Face ID";
   }
 
-  if (types.includes(LocalAuthentication.AuthenticationType.FINGERPRINT)) {
+  if (types.includes(authTypes.FINGERPRINT)) {
     return "отпечатку пальца";
   }
 
