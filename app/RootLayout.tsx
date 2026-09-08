@@ -1,78 +1,88 @@
 import { Loader } from "@/components/ui/Loader";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { TypeUserState } from "@/features/auth/types/auth-provider.interface";
 import { getPinCode } from "@/features/auth/utils/pinStore";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { router, Slot, useRootNavigationState } from "expo-router";
+import { Href, router, Slot, useRootNavigationState } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
+const determineRoute = async (
+  user: TypeUserState,
+  isPinVerified: boolean,
+): Promise<Href | null> => {
+  if (!user) {
+    return "/(auth)/login";
+  }
+
+  if (!user.extraLoaded) {
+    return null;
+  }
+
+  if (!user.userInfo?.currentStaff?.roles?.length) {
+    Toast.show({
+      type: "error",
+      text1: "Не удалось загрузить роли пользователя",
+    });
+    return "/(auth)/no-access";
+  }
+
+  const roles = user.userInfo.currentStaff.roles.map((role: any) => role.name);
+
+  if (!roles.includes("mobile")) {
+    Toast.show({
+      type: "error",
+      text1: "У вас нет доступа к мобильному приложению",
+    });
+    return "/(auth)/no-access";
+  }
+
+  if (!roles.includes("mobile-master")) {
+    return "/(auth)/no-access";
+  }
+
+  const pinCode = await getPinCode();
+  if (!pinCode) {
+    return "/(auth)/pin-setup";
+  }
+
+  if (!isPinVerified) {
+    return "/(auth)/pin-unlock";
+  }
+
+  return "/(apps)/master";
+};
+
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const navigationState = useRootNavigationState();
   const { user, isInitialized, isPinVerified } = useAuth();
-
-  // removePinCode();
+  const [hasResolvedRoute, setHasResolvedRoute] = useState(false);
 
   useEffect(() => {
     if (!isInitialized || !navigationState?.key) return;
 
-    const resolveRoute = async () => {
-      if (!user) {
-        router.replace("/(auth)/login");
-        return;
-      }
+    determineRoute(user, isPinVerified).then((route) => {
+      if (!route) return;
 
-      if (!user?.extraLoaded || !user.userInfo?.currentStaff?.roles?.length)
-        return;
-
-      const roles =
-        user?.userInfo?.currentStaff?.roles?.map((role: any) => role.name) ??
-        [];
-      const hasMobileAccess = roles.includes("mobile");
-
-      if (!hasMobileAccess) {
-        Toast.show({
-          type: "error",
-          text1: "У вас нет доступа к мобильному приложению",
-        });
-        router.replace("/(auth)/no-access");
-        return;
-      }
-
-      if (!roles.includes("mobile-master")) {
-        router.replace("/(auth)/no-access");
-        return;
-      }
-
-      const pinCode = await getPinCode();
-      if (!pinCode) {
-        router.replace("/(auth)/pin-setup");
-        return;
-      }
-
-      if (!isPinVerified) {
-        router.replace("/(auth)/pin-unlock");
-        return;
-      }
-
-      router.replace("/(apps)/master");
-    };
-
-    resolveRoute();
+      router.replace(route);
+      setHasResolvedRoute(true);
+    });
+    // isPinVerified intentionally excluded: pin-setup/pin-unlock already
+    // navigate to master themselves once verified, re-running this on that
+    // change alone would re-check getPinCode() and bounce back to pin-setup
+    // right after a skip (no PIN was ever saved).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isInitialized, navigationState?.key, user]);
 
-  if (!isInitialized || !navigationState?.key) {
+  if (!isInitialized || !navigationState?.key || !hasResolvedRoute) {
     return <Loader />;
   }
 
   return (
-    // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
     <>
       <Slot />
       <Toast />
       <StatusBar style="auto" />
     </>
-    // </ThemeProvider>
   );
 }
