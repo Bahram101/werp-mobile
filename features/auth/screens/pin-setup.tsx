@@ -1,20 +1,18 @@
-import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { Pressable, Text } from "react-native";
-
 import { PinScreenLayout } from "@/features/auth/components/PinCode/PinScreenLayout";
 import {
   MISMATCH_RESET_DELAY,
   PIN_LENGTH,
 } from "@/features/auth/constants/pin";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import { usePinDigitInput } from "@/features/auth/hooks/usePinDigitInput";
+import { usePostPinNavigation } from "@/features/auth/hooks/usePostPinNavigation"; // <-- qo'shildi
 import { savePinCode } from "@/features/auth/utils/pinStore";
+import { useEffect, useState } from "react";
+import { Pressable, Text } from "react-native";
 
 type Step = "create" | "confirm";
 
 const PinSetup = () => {
-  const { setPinVerified } = useAuth();
+  const { navigateNext } = usePostPinNavigation(); // <-- bitta qator
   const [step, setStep] = useState<Step>("create");
   const [firstPin, setFirstPin] = useState("");
   const [hasError, setHasError] = useState(false);
@@ -43,14 +41,12 @@ const PinSetup = () => {
     }
 
     savePinCode(input).then(() => {
-      setPinVerified(true);
-      router.replace("/(apps)/master");
+      navigateNext();
     });
-  }, [input, step, firstPin, hasError, reset, setPinVerified]);
+  }, [input, step, firstPin, hasError, reset, navigateNext]);
 
   const handleSkip = () => {
-    setPinVerified(true);
-    router.replace("/(apps)/master");
+    navigateNext();
   };
 
   const title = step === "create" ? "Придумайте PIN-код" : "Повторите PIN-код";

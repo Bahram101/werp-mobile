@@ -1,14 +1,10 @@
-import { router } from "expo-router";
-import React, { useCallback, useEffect, useState } from "react";
-import { Pressable, Text } from "react-native";
-
 import { PinScreenLayout } from "@/features/auth/components/PinCode/PinScreenLayout";
 import {
   MISMATCH_RESET_DELAY,
   PIN_LENGTH,
 } from "@/features/auth/constants/pin";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import { usePinDigitInput } from "@/features/auth/hooks/usePinDigitInput";
+import { usePostPinNavigation } from "@/features/auth/hooks/usePostPinNavigation"; // <-- qo'shildi
 import { isBiometricEnabled } from "@/features/auth/utils/biometricStore";
 import {
   authenticateWithBiometrics,
@@ -16,9 +12,11 @@ import {
   isBiometricSupported,
 } from "@/features/auth/utils/biometrics";
 import { getPinCode } from "@/features/auth/utils/pinStore";
+import { useCallback, useEffect, useState } from "react";
+import { Pressable, Text } from "react-native";
 
 const PinUnlock = () => {
-  const { setPinVerified } = useAuth();
+  const { navigateNext } = usePostPinNavigation(); // <-- bitta qator
   const [hasError, setHasError] = useState(false);
   const [biometricLabel, setBiometricLabel] = useState<string | null>(null);
   const [enabled, setBiometricEnabledState] = useState(false);
@@ -29,9 +27,8 @@ const PinUnlock = () => {
     const success = await authenticateWithBiometrics();
     if (!success) return;
 
-    setPinVerified(true);
-    router.replace("/(apps)/master");
-  }, [setPinVerified]);
+    navigateNext();
+  }, [navigateNext]);
 
   useEffect(() => {
     const init = async () => {
@@ -65,12 +62,11 @@ const PinUnlock = () => {
         return;
       }
 
-      setPinVerified(true);
-      router.replace("/(apps)/master");
+      navigateNext();
     };
 
     verify();
-  }, [input, hasError, reset, setPinVerified]);
+  }, [input, hasError, reset, navigateNext]);
 
   return (
     <PinScreenLayout

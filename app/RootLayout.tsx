@@ -11,23 +11,11 @@ const determineRoute = async (
   user: TypeUserState,
   isPinVerified: boolean,
 ): Promise<Href | null> => {
-  if (!user) {
-    return "/(auth)/login";
-  }
+  if (!user) return "/(auth)/login";
+  if (!user.extraLoaded) return null;
 
-  if (!user.extraLoaded) {
-    return null;
-  }
-
-  if (!user.userInfo?.currentStaff?.roles?.length) {
-    Toast.show({
-      type: "error",
-      text1: "Не удалось загрузить роли пользователя",
-    });
-    return "/(auth)/no-access";
-  }
-
-  const roles = user.userInfo.currentStaff.roles.map((role: any) => role.name);
+  const roles =
+    user.userInfo?.currentStaff?.roles?.map((role: any) => role.name) || [];
 
   if (!roles.includes("mobile")) {
     Toast.show({
@@ -37,20 +25,15 @@ const determineRoute = async (
     return "/(auth)/no-access";
   }
 
-  if (!roles.includes("mobile-master")) {
-    return "/(auth)/no-access";
-  }
-
   const pinCode = await getPinCode();
-  if (!pinCode) {
-    return "/(auth)/pin-setup";
+  if (!pinCode) return "/(auth)/pin-setup";
+  if (!isPinVerified) return "/(auth)/pin-unlock";
+
+  if (roles.includes("mobile-master")) {
+    return "/(apps)/master";
   }
 
-  if (!isPinVerified) {
-    return "/(auth)/pin-unlock";
-  }
-
-  return "/(apps)/master";
+  return "/(hub)/(tabs)/home";
 };
 
 export default function RootLayout() {
@@ -61,27 +44,32 @@ export default function RootLayout() {
   useEffect(() => {
     if (!isInitialized || !navigationState?.key) return;
 
+    let isMounted = true;
+
     determineRoute(user, isPinVerified).then((route) => {
-      if (!route) return;
+      if (!isMounted || !route) return;
 
       router.replace(route);
       setHasResolvedRoute(true);
     });
-    // isPinVerified intentionally excluded: pin-setup/pin-unlock already
-    // navigate to master themselves once verified, re-running this on that
-    // change alone would re-check getPinCode() and bounce back to pin-setup
-    // right after a skip (no PIN was ever saved).
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    return () => {
+      isMounted = false;
+    };
   }, [isInitialized, navigationState?.key, user]);
 
   if (!isInitialized || !navigationState?.key || !hasResolvedRoute) {
-    return <Loader />;
+    return (
+      <>
+        <Loader />
+        <StatusBar style="auto" />
+      </>
+    );
   }
 
   return (
     <>
       <Slot />
-      {/* {!hasResolvedRoute && <Loader />} */}
       <Toast />
       <StatusBar style="auto" />
     </>
