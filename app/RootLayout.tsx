@@ -81,6 +81,7 @@ export default function RootLayout() {
   return (
     <>
       <Slot />
+      {/* {!hasResolvedRoute && <Loader />} */}
       <Toast />
       <StatusBar style="auto" />
     </>
